@@ -1,0 +1,16 @@
+<!doctype html>
+<html ng-app>
+  <head>
+    <title>My AngularJS App</title>
+    <script src="../Scripts/angular.min.js"></script>
+    <script src="../Scripts/principalModule.js"></script>
+  </head>
+  <body ng-app="slideShowExample">
+  <div ng-controller="slideShowCtrl">
+    <div slideshow>
+      <div slide ng-repeat="slide in slides"></div>
+          
+    </div>
+  </div>
+</body>
+</html>
