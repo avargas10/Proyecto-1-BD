@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3b0c0399ca36450bb34da24fbb9b297a" Name="Diagram1">
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.CANTON" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.CLIENTE" Width="1.5" PointX="9.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.DETALLEPEDIDO" Width="1.5" PointX="17.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.DETALLERECETA" Width="1.5" PointX="12.75" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.DIRECCIONE" Width="1.5" PointX="7.5" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.DISTRITO" Width="1.5" PointX="5.25" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.DOCTORE" Width="1.5" PointX="9.75" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.EMPLEADO" Width="1.5" PointX="9.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.EMPLEADOXSUCURSAL" Width="1.5" PointX="12" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.EMPRESA" Width="1.5" PointX="5.25" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PADECIMIENTO" Width="1.5" PointX="12" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PEDIDO" Width="1.5" PointX="15" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PRODUCTO" Width="1.5" PointX="10.5" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PRODUCTOXSUCURSAL" Width="1.5" PointX="12.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PROVEEDORE" Width="1.5" PointX="8.25" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PROVINCIA" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.RECETA" Width="1.5" PointX="12" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.ROLE" Width="1.5" PointX="7.5" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.SUCURSAL" Width="1.5" PointX="7.5" PointY="5.5" IsExpanded="true" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__CANTON__idProvin__5BE2A6F2" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__DISTRITO__idCant__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__CLIENTE__Direcci__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__PADECIMIE__idUsu__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__PEDIDOS__idClien__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__RECETAS__idClien__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__DETALLEPE__idPed__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__DETALLEPE__idPed__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__DETALLEPE__idPro__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__DETALLERE__idMed__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__DIRECCION__Distr__5070F446" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__DOCTORES__Direcc__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__SUCURSAL__idDist__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__RECETAS__idDocto__5629CD9C" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__EMPLEADO__idRol__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__EMPLEADO__idSucu__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__EMPLEADOX__idEmp__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__EMPLEADOX__idRol__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__EMPLEADOX__idSuc__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__SUCURSAL__idEmpr__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__PEDIDOS__sucursa__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__PRODUCTOS__Prove__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__PRODUCTOX__codPr__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__PRODUCTOX__idSuc__48CFD27E" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gspREST", "gspREST\gspREST.csproj", "{38E1EE24-9C5A-4CE5-8E43-02A59AFD711A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dataAcces", "dataAcces\dataAcces.csproj", "{C3E3037C-912A-4B17-AB24-2F4BEC590F1A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38E1EE24-9C5A-4CE5-8E43-02A59AFD711A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38E1EE24-9C5A-4CE5-8E43-02A59AFD711A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38E1EE24-9C5A-4CE5-8E43-02A59AFD711A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38E1EE24-9C5A-4CE5-8E43-02A59AFD711A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3E3037C-912A-4B17-AB24-2F4BEC590F1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3E3037C-912A-4B17-AB24-2F4BEC590F1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3E3037C-912A-4B17-AB24-2F4BEC590F1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3E3037C-912A-4B17-AB24-2F4BEC590F1A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9B281E8C-2FE5-45C4-A041-E642015EC18D}
+	EndGlobalSection
+EndGlobal
