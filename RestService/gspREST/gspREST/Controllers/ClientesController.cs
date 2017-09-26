@@ -53,7 +53,7 @@ namespace gspREST.Controllers
                 }
                 else
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Usuario con Cedula: " + username + " no encontrado.");
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Usuario con Username: " + username + " no encontrado.");
                 }
             }
         }
