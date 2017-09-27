@@ -58,6 +58,22 @@ namespace gspREST.Controllers
             }
         }
 
+        public bool clientLogin([FromUri]string username, [FromUri]string pass)
+        {
+            using(GasStationPharmacyDBEntities entities =new GasStationPharmacyDBEntities())
+            {
+                entities.Configuration.LazyLoadingEnabled = false;
+                var entity = entities.CLIENTEs.FirstOrDefault(e => (e.Username == username) && (e.Password == pass));
+                if (entity != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
 
         public HttpResponseMessage Post([FromBody] CLIENTE cliente)
         {
