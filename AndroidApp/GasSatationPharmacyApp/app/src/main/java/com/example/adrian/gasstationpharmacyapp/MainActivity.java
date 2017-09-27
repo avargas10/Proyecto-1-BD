@@ -1,34 +1,26 @@
 package com.example.adrian.gasstationpharmacyapp;
 
-import android.app.Application;
-import android.app.Dialog;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import com.example.adrian.gasstationpharmacyapp.Tools.Connection;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     Button login;
@@ -45,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
         username=(EditText) findViewById(R.id.txtUsername);
         password=(EditText) findViewById(R.id.txtPassword);
         final Context context= this;
-
 
 
         forgot.setOnClickListener(new View.OnClickListener() {
@@ -86,28 +77,14 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                StrictMode.ThreadPolicy policy =new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                StrictMode.setThreadPolicy(policy);
-                HttpURLConnection conn;
-                try{
-                    URL url= new URL("http://192.168.0.14:58706/api/Clientes?username="+username.getText()+"&pass="+password.getText());
-                    conn= (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.connect();
-                   BufferedReader in= new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    String inputLine;
-                    StringBuffer response=new StringBuffer();
-                    while ((inputLine=in.readLine())!=null) {
-                        response.append(inputLine);
-                    }
-                    if(response.toString().equals("true")){
-                        Intent intent = new Intent(context, Principal.class);
-                        startActivity(intent);
-                    }else{
-                        Toast.makeText(getApplicationContext(),"Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
-                    }
-                }catch(Exception e){
-                    e.printStackTrace();
+                if(Connection.getInstance().clientLogin(username.getText().toString(),
+                        password.getText().toString())){
+                    username.setText("");
+                    password.setText("");
+                    Intent intent = new Intent(context, Principal.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(),"Usuario o Contraseña incorrectos.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

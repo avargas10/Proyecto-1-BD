@@ -28,7 +28,7 @@
         </activity>
         <activity
             android:name=".Registro"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity" ></activity>
         <activity android:name=".Principal"></activity>
     </application>
 
