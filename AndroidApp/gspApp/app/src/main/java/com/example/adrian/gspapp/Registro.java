@@ -57,7 +57,6 @@ public class Registro extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"No se ha podido registrar el usuario, intentelo mas tarde.", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
-                    System.out.println("MAMADA");
                     e.printStackTrace();
                 }
 
