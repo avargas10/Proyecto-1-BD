@@ -4,6 +4,7 @@ import android.os.StrictMode;
 
 import com.example.adrian.gspapp.MainActivity;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -11,6 +12,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static android.R.id.list;
 
 /**
  * Created by Adrian on 27/09/2017.
@@ -106,5 +112,71 @@ public class Connection {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public JSONArray getDirections(int type, int id){
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        HttpURLConnection conn;
+        switch (type){
+            case 1:
+                try {
+                    URL url = new URL("http://"+Config.ip + ":58706/api/Provincias/" );
+                    conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("GET");
+                    conn.connect();
+                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                    String inputLine;
+                    StringBuffer response = new StringBuffer();
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    JSONArray jArray=new JSONArray(response.toString());
+                    return jArray;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 2:
+                try {
+                    URL url = new URL("http://"+Config.ip + ":58706/api/Cantones?Provincia="+Integer.toString(id));
+                    conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("GET");
+                    conn.connect();
+                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                    String inputLine;
+                    StringBuffer response = new StringBuffer();
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    JSONArray jArray=new JSONArray(response.toString());
+
+                    return jArray;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 3:
+                try {
+                    URL url = new URL("http://"+Config.ip + ":58706/api/Distrito?canton="+Integer.toString(id) );
+                    conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("GET");
+                    conn.connect();
+                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                    String inputLine;
+                    StringBuffer response = new StringBuffer();
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    JSONArray jArray=new JSONArray(response.toString());
+
+                    return jArray;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+        JSONArray arr=new JSONArray();
+        return arr;
     }
 }
