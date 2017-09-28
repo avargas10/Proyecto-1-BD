@@ -20,12 +20,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Registro"
+        <activity
+            android:name=".Registro"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".Principal"
+            android:name=".navigationDrawer"
             android:label="@string/title_activity_principal"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Cuenta" />
+        <activity android:name=".Home" />
+        <activity android:name=".Pedidos" />
+        <activity android:name=".Recetas"></activity>
     </application>
 
 </manifest>

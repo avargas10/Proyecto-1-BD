@@ -14,10 +14,13 @@ import android.widget.Toast;
 
 import com.example.adrian.gspapp.Tools.Connection;
 
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
     Button login;
     TextView forgot, registro;
     EditText username, password;
+    public  static JSONObject clientInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                         password.getText().toString())){
                     username.setText("");
                     password.setText("");
-                    Intent intent = new Intent(context, Principal.class);
+                    Intent intent = new Intent(context, navigationDrawer.class);
                     startActivity(intent);
                 }else{
                     Toast.makeText(getApplicationContext(),"Usuario o Contraseña incorrectos.", Toast.LENGTH_SHORT).show();

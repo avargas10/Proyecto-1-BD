@@ -2,6 +2,8 @@ package com.example.adrian.gspapp.Tools;
 
 import android.os.StrictMode;
 
+import com.example.adrian.gspapp.MainActivity;
+
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -45,6 +47,7 @@ public class Connection {
                 response.append(inputLine);
             }
             if (response.toString().equals("true")) {
+                getClientInfo(user);
                 return true;
             } else {
                 return false;
@@ -79,5 +82,28 @@ public class Connection {
             return false;
         }
 
+    }
+
+    private void getClientInfo(String user){
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        HttpURLConnection conn;
+        try {
+            URL url = new URL(stringConnection + "/api/Clientes?username=" + user );
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            JSONObject client =new JSONObject(response.toString());
+            MainActivity.clientInfo=client;
+            System.out.println("CLIENTE: "+MainActivity.clientInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

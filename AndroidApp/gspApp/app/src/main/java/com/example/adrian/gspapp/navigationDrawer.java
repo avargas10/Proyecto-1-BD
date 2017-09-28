@@ -1,9 +1,9 @@
 package com.example.adrian.gspapp;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,9 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
-public class Principal extends AppCompatActivity
+import org.json.JSONException;
+
+public class navigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    TextView menuName, menuUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,15 +26,6 @@ public class Principal extends AppCompatActivity
         setContentView(R.layout.activity_principal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -40,6 +35,8 @@ public class Principal extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        displaySelectedScreen(2131558578);
     }
 
     @Override
@@ -56,6 +53,18 @@ public class Principal extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.principal, menu);
+        menuName=(TextView)findViewById(R.id.textView2);
+        menuUser=(TextView)findViewById(R.id.textView);
+
+        try {
+
+            menuName.setText(MainActivity.clientInfo.getString("Nombre")
+            +" "+MainActivity.clientInfo.getString("pApellido")
+            +" "+MainActivity.clientInfo.getString("sApellido"));
+            menuUser.setText(MainActivity.clientInfo.getString("Username"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return true;
     }
 
@@ -74,25 +83,44 @@ public class Principal extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    private void displaySelectedScreen(int id){
+        Fragment fragment=null;
+        switch (id){
+            case R.id.nav_camera:
+                fragment=new Home();
+                break;
+            case R.id.nav_gallery:
+                fragment=new Recetas();
+                break;
+            case R.id.nav_manage:
+                fragment=new Cuenta();
+                break;
+            case  R.id.nav_slideshow:
+                fragment=new Pedidos();
+                break;
+        }
+        if(fragment!=null){
+            FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_principal, fragment);
+            ft.commit();
+            }
+        DrawerLayout drawer =(DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
+         if (id == R.id.nav_share) {
+            Intent intent = new Intent(navigationDrawer.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }else{
+             displaySelectedScreen(id);
+         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
