@@ -1,0 +1,23 @@
+
+.table{
+  text-align: center;
+ }
+
+.scrollin{
+	width: 100%;
+	height: 345px;
+	overflow: auto;
+}
+
+
+img {
+    border-radius: 5px 5px 0 0;
+    max-height: 10vw;
+    min-height: 10vw;
+    max-width:  10vw;
+    min-width:  10vw;
+}
+
+.selector-for-some-widget {
+  box-sizing: content-box;
+}

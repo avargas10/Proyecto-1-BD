@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <link rel="stylesheet" type="text/css" href="pedido.css">
+    <script src="pedido.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  </head>
+  <body background-color= #2D3142>
+
+    <nav class="navbar navbar-toggleable-md navbar-dark bg-primary">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="#">GasStationPharmacy</a>
+
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Pedidos <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="client.html">Medicamentos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="receta.html">Recetas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Otros Productos</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+
+    <h1>Pedido</h1>
+
+    <div class="scrollin">
+    
+    <div class="list-group">
+      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
+        <div class="d-flex justify-content-between">
+          <img class="img-fluid" src="img/med.png" alt="Card image cap">
+          <h5 class="mp" >Tabcin</h5>
+          <p> $40 </p><p> No requiere prescripcion</p>
+          
+        </div>
+      </a>
+
+      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex justify-content-between">
+          <img class="img-fluid" src="img/iny.png" alt="Card image cap">
+          <h5 class="mb-1">Talerdin </h5>
+          <p> $40 <br><br> No requiere prescripcion</p>
+         
+        </div>
+      </a>
+
+      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
+        <div class="d-flex justify-content-between">
+          <img class="img-fluid" src="img/med.png" alt="Card image cap">
+          <h5 class="mb-1">Tabcin <br><br> $40 <br><br> </h5>
+          <p>No requiere prescripcion</p>
+          
+        </div>
+      </a>
+
+      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex justify-content-between">
+          <img class="img-fluid" src="img/iny.png" alt="Card image cap">
+          <h5 class="mb-1">Tabcin <br><br> $40 <br><br> </h5>
+          <p>No requiere prescripcion</p>
+          
+        </div>
+      </a>
+      
+    </div>
+
+    </div>
+
+      <br>
+      <h3>Datos del Usuario</h3>
+        <form>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="exampleInputEmail1">ID Cliente</label>
+              <input type="text" class="form-control" id="idUser" placeholder="Cedula">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="exampleInputPassword1">Telefono</label>
+              <input type="text" class="form-control" id="telUser" placeholder="22210987">
+              <small id="fileHelp" class="form-text text-muted">Telefono de preferencia para que pueda ser contactado con facilidad.</small>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="sucursales">Sucursal de Recojo</label>
+              <select multiple class="form-control" id="sucursales">
+                <option>San Jose</option>
+                <option>Heredia</option>
+                <option>Coronado</option>
+                <option>Alajuela</option>
+                <option>Liberia</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <h4>Entrega de paquete</h4>
+              <div class="form-group col-md-6">
+              Fecha de Recojo:
+              <input type="date" name="startdate" ng-model="startDate" id="dateUser"><br><br>
+              Hora de Recojo:
+              <input type="time" name="starttime" step="60" ng-model="startTime" id="hourUser">
+            </div>
+            </div>
+          </div>
+                  
+          <button type="submit" class="btn btn-primary" onclick="submitCart()"> Terminar Compra</button>
+        </form>
+
+
+
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+  </body>
+</html>

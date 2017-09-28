@@ -1,0 +1,14 @@
+
+
+img {
+    border-radius: 5px 5px 0 0;
+    max-height: 10vw;
+    min-height: 10vw;
+    max-width:  15vw;
+    min-width:  15vw;
+}
+
+.selector-for-some-widget {
+  box-sizing: content-box;
+}
+
