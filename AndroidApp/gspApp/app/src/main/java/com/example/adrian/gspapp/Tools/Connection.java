@@ -18,7 +18,7 @@ import java.net.URL;
 
 public class Connection {
     private static Connection instance;
-    private String stringConnection = "http://192.168.0.14:58706";
+    private String stringConnection = "http://192.168.1.59:58706";
 
     private Connection() {
 
