@@ -18,7 +18,6 @@ import java.net.URL;
 
 public class Connection {
     private static Connection instance;
-    private String stringConnection = "http://192.168.1.59:58706";
 
     private Connection() {
 
@@ -36,7 +35,7 @@ public class Connection {
         StrictMode.setThreadPolicy(policy);
         HttpURLConnection conn;
         try {
-            URL url = new URL(stringConnection + "/api/Clientes?username=" + user + "&pass=" + pass);
+            URL url = new URL("http://"+Config.ip + ":58706/api/Clientes?username=" + user + "&pass=" + pass);
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.connect();
@@ -66,7 +65,7 @@ public class Connection {
 
         HttpURLConnection conn;
         try {
-            URL url = new URL(stringConnection + "/api/Clientes");
+            URL url = new URL("http://"+Config.ip + ":58706/api/Clientes");
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setDoOutput(true);
@@ -91,7 +90,7 @@ public class Connection {
         StrictMode.setThreadPolicy(policy);
         HttpURLConnection conn;
         try {
-            URL url = new URL(stringConnection + "/api/Clientes?username=" + user );
+            URL url = new URL("http://"+Config.ip + ":58706/api/Clientes?username=" + user );
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();
