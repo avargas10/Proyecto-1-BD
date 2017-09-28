@@ -48,8 +48,10 @@ public class Connection {
             }
             if (response.toString().equals("true")) {
                 getClientInfo(user);
+                conn.disconnect();
                 return true;
             } else {
+                conn.disconnect();
                 return false;
             }
         } catch (Exception e) {
