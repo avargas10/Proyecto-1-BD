@@ -5,6 +5,7 @@ import android.os.StrictMode;
 import com.example.adrian.gspapp.MainActivity;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -91,28 +92,34 @@ public class Connection {
 
     }
 
-    public boolean registroDireccion(JSONObject dataDir, JSONObject clientData){
+    public JSONObject registroDireccion(JSONObject dataDir) throws JSONException {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
         HttpURLConnection conn;
         try {
-            URL url = new URL("http://"+Config.ip + ":58706/api/Clientes");
+            URL url = new URL("http://"+Config.ip + ":58706/api/Direcciones");
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setDoOutput(true);
+            conn.setDoInput(true);
             conn.setRequestMethod("POST");
             OutputStream os = conn.getOutputStream();
             os.write(dataDir.toString().getBytes());
             os.flush();
-            if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-                return false;
-            } else {
-                return true;
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
             }
+            JSONObject jData = new JSONObject(response.toString());
+            return jData;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            JSONObject jData = new JSONObject();
+            jData.put("idDireccion",1);
+            return jData;
         }
     }
 

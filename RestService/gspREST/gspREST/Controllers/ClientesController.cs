@@ -75,7 +75,7 @@ namespace gspREST.Controllers
             }
         }
 
-        public HttpResponseMessage Post([FromBody] CLIENTE cliente)
+        public HttpResponseMessage regCliente([FromBody] CLIENTE cliente)
         {
             try
             {

@@ -1,6 +1,7 @@
 package com.example.adrian.gspapp;
 
 import android.app.DatePickerDialog;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -28,7 +29,8 @@ public class Registro extends AppCompatActivity {
     Button registro;
     Spinner provincia, canton, distrito;
     DatePickerDialog datePickerDialog;
-    JSONArray dataProvincia, dataCanton, dataDistrito;
+    private JSONArray dataProvincia, dataCanton, dataDistrito;
+    private int idProvincia, idCanton, idDistrito;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,15 +81,22 @@ public class Registro extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 JSONObject data = new JSONObject();
+                JSONObject direccion =new JSONObject();
                 try {
+                    direccion.put("Provincia", idProvincia);
+                    direccion.put("Canton", idCanton);
+                    direccion.put("Distrito", idDistrito);
+                    direccion.put("Descripcion", direccionExacta.getText());
                     data.put("Cedula", Integer.parseInt(cedula.getText().toString()));
                     data.put("Nombre", name.getText().toString());
                     data.put("pApellido", pApellido.getText().toString());
                     data.put("sApellido", sApellido.getText().toString());
                     data.put("Password", pass.getText().toString());
                     data.put("Username", username.getText().toString());
-                    data.put("Nacimiento", null);
-                    data.put("Direccion", null);
+                    data.put("Email", email.getText());
+                    data.put("Penalizacion", 0);
+                    data.put("Nacimiento", nacimiento.getText());
+                    data.put("Direccion", Connection.getInstance().registroDireccion(direccion).get("idDireccion"));
                     if(Connection.getInstance().registroCliente(data)){
                         Toast.makeText(getApplicationContext(),"Usuario registrado con exito", Toast.LENGTH_SHORT).show();
                         username.setText("");
@@ -120,6 +129,7 @@ public class Registro extends AppCompatActivity {
                     }
 
                 }
+                idProvincia=id;
                 fillCanton(id);
                 } catch (JSONException e) {
                         e.printStackTrace();
@@ -146,11 +156,38 @@ public class Registro extends AppCompatActivity {
                         }
 
                     }
+                    idCanton=id;
                     fillDistrito(id);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        distrito.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                int id=0;
+                String name=distrito.getSelectedItem().toString();
+                try {
+                    for(int a=0; a<dataDistrito.length();a++){
+                        JSONObject objeto=(JSONObject)dataDistrito.get(a);
+                        if(objeto.getString("Nombre").equals(name)){
+                            id=objeto.getInt("idCanton");
+                            break;
+                        }
+
+                    }
+                    idDistrito=id;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -213,4 +250,5 @@ public class Registro extends AppCompatActivity {
 
         distrito.setAdapter(dataAdapter);
     }
+
 }
