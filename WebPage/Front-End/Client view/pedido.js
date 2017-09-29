@@ -1,4 +1,3 @@
-var listProducts=[];
 
 angular.module("pedidoClient", []).controller("contPedido", 
   function($scope) {

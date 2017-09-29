@@ -3,6 +3,8 @@
 
   <head>
     <!-- Required meta tags -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="client.css">
     <script src="client.js"></script>
     <meta charset="utf-8">
@@ -13,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   </head>
-  <body>
+  <body ng-app="productosClient">
 
     <nav class="navbar navbar-toggleable-md navbar-dark bg-primary">
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,63 +42,18 @@
 
     <h1>Medicamentos</h1>
 
-    <div class="list-group">
+    <div class="list-group" ng-controller="contProductos">
 
+    <div ng-repeat="p in listProducts">
 
-    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
-        <div class="d-flex justify-content-between">
-         <img class="img-fluid" src="img/med.png" alt="Card image cap">        
-         <h5 class="mb-1">Tabcin <br><br> $40 <br><br> </h5>
-         <p>No requiere prescripcion</p>
-         <div class="form-group select">
-          <label for="exampleSelect1">Cantidad</label>
-          <select class="form-control" id="cantidad">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </select>
-        </div>
-        <button type="button" class="btn btn-primary" onclick="add()">
-          Comprar
-        </button>
-
-      </div>
-    </a>
-
-    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
-        <div class="d-flex justify-content-between">
-         <img class="img-fluid" src="img/med.png" alt="Card image cap">        
-         <h5 class="mb-1">Tabcin <br><br> $40 <br><br> </h5>
-         <p>No requiere prescripcion</p>
-         <div class="form-group select">
-          <label for="exampleSelect1">Cantidad</label>
-          <select class="form-control" id="cantidad">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </select>
-        </div>
-        <button type="button" class="btn btn-primary">
-          Comprar
-        </button>
-
-      </div>
-    </a>
-
-
-    <c:forEach var="i" items="${productos}">
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
+      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
           <div class="d-flex justify-content-between">
-           <img class="img-fluid" src="img/med.png" alt="Card image cap">    
-           <h5 class="mb-1">Antifludes <br><br> $40 <br><br> </h5>
-           <p>No requiere prescripcion</p>
+           <img class="img-fluid" src="{{p.img}}" alt="Card image cap">        
+           <h5 class="mb-1">{{p.producto}} <br><br> ${{p.precio}} <br><br> </h5>
+           <p>{{p.prescripcion}} requiere prescripcion</p>
            <div class="form-group select">
-            <label for="exampleSelect1">Cantidad</label>
-            <select class="form-control" id="cantidad">
+            <label>Cantidad</label>
+            <select class="form-control" id="cantidad" ng-model="cantidad" required>
               <option>1</option>
               <option>2</option>
               <option>3</option>
@@ -104,12 +61,14 @@
               <option>5</option>
             </select>
           </div>
-          <button type="button" class="btn btn-primary">
+          <button type="button" class="btn btn-primary" ng-click="add(p.producto, cantidad)">
             Comprar
           </button>
         </div>
       </a>
-    </c:forEach>
+
+    </div>
+
 
     </div>
 
