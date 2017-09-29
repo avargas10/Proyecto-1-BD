@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     Button login;
     TextView forgot, registro;
     EditText username, password;
+    private ProgressBar pb;
     public  static JSONObject clientInfo;
 
     @Override
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         registro=(TextView) findViewById(R.id.textSignup);
         username=(EditText) findViewById(R.id.txtUsername);
         password=(EditText) findViewById(R.id.txtPassword);
+        pb=(ProgressBar)findViewById(R.id.progressBar1);
+        pb.setVisibility(View.GONE);
         final Context context= this;
 
 
@@ -84,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                pb.setVisibility(View.VISIBLE);
                 if(Connection.getInstance().clientLogin(username.getText().toString(),
                         password.getText().toString())){
                     username.setText("");
@@ -93,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(getApplicationContext(),"Usuario o Contraseña incorrectos.", Toast.LENGTH_SHORT).show();
                 }
+                pb.setVisibility(View.GONE);
             }
         });
 

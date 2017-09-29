@@ -1,17 +1,28 @@
 package com.example.adrian.gspapp.Tools;
 
+import android.os.AsyncTask;
 import android.os.StrictMode;
+import android.util.Log;
+import android.widget.ProgressBar;
 
 import com.example.adrian.gspapp.MainActivity;
 
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,6 +56,7 @@ public class Connection {
             URL url = new URL("http://"+Config.ip + ":58706/api/Clientes?username=" + user + "&pass=" + pass);
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
+            conn.setConnectTimeout(15000);
             conn.connect();
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String inputLine;
@@ -64,6 +76,10 @@ public class Connection {
             e.printStackTrace();
             return false;
         }
+        //new MyAsyncTask().execute(user,pass);
+        //return true;
+
+
     }
 
     public boolean registroCliente(JSONObject data) {
@@ -210,5 +226,79 @@ public class Connection {
         }
         JSONArray arr=new JSONArray();
         return arr;
+    }
+    public JSONArray getProductos(){
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        HttpURLConnection conn;
+        try{
+            URL url = new URL("http://"+Config.ip + ":58706/api/Productos/" );
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            JSONArray jArray=new JSONArray(response.toString());
+            return jArray;
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    private class MyAsyncTask extends AsyncTask<String, Integer, Boolean>{
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            // TODO Auto-generated method stub
+            postData(params[0],params[1]);
+            return null;
+        }
+
+        protected void onPostExecute(Double result){
+           // pb.setVisibility(View.GONE);
+            // Toast.makeText(getApplicationContext(), "command sent", Toast.LENGTH_LONG).show();
+        }
+        protected void onProgressUpdate(Integer... progress){
+           // pb.setProgress(progress[0]);
+        }
+
+        public void postData(String user,String pass) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            HttpURLConnection conn;
+            try {
+                URL url = new URL("http://"+Config.ip + ":58706/api/Clientes?username=" + user + "&pass=" + pass);
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setConnectTimeout(15000);
+                conn.connect();
+                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                if (response.toString().equals("true")) {
+                    getClientInfo(user);
+                    conn.disconnect();
+                    Log.e("test:","im true.....................");
+                } else {
+                    conn.disconnect();
+                    Log.e("test:","im false.....................");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e("test:","im false.....................");
+            }
+        }
+
     }
 }

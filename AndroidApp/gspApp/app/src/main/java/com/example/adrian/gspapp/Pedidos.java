@@ -39,8 +39,8 @@ public class Pedidos extends Fragment {
         return inflater.inflate(R.layout.activity_pedidos, container, false);
     }
 
-    /*private void getProducts() throws JSONException {
-        dataProducts = Connection.getInstance().getDirections(1,0);
+    private void getProducts() throws JSONException {
+        dataProducts = Connection.getInstance().getProductos();
         List<String> allProducts = new ArrayList<String>();
         for(int i=0; i<dataProducts.length();i++){
             JSONObject objeto= (JSONObject) dataProducts.get(i);
@@ -54,6 +54,6 @@ public class Pedidos extends Fragment {
                 (android.R.layout.simple_list_item_1);
 
         list.setAdapter(dataAdapter);
-    }*/
+    }
 
 }
