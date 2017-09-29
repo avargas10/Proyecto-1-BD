@@ -4,50 +4,52 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="315fd16f752b4c1abb03bd980c96a060" Name="Diagram1">
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.CANTON" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.CLIENTE" Width="1.5" PointX="9.75" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.DETALLEPEDIDO" Width="1.5" PointX="17" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.DETALLERECETA" Width="1.5" PointX="17" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.DIRECCIONE" Width="1.5" PointX="7.5" PointY="13.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.DISTRITO" Width="1.5" PointX="5.25" PointY="18.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.EMPLEADO" Width="1.5" PointX="9.75" PointY="16.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.EMPLEADOXSUCURSAL" Width="1.5" PointX="12.75" PointY="14.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.EMPRESA" Width="1.5" PointX="8.25" PointY="21" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PADECIMIENTO" Width="1.5" PointX="12" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PEDIDO" Width="1.5" PointX="14.75" PointY="9.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PRODUCTO" Width="1.5" PointX="14.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PRODUCTOXSUCURSAL" Width="1.5" PointX="15.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PROVEEDORE" Width="1.5" PointX="12.5" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PROVINCIA" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.RECETA" Width="1.5" PointX="12" PointY="9.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.ROLE" Width="1.5" PointX="10.5" PointY="21.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.SUCURSAL" Width="1.5" PointX="10.5" PointY="11.875" IsExpanded="true" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__CANTON__idProvin__5AEE82B9" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__DIRECCION__Canto__4F7CD00D" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__DISTRITO__idCant__59FA5E80" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__SUCURSAL__idCant__5629CD9C" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__CLIENTE__Direcci__5165187F" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__PADECIMIE__idUsu__4D94879B" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__PEDIDOS__idClien__534D60F1" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__RECETAS__idClien__59063A47" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__DETALLEPE__idPed__49C3F6B7" ManuallyRouted="false" />
+      <Diagram DiagramId="d763e52da0c84a62a1848c64c14a5b33" Name="Diagram1">
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.CANTON" Width="1.5" PointX="3" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.CLIENTE" Width="1.5" PointX="9.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.DETALLEPEDIDO" Width="1.5" PointX="15" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.DETALLERECETA" Width="1.5" PointX="15" PointY="22" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.DIRECCIONE" Width="1.5" PointX="7.5" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.DISTRITO" Width="1.5" PointX="5.25" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.EMPLEADO" Width="1.5" PointX="9.75" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.EMPLEADOXSUCURSAL" Width="1.5" PointX="14.75" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.EMPRESA" Width="1.5" PointX="8.25" PointY="21.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.ESTADO" Width="1.5" PointX="10.5" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PADECIMIENTO" Width="1.5" PointX="12" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PEDIDO" Width="1.5" PointX="12.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PRODUCTO" Width="1.5" PointX="12.75" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PRODUCTOXSUCURSAL" Width="1.5" PointX="15.75" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PROVEEDORE" Width="1.5" PointX="10.5" PointY="22" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PROVINCIA" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.RECETA" Width="1.5" PointX="12" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.ROLE" Width="1.5" PointX="12.5" PointY="25.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.SUCURSAL" Width="1.5" PointX="10.5" PointY="12" IsExpanded="true" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__CANTON__idProvin__5DCAEF64" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__DIRECCION__Canto__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__DISTRITO__idCant__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__SUCURSAL__idCant__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__CLIENTE__Direcci__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__PADECIMIE__idUsu__5070F446" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__PEDIDOS__idClien__5629CD9C" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__RECETAS__idClien__5BE2A6F2" ManuallyRouted="false" />
         <AssociationConnector Association="GasStationPharmacyDBModel.FK__DETALLEPE__idPed__4BAC3F29" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__DETALLEPE__idPro__48CFD27E" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__DETALLERE__idMed__4AB81AF0" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__DIRECCION__Distr__4E88ABD4" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__DIRECCION__Provi__5070F446" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__EMPLEADO__Direcc__4CA06362" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__SUCURSAL__idDist__571DF1D5" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__EMPLEADOX__idEmp__44FF419A" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__EMPLEADOX__idRol__45F365D3" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__EMPLEADOX__idSuc__440B1D61" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__SUCURSAL__idEmpr__5441852A" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__PEDIDOS__sucursa__52593CB8" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__PRODUCTOS__Prove__5812160E" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__PRODUCTOX__codPr__47DBAE45" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__PRODUCTOX__idSuc__46E78A0C" ManuallyRouted="false" />
-        <AssociationConnector Association="GasStationPharmacyDBModel.FK__SUCURSAL__idProv__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__DETALLEPE__idPed__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__DETALLEPE__idPro__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__DETALLERE__idMed__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__DIRECCION__Distr__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__DIRECCION__Provi__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__EMPLEADO__Direcc__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__SUCURSAL__idDist__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__EMPLEADOX__idEmp__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__EMPLEADOX__idRol__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__EMPLEADOX__idSuc__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__SUCURSAL__idEmpr__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__PEDIDOS__Estado__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__PEDIDOS__sucursa__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__PRODUCTOS__Prove__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__PRODUCTOX__codPr__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__PRODUCTOX__idSuc__48CFD27E" ManuallyRouted="false" />
+        <AssociationConnector Association="GasStationPharmacyDBModel.FK__SUCURSAL__idProv__5812160E" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

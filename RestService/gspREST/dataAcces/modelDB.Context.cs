@@ -34,6 +34,7 @@ namespace dataAcces
         public virtual DbSet<EMPLEADO> EMPLEADOes { get; set; }
         public virtual DbSet<EMPLEADOXSUCURSAL> EMPLEADOXSUCURSALs { get; set; }
         public virtual DbSet<EMPRESA> EMPRESAs { get; set; }
+        public virtual DbSet<ESTADO> ESTADOS { get; set; }
         public virtual DbSet<PADECIMIENTO> PADECIMIENTOS { get; set; }
         public virtual DbSet<PEDIDO> PEDIDOS { get; set; }
         public virtual DbSet<PRODUCTO> PRODUCTOS { get; set; }

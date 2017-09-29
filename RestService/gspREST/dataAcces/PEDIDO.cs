@@ -27,13 +27,14 @@ namespace dataAcces
         public Nullable<System.DateTime> horaRecojo { get; set; }
         public Nullable<int> Telefono { get; set; }
         public byte[] Imagen { get; set; }
-        public string Estado { get; set; }
+        public Nullable<int> Estado { get; set; }
     
         public virtual CLIENTE CLIENTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DETALLEPEDIDO> DETALLEPEDIDOes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DETALLEPEDIDO> DETALLEPEDIDOes1 { get; set; }
+        public virtual ESTADO ESTADO1 { get; set; }
         public virtual SUCURSAL SUCURSAL { get; set; }
     }
 }
