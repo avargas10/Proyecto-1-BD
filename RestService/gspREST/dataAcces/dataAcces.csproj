@@ -77,6 +77,9 @@
     <Compile Include="EMPRESA.cs">
       <DependentUpon>modelDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="ESTADO.cs">
+      <DependentUpon>modelDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="modelDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

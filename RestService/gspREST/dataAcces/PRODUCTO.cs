@@ -27,6 +27,7 @@ namespace dataAcces
         public string Nombre { get; set; }
         public Nullable<int> esMedicamento { get; set; }
         public Nullable<int> reqPrescripcion { get; set; }
+        public string Image { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DETALLEPEDIDO> DETALLEPEDIDOes { get; set; }

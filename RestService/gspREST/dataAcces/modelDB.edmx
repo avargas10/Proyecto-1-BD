@@ -132,6 +132,7 @@
           <Property Name="Nombre" Type="varchar" MaxLength="30" />
           <Property Name="esMedicamento" Type="int" />
           <Property Name="reqPrescripcion" Type="int" />
+          <Property Name="Image" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="PRODUCTOXSUCURSAL">
           <Key>
@@ -787,6 +788,7 @@
           <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="esMedicamento" Type="Int32" />
           <Property Name="reqPrescripcion" Type="Int32" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="DETALLEPEDIDOes" Relationship="Self.FK__DETALLEPE__idPro__4AB81AF0" FromRole="PRODUCTOS" ToRole="DETALLEPEDIDO" />
           <NavigationProperty Name="DETALLERECETAs" Relationship="Self.FK__DETALLERE__idMed__4CA06362" FromRole="PRODUCTOS" ToRole="DETALLERECETA" />
           <NavigationProperty Name="PROVEEDORE" Relationship="Self.FK__PRODUCTOS__Prove__5AEE82B9" FromRole="PRODUCTOS" ToRole="PROVEEDORES" />
@@ -1437,6 +1439,7 @@
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="esMedicamento" ColumnName="esMedicamento" />
                 <ScalarProperty Name="reqPrescripcion" ColumnName="reqPrescripcion" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
