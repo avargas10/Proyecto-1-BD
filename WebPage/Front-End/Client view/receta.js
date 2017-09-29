@@ -7,6 +7,7 @@ angular.module("recetasClient", []).controller("contRecetas",
 
     $scope.submitReceta=function(){
       alert($scope.id+','+$scope.doctor+','+$scope.lista);
+      animation();
     }
 
   }
@@ -26,3 +27,11 @@ var openFile = function(event) {
     };
     reader.readAsDataURL(input.files[0]);
  }
+
+
+
+ function animation() {
+    var x = document.getElementById("snackbar")
+    x.className = "show";
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}

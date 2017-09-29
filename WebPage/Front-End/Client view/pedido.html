@@ -45,19 +45,19 @@
     <h1>Pedido</h1>
 
     <div class="scrollin" ng-controller="contPedido">
-    
-    <div class="list-group">
-      <div ng-repeat="p in listProducts">
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
-          <div class="d-flex justify-content-between">
-            <img class="img-fluid" src="{{p.img}}" alt="Card image cap">
-            <h5 class="mp" >{{p.producto}}</h5>
-            <p> {{p.precio}} </p><p> {{p.prescripcion}} requiere prescripcion</p>
-            
-          </div>
-        </a>
+      
+      <div class="list-group">
+        <div ng-repeat="p in listProducts">
+          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
+            <div class="d-flex justify-content-between">
+              <img class="img-fluid" src="{{p.img}}" alt="Card image cap">
+              <h5 class="mp" >{{p.producto}}</h5>
+              <p> {{p.precio}} </p><p> {{p.prescripcion}} requiere prescripcion</p>
+              
+            </div>
+          </a>
+        </div>
       </div>
-    </div>
 
     </div>
 
@@ -103,8 +103,9 @@
                   
           <button type="submit" class="btn btn-primary" ng-click="submitCart()"> Terminar Compra</button>
         </form>
+        
 
-
+        <div id="snackbar">Pedido Creado</div>
 
 
 

@@ -16,6 +16,7 @@ angular.module("pedidoClient", []).controller("contPedido",
 
     $scope.submitCart=function(){
       alert($scope.sucursal+','+$scope.fecha);
+      animation();
     }
 
   }
@@ -24,3 +25,8 @@ angular.module("pedidoClient", []).controller("contPedido",
 
 
 
+function animation() {
+    var x = document.getElementById("snackbar")
+    x.className = "show";
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
