@@ -1,14 +1,17 @@
-function submitReceta(){
-	var id, num, list, img, imgb;
-	var reader  = new FileReader();
+angular.module("recetasClient", []).controller("contRecetas", 
+  function($scope) {
+    $scope.id = "";
+    $scope.doctor="";
+    $scope.lista="";
 
 
-	id=document.getElementById("idUser").value;
-	num=document.getElementById("numDoctor").value;
-	list=document.getElementById("inputList").value;
-	img=document.getElementById("inputFile").value;
+    $scope.submitReceta=function(){
+      alert($scope.id+','+$scope.doctor+','+$scope.lista);
+    }
 
-}
+  }
+
+);
 
 
 var openFile = function(event) {

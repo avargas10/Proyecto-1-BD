@@ -1,4 +1,4 @@
-var productos=[];
+var productos=[a,b,c];
 
 function shopCart() {
     window.location.href = "pedido.html";

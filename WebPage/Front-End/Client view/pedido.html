@@ -2,6 +2,8 @@
 <html lang="en">
   <head>
     <!-- Required meta tags -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="pedido.css">
     <script src="pedido.js"></script>
     <meta charset="utf-8">
@@ -13,7 +15,7 @@
 
 
   </head>
-  <body background-color= #2D3142>
+  <body ng-app="pedidoClient">
 
     <nav class="navbar navbar-toggleable-md navbar-dark bg-primary">
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,67 +44,46 @@
 
     <h1>Pedido</h1>
 
-    <div class="scrollin">
+    <div class="scrollin" ng-controller="contPedido">
     
     <div class="list-group">
-      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
-        <div class="d-flex justify-content-between">
-          <img class="img-fluid" src="img/med.png" alt="Card image cap">
-          <h5 class="mp" >Tabcin</h5>
-          <p> $40 </p><p> No requiere prescripcion</p>
-          
-        </div>
-      </a>
-
-      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-        <div class="d-flex justify-content-between">
-          <img class="img-fluid" src="img/iny.png" alt="Card image cap">
-          <h5 class="mb-1">Talerdin </h5>
-          <p> $40 <br><br> No requiere prescripcion</p>
-         
-        </div>
-      </a>
-
-      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
-        <div class="d-flex justify-content-between">
-          <img class="img-fluid" src="img/med.png" alt="Card image cap">
-          <h5 class="mb-1">Tabcin <br><br> $40 <br><br> </h5>
-          <p>No requiere prescripcion</p>
-          
-        </div>
-      </a>
-
-      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-        <div class="d-flex justify-content-between">
-          <img class="img-fluid" src="img/iny.png" alt="Card image cap">
-          <h5 class="mb-1">Tabcin <br><br> $40 <br><br> </h5>
-          <p>No requiere prescripcion</p>
-          
-        </div>
-      </a>
-      
+      <div ng-repeat="p in listProducts">
+        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
+          <div class="d-flex justify-content-between">
+            <img class="img-fluid" src="{{p.img}}" alt="Card image cap">
+            <h5 class="mp" >{{p.producto}}</h5>
+            <p> {{p.precio}} </p><p> {{p.prescripcion}} requiere prescripcion</p>
+            
+          </div>
+        </a>
+      </div>
     </div>
 
     </div>
 
       <br>
       <h3>Datos del Usuario</h3>
-        <form>
+        <form ng-controller="contPedido" name="pedidos">
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="exampleInputEmail1">ID Cliente</label>
-              <input type="text" class="form-control" id="idUser" placeholder="Cedula">
+              <label>ID Cliente</label>
+              <input type="text" class="form-control" name="idUser" ng-model="id" placeholder="Cedula" ng-pattern="/^[0-9]{1,5}$/" required>
+              <span ng-show="pedidos.idUser.$error.pattern">
+                <small class="form-text text-muted">Numero de ID no valido</small>
+              </span>
             </div>
             <div class="form-group col-md-6">
               <label for="exampleInputPassword1">Telefono</label>
-              <input type="text" class="form-control" id="telUser" placeholder="22210987">
-              <small id="fileHelp" class="form-text text-muted">Telefono de preferencia para que pueda ser contactado con facilidad.</small>
+              <input type="text" class="form-control" name="telUser" placeholder="Numero de Telefono" ng-model="tel" ng-pattern="/^[0-9]{8}$/" required>
+              <span ng-show="pedidos.telUser.$error.pattern">
+                <small class="form-text text-muted">Numero de telefono no valido</small>
+              </span>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="sucursales">Sucursal de Recojo</label>
-              <select multiple class="form-control" id="sucursales">
+              <select multiple class="form-control" id="sucursales" ng-model="sucursal">
                 <option>San Jose</option>
                 <option>Heredia</option>
                 <option>Coronado</option>
@@ -113,15 +94,14 @@
             <div class="form-group col-md-6">
               <h4>Entrega de paquete</h4>
               <div class="form-group col-md-6">
-              Fecha de Recojo:
-              <input type="date" name="startdate" ng-model="startDate" id="dateUser"><br><br>
-              Hora de Recojo:
-              <input type="time" name="starttime" step="60" ng-model="startTime" id="hourUser">
+              Fecha y hora de recojo:
+              <input type="datetime-local" ng-model="fecha" name="dateUser" required><br>
+              <small class="form-text text-muted">La fecha se dan en formato de 24 horas</small>
             </div>
             </div>
           </div>
                   
-          <button type="submit" class="btn btn-primary" onclick="submitCart()"> Terminar Compra</button>
+          <button type="submit" class="btn btn-primary" ng-click="submitCart()"> Terminar Compra</button>
         </form>
 
 

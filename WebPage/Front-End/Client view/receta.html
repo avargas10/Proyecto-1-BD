@@ -2,8 +2,6 @@
 <html lang="en">
   <head>
     <!-- Required meta tags -->
-    <link rel="stylesheet" type="text/css" href="receta.css">
-    <script src="receta.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -11,18 +9,23 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="receta.css">
+    <script src="receta.js"></script>
+
+
 
   </head>
-  <body background-color= #2D3142>
+  <body ng-app="recetasClient">
 
     <nav class="navbar navbar-toggleable-md navbar-dark bg-primary">
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <a class="navbar-brand" href="#">GasStationPharmacy</a>
 
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
           <li class="nav-item active">
             <a class="nav-link" href="#">Recetas <span class="sr-only">(current)</span></a>
           </li>
@@ -35,28 +38,35 @@
         </ul>
       </div>
     </nav>
+    
+
 
     <h1>Receta</h1>
 
 
-        
-    <form>
+
+    <form name="datReceta" ng-controller="contRecetas">
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="exampleInputEmail1">ID Receta</label>
-          <input type="text" class="form-control" id="idUser" aria-describedby="emailHelp" placeholder="#######">
+          <label> ID Receta</label>
+          <input type="text" class="form-control" name="idRec" placeholder="ID Receta" ng-model="id" ng-pattern="/^[0-9]{1,5}$/" required>
+          <span ng-show="datReceta.idRec.$error.pattern">
+            <small class="form-text text-muted">ID de receta no valido</small>
+          </span>
         </div>
         <div class="form-group col-md-6">
           <label for="exampleInputPassword1">Doctor</label>
-          <input type="text" class="form-control" id="numDoctor" placeholder="ID doctor">
-          <small id="fileHelp" class="form-text text-muted">Telefono de preferencia para que pueda ser contactado con facilidad.</small>
+          <input type="text" class="form-control" name="numDoctor" placeholder="ID doctor" ng-model="doctor" ng-pattern="/^[0-9]{1,5}$/" required>
+          <span ng-show="datReceta.numDoctor.$error.pattern">
+            <small id="fileHelp" class="form-text text-muted">Numero de doctor no valido</small>
+          </span>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
 
-          <label for="exampleInputFile">Seleccionar Imagen</label>
-          <input type="file" class="form-control-file" id="inputFile" aria-describedby="fileHelp" onchange="openFile(event)">
+          <label> Seleccionar Imagen</label>
+          <input type="file" class="form-control-file" id="inputFile" onchange="openFile(event)" >
           <small id="fileHelp" class="form-text text-muted">Seleccionar una imagen de la receta.</small>
           
           <img id="output">
@@ -64,17 +74,22 @@
         </div>
 
         <div class="form-group col-md-6">
-          <label for="exampleSelect2">Lista de Medicamentos</label>
-          <textarea class="form-control" id="inputList" placeholder="Lista">
-            
+          <label>Lista de Medicamentos</label>
+          <textarea class="form-control" name="inputList" ng-model="lista" ng-pattern="/^[A-Za-z0-9]/" required>
           </textarea>
+          <span ng-show="datReceta.inputList.$error.pattern">
+            <small id="fileHelp" class="form-text text-muted">Lista de medicamentos no valida</small>
+          </span>
         </div>
         
       </div>
       
-      <button type="submit" class="btn btn-primary" onclick="submitReceta()">Crear Receta</button>
+      <button type="submit" class="btn btn-primary" ng-click="submitReceta()">
+      Crear Receta
+      </button>
 
     </form>
+    
 
 
 

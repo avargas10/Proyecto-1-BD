@@ -87,28 +87,30 @@
       </div>
     </a>
 
-    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
-        <div class="d-flex justify-content-between">
-         <img class="img-fluid" src="img/med.png" alt="Card image cap">        
-         <h5 class="mb-1">Antifludes <br><br> $40 <br><br> </h5>
-         <p>No requiere prescripcion</p>
-         <div class="form-group select">
-          <label for="exampleSelect1">Cantidad</label>
-          <select class="form-control" id="cantidad">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </select>
-        </div>
-        <button type="button" class="btn btn-primary">
-          Comprar
-        </button>
 
-      </div>
-    </a>
-      
+    <c:forEach var="i" items="${productos}">
+        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
+          <div class="d-flex justify-content-between">
+           <img class="img-fluid" src="img/med.png" alt="Card image cap">    
+           <h5 class="mb-1">Antifludes <br><br> $40 <br><br> </h5>
+           <p>No requiere prescripcion</p>
+           <div class="form-group select">
+            <label for="exampleSelect1">Cantidad</label>
+            <select class="form-control" id="cantidad">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+          <button type="button" class="btn btn-primary">
+            Comprar
+          </button>
+        </div>
+      </a>
+    </c:forEach>
+
     </div>
 
     <div id="snackbar">Añadido al carrito</div>
