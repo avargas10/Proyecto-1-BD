@@ -105,6 +105,9 @@ public class Registro extends AppCompatActivity {
                         pApellido.setText("");
                         sApellido.setText("");
                         cedula.setText("");
+                        email.setText("");
+                        nacimiento.setText("");
+                        direccionExacta.setText("");
                     }else{
                         Toast.makeText(getApplicationContext(),"No se ha podido registrar el usuario, intentelo mas tarde.", Toast.LENGTH_LONG).show();
                     }
