@@ -15,7 +15,7 @@ namespace dataAcces
     public partial class PADECIMIENTO
     {
         public int idPadecimiento { get; set; }
-        public Nullable<int> idUsuario { get; set; }
+        public int idUsuario { get; set; }
         public Nullable<System.DateTime> Fecha { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }

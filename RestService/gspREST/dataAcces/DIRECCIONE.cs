@@ -18,17 +18,21 @@ namespace dataAcces
         public DIRECCIONE()
         {
             this.CLIENTEs = new HashSet<CLIENTE>();
-            this.DOCTORES = new HashSet<DOCTORE>();
+            this.EMPLEADOes = new HashSet<EMPLEADO>();
         }
     
         public int idDireccion { get; set; }
+        public Nullable<int> Provincia { get; set; }
+        public Nullable<int> Canton { get; set; }
         public Nullable<int> Distrito { get; set; }
         public string Descripcion { get; set; }
     
+        public virtual CANTON CANTON1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CLIENTE> CLIENTEs { get; set; }
         public virtual DISTRITO DISTRITO1 { get; set; }
+        public virtual PROVINCIA PROVINCIA1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DOCTORE> DOCTORES { get; set; }
+        public virtual ICollection<EMPLEADO> EMPLEADOes { get; set; }
     }
 }

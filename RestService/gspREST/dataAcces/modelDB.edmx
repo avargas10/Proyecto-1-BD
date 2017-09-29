@@ -9,21 +9,23 @@
           <Key>
             <PropertyRef Name="idCanton" />
           </Key>
-          <Property Name="idCanton" Type="int" Nullable="false" />
+          <Property Name="idCanton" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idProvincia" Type="int" />
-          <Property Name="Nombre" Type="varchar" MaxLength="20" />
+          <Property Name="Nombre" Type="varchar" MaxLength="40" />
         </EntityType>
         <EntityType Name="CLIENTE">
           <Key>
             <PropertyRef Name="Cedula" />
           </Key>
           <Property Name="Cedula" Type="int" Nullable="false" />
-          <Property Name="Nombre" Type="varchar" MaxLength="20" />
-          <Property Name="pApellido" Type="varchar" MaxLength="20" />
-          <Property Name="sApellido" Type="varchar" MaxLength="20" />
-          <Property Name="Password" Type="varchar" MaxLength="20" />
-          <Property Name="Username" Type="varchar" MaxLength="20" />
+          <Property Name="Nombre" Type="varchar" MaxLength="30" />
+          <Property Name="pApellido" Type="varchar" MaxLength="30" />
+          <Property Name="sApellido" Type="varchar" MaxLength="30" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="Username" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="80" />
           <Property Name="Nacimiento" Type="date" />
+          <Property Name="Penalizacion" Type="int" />
           <Property Name="Direccion" Type="int" />
         </EntityType>
         <EntityType Name="DETALLEPEDIDO">
@@ -48,40 +50,33 @@
           <Key>
             <PropertyRef Name="idDireccion" />
           </Key>
-          <Property Name="idDireccion" Type="int" Nullable="false" />
+          <Property Name="idDireccion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Provincia" Type="int" />
+          <Property Name="Canton" Type="int" />
           <Property Name="Distrito" Type="int" />
-          <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="DISTRITO">
           <Key>
             <PropertyRef Name="idDistrito" />
           </Key>
-          <Property Name="idDistrito" Type="int" Nullable="false" />
+          <Property Name="idDistrito" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idCanton" Type="int" />
-          <Property Name="Nombre" Type="varchar" MaxLength="20" />
-        </EntityType>
-        <EntityType Name="DOCTORES">
-          <Key>
-            <PropertyRef Name="Cedula" />
-          </Key>
-          <Property Name="Cedula" Type="int" Nullable="false" />
-          <Property Name="Direccion" Type="int" />
-          <Property Name="numDoctor" Type="int" />
-          <Property Name="Nombre" Type="varchar" MaxLength="20" />
-          <Property Name="pApellido" Type="varchar" MaxLength="20" />
-          <Property Name="sApellido" Type="varchar" MaxLength="20" />
-          <Property Name="Nacimiento" Type="date" />
+          <Property Name="Nombre" Type="varchar" MaxLength="40" />
         </EntityType>
         <EntityType Name="EMPLEADO">
           <Key>
             <PropertyRef Name="idEmpleado" />
           </Key>
           <Property Name="idEmpleado" Type="int" Nullable="false" />
-          <Property Name="idSucursal" Type="int" />
-          <Property Name="idRol" Type="int" />
-          <Property Name="Username" Type="varchar" MaxLength="20" />
-          <Property Name="Password" Type="varchar" MaxLength="20" />
-          <Property Name="Nombre" Type="varchar" MaxLength="20" />
+          <Property Name="Email" Type="varchar" MaxLength="80" />
+          <Property Name="Username" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="pApellido" Type="varchar" MaxLength="50" />
+          <Property Name="sApellido" Type="varchar" MaxLength="50" />
+          <Property Name="Nacimiento" Type="date" />
+          <Property Name="Direccion" Type="int" />
         </EntityType>
         <EntityType Name="EMPLEADOXSUCURSAL">
           <Key>
@@ -96,15 +91,15 @@
           <Key>
             <PropertyRef Name="idEmpresa" />
           </Key>
-          <Property Name="idEmpresa" Type="int" Nullable="false" />
+          <Property Name="idEmpresa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="PADECIMIENTOS">
           <Key>
             <PropertyRef Name="idPadecimiento" />
           </Key>
-          <Property Name="idPadecimiento" Type="int" Nullable="false" />
-          <Property Name="idUsuario" Type="int" />
+          <Property Name="idPadecimiento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUsuario" Type="int" Nullable="false" />
           <Property Name="Fecha" Type="date" />
           <Property Name="Nombre" Type="varchar" MaxLength="20" />
           <Property Name="Descripcion" Type="varchar" MaxLength="50" />
@@ -113,12 +108,13 @@
           <Key>
             <PropertyRef Name="idPedido" />
           </Key>
-          <Property Name="idPedido" Type="int" Nullable="false" />
+          <Property Name="idPedido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="sucursalRecojo" Type="int" />
           <Property Name="idCliente" Type="int" />
-          <Property Name="horaRecojo" Type="time" Precision="7" />
+          <Property Name="horaRecojo" Type="datetime" />
           <Property Name="Telefono" Type="int" />
           <Property Name="Imagen" Type="image" />
+          <Property Name="Estado" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="PRODUCTOS">
           <Key>
@@ -126,7 +122,7 @@
           </Key>
           <Property Name="idProducto" Type="int" Nullable="false" />
           <Property Name="Proveedor" Type="int" />
-          <Property Name="Nombre" Type="varchar" MaxLength="20" />
+          <Property Name="Nombre" Type="varchar" MaxLength="30" />
           <Property Name="esMedicamento" Type="int" />
           <Property Name="reqPrescripcion" Type="int" />
         </EntityType>
@@ -144,22 +140,21 @@
             <PropertyRef Name="idProveedor" />
           </Key>
           <Property Name="idProveedor" Type="int" Nullable="false" />
-          <Property Name="Nombre" Type="varchar" MaxLength="20" />
+          <Property Name="Nombre" Type="varchar" MaxLength="30" />
           <Property Name="Telefono" Type="int" />
         </EntityType>
         <EntityType Name="PROVINCIA">
           <Key>
             <PropertyRef Name="idProvincia" />
           </Key>
-          <Property Name="idProvincia" Type="int" Nullable="false" />
-          <Property Name="Nombre" Type="varchar" MaxLength="20" />
+          <Property Name="idProvincia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="40" />
         </EntityType>
         <EntityType Name="RECETAS">
           <Key>
             <PropertyRef Name="idReceta" />
           </Key>
-          <Property Name="idReceta" Type="int" Nullable="false" />
-          <Property Name="idDoctor" Type="int" />
+          <Property Name="idReceta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idCliente" Type="int" />
           <Property Name="Imagen" Type="image" />
         </EntityType>
@@ -167,7 +162,7 @@
           <Key>
             <PropertyRef Name="idRol" />
           </Key>
-          <Property Name="idRol" Type="int" Nullable="false" />
+          <Property Name="idRol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="20" />
           <Property Name="Descripcion" Type="varchar" MaxLength="50" />
         </EntityType>
@@ -175,13 +170,15 @@
           <Key>
             <PropertyRef Name="idSucursal" />
           </Key>
-          <Property Name="idSucursal" Type="int" Nullable="false" />
+          <Property Name="idSucursal" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idEmpresa" Type="int" />
+          <Property Name="idProvincia" Type="int" />
+          <Property Name="idCanton" Type="int" />
           <Property Name="idDistrito" Type="int" />
           <Property Name="detalleDireccion" Type="varchar" MaxLength="50" />
-          <Property Name="Nombre" Type="varchar" MaxLength="20" />
+          <Property Name="Nombre" Type="varchar" MaxLength="30" />
         </EntityType>
-        <Association Name="FK__CANTON__idProvin__5BE2A6F2">
+        <Association Name="FK__CANTON__idProvin__5AEE82B9">
           <End Role="PROVINCIA" Type="Self.PROVINCIA" Multiplicity="0..1" />
           <End Role="CANTON" Type="Self.CANTON" Multiplicity="*" />
           <ReferentialConstraint>
@@ -193,7 +190,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CLIENTE__Direcci__4E88ABD4">
+        <Association Name="FK__CLIENTE__Direcci__5165187F">
           <End Role="DIRECCIONES" Type="Self.DIRECCIONES" Multiplicity="0..1" />
           <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="*" />
           <ReferentialConstraint>
@@ -202,6 +199,18 @@
             </Principal>
             <Dependent Role="CLIENTE">
               <PropertyRef Name="Direccion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DETALLEPE__idPed__49C3F6B7">
+          <End Role="PEDIDOS" Type="Self.PEDIDOS" Multiplicity="1" />
+          <End Role="DETALLEPEDIDO" Type="Self.DETALLEPEDIDO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PEDIDOS">
+              <PropertyRef Name="idPedido" />
+            </Principal>
+            <Dependent Role="DETALLEPEDIDO">
+              <PropertyRef Name="idPedido" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -217,19 +226,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DETALLEPE__idPed__4D94879B">
-          <End Role="PEDIDOS" Type="Self.PEDIDOS" Multiplicity="1" />
-          <End Role="DETALLEPEDIDO" Type="Self.DETALLEPEDIDO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PEDIDOS">
-              <PropertyRef Name="idPedido" />
-            </Principal>
-            <Dependent Role="DETALLEPEDIDO">
-              <PropertyRef Name="idPedido" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__DETALLEPE__idPro__4AB81AF0">
+        <Association Name="FK__DETALLEPE__idPro__48CFD27E">
           <End Role="PRODUCTOS" Type="Self.PRODUCTOS" Multiplicity="1" />
           <End Role="DETALLEPEDIDO" Type="Self.DETALLEPEDIDO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -241,7 +238,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DETALLERE__idMed__4CA06362">
+        <Association Name="FK__DETALLERE__idMed__4AB81AF0">
           <End Role="PRODUCTOS" Type="Self.PRODUCTOS" Multiplicity="1" />
           <End Role="DETALLERECETA" Type="Self.DETALLERECETA" Multiplicity="*" />
           <ReferentialConstraint>
@@ -253,7 +250,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DIRECCION__Distr__5070F446">
+        <Association Name="FK__DIRECCION__Canto__4F7CD00D">
+          <End Role="CANTON" Type="Self.CANTON" Multiplicity="0..1" />
+          <End Role="DIRECCIONES" Type="Self.DIRECCIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CANTON">
+              <PropertyRef Name="idCanton" />
+            </Principal>
+            <Dependent Role="DIRECCIONES">
+              <PropertyRef Name="Canton" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DIRECCION__Distr__4E88ABD4">
           <End Role="DISTRITO" Type="Self.DISTRITO" Multiplicity="0..1" />
           <End Role="DIRECCIONES" Type="Self.DIRECCIONES" Multiplicity="*" />
           <ReferentialConstraint>
@@ -265,7 +274,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DISTRITO__idCant__5AEE82B9">
+        <Association Name="FK__DIRECCION__Provi__5070F446">
+          <End Role="PROVINCIA" Type="Self.PROVINCIA" Multiplicity="0..1" />
+          <End Role="DIRECCIONES" Type="Self.DIRECCIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROVINCIA">
+              <PropertyRef Name="idProvincia" />
+            </Principal>
+            <Dependent Role="DIRECCIONES">
+              <PropertyRef Name="Provincia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DISTRITO__idCant__59FA5E80">
           <End Role="CANTON" Type="Self.CANTON" Multiplicity="0..1" />
           <End Role="DISTRITO" Type="Self.DISTRITO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -277,43 +298,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DOCTORES__Direcc__5812160E">
+        <Association Name="FK__EMPLEADO__Direcc__4CA06362">
           <End Role="DIRECCIONES" Type="Self.DIRECCIONES" Multiplicity="0..1" />
-          <End Role="DOCTORES" Type="Self.DOCTORES" Multiplicity="*" />
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DIRECCIONES">
               <PropertyRef Name="idDireccion" />
             </Principal>
-            <Dependent Role="DOCTORES">
+            <Dependent Role="EMPLEADO">
               <PropertyRef Name="Direccion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EMPLEADO__idRol__59FA5E80">
-          <End Role="ROLES" Type="Self.ROLES" Multiplicity="0..1" />
-          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ROLES">
-              <PropertyRef Name="idRol" />
-            </Principal>
-            <Dependent Role="EMPLEADO">
-              <PropertyRef Name="idRol" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__EMPLEADO__idSucu__59063A47">
-          <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="0..1" />
-          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SUCURSAL">
-              <PropertyRef Name="idSucursal" />
-            </Principal>
-            <Dependent Role="EMPLEADO">
-              <PropertyRef Name="idSucursal" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__EMPLEADOX__idEmp__46E78A0C">
+        <Association Name="FK__EMPLEADOX__idEmp__44FF419A">
           <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
           <End Role="EMPLEADOXSUCURSAL" Type="Self.EMPLEADOXSUCURSAL" Multiplicity="*" />
           <ReferentialConstraint>
@@ -325,7 +322,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EMPLEADOX__idRol__47DBAE45">
+        <Association Name="FK__EMPLEADOX__idRol__45F365D3">
           <End Role="ROLES" Type="Self.ROLES" Multiplicity="1" />
           <End Role="EMPLEADOXSUCURSAL" Type="Self.EMPLEADOXSUCURSAL" Multiplicity="*" />
           <ReferentialConstraint>
@@ -337,7 +334,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EMPLEADOX__idSuc__45F365D3">
+        <Association Name="FK__EMPLEADOX__idSuc__440B1D61">
           <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="1" />
           <End Role="EMPLEADOXSUCURSAL" Type="Self.EMPLEADOXSUCURSAL" Multiplicity="*" />
           <ReferentialConstraint>
@@ -349,8 +346,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PADECIMIE__idUsu__4F7CD00D">
-          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="0..1" />
+        <Association Name="FK__PADECIMIE__idUsu__4D94879B">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
           <End Role="PADECIMIENTOS" Type="Self.PADECIMIENTOS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CLIENTE">
@@ -361,7 +358,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PEDIDOS__idClien__52593CB8">
+        <Association Name="FK__PEDIDOS__idClien__534D60F1">
           <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="0..1" />
           <End Role="PEDIDOS" Type="Self.PEDIDOS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -373,7 +370,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PEDIDOS__sucursa__5165187F">
+        <Association Name="FK__PEDIDOS__sucursa__52593CB8">
           <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="0..1" />
           <End Role="PEDIDOS" Type="Self.PEDIDOS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -385,7 +382,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PRODUCTOS__Prove__5535A963">
+        <Association Name="FK__PRODUCTOS__Prove__5812160E">
           <End Role="PROVEEDORES" Type="Self.PROVEEDORES" Multiplicity="0..1" />
           <End Role="PRODUCTOS" Type="Self.PRODUCTOS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -397,7 +394,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PRODUCTOX__codPr__49C3F6B7">
+        <Association Name="FK__PRODUCTOX__codPr__47DBAE45">
           <End Role="PRODUCTOS" Type="Self.PRODUCTOS" Multiplicity="1" />
           <End Role="PRODUCTOXSUCURSAL" Type="Self.PRODUCTOXSUCURSAL" Multiplicity="*" />
           <ReferentialConstraint>
@@ -409,7 +406,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PRODUCTOX__idSuc__48CFD27E">
+        <Association Name="FK__PRODUCTOX__idSuc__46E78A0C">
           <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="1" />
           <End Role="PRODUCTOXSUCURSAL" Type="Self.PRODUCTOXSUCURSAL" Multiplicity="*" />
           <ReferentialConstraint>
@@ -421,7 +418,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__RECETAS__idClien__571DF1D5">
+        <Association Name="FK__RECETAS__idClien__59063A47">
           <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="0..1" />
           <End Role="RECETAS" Type="Self.RECETAS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -433,19 +430,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__RECETAS__idDocto__5629CD9C">
-          <End Role="DOCTORES" Type="Self.DOCTORES" Multiplicity="0..1" />
-          <End Role="RECETAS" Type="Self.RECETAS" Multiplicity="*" />
+        <Association Name="FK__SUCURSAL__idCant__5629CD9C">
+          <End Role="CANTON" Type="Self.CANTON" Multiplicity="0..1" />
+          <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="DOCTORES">
-              <PropertyRef Name="Cedula" />
+            <Principal Role="CANTON">
+              <PropertyRef Name="idCanton" />
             </Principal>
-            <Dependent Role="RECETAS">
-              <PropertyRef Name="idDoctor" />
+            <Dependent Role="SUCURSAL">
+              <PropertyRef Name="idCanton" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SUCURSAL__idDist__5441852A">
+        <Association Name="FK__SUCURSAL__idDist__571DF1D5">
           <End Role="DISTRITO" Type="Self.DISTRITO" Multiplicity="0..1" />
           <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="*" />
           <ReferentialConstraint>
@@ -457,7 +454,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SUCURSAL__idEmpr__534D60F1">
+        <Association Name="FK__SUCURSAL__idEmpr__5441852A">
           <End Role="EMPRESA" Type="Self.EMPRESA" Multiplicity="0..1" />
           <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="*" />
           <ReferentialConstraint>
@@ -469,6 +466,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__SUCURSAL__idProv__5535A963">
+          <End Role="PROVINCIA" Type="Self.PROVINCIA" Multiplicity="0..1" />
+          <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROVINCIA">
+              <PropertyRef Name="idProvincia" />
+            </Principal>
+            <Dependent Role="SUCURSAL">
+              <PropertyRef Name="idProvincia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="GasStationPharmacyDBModelStoreContainer">
           <EntitySet Name="CANTON" EntityType="Self.CANTON" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" Schema="dbo" store:Type="Tables" />
@@ -476,7 +485,6 @@
           <EntitySet Name="DETALLERECETA" EntityType="Self.DETALLERECETA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DIRECCIONES" EntityType="Self.DIRECCIONES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DISTRITO" EntityType="Self.DISTRITO" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="DOCTORES" EntityType="Self.DOCTORES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EMPLEADO" EntityType="Self.EMPLEADO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EMPLEADOXSUCURSAL" EntityType="Self.EMPLEADOXSUCURSAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EMPRESA" EntityType="Self.EMPRESA" Schema="dbo" store:Type="Tables" />
@@ -489,100 +497,104 @@
           <EntitySet Name="RECETAS" EntityType="Self.RECETAS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ROLES" EntityType="Self.ROLES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SUCURSAL" EntityType="Self.SUCURSAL" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__CANTON__idProvin__5BE2A6F2" Association="Self.FK__CANTON__idProvin__5BE2A6F2">
+          <AssociationSet Name="FK__CANTON__idProvin__5AEE82B9" Association="Self.FK__CANTON__idProvin__5AEE82B9">
             <End Role="PROVINCIA" EntitySet="PROVINCIA" />
             <End Role="CANTON" EntitySet="CANTON" />
           </AssociationSet>
-          <AssociationSet Name="FK__CLIENTE__Direcci__4E88ABD4" Association="Self.FK__CLIENTE__Direcci__4E88ABD4">
+          <AssociationSet Name="FK__CLIENTE__Direcci__5165187F" Association="Self.FK__CLIENTE__Direcci__5165187F">
             <End Role="DIRECCIONES" EntitySet="DIRECCIONES" />
             <End Role="CLIENTE" EntitySet="CLIENTE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DETALLEPE__idPed__49C3F6B7" Association="Self.FK__DETALLEPE__idPed__49C3F6B7">
+            <End Role="PEDIDOS" EntitySet="PEDIDOS" />
+            <End Role="DETALLEPEDIDO" EntitySet="DETALLEPEDIDO" />
           </AssociationSet>
           <AssociationSet Name="FK__DETALLEPE__idPed__4BAC3F29" Association="Self.FK__DETALLEPE__idPed__4BAC3F29">
             <End Role="PEDIDOS" EntitySet="PEDIDOS" />
             <End Role="DETALLEPEDIDO" EntitySet="DETALLEPEDIDO" />
           </AssociationSet>
-          <AssociationSet Name="FK__DETALLEPE__idPed__4D94879B" Association="Self.FK__DETALLEPE__idPed__4D94879B">
-            <End Role="PEDIDOS" EntitySet="PEDIDOS" />
-            <End Role="DETALLEPEDIDO" EntitySet="DETALLEPEDIDO" />
-          </AssociationSet>
-          <AssociationSet Name="FK__DETALLEPE__idPro__4AB81AF0" Association="Self.FK__DETALLEPE__idPro__4AB81AF0">
+          <AssociationSet Name="FK__DETALLEPE__idPro__48CFD27E" Association="Self.FK__DETALLEPE__idPro__48CFD27E">
             <End Role="PRODUCTOS" EntitySet="PRODUCTOS" />
             <End Role="DETALLEPEDIDO" EntitySet="DETALLEPEDIDO" />
           </AssociationSet>
-          <AssociationSet Name="FK__DETALLERE__idMed__4CA06362" Association="Self.FK__DETALLERE__idMed__4CA06362">
+          <AssociationSet Name="FK__DETALLERE__idMed__4AB81AF0" Association="Self.FK__DETALLERE__idMed__4AB81AF0">
             <End Role="PRODUCTOS" EntitySet="PRODUCTOS" />
             <End Role="DETALLERECETA" EntitySet="DETALLERECETA" />
           </AssociationSet>
-          <AssociationSet Name="FK__DIRECCION__Distr__5070F446" Association="Self.FK__DIRECCION__Distr__5070F446">
+          <AssociationSet Name="FK__DIRECCION__Canto__4F7CD00D" Association="Self.FK__DIRECCION__Canto__4F7CD00D">
+            <End Role="CANTON" EntitySet="CANTON" />
+            <End Role="DIRECCIONES" EntitySet="DIRECCIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DIRECCION__Distr__4E88ABD4" Association="Self.FK__DIRECCION__Distr__4E88ABD4">
             <End Role="DISTRITO" EntitySet="DISTRITO" />
             <End Role="DIRECCIONES" EntitySet="DIRECCIONES" />
           </AssociationSet>
-          <AssociationSet Name="FK__DISTRITO__idCant__5AEE82B9" Association="Self.FK__DISTRITO__idCant__5AEE82B9">
+          <AssociationSet Name="FK__DIRECCION__Provi__5070F446" Association="Self.FK__DIRECCION__Provi__5070F446">
+            <End Role="PROVINCIA" EntitySet="PROVINCIA" />
+            <End Role="DIRECCIONES" EntitySet="DIRECCIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DISTRITO__idCant__59FA5E80" Association="Self.FK__DISTRITO__idCant__59FA5E80">
             <End Role="CANTON" EntitySet="CANTON" />
             <End Role="DISTRITO" EntitySet="DISTRITO" />
           </AssociationSet>
-          <AssociationSet Name="FK__DOCTORES__Direcc__5812160E" Association="Self.FK__DOCTORES__Direcc__5812160E">
+          <AssociationSet Name="FK__EMPLEADO__Direcc__4CA06362" Association="Self.FK__EMPLEADO__Direcc__4CA06362">
             <End Role="DIRECCIONES" EntitySet="DIRECCIONES" />
-            <End Role="DOCTORES" EntitySet="DOCTORES" />
-          </AssociationSet>
-          <AssociationSet Name="FK__EMPLEADO__idRol__59FA5E80" Association="Self.FK__EMPLEADO__idRol__59FA5E80">
-            <End Role="ROLES" EntitySet="ROLES" />
             <End Role="EMPLEADO" EntitySet="EMPLEADO" />
           </AssociationSet>
-          <AssociationSet Name="FK__EMPLEADO__idSucu__59063A47" Association="Self.FK__EMPLEADO__idSucu__59063A47">
-            <End Role="SUCURSAL" EntitySet="SUCURSAL" />
-            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
-          </AssociationSet>
-          <AssociationSet Name="FK__EMPLEADOX__idEmp__46E78A0C" Association="Self.FK__EMPLEADOX__idEmp__46E78A0C">
+          <AssociationSet Name="FK__EMPLEADOX__idEmp__44FF419A" Association="Self.FK__EMPLEADOX__idEmp__44FF419A">
             <End Role="EMPLEADO" EntitySet="EMPLEADO" />
             <End Role="EMPLEADOXSUCURSAL" EntitySet="EMPLEADOXSUCURSAL" />
           </AssociationSet>
-          <AssociationSet Name="FK__EMPLEADOX__idRol__47DBAE45" Association="Self.FK__EMPLEADOX__idRol__47DBAE45">
+          <AssociationSet Name="FK__EMPLEADOX__idRol__45F365D3" Association="Self.FK__EMPLEADOX__idRol__45F365D3">
             <End Role="ROLES" EntitySet="ROLES" />
             <End Role="EMPLEADOXSUCURSAL" EntitySet="EMPLEADOXSUCURSAL" />
           </AssociationSet>
-          <AssociationSet Name="FK__EMPLEADOX__idSuc__45F365D3" Association="Self.FK__EMPLEADOX__idSuc__45F365D3">
+          <AssociationSet Name="FK__EMPLEADOX__idSuc__440B1D61" Association="Self.FK__EMPLEADOX__idSuc__440B1D61">
             <End Role="SUCURSAL" EntitySet="SUCURSAL" />
             <End Role="EMPLEADOXSUCURSAL" EntitySet="EMPLEADOXSUCURSAL" />
           </AssociationSet>
-          <AssociationSet Name="FK__PADECIMIE__idUsu__4F7CD00D" Association="Self.FK__PADECIMIE__idUsu__4F7CD00D">
+          <AssociationSet Name="FK__PADECIMIE__idUsu__4D94879B" Association="Self.FK__PADECIMIE__idUsu__4D94879B">
             <End Role="CLIENTE" EntitySet="CLIENTE" />
             <End Role="PADECIMIENTOS" EntitySet="PADECIMIENTOS" />
           </AssociationSet>
-          <AssociationSet Name="FK__PEDIDOS__idClien__52593CB8" Association="Self.FK__PEDIDOS__idClien__52593CB8">
+          <AssociationSet Name="FK__PEDIDOS__idClien__534D60F1" Association="Self.FK__PEDIDOS__idClien__534D60F1">
             <End Role="CLIENTE" EntitySet="CLIENTE" />
             <End Role="PEDIDOS" EntitySet="PEDIDOS" />
           </AssociationSet>
-          <AssociationSet Name="FK__PEDIDOS__sucursa__5165187F" Association="Self.FK__PEDIDOS__sucursa__5165187F">
+          <AssociationSet Name="FK__PEDIDOS__sucursa__52593CB8" Association="Self.FK__PEDIDOS__sucursa__52593CB8">
             <End Role="SUCURSAL" EntitySet="SUCURSAL" />
             <End Role="PEDIDOS" EntitySet="PEDIDOS" />
           </AssociationSet>
-          <AssociationSet Name="FK__PRODUCTOS__Prove__5535A963" Association="Self.FK__PRODUCTOS__Prove__5535A963">
+          <AssociationSet Name="FK__PRODUCTOS__Prove__5812160E" Association="Self.FK__PRODUCTOS__Prove__5812160E">
             <End Role="PROVEEDORES" EntitySet="PROVEEDORES" />
             <End Role="PRODUCTOS" EntitySet="PRODUCTOS" />
           </AssociationSet>
-          <AssociationSet Name="FK__PRODUCTOX__codPr__49C3F6B7" Association="Self.FK__PRODUCTOX__codPr__49C3F6B7">
+          <AssociationSet Name="FK__PRODUCTOX__codPr__47DBAE45" Association="Self.FK__PRODUCTOX__codPr__47DBAE45">
             <End Role="PRODUCTOS" EntitySet="PRODUCTOS" />
             <End Role="PRODUCTOXSUCURSAL" EntitySet="PRODUCTOXSUCURSAL" />
           </AssociationSet>
-          <AssociationSet Name="FK__PRODUCTOX__idSuc__48CFD27E" Association="Self.FK__PRODUCTOX__idSuc__48CFD27E">
+          <AssociationSet Name="FK__PRODUCTOX__idSuc__46E78A0C" Association="Self.FK__PRODUCTOX__idSuc__46E78A0C">
             <End Role="SUCURSAL" EntitySet="SUCURSAL" />
             <End Role="PRODUCTOXSUCURSAL" EntitySet="PRODUCTOXSUCURSAL" />
           </AssociationSet>
-          <AssociationSet Name="FK__RECETAS__idClien__571DF1D5" Association="Self.FK__RECETAS__idClien__571DF1D5">
+          <AssociationSet Name="FK__RECETAS__idClien__59063A47" Association="Self.FK__RECETAS__idClien__59063A47">
             <End Role="CLIENTE" EntitySet="CLIENTE" />
             <End Role="RECETAS" EntitySet="RECETAS" />
           </AssociationSet>
-          <AssociationSet Name="FK__RECETAS__idDocto__5629CD9C" Association="Self.FK__RECETAS__idDocto__5629CD9C">
-            <End Role="DOCTORES" EntitySet="DOCTORES" />
-            <End Role="RECETAS" EntitySet="RECETAS" />
+          <AssociationSet Name="FK__SUCURSAL__idCant__5629CD9C" Association="Self.FK__SUCURSAL__idCant__5629CD9C">
+            <End Role="CANTON" EntitySet="CANTON" />
+            <End Role="SUCURSAL" EntitySet="SUCURSAL" />
           </AssociationSet>
-          <AssociationSet Name="FK__SUCURSAL__idDist__5441852A" Association="Self.FK__SUCURSAL__idDist__5441852A">
+          <AssociationSet Name="FK__SUCURSAL__idDist__571DF1D5" Association="Self.FK__SUCURSAL__idDist__571DF1D5">
             <End Role="DISTRITO" EntitySet="DISTRITO" />
             <End Role="SUCURSAL" EntitySet="SUCURSAL" />
           </AssociationSet>
-          <AssociationSet Name="FK__SUCURSAL__idEmpr__534D60F1" Association="Self.FK__SUCURSAL__idEmpr__534D60F1">
+          <AssociationSet Name="FK__SUCURSAL__idEmpr__5441852A" Association="Self.FK__SUCURSAL__idEmpr__5441852A">
             <End Role="EMPRESA" EntitySet="EMPRESA" />
+            <End Role="SUCURSAL" EntitySet="SUCURSAL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SUCURSAL__idProv__5535A963" Association="Self.FK__SUCURSAL__idProv__5535A963">
+            <End Role="PROVINCIA" EntitySet="PROVINCIA" />
             <End Role="SUCURSAL" EntitySet="SUCURSAL" />
           </AssociationSet>
         </EntityContainer>
@@ -595,28 +607,32 @@
           <Key>
             <PropertyRef Name="idCanton" />
           </Key>
-          <Property Name="idCanton" Type="Int32" Nullable="false" />
+          <Property Name="idCanton" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idProvincia" Type="Int32" />
-          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PROVINCIA" Relationship="Self.FK__CANTON__idProvin__5BE2A6F2" FromRole="CANTON" ToRole="PROVINCIA" />
-          <NavigationProperty Name="DISTRITOes" Relationship="Self.FK__DISTRITO__idCant__5AEE82B9" FromRole="CANTON" ToRole="DISTRITO" />
+          <Property Name="Nombre" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PROVINCIA" Relationship="Self.FK__CANTON__idProvin__5AEE82B9" FromRole="CANTON" ToRole="PROVINCIA" />
+          <NavigationProperty Name="DIRECCIONES" Relationship="Self.FK__DIRECCION__Canto__4F7CD00D" FromRole="CANTON" ToRole="DIRECCIONES" />
+          <NavigationProperty Name="DISTRITOes" Relationship="Self.FK__DISTRITO__idCant__59FA5E80" FromRole="CANTON" ToRole="DISTRITO" />
+          <NavigationProperty Name="SUCURSALs" Relationship="Self.FK__SUCURSAL__idCant__5629CD9C" FromRole="CANTON" ToRole="SUCURSAL" />
         </EntityType>
         <EntityType Name="CLIENTE">
           <Key>
             <PropertyRef Name="Cedula" />
           </Key>
           <Property Name="Cedula" Type="Int32" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="pApellido" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="sApellido" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="pApellido" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="sApellido" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
           <Property Name="Nacimiento" Type="DateTime" Precision="0" />
+          <Property Name="Penalizacion" Type="Int32" />
           <Property Name="Direccion" Type="Int32" />
-          <NavigationProperty Name="DIRECCIONE" Relationship="Self.FK__CLIENTE__Direcci__4E88ABD4" FromRole="CLIENTE" ToRole="DIRECCIONES" />
-          <NavigationProperty Name="PADECIMIENTOS" Relationship="Self.FK__PADECIMIE__idUsu__4F7CD00D" FromRole="CLIENTE" ToRole="PADECIMIENTOS" />
-          <NavigationProperty Name="PEDIDOS" Relationship="Self.FK__PEDIDOS__idClien__52593CB8" FromRole="CLIENTE" ToRole="PEDIDOS" />
-          <NavigationProperty Name="RECETAS" Relationship="Self.FK__RECETAS__idClien__571DF1D5" FromRole="CLIENTE" ToRole="RECETAS" />
+          <NavigationProperty Name="DIRECCIONE" Relationship="Self.FK__CLIENTE__Direcci__5165187F" FromRole="CLIENTE" ToRole="DIRECCIONES" />
+          <NavigationProperty Name="PADECIMIENTOS" Relationship="Self.FK__PADECIMIE__idUsu__4D94879B" FromRole="CLIENTE" ToRole="PADECIMIENTOS" />
+          <NavigationProperty Name="PEDIDOS" Relationship="Self.FK__PEDIDOS__idClien__534D60F1" FromRole="CLIENTE" ToRole="PEDIDOS" />
+          <NavigationProperty Name="RECETAS" Relationship="Self.FK__RECETAS__idClien__59063A47" FromRole="CLIENTE" ToRole="RECETAS" />
         </EntityType>
         <EntityType Name="DETALLEPEDIDO">
           <Key>
@@ -626,9 +642,9 @@
           <Property Name="idProducto" Type="Int32" Nullable="false" />
           <Property Name="idPedido" Type="Int32" Nullable="false" />
           <Property Name="Cantidad" Type="Int32" />
-          <NavigationProperty Name="PEDIDO" Relationship="Self.FK__DETALLEPE__idPed__4BAC3F29" FromRole="DETALLEPEDIDO" ToRole="PEDIDOS" />
-          <NavigationProperty Name="PEDIDO1" Relationship="Self.FK__DETALLEPE__idPed__4D94879B" FromRole="DETALLEPEDIDO" ToRole="PEDIDOS" />
-          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK__DETALLEPE__idPro__4AB81AF0" FromRole="DETALLEPEDIDO" ToRole="PRODUCTOS" />
+          <NavigationProperty Name="PEDIDO" Relationship="Self.FK__DETALLEPE__idPed__49C3F6B7" FromRole="DETALLEPEDIDO" ToRole="PEDIDOS" />
+          <NavigationProperty Name="PEDIDO1" Relationship="Self.FK__DETALLEPE__idPed__4BAC3F29" FromRole="DETALLEPEDIDO" ToRole="PEDIDOS" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK__DETALLEPE__idPro__48CFD27E" FromRole="DETALLEPEDIDO" ToRole="PRODUCTOS" />
         </EntityType>
         <EntityType Name="DETALLERECETA">
           <Key>
@@ -638,57 +654,49 @@
           <Property Name="idMedicamento" Type="Int32" Nullable="false" />
           <Property Name="idReceta" Type="Int32" Nullable="false" />
           <Property Name="Cantidad" Type="Int32" />
-          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK__DETALLERE__idMed__4CA06362" FromRole="DETALLERECETA" ToRole="PRODUCTOS" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK__DETALLERE__idMed__4AB81AF0" FromRole="DETALLERECETA" ToRole="PRODUCTOS" />
         </EntityType>
         <EntityType Name="DIRECCIONE">
           <Key>
             <PropertyRef Name="idDireccion" />
           </Key>
-          <Property Name="idDireccion" Type="Int32" Nullable="false" />
+          <Property Name="idDireccion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Provincia" Type="Int32" />
+          <Property Name="Canton" Type="Int32" />
           <Property Name="Distrito" Type="Int32" />
-          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CLIENTEs" Relationship="Self.FK__CLIENTE__Direcci__4E88ABD4" FromRole="DIRECCIONES" ToRole="CLIENTE" />
-          <NavigationProperty Name="DISTRITO1" Relationship="Self.FK__DIRECCION__Distr__5070F446" FromRole="DIRECCIONES" ToRole="DISTRITO" />
-          <NavigationProperty Name="DOCTORES" Relationship="Self.FK__DOCTORES__Direcc__5812160E" FromRole="DIRECCIONES" ToRole="DOCTORES" />
+          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CANTON1" Relationship="Self.FK__DIRECCION__Canto__4F7CD00D" FromRole="DIRECCIONES" ToRole="CANTON" />
+          <NavigationProperty Name="CLIENTEs" Relationship="Self.FK__CLIENTE__Direcci__5165187F" FromRole="DIRECCIONES" ToRole="CLIENTE" />
+          <NavigationProperty Name="DISTRITO1" Relationship="Self.FK__DIRECCION__Distr__4E88ABD4" FromRole="DIRECCIONES" ToRole="DISTRITO" />
+          <NavigationProperty Name="PROVINCIA1" Relationship="Self.FK__DIRECCION__Provi__5070F446" FromRole="DIRECCIONES" ToRole="PROVINCIA" />
+          <NavigationProperty Name="EMPLEADOes" Relationship="Self.FK__EMPLEADO__Direcc__4CA06362" FromRole="DIRECCIONES" ToRole="EMPLEADO" />
         </EntityType>
         <EntityType Name="DISTRITO">
           <Key>
             <PropertyRef Name="idDistrito" />
           </Key>
-          <Property Name="idDistrito" Type="Int32" Nullable="false" />
+          <Property Name="idDistrito" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idCanton" Type="Int32" />
-          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CANTON" Relationship="Self.FK__DISTRITO__idCant__5AEE82B9" FromRole="DISTRITO" ToRole="CANTON" />
-          <NavigationProperty Name="DIRECCIONES" Relationship="Self.FK__DIRECCION__Distr__5070F446" FromRole="DISTRITO" ToRole="DIRECCIONES" />
-          <NavigationProperty Name="SUCURSALs" Relationship="Self.FK__SUCURSAL__idDist__5441852A" FromRole="DISTRITO" ToRole="SUCURSAL" />
-        </EntityType>
-        <EntityType Name="DOCTORE">
-          <Key>
-            <PropertyRef Name="Cedula" />
-          </Key>
-          <Property Name="Cedula" Type="Int32" Nullable="false" />
-          <Property Name="Direccion" Type="Int32" />
-          <Property Name="numDoctor" Type="Int32" />
-          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="pApellido" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="sApellido" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Nacimiento" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="DIRECCIONE" Relationship="Self.FK__DOCTORES__Direcc__5812160E" FromRole="DOCTORES" ToRole="DIRECCIONES" />
-          <NavigationProperty Name="RECETAS" Relationship="Self.FK__RECETAS__idDocto__5629CD9C" FromRole="DOCTORES" ToRole="RECETAS" />
+          <Property Name="Nombre" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CANTON" Relationship="Self.FK__DISTRITO__idCant__59FA5E80" FromRole="DISTRITO" ToRole="CANTON" />
+          <NavigationProperty Name="DIRECCIONES" Relationship="Self.FK__DIRECCION__Distr__4E88ABD4" FromRole="DISTRITO" ToRole="DIRECCIONES" />
+          <NavigationProperty Name="SUCURSALs" Relationship="Self.FK__SUCURSAL__idDist__571DF1D5" FromRole="DISTRITO" ToRole="SUCURSAL" />
         </EntityType>
         <EntityType Name="EMPLEADO">
           <Key>
             <PropertyRef Name="idEmpleado" />
           </Key>
           <Property Name="idEmpleado" Type="Int32" Nullable="false" />
-          <Property Name="idSucursal" Type="Int32" />
-          <Property Name="idRol" Type="Int32" />
-          <Property Name="Username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ROLE" Relationship="Self.FK__EMPLEADO__idRol__59FA5E80" FromRole="EMPLEADO" ToRole="ROLES" />
-          <NavigationProperty Name="SUCURSAL" Relationship="Self.FK__EMPLEADO__idSucu__59063A47" FromRole="EMPLEADO" ToRole="SUCURSAL" />
-          <NavigationProperty Name="EMPLEADOXSUCURSALs" Relationship="Self.FK__EMPLEADOX__idEmp__46E78A0C" FromRole="EMPLEADO" ToRole="EMPLEADOXSUCURSAL" />
+          <Property Name="Email" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pApellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sApellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nacimiento" Type="DateTime" Precision="0" />
+          <Property Name="Direccion" Type="Int32" />
+          <NavigationProperty Name="DIRECCIONE" Relationship="Self.FK__EMPLEADO__Direcc__4CA06362" FromRole="EMPLEADO" ToRole="DIRECCIONES" />
+          <NavigationProperty Name="EMPLEADOXSUCURSALs" Relationship="Self.FK__EMPLEADOX__idEmp__44FF419A" FromRole="EMPLEADO" ToRole="EMPLEADOXSUCURSAL" />
         </EntityType>
         <EntityType Name="EMPLEADOXSUCURSAL">
           <Key>
@@ -698,43 +706,44 @@
           <Property Name="idSucursal" Type="Int32" Nullable="false" />
           <Property Name="idEmpleado" Type="Int32" Nullable="false" />
           <Property Name="idRol" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="EMPLEADO" Relationship="Self.FK__EMPLEADOX__idEmp__46E78A0C" FromRole="EMPLEADOXSUCURSAL" ToRole="EMPLEADO" />
-          <NavigationProperty Name="ROLE" Relationship="Self.FK__EMPLEADOX__idRol__47DBAE45" FromRole="EMPLEADOXSUCURSAL" ToRole="ROLES" />
-          <NavigationProperty Name="SUCURSAL" Relationship="Self.FK__EMPLEADOX__idSuc__45F365D3" FromRole="EMPLEADOXSUCURSAL" ToRole="SUCURSAL" />
+          <NavigationProperty Name="EMPLEADO" Relationship="Self.FK__EMPLEADOX__idEmp__44FF419A" FromRole="EMPLEADOXSUCURSAL" ToRole="EMPLEADO" />
+          <NavigationProperty Name="ROLE" Relationship="Self.FK__EMPLEADOX__idRol__45F365D3" FromRole="EMPLEADOXSUCURSAL" ToRole="ROLES" />
+          <NavigationProperty Name="SUCURSAL" Relationship="Self.FK__EMPLEADOX__idSuc__440B1D61" FromRole="EMPLEADOXSUCURSAL" ToRole="SUCURSAL" />
         </EntityType>
         <EntityType Name="EMPRESA">
           <Key>
             <PropertyRef Name="idEmpresa" />
           </Key>
-          <Property Name="idEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="idEmpresa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="SUCURSALs" Relationship="Self.FK__SUCURSAL__idEmpr__534D60F1" FromRole="EMPRESA" ToRole="SUCURSAL" />
+          <NavigationProperty Name="SUCURSALs" Relationship="Self.FK__SUCURSAL__idEmpr__5441852A" FromRole="EMPRESA" ToRole="SUCURSAL" />
         </EntityType>
         <EntityType Name="PADECIMIENTO">
           <Key>
             <PropertyRef Name="idPadecimiento" />
           </Key>
-          <Property Name="idPadecimiento" Type="Int32" Nullable="false" />
-          <Property Name="idUsuario" Type="Int32" />
+          <Property Name="idPadecimiento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUsuario" Type="Int32" Nullable="false" />
           <Property Name="Fecha" Type="DateTime" Precision="0" />
           <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CLIENTE" Relationship="Self.FK__PADECIMIE__idUsu__4F7CD00D" FromRole="PADECIMIENTOS" ToRole="CLIENTE" />
+          <NavigationProperty Name="CLIENTE" Relationship="Self.FK__PADECIMIE__idUsu__4D94879B" FromRole="PADECIMIENTOS" ToRole="CLIENTE" />
         </EntityType>
         <EntityType Name="PEDIDO">
           <Key>
             <PropertyRef Name="idPedido" />
           </Key>
-          <Property Name="idPedido" Type="Int32" Nullable="false" />
+          <Property Name="idPedido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="sucursalRecojo" Type="Int32" />
           <Property Name="idCliente" Type="Int32" />
-          <Property Name="horaRecojo" Type="Time" Precision="7" />
+          <Property Name="horaRecojo" Type="DateTime" Precision="3" />
           <Property Name="Telefono" Type="Int32" />
           <Property Name="Imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="CLIENTE" Relationship="Self.FK__PEDIDOS__idClien__52593CB8" FromRole="PEDIDOS" ToRole="CLIENTE" />
-          <NavigationProperty Name="DETALLEPEDIDOes" Relationship="Self.FK__DETALLEPE__idPed__4BAC3F29" FromRole="PEDIDOS" ToRole="DETALLEPEDIDO" />
-          <NavigationProperty Name="DETALLEPEDIDOes1" Relationship="Self.FK__DETALLEPE__idPed__4D94879B" FromRole="PEDIDOS" ToRole="DETALLEPEDIDO" />
-          <NavigationProperty Name="SUCURSAL" Relationship="Self.FK__PEDIDOS__sucursa__5165187F" FromRole="PEDIDOS" ToRole="SUCURSAL" />
+          <Property Name="Estado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CLIENTE" Relationship="Self.FK__PEDIDOS__idClien__534D60F1" FromRole="PEDIDOS" ToRole="CLIENTE" />
+          <NavigationProperty Name="DETALLEPEDIDOes" Relationship="Self.FK__DETALLEPE__idPed__49C3F6B7" FromRole="PEDIDOS" ToRole="DETALLEPEDIDO" />
+          <NavigationProperty Name="DETALLEPEDIDOes1" Relationship="Self.FK__DETALLEPE__idPed__4BAC3F29" FromRole="PEDIDOS" ToRole="DETALLEPEDIDO" />
+          <NavigationProperty Name="SUCURSAL" Relationship="Self.FK__PEDIDOS__sucursa__52593CB8" FromRole="PEDIDOS" ToRole="SUCURSAL" />
         </EntityType>
         <EntityType Name="PRODUCTO">
           <Key>
@@ -742,13 +751,13 @@
           </Key>
           <Property Name="idProducto" Type="Int32" Nullable="false" />
           <Property Name="Proveedor" Type="Int32" />
-          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="esMedicamento" Type="Int32" />
           <Property Name="reqPrescripcion" Type="Int32" />
-          <NavigationProperty Name="DETALLEPEDIDOes" Relationship="Self.FK__DETALLEPE__idPro__4AB81AF0" FromRole="PRODUCTOS" ToRole="DETALLEPEDIDO" />
-          <NavigationProperty Name="DETALLERECETAs" Relationship="Self.FK__DETALLERE__idMed__4CA06362" FromRole="PRODUCTOS" ToRole="DETALLERECETA" />
-          <NavigationProperty Name="PROVEEDORE" Relationship="Self.FK__PRODUCTOS__Prove__5535A963" FromRole="PRODUCTOS" ToRole="PROVEEDORES" />
-          <NavigationProperty Name="PRODUCTOXSUCURSALs" Relationship="Self.FK__PRODUCTOX__codPr__49C3F6B7" FromRole="PRODUCTOS" ToRole="PRODUCTOXSUCURSAL" />
+          <NavigationProperty Name="DETALLEPEDIDOes" Relationship="Self.FK__DETALLEPE__idPro__48CFD27E" FromRole="PRODUCTOS" ToRole="DETALLEPEDIDO" />
+          <NavigationProperty Name="DETALLERECETAs" Relationship="Self.FK__DETALLERE__idMed__4AB81AF0" FromRole="PRODUCTOS" ToRole="DETALLERECETA" />
+          <NavigationProperty Name="PROVEEDORE" Relationship="Self.FK__PRODUCTOS__Prove__5812160E" FromRole="PRODUCTOS" ToRole="PROVEEDORES" />
+          <NavigationProperty Name="PRODUCTOXSUCURSALs" Relationship="Self.FK__PRODUCTOX__codPr__47DBAE45" FromRole="PRODUCTOS" ToRole="PRODUCTOXSUCURSAL" />
         </EntityType>
         <EntityType Name="PRODUCTOXSUCURSAL">
           <Key>
@@ -758,64 +767,66 @@
           <Property Name="idSucursal" Type="Int32" Nullable="false" />
           <Property Name="codProducto" Type="Int32" Nullable="false" />
           <Property Name="Cantidad" Type="Int32" />
-          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK__PRODUCTOX__codPr__49C3F6B7" FromRole="PRODUCTOXSUCURSAL" ToRole="PRODUCTOS" />
-          <NavigationProperty Name="SUCURSAL" Relationship="Self.FK__PRODUCTOX__idSuc__48CFD27E" FromRole="PRODUCTOXSUCURSAL" ToRole="SUCURSAL" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK__PRODUCTOX__codPr__47DBAE45" FromRole="PRODUCTOXSUCURSAL" ToRole="PRODUCTOS" />
+          <NavigationProperty Name="SUCURSAL" Relationship="Self.FK__PRODUCTOX__idSuc__46E78A0C" FromRole="PRODUCTOXSUCURSAL" ToRole="SUCURSAL" />
         </EntityType>
         <EntityType Name="PROVEEDORE">
           <Key>
             <PropertyRef Name="idProveedor" />
           </Key>
           <Property Name="idProveedor" Type="Int32" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="Telefono" Type="Int32" />
-          <NavigationProperty Name="PRODUCTOS" Relationship="Self.FK__PRODUCTOS__Prove__5535A963" FromRole="PROVEEDORES" ToRole="PRODUCTOS" />
+          <NavigationProperty Name="PRODUCTOS" Relationship="Self.FK__PRODUCTOS__Prove__5812160E" FromRole="PROVEEDORES" ToRole="PRODUCTOS" />
         </EntityType>
         <EntityType Name="PROVINCIA">
           <Key>
             <PropertyRef Name="idProvincia" />
           </Key>
-          <Property Name="idProvincia" Type="Int32" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CANTONs" Relationship="Self.FK__CANTON__idProvin__5BE2A6F2" FromRole="PROVINCIA" ToRole="CANTON" />
+          <Property Name="idProvincia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CANTONs" Relationship="Self.FK__CANTON__idProvin__5AEE82B9" FromRole="PROVINCIA" ToRole="CANTON" />
+          <NavigationProperty Name="DIRECCIONES" Relationship="Self.FK__DIRECCION__Provi__5070F446" FromRole="PROVINCIA" ToRole="DIRECCIONES" />
+          <NavigationProperty Name="SUCURSALs" Relationship="Self.FK__SUCURSAL__idProv__5535A963" FromRole="PROVINCIA" ToRole="SUCURSAL" />
         </EntityType>
         <EntityType Name="RECETA">
           <Key>
             <PropertyRef Name="idReceta" />
           </Key>
-          <Property Name="idReceta" Type="Int32" Nullable="false" />
-          <Property Name="idDoctor" Type="Int32" />
+          <Property Name="idReceta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idCliente" Type="Int32" />
           <Property Name="Imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="CLIENTE" Relationship="Self.FK__RECETAS__idClien__571DF1D5" FromRole="RECETAS" ToRole="CLIENTE" />
-          <NavigationProperty Name="DOCTORE" Relationship="Self.FK__RECETAS__idDocto__5629CD9C" FromRole="RECETAS" ToRole="DOCTORES" />
+          <NavigationProperty Name="CLIENTE" Relationship="Self.FK__RECETAS__idClien__59063A47" FromRole="RECETAS" ToRole="CLIENTE" />
         </EntityType>
         <EntityType Name="ROLE">
           <Key>
             <PropertyRef Name="idRol" />
           </Key>
-          <Property Name="idRol" Type="Int32" Nullable="false" />
+          <Property Name="idRol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="EMPLEADOes" Relationship="Self.FK__EMPLEADO__idRol__59FA5E80" FromRole="ROLES" ToRole="EMPLEADO" />
-          <NavigationProperty Name="EMPLEADOXSUCURSALs" Relationship="Self.FK__EMPLEADOX__idRol__47DBAE45" FromRole="ROLES" ToRole="EMPLEADOXSUCURSAL" />
+          <NavigationProperty Name="EMPLEADOXSUCURSALs" Relationship="Self.FK__EMPLEADOX__idRol__45F365D3" FromRole="ROLES" ToRole="EMPLEADOXSUCURSAL" />
         </EntityType>
         <EntityType Name="SUCURSAL">
           <Key>
             <PropertyRef Name="idSucursal" />
           </Key>
-          <Property Name="idSucursal" Type="Int32" Nullable="false" />
+          <Property Name="idSucursal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idEmpresa" Type="Int32" />
+          <Property Name="idProvincia" Type="Int32" />
+          <Property Name="idCanton" Type="Int32" />
           <Property Name="idDistrito" Type="Int32" />
           <Property Name="detalleDireccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="DISTRITO" Relationship="Self.FK__SUCURSAL__idDist__5441852A" FromRole="SUCURSAL" ToRole="DISTRITO" />
-          <NavigationProperty Name="EMPLEADOes" Relationship="Self.FK__EMPLEADO__idSucu__59063A47" FromRole="SUCURSAL" ToRole="EMPLEADO" />
-          <NavigationProperty Name="EMPLEADOXSUCURSALs" Relationship="Self.FK__EMPLEADOX__idSuc__45F365D3" FromRole="SUCURSAL" ToRole="EMPLEADOXSUCURSAL" />
-          <NavigationProperty Name="EMPRESA" Relationship="Self.FK__SUCURSAL__idEmpr__534D60F1" FromRole="SUCURSAL" ToRole="EMPRESA" />
-          <NavigationProperty Name="PEDIDOS" Relationship="Self.FK__PEDIDOS__sucursa__5165187F" FromRole="SUCURSAL" ToRole="PEDIDOS" />
-          <NavigationProperty Name="PRODUCTOXSUCURSALs" Relationship="Self.FK__PRODUCTOX__idSuc__48CFD27E" FromRole="SUCURSAL" ToRole="PRODUCTOXSUCURSAL" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CANTON" Relationship="Self.FK__SUCURSAL__idCant__5629CD9C" FromRole="SUCURSAL" ToRole="CANTON" />
+          <NavigationProperty Name="DISTRITO" Relationship="Self.FK__SUCURSAL__idDist__571DF1D5" FromRole="SUCURSAL" ToRole="DISTRITO" />
+          <NavigationProperty Name="EMPLEADOXSUCURSALs" Relationship="Self.FK__EMPLEADOX__idSuc__440B1D61" FromRole="SUCURSAL" ToRole="EMPLEADOXSUCURSAL" />
+          <NavigationProperty Name="EMPRESA" Relationship="Self.FK__SUCURSAL__idEmpr__5441852A" FromRole="SUCURSAL" ToRole="EMPRESA" />
+          <NavigationProperty Name="PEDIDOS" Relationship="Self.FK__PEDIDOS__sucursa__52593CB8" FromRole="SUCURSAL" ToRole="PEDIDOS" />
+          <NavigationProperty Name="PRODUCTOXSUCURSALs" Relationship="Self.FK__PRODUCTOX__idSuc__46E78A0C" FromRole="SUCURSAL" ToRole="PRODUCTOXSUCURSAL" />
+          <NavigationProperty Name="PROVINCIA" Relationship="Self.FK__SUCURSAL__idProv__5535A963" FromRole="SUCURSAL" ToRole="PROVINCIA" />
         </EntityType>
-        <Association Name="FK__CANTON__idProvin__5BE2A6F2">
+        <Association Name="FK__CANTON__idProvin__5AEE82B9">
           <End Role="PROVINCIA" Type="Self.PROVINCIA" Multiplicity="0..1" />
           <End Role="CANTON" Type="Self.CANTON" Multiplicity="*" />
           <ReferentialConstraint>
@@ -827,7 +838,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DISTRITO__idCant__5AEE82B9">
+        <Association Name="FK__DIRECCION__Canto__4F7CD00D">
+          <End Role="CANTON" Type="Self.CANTON" Multiplicity="0..1" />
+          <End Role="DIRECCIONES" Type="Self.DIRECCIONE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CANTON">
+              <PropertyRef Name="idCanton" />
+            </Principal>
+            <Dependent Role="DIRECCIONES">
+              <PropertyRef Name="Canton" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DISTRITO__idCant__59FA5E80">
           <End Role="CANTON" Type="Self.CANTON" Multiplicity="0..1" />
           <End Role="DISTRITO" Type="Self.DISTRITO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -839,7 +862,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CLIENTE__Direcci__4E88ABD4">
+        <Association Name="FK__SUCURSAL__idCant__5629CD9C">
+          <End Role="CANTON" Type="Self.CANTON" Multiplicity="0..1" />
+          <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CANTON">
+              <PropertyRef Name="idCanton" />
+            </Principal>
+            <Dependent Role="SUCURSAL">
+              <PropertyRef Name="idCanton" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CLIENTE__Direcci__5165187F">
           <End Role="DIRECCIONES" Type="Self.DIRECCIONE" Multiplicity="0..1" />
           <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="*" />
           <ReferentialConstraint>
@@ -851,8 +886,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PADECIMIE__idUsu__4F7CD00D">
-          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="0..1" />
+        <Association Name="FK__PADECIMIE__idUsu__4D94879B">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
           <End Role="PADECIMIENTOS" Type="Self.PADECIMIENTO" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CLIENTE">
@@ -863,7 +898,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PEDIDOS__idClien__52593CB8">
+        <Association Name="FK__PEDIDOS__idClien__534D60F1">
           <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="0..1" />
           <End Role="PEDIDOS" Type="Self.PEDIDO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -875,7 +910,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__RECETAS__idClien__571DF1D5">
+        <Association Name="FK__RECETAS__idClien__59063A47">
           <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="0..1" />
           <End Role="RECETAS" Type="Self.RECETA" Multiplicity="*" />
           <ReferentialConstraint>
@@ -884,6 +919,18 @@
             </Principal>
             <Dependent Role="RECETAS">
               <PropertyRef Name="idCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DETALLEPE__idPed__49C3F6B7">
+          <End Role="PEDIDOS" Type="Self.PEDIDO" Multiplicity="1" />
+          <End Role="DETALLEPEDIDO" Type="Self.DETALLEPEDIDO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PEDIDOS">
+              <PropertyRef Name="idPedido" />
+            </Principal>
+            <Dependent Role="DETALLEPEDIDO">
+              <PropertyRef Name="idPedido" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -899,19 +946,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DETALLEPE__idPed__4D94879B">
-          <End Role="PEDIDOS" Type="Self.PEDIDO" Multiplicity="1" />
-          <End Role="DETALLEPEDIDO" Type="Self.DETALLEPEDIDO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PEDIDOS">
-              <PropertyRef Name="idPedido" />
-            </Principal>
-            <Dependent Role="DETALLEPEDIDO">
-              <PropertyRef Name="idPedido" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__DETALLEPE__idPro__4AB81AF0">
+        <Association Name="FK__DETALLEPE__idPro__48CFD27E">
           <End Role="PRODUCTOS" Type="Self.PRODUCTO" Multiplicity="1" />
           <End Role="DETALLEPEDIDO" Type="Self.DETALLEPEDIDO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -923,7 +958,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DETALLERE__idMed__4CA06362">
+        <Association Name="FK__DETALLERE__idMed__4AB81AF0">
           <End Role="PRODUCTOS" Type="Self.PRODUCTO" Multiplicity="1" />
           <End Role="DETALLERECETA" Type="Self.DETALLERECETA" Multiplicity="*" />
           <ReferentialConstraint>
@@ -935,7 +970,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DIRECCION__Distr__5070F446">
+        <Association Name="FK__DIRECCION__Distr__4E88ABD4">
           <End Role="DISTRITO" Type="Self.DISTRITO" Multiplicity="0..1" />
           <End Role="DIRECCIONES" Type="Self.DIRECCIONE" Multiplicity="*" />
           <ReferentialConstraint>
@@ -947,19 +982,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DOCTORES__Direcc__5812160E">
+        <Association Name="FK__DIRECCION__Provi__5070F446">
+          <End Role="PROVINCIA" Type="Self.PROVINCIA" Multiplicity="0..1" />
+          <End Role="DIRECCIONES" Type="Self.DIRECCIONE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROVINCIA">
+              <PropertyRef Name="idProvincia" />
+            </Principal>
+            <Dependent Role="DIRECCIONES">
+              <PropertyRef Name="Provincia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EMPLEADO__Direcc__4CA06362">
           <End Role="DIRECCIONES" Type="Self.DIRECCIONE" Multiplicity="0..1" />
-          <End Role="DOCTORES" Type="Self.DOCTORE" Multiplicity="*" />
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DIRECCIONES">
               <PropertyRef Name="idDireccion" />
             </Principal>
-            <Dependent Role="DOCTORES">
+            <Dependent Role="EMPLEADO">
               <PropertyRef Name="Direccion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SUCURSAL__idDist__5441852A">
+        <Association Name="FK__SUCURSAL__idDist__571DF1D5">
           <End Role="DISTRITO" Type="Self.DISTRITO" Multiplicity="0..1" />
           <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="*" />
           <ReferentialConstraint>
@@ -971,43 +1018,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__RECETAS__idDocto__5629CD9C">
-          <End Role="DOCTORES" Type="Self.DOCTORE" Multiplicity="0..1" />
-          <End Role="RECETAS" Type="Self.RECETA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DOCTORES">
-              <PropertyRef Name="Cedula" />
-            </Principal>
-            <Dependent Role="RECETAS">
-              <PropertyRef Name="idDoctor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__EMPLEADO__idRol__59FA5E80">
-          <End Role="ROLES" Type="Self.ROLE" Multiplicity="0..1" />
-          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ROLES">
-              <PropertyRef Name="idRol" />
-            </Principal>
-            <Dependent Role="EMPLEADO">
-              <PropertyRef Name="idRol" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__EMPLEADO__idSucu__59063A47">
-          <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="0..1" />
-          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SUCURSAL">
-              <PropertyRef Name="idSucursal" />
-            </Principal>
-            <Dependent Role="EMPLEADO">
-              <PropertyRef Name="idSucursal" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__EMPLEADOX__idEmp__46E78A0C">
+        <Association Name="FK__EMPLEADOX__idEmp__44FF419A">
           <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
           <End Role="EMPLEADOXSUCURSAL" Type="Self.EMPLEADOXSUCURSAL" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1019,7 +1030,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EMPLEADOX__idRol__47DBAE45">
+        <Association Name="FK__EMPLEADOX__idRol__45F365D3">
           <End Role="ROLES" Type="Self.ROLE" Multiplicity="1" />
           <End Role="EMPLEADOXSUCURSAL" Type="Self.EMPLEADOXSUCURSAL" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1031,7 +1042,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EMPLEADOX__idSuc__45F365D3">
+        <Association Name="FK__EMPLEADOX__idSuc__440B1D61">
           <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="1" />
           <End Role="EMPLEADOXSUCURSAL" Type="Self.EMPLEADOXSUCURSAL" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1043,7 +1054,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SUCURSAL__idEmpr__534D60F1">
+        <Association Name="FK__SUCURSAL__idEmpr__5441852A">
           <End Role="EMPRESA" Type="Self.EMPRESA" Multiplicity="0..1" />
           <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1055,7 +1066,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PEDIDOS__sucursa__5165187F">
+        <Association Name="FK__PEDIDOS__sucursa__52593CB8">
           <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="0..1" />
           <End Role="PEDIDOS" Type="Self.PEDIDO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1067,7 +1078,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PRODUCTOS__Prove__5535A963">
+        <Association Name="FK__PRODUCTOS__Prove__5812160E">
           <End Role="PROVEEDORES" Type="Self.PROVEEDORE" Multiplicity="0..1" />
           <End Role="PRODUCTOS" Type="Self.PRODUCTO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1079,7 +1090,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PRODUCTOX__codPr__49C3F6B7">
+        <Association Name="FK__PRODUCTOX__codPr__47DBAE45">
           <End Role="PRODUCTOS" Type="Self.PRODUCTO" Multiplicity="1" />
           <End Role="PRODUCTOXSUCURSAL" Type="Self.PRODUCTOXSUCURSAL" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1091,7 +1102,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PRODUCTOX__idSuc__48CFD27E">
+        <Association Name="FK__PRODUCTOX__idSuc__46E78A0C">
           <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="1" />
           <End Role="PRODUCTOXSUCURSAL" Type="Self.PRODUCTOXSUCURSAL" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1103,6 +1114,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__SUCURSAL__idProv__5535A963">
+          <End Role="PROVINCIA" Type="Self.PROVINCIA" Multiplicity="0..1" />
+          <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROVINCIA">
+              <PropertyRef Name="idProvincia" />
+            </Principal>
+            <Dependent Role="SUCURSAL">
+              <PropertyRef Name="idProvincia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="GasStationPharmacyDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CANTONs" EntityType="Self.CANTON" />
           <EntitySet Name="CLIENTEs" EntityType="Self.CLIENTE" />
@@ -1110,7 +1133,6 @@
           <EntitySet Name="DETALLERECETAs" EntityType="Self.DETALLERECETA" />
           <EntitySet Name="DIRECCIONES" EntityType="Self.DIRECCIONE" />
           <EntitySet Name="DISTRITOes" EntityType="Self.DISTRITO" />
-          <EntitySet Name="DOCTORES" EntityType="Self.DOCTORE" />
           <EntitySet Name="EMPLEADOes" EntityType="Self.EMPLEADO" />
           <EntitySet Name="EMPLEADOXSUCURSALs" EntityType="Self.EMPLEADOXSUCURSAL" />
           <EntitySet Name="EMPRESAs" EntityType="Self.EMPRESA" />
@@ -1123,101 +1145,105 @@
           <EntitySet Name="RECETAS" EntityType="Self.RECETA" />
           <EntitySet Name="ROLES" EntityType="Self.ROLE" />
           <EntitySet Name="SUCURSALs" EntityType="Self.SUCURSAL" />
-          <AssociationSet Name="FK__CANTON__idProvin__5BE2A6F2" Association="Self.FK__CANTON__idProvin__5BE2A6F2">
+          <AssociationSet Name="FK__CANTON__idProvin__5AEE82B9" Association="Self.FK__CANTON__idProvin__5AEE82B9">
             <End Role="PROVINCIA" EntitySet="PROVINCIAs" />
             <End Role="CANTON" EntitySet="CANTONs" />
           </AssociationSet>
-          <AssociationSet Name="FK__DISTRITO__idCant__5AEE82B9" Association="Self.FK__DISTRITO__idCant__5AEE82B9">
+          <AssociationSet Name="FK__DIRECCION__Canto__4F7CD00D" Association="Self.FK__DIRECCION__Canto__4F7CD00D">
+            <End Role="CANTON" EntitySet="CANTONs" />
+            <End Role="DIRECCIONES" EntitySet="DIRECCIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DISTRITO__idCant__59FA5E80" Association="Self.FK__DISTRITO__idCant__59FA5E80">
             <End Role="CANTON" EntitySet="CANTONs" />
             <End Role="DISTRITO" EntitySet="DISTRITOes" />
           </AssociationSet>
-          <AssociationSet Name="FK__CLIENTE__Direcci__4E88ABD4" Association="Self.FK__CLIENTE__Direcci__4E88ABD4">
+          <AssociationSet Name="FK__SUCURSAL__idCant__5629CD9C" Association="Self.FK__SUCURSAL__idCant__5629CD9C">
+            <End Role="CANTON" EntitySet="CANTONs" />
+            <End Role="SUCURSAL" EntitySet="SUCURSALs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CLIENTE__Direcci__5165187F" Association="Self.FK__CLIENTE__Direcci__5165187F">
             <End Role="DIRECCIONES" EntitySet="DIRECCIONES" />
             <End Role="CLIENTE" EntitySet="CLIENTEs" />
           </AssociationSet>
-          <AssociationSet Name="FK__PADECIMIE__idUsu__4F7CD00D" Association="Self.FK__PADECIMIE__idUsu__4F7CD00D">
+          <AssociationSet Name="FK__PADECIMIE__idUsu__4D94879B" Association="Self.FK__PADECIMIE__idUsu__4D94879B">
             <End Role="CLIENTE" EntitySet="CLIENTEs" />
             <End Role="PADECIMIENTOS" EntitySet="PADECIMIENTOS" />
           </AssociationSet>
-          <AssociationSet Name="FK__PEDIDOS__idClien__52593CB8" Association="Self.FK__PEDIDOS__idClien__52593CB8">
+          <AssociationSet Name="FK__PEDIDOS__idClien__534D60F1" Association="Self.FK__PEDIDOS__idClien__534D60F1">
             <End Role="CLIENTE" EntitySet="CLIENTEs" />
             <End Role="PEDIDOS" EntitySet="PEDIDOS" />
           </AssociationSet>
-          <AssociationSet Name="FK__RECETAS__idClien__571DF1D5" Association="Self.FK__RECETAS__idClien__571DF1D5">
+          <AssociationSet Name="FK__RECETAS__idClien__59063A47" Association="Self.FK__RECETAS__idClien__59063A47">
             <End Role="CLIENTE" EntitySet="CLIENTEs" />
             <End Role="RECETAS" EntitySet="RECETAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DETALLEPE__idPed__49C3F6B7" Association="Self.FK__DETALLEPE__idPed__49C3F6B7">
+            <End Role="PEDIDOS" EntitySet="PEDIDOS" />
+            <End Role="DETALLEPEDIDO" EntitySet="DETALLEPEDIDOes" />
           </AssociationSet>
           <AssociationSet Name="FK__DETALLEPE__idPed__4BAC3F29" Association="Self.FK__DETALLEPE__idPed__4BAC3F29">
             <End Role="PEDIDOS" EntitySet="PEDIDOS" />
             <End Role="DETALLEPEDIDO" EntitySet="DETALLEPEDIDOes" />
           </AssociationSet>
-          <AssociationSet Name="FK__DETALLEPE__idPed__4D94879B" Association="Self.FK__DETALLEPE__idPed__4D94879B">
-            <End Role="PEDIDOS" EntitySet="PEDIDOS" />
-            <End Role="DETALLEPEDIDO" EntitySet="DETALLEPEDIDOes" />
-          </AssociationSet>
-          <AssociationSet Name="FK__DETALLEPE__idPro__4AB81AF0" Association="Self.FK__DETALLEPE__idPro__4AB81AF0">
+          <AssociationSet Name="FK__DETALLEPE__idPro__48CFD27E" Association="Self.FK__DETALLEPE__idPro__48CFD27E">
             <End Role="PRODUCTOS" EntitySet="PRODUCTOS" />
             <End Role="DETALLEPEDIDO" EntitySet="DETALLEPEDIDOes" />
           </AssociationSet>
-          <AssociationSet Name="FK__DETALLERE__idMed__4CA06362" Association="Self.FK__DETALLERE__idMed__4CA06362">
+          <AssociationSet Name="FK__DETALLERE__idMed__4AB81AF0" Association="Self.FK__DETALLERE__idMed__4AB81AF0">
             <End Role="PRODUCTOS" EntitySet="PRODUCTOS" />
             <End Role="DETALLERECETA" EntitySet="DETALLERECETAs" />
           </AssociationSet>
-          <AssociationSet Name="FK__DIRECCION__Distr__5070F446" Association="Self.FK__DIRECCION__Distr__5070F446">
+          <AssociationSet Name="FK__DIRECCION__Distr__4E88ABD4" Association="Self.FK__DIRECCION__Distr__4E88ABD4">
             <End Role="DISTRITO" EntitySet="DISTRITOes" />
             <End Role="DIRECCIONES" EntitySet="DIRECCIONES" />
           </AssociationSet>
-          <AssociationSet Name="FK__DOCTORES__Direcc__5812160E" Association="Self.FK__DOCTORES__Direcc__5812160E">
+          <AssociationSet Name="FK__DIRECCION__Provi__5070F446" Association="Self.FK__DIRECCION__Provi__5070F446">
+            <End Role="PROVINCIA" EntitySet="PROVINCIAs" />
             <End Role="DIRECCIONES" EntitySet="DIRECCIONES" />
-            <End Role="DOCTORES" EntitySet="DOCTORES" />
           </AssociationSet>
-          <AssociationSet Name="FK__SUCURSAL__idDist__5441852A" Association="Self.FK__SUCURSAL__idDist__5441852A">
+          <AssociationSet Name="FK__EMPLEADO__Direcc__4CA06362" Association="Self.FK__EMPLEADO__Direcc__4CA06362">
+            <End Role="DIRECCIONES" EntitySet="DIRECCIONES" />
+            <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SUCURSAL__idDist__571DF1D5" Association="Self.FK__SUCURSAL__idDist__571DF1D5">
             <End Role="DISTRITO" EntitySet="DISTRITOes" />
             <End Role="SUCURSAL" EntitySet="SUCURSALs" />
           </AssociationSet>
-          <AssociationSet Name="FK__RECETAS__idDocto__5629CD9C" Association="Self.FK__RECETAS__idDocto__5629CD9C">
-            <End Role="DOCTORES" EntitySet="DOCTORES" />
-            <End Role="RECETAS" EntitySet="RECETAS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__EMPLEADO__idRol__59FA5E80" Association="Self.FK__EMPLEADO__idRol__59FA5E80">
-            <End Role="ROLES" EntitySet="ROLES" />
-            <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
-          </AssociationSet>
-          <AssociationSet Name="FK__EMPLEADO__idSucu__59063A47" Association="Self.FK__EMPLEADO__idSucu__59063A47">
-            <End Role="SUCURSAL" EntitySet="SUCURSALs" />
-            <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
-          </AssociationSet>
-          <AssociationSet Name="FK__EMPLEADOX__idEmp__46E78A0C" Association="Self.FK__EMPLEADOX__idEmp__46E78A0C">
+          <AssociationSet Name="FK__EMPLEADOX__idEmp__44FF419A" Association="Self.FK__EMPLEADOX__idEmp__44FF419A">
             <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
             <End Role="EMPLEADOXSUCURSAL" EntitySet="EMPLEADOXSUCURSALs" />
           </AssociationSet>
-          <AssociationSet Name="FK__EMPLEADOX__idRol__47DBAE45" Association="Self.FK__EMPLEADOX__idRol__47DBAE45">
+          <AssociationSet Name="FK__EMPLEADOX__idRol__45F365D3" Association="Self.FK__EMPLEADOX__idRol__45F365D3">
             <End Role="ROLES" EntitySet="ROLES" />
             <End Role="EMPLEADOXSUCURSAL" EntitySet="EMPLEADOXSUCURSALs" />
           </AssociationSet>
-          <AssociationSet Name="FK__EMPLEADOX__idSuc__45F365D3" Association="Self.FK__EMPLEADOX__idSuc__45F365D3">
+          <AssociationSet Name="FK__EMPLEADOX__idSuc__440B1D61" Association="Self.FK__EMPLEADOX__idSuc__440B1D61">
             <End Role="SUCURSAL" EntitySet="SUCURSALs" />
             <End Role="EMPLEADOXSUCURSAL" EntitySet="EMPLEADOXSUCURSALs" />
           </AssociationSet>
-          <AssociationSet Name="FK__SUCURSAL__idEmpr__534D60F1" Association="Self.FK__SUCURSAL__idEmpr__534D60F1">
+          <AssociationSet Name="FK__SUCURSAL__idEmpr__5441852A" Association="Self.FK__SUCURSAL__idEmpr__5441852A">
             <End Role="EMPRESA" EntitySet="EMPRESAs" />
             <End Role="SUCURSAL" EntitySet="SUCURSALs" />
           </AssociationSet>
-          <AssociationSet Name="FK__PEDIDOS__sucursa__5165187F" Association="Self.FK__PEDIDOS__sucursa__5165187F">
+          <AssociationSet Name="FK__PEDIDOS__sucursa__52593CB8" Association="Self.FK__PEDIDOS__sucursa__52593CB8">
             <End Role="SUCURSAL" EntitySet="SUCURSALs" />
             <End Role="PEDIDOS" EntitySet="PEDIDOS" />
           </AssociationSet>
-          <AssociationSet Name="FK__PRODUCTOS__Prove__5535A963" Association="Self.FK__PRODUCTOS__Prove__5535A963">
+          <AssociationSet Name="FK__PRODUCTOS__Prove__5812160E" Association="Self.FK__PRODUCTOS__Prove__5812160E">
             <End Role="PROVEEDORES" EntitySet="PROVEEDORES" />
             <End Role="PRODUCTOS" EntitySet="PRODUCTOS" />
           </AssociationSet>
-          <AssociationSet Name="FK__PRODUCTOX__codPr__49C3F6B7" Association="Self.FK__PRODUCTOX__codPr__49C3F6B7">
+          <AssociationSet Name="FK__PRODUCTOX__codPr__47DBAE45" Association="Self.FK__PRODUCTOX__codPr__47DBAE45">
             <End Role="PRODUCTOS" EntitySet="PRODUCTOS" />
             <End Role="PRODUCTOXSUCURSAL" EntitySet="PRODUCTOXSUCURSALs" />
           </AssociationSet>
-          <AssociationSet Name="FK__PRODUCTOX__idSuc__48CFD27E" Association="Self.FK__PRODUCTOX__idSuc__48CFD27E">
+          <AssociationSet Name="FK__PRODUCTOX__idSuc__46E78A0C" Association="Self.FK__PRODUCTOX__idSuc__46E78A0C">
             <End Role="SUCURSAL" EntitySet="SUCURSALs" />
             <End Role="PRODUCTOXSUCURSAL" EntitySet="PRODUCTOXSUCURSALs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SUCURSAL__idProv__5535A963" Association="Self.FK__SUCURSAL__idProv__5535A963">
+            <End Role="PROVINCIA" EntitySet="PROVINCIAs" />
+            <End Role="SUCURSAL" EntitySet="SUCURSALs" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -1244,7 +1270,9 @@
                 <ScalarProperty Name="sApellido" ColumnName="sApellido" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Nacimiento" ColumnName="Nacimiento" />
+                <ScalarProperty Name="Penalizacion" ColumnName="Penalizacion" />
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1271,6 +1299,8 @@
             <EntityTypeMapping TypeName="GasStationPharmacyDBModel.DIRECCIONE">
               <MappingFragment StoreEntitySet="DIRECCIONES">
                 <ScalarProperty Name="idDireccion" ColumnName="idDireccion" />
+                <ScalarProperty Name="Provincia" ColumnName="Provincia" />
+                <ScalarProperty Name="Canton" ColumnName="Canton" />
                 <ScalarProperty Name="Distrito" ColumnName="Distrito" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
               </MappingFragment>
@@ -1285,28 +1315,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DOCTORES">
-            <EntityTypeMapping TypeName="GasStationPharmacyDBModel.DOCTORE">
-              <MappingFragment StoreEntitySet="DOCTORES">
-                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-                <ScalarProperty Name="numDoctor" ColumnName="numDoctor" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="pApellido" ColumnName="pApellido" />
-                <ScalarProperty Name="sApellido" ColumnName="sApellido" />
-                <ScalarProperty Name="Nacimiento" ColumnName="Nacimiento" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="EMPLEADOes">
             <EntityTypeMapping TypeName="GasStationPharmacyDBModel.EMPLEADO">
               <MappingFragment StoreEntitySet="EMPLEADO">
                 <ScalarProperty Name="idEmpleado" ColumnName="idEmpleado" />
-                <ScalarProperty Name="idSucursal" ColumnName="idSucursal" />
-                <ScalarProperty Name="idRol" ColumnName="idRol" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="pApellido" ColumnName="pApellido" />
+                <ScalarProperty Name="sApellido" ColumnName="sApellido" />
+                <ScalarProperty Name="Nacimiento" ColumnName="Nacimiento" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1347,6 +1367,7 @@
                 <ScalarProperty Name="horaRecojo" ColumnName="horaRecojo" />
                 <ScalarProperty Name="Telefono" ColumnName="Telefono" />
                 <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1391,7 +1412,6 @@
             <EntityTypeMapping TypeName="GasStationPharmacyDBModel.RECETA">
               <MappingFragment StoreEntitySet="RECETAS">
                 <ScalarProperty Name="idReceta" ColumnName="idReceta" />
-                <ScalarProperty Name="idDoctor" ColumnName="idDoctor" />
                 <ScalarProperty Name="idCliente" ColumnName="idCliente" />
                 <ScalarProperty Name="Imagen" ColumnName="Imagen" />
               </MappingFragment>
@@ -1411,6 +1431,8 @@
               <MappingFragment StoreEntitySet="SUCURSAL">
                 <ScalarProperty Name="idSucursal" ColumnName="idSucursal" />
                 <ScalarProperty Name="idEmpresa" ColumnName="idEmpresa" />
+                <ScalarProperty Name="idProvincia" ColumnName="idProvincia" />
+                <ScalarProperty Name="idCanton" ColumnName="idCanton" />
                 <ScalarProperty Name="idDistrito" ColumnName="idDistrito" />
                 <ScalarProperty Name="detalleDireccion" ColumnName="detalleDireccion" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />

@@ -17,7 +17,6 @@ namespace dataAcces
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ROLE()
         {
-            this.EMPLEADOes = new HashSet<EMPLEADO>();
             this.EMPLEADOXSUCURSALs = new HashSet<EMPLEADOXSUCURSAL>();
         }
     
@@ -25,8 +24,6 @@ namespace dataAcces
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EMPLEADO> EMPLEADOes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EMPLEADOXSUCURSAL> EMPLEADOXSUCURSALs { get; set; }
     }

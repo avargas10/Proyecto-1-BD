@@ -68,9 +68,6 @@
     <Compile Include="DISTRITO.cs">
       <DependentUpon>modelDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="DOCTORE.cs">
-      <DependentUpon>modelDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="EMPLEADO.cs">
       <DependentUpon>modelDB.tt</DependentUpon>
     </Compile>
@@ -125,32 +122,30 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="modelDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>modelDB.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
     <None Include="modelDB.edmx.diagram">
       <DependentUpon>modelDB.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="modelDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>modelDB.Context.cs</LastGenOutput>
       <DependentUpon>modelDB.edmx</DependentUpon>
+      <LastGenOutput>modelDB.Context.cs</LastGenOutput>
     </Content>
     <Content Include="modelDB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>modelDB.edmx</DependentUpon>
       <LastGenOutput>modelDB.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

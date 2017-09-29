@@ -17,7 +17,9 @@ namespace dataAcces
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CANTON()
         {
+            this.DIRECCIONES = new HashSet<DIRECCIONE>();
             this.DISTRITOes = new HashSet<DISTRITO>();
+            this.SUCURSALs = new HashSet<SUCURSAL>();
         }
     
         public int idCanton { get; set; }
@@ -26,6 +28,10 @@ namespace dataAcces
     
         public virtual PROVINCIA PROVINCIA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DIRECCIONE> DIRECCIONES { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DISTRITO> DISTRITOes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SUCURSAL> SUCURSALs { get; set; }
     }
 }

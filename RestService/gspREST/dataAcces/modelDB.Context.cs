@@ -31,7 +31,6 @@ namespace dataAcces
         public virtual DbSet<DETALLERECETA> DETALLERECETAs { get; set; }
         public virtual DbSet<DIRECCIONE> DIRECCIONES { get; set; }
         public virtual DbSet<DISTRITO> DISTRITOes { get; set; }
-        public virtual DbSet<DOCTORE> DOCTORES { get; set; }
         public virtual DbSet<EMPLEADO> EMPLEADOes { get; set; }
         public virtual DbSet<EMPLEADOXSUCURSAL> EMPLEADOXSUCURSALs { get; set; }
         public virtual DbSet<EMPRESA> EMPRESAs { get; set; }

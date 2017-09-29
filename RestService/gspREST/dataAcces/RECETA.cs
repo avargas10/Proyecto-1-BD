@@ -15,11 +15,9 @@ namespace dataAcces
     public partial class RECETA
     {
         public int idReceta { get; set; }
-        public Nullable<int> idDoctor { get; set; }
         public Nullable<int> idCliente { get; set; }
         public byte[] Imagen { get; set; }
     
         public virtual CLIENTE CLIENTE { get; set; }
-        public virtual DOCTORE DOCTORE { get; set; }
     }
 }

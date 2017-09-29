@@ -24,9 +24,10 @@ namespace dataAcces
         public int idPedido { get; set; }
         public Nullable<int> sucursalRecojo { get; set; }
         public Nullable<int> idCliente { get; set; }
-        public Nullable<System.TimeSpan> horaRecojo { get; set; }
+        public Nullable<System.DateTime> horaRecojo { get; set; }
         public Nullable<int> Telefono { get; set; }
         public byte[] Imagen { get; set; }
+        public string Estado { get; set; }
     
         public virtual CLIENTE CLIENTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

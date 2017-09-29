@@ -28,7 +28,9 @@ namespace dataAcces
         public string sApellido { get; set; }
         public string Password { get; set; }
         public string Username { get; set; }
+        public string Email { get; set; }
         public Nullable<System.DateTime> Nacimiento { get; set; }
+        public Nullable<int> Penalizacion { get; set; }
         public Nullable<int> Direccion { get; set; }
     
         public virtual DIRECCIONE DIRECCIONE { get; set; }

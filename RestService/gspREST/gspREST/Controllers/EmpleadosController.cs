@@ -97,8 +97,6 @@ namespace gspREST.Controllers
                     else
                     {
                         entity.Nombre = user.Nombre;
-                        entity.idRol = user.idRol;
-                        entity.idSucursal = user.idSucursal;
                         entity.idEmpleado = user.idEmpleado;
                         entity.Username = user.Username;
                         entity.Password = user.Password;

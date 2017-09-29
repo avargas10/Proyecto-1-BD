@@ -21,14 +21,16 @@ namespace dataAcces
         }
     
         public int idEmpleado { get; set; }
-        public Nullable<int> idSucursal { get; set; }
-        public Nullable<int> idRol { get; set; }
+        public string Email { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string Nombre { get; set; }
+        public string pApellido { get; set; }
+        public string sApellido { get; set; }
+        public Nullable<System.DateTime> Nacimiento { get; set; }
+        public Nullable<int> Direccion { get; set; }
     
-        public virtual ROLE ROLE { get; set; }
-        public virtual SUCURSAL SUCURSAL { get; set; }
+        public virtual DIRECCIONE DIRECCIONE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EMPLEADOXSUCURSAL> EMPLEADOXSUCURSALs { get; set; }
     }

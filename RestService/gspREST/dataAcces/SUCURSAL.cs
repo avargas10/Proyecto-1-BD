@@ -17,7 +17,6 @@ namespace dataAcces
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SUCURSAL()
         {
-            this.EMPLEADOes = new HashSet<EMPLEADO>();
             this.EMPLEADOXSUCURSALs = new HashSet<EMPLEADOXSUCURSAL>();
             this.PEDIDOS = new HashSet<PEDIDO>();
             this.PRODUCTOXSUCURSALs = new HashSet<PRODUCTOXSUCURSAL>();
@@ -25,13 +24,14 @@ namespace dataAcces
     
         public int idSucursal { get; set; }
         public Nullable<int> idEmpresa { get; set; }
+        public Nullable<int> idProvincia { get; set; }
+        public Nullable<int> idCanton { get; set; }
         public Nullable<int> idDistrito { get; set; }
         public string detalleDireccion { get; set; }
         public string Nombre { get; set; }
     
+        public virtual CANTON CANTON { get; set; }
         public virtual DISTRITO DISTRITO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EMPLEADO> EMPLEADOes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EMPLEADOXSUCURSAL> EMPLEADOXSUCURSALs { get; set; }
         public virtual EMPRESA EMPRESA { get; set; }
@@ -39,5 +39,6 @@ namespace dataAcces
         public virtual ICollection<PEDIDO> PEDIDOS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PRODUCTOXSUCURSAL> PRODUCTOXSUCURSALs { get; set; }
+        public virtual PROVINCIA PROVINCIA { get; set; }
     }
 }

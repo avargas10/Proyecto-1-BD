@@ -18,6 +18,8 @@ namespace dataAcces
         public PROVINCIA()
         {
             this.CANTONs = new HashSet<CANTON>();
+            this.DIRECCIONES = new HashSet<DIRECCIONE>();
+            this.SUCURSALs = new HashSet<SUCURSAL>();
         }
     
         public int idProvincia { get; set; }
@@ -25,5 +27,9 @@ namespace dataAcces
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CANTON> CANTONs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DIRECCIONE> DIRECCIONES { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SUCURSAL> SUCURSALs { get; set; }
     }
 }
