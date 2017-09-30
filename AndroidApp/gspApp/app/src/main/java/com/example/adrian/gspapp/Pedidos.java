@@ -65,6 +65,7 @@ public class Pedidos extends Fragment {
         getActivity().setTitle("Pedidos");
         try {
             getProducts();
+            getSucursales();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -104,7 +105,7 @@ public class Pedidos extends Fragment {
         List<String> allNames = new ArrayList<String>();
         for (int i = 0; i < dataSucursales.length(); i++) {
             JSONObject objeto = (JSONObject) dataSucursales.get(i);
-            allNames.add(objeto.getString("Nombre"));
+            allNames.add(objeto.getString("Nombre") + " - " + objeto.getString("detalleDireccion") );
         }
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
                 (getContext(), android.R.layout.simple_list_item_1, allNames);

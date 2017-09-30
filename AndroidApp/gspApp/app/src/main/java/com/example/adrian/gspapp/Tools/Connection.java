@@ -289,7 +289,7 @@ public class Connection {
         StrictMode.setThreadPolicy(policy);
         HttpURLConnection conn;
         try{
-            URL url = new URL("http://"+Config.ip + ":58706/api/Sucursales/" );
+            URL url = new URL("http://"+Config.ip + ":58706/api/Sucursal/" );
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();
