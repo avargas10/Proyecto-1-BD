@@ -1,5 +1,6 @@
 package com.example.adrian.gspapp.Tools;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.util.Log;
