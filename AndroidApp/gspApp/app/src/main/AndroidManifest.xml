@@ -30,7 +30,10 @@
         <activity android:name=".Cuenta" />
         <activity android:name=".Home" />
         <activity android:name=".Pedidos" />
-        <activity android:name=".Recetas"></activity>
+        <activity android:name=".Recetas" />
+        <activity android:name=".Padecimientos" />
+        <activity android:name=".nuevoPadecimiento"
+            android:parentActivityName=".navigationDrawer"></activity>
     </application>
 
 </manifest>
