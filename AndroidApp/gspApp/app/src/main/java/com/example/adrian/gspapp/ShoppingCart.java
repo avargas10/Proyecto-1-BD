@@ -34,7 +34,7 @@ public class ShoppingCart extends AppCompatActivity {
     private void getProducts() throws JSONException {
 
         CustomList adapter = new
-                CustomList(this, Config.allProducts, Config.allimg);
+                CustomList(this, Config.allProducts, Config.allimg,Config.precios);
         ShoppingList = (ListView)findViewById(R.id.Shoppinglist);
         ShoppingList.setAdapter(adapter);
 

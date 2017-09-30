@@ -21,12 +21,13 @@ public class CustomList extends ArrayAdapter<String>{
     private final Activity context;
     private final List web;
     private final List imageId;
-    public CustomList(Activity context,
-                      List web, List imageId) {
+    private final List precios;
+    public CustomList(Activity context, List web, List imageId, List precios) {
         super(context, R.layout.list_single, web);
         this.context = context;
         this.web = web;
         this.imageId = imageId;
+        this.precios = precios;
 
     }
     @Override
@@ -34,10 +35,12 @@ public class CustomList extends ArrayAdapter<String>{
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView= inflater.inflate(R.layout.list_single, null, true);
         TextView txtTitle = (TextView) rowView.findViewById(R.id.txt);
+        TextView txtPrecios = (TextView) rowView.findViewById(R.id.price);
 
 
         ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
         txtTitle.setText((String) web.get(position));
+        txtPrecios.setText("   -   $" + String.valueOf(precios.get(position)));
 
         imageView.setImageBitmap((Bitmap)imageId.get(position));
         return rowView;

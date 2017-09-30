@@ -13,4 +13,5 @@ public abstract class Config {
     public static String ip = "";
     public static List<String> allProducts = new ArrayList<String>();
     public static List<Bitmap> allimg = new ArrayList<>();
+    public static List<Integer> precios = new ArrayList<>();
 }

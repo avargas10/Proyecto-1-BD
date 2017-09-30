@@ -94,6 +94,7 @@ public class Pedidos extends Fragment {
         dataProducts = Connection.getInstance().getProductos();
         List<String> allProducts = new ArrayList<String>();
         List<Bitmap> allimg = new ArrayList<>();
+        List<Integer> precios = new ArrayList<>();
 
         for(int i=0; i<dataProducts.length();i++){
             JSONObject objeto= (JSONObject) dataProducts.get(i);
@@ -101,10 +102,11 @@ public class Pedidos extends Fragment {
             byte[] decodedString = Base64.decode(objeto.getString("Image"), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             allimg.add(decodedByte);
+            precios.add(objeto.getInt("Precio"));
         }
 
         CustomList adapter = new
-                CustomList((Activity) this.getContext(), allProducts, allimg);
+                CustomList((Activity) this.getContext(), allProducts, allimg, precios);
         list=(ListView)getView().findViewById(R.id.list);
         list.setAdapter(adapter);
 
