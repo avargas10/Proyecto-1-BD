@@ -71,7 +71,9 @@ public class nuevoPadecimiento extends AppCompatActivity {
                        nombre.setText("");
                        fecha.setText("");
                        descrip.setText("");
-
+                      // Padecimientos.allNames.add(pad.getString("Nombre") + " - " +pad.get("Fecha").toString()+" - " +
+                        //       pad.getString("Descripcion") );
+                       Padecimientos.allNames.clear();
                     }else{
                         Toast.makeText(getApplicationContext(),"Error al agregar el Padecimiento.", Toast.LENGTH_LONG).show();
 
