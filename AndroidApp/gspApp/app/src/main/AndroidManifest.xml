@@ -31,10 +31,11 @@
         <activity android:name=".Home" />
         <activity android:name=".Pedidos" />
         <activity android:name=".Recetas" />
-        <activity android:name=".ShoppingCart"></activity>
+        <activity android:name=".ShoppingCart" />
         <activity android:name=".Padecimientos" />
-        <activity android:name=".nuevoPadecimiento"
-            android:parentActivityName=".navigationDrawer"></activity>
+        <activity
+            android:name=".nuevoPadecimiento"
+            android:parentActivityName=".navigationDrawer" />
     </application>
 
 </manifest>
