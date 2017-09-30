@@ -55,6 +55,7 @@ public class Connection {
     }
 
     public boolean isConnectedToServer(String ip) {
+        System.out.println(ip);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         try{
@@ -69,7 +70,7 @@ public class Connection {
     }
 
     public boolean clientLogin(String user, String pass) {
-        if(!isConnectedToServer("http://"+Config.ip+":58706")){
+        if(!isConnectedToServer(Config.ip)){
             Toast.makeText(context,"Error to connect with server!", Toast.LENGTH_SHORT).show();
 
             return false;
@@ -110,6 +111,11 @@ public class Connection {
     public boolean registroCliente(JSONObject data) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+        if(!isConnectedToServer(Config.ip)){
+            openLogin();
+
+            return false;
+        }else {
             HttpURLConnection conn;
             try {
                 URL url = new URL("http://" + Config.ip + ":58706/api/Clientes");
@@ -129,7 +135,7 @@ public class Connection {
                 e.printStackTrace();
                 return false;
             }
-
+        }
     }
 
     public JSONObject registroDireccion(JSONObject dataDir) throws JSONException {
@@ -189,6 +195,10 @@ public class Connection {
     public JSONArray getDirections(int type, int id){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+        if(!isConnectedToServer(Config.ip)){
+            openLogin();
+
+        }else {
         HttpURLConnection conn;
         switch (type){
             case 1:
@@ -251,6 +261,8 @@ public class Connection {
         JSONArray arr=new JSONArray();
         return arr;
     }
+        return null;
+    }
     public JSONArray getProductos(){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -278,5 +290,11 @@ public class Connection {
         return null;
     }
 
+    public void openLogin(){
+        Toast.makeText(context,"Error to connect with server!, try changing the ip address.", Toast.LENGTH_SHORT).show();
+        ///Intent intent = new Intent(this.context, MainActivity.class);
+      //  intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        context.startActivity(intent);
+    }
 
 }

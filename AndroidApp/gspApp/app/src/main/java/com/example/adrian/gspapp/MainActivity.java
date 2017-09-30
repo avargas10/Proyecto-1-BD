@@ -81,8 +81,12 @@ public class MainActivity extends AppCompatActivity {
         registro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(Connection.getInstance().isConnectedToServer(Config.ip)){
                Intent intent = new Intent(context, Registro.class);
-                startActivity(intent);
+                startActivity(intent);}else{
+                    Toast.makeText(getApplicationContext(),"Error to connect with server!, try changing the ip address.", Toast.LENGTH_LONG).show();
+
+                }
             }
         });
 
