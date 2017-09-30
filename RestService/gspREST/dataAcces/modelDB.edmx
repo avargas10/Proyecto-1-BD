@@ -133,6 +133,7 @@
           <Property Name="esMedicamento" Type="int" />
           <Property Name="reqPrescripcion" Type="int" />
           <Property Name="Image" Type="varchar(max)" />
+          <Property Name="Precio" Type="int" />
         </EntityType>
         <EntityType Name="PRODUCTOXSUCURSAL">
           <Key>
@@ -183,6 +184,8 @@
           <Property Name="idProvincia" Type="int" />
           <Property Name="idCanton" Type="int" />
           <Property Name="idDistrito" Type="int" />
+          <Property Name="Latitud" Type="float" />
+          <Property Name="Longitud" Type="float" />
           <Property Name="detalleDireccion" Type="varchar" MaxLength="50" />
           <Property Name="Nombre" Type="varchar" MaxLength="30" />
         </EntityType>
@@ -789,6 +792,7 @@
           <Property Name="esMedicamento" Type="Int32" />
           <Property Name="reqPrescripcion" Type="Int32" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Precio" Type="Int32" />
           <NavigationProperty Name="DETALLEPEDIDOes" Relationship="Self.FK__DETALLEPE__idPro__4AB81AF0" FromRole="PRODUCTOS" ToRole="DETALLEPEDIDO" />
           <NavigationProperty Name="DETALLERECETAs" Relationship="Self.FK__DETALLERE__idMed__4CA06362" FromRole="PRODUCTOS" ToRole="DETALLERECETA" />
           <NavigationProperty Name="PROVEEDORE" Relationship="Self.FK__PRODUCTOS__Prove__5AEE82B9" FromRole="PRODUCTOS" ToRole="PROVEEDORES" />
@@ -851,6 +855,8 @@
           <Property Name="idProvincia" Type="Int32" />
           <Property Name="idCanton" Type="Int32" />
           <Property Name="idDistrito" Type="Int32" />
+          <Property Name="Latitud" Type="Double" />
+          <Property Name="Longitud" Type="Double" />
           <Property Name="detalleDireccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CANTON" Relationship="Self.FK__SUCURSAL__idCant__59063A47" FromRole="SUCURSAL" ToRole="CANTON" />
@@ -1440,6 +1446,7 @@
                 <ScalarProperty Name="esMedicamento" ColumnName="esMedicamento" />
                 <ScalarProperty Name="reqPrescripcion" ColumnName="reqPrescripcion" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1495,6 +1502,8 @@
                 <ScalarProperty Name="idProvincia" ColumnName="idProvincia" />
                 <ScalarProperty Name="idCanton" ColumnName="idCanton" />
                 <ScalarProperty Name="idDistrito" ColumnName="idDistrito" />
+                <ScalarProperty Name="Latitud" ColumnName="Latitud" />
+                <ScalarProperty Name="Longitud" ColumnName="Longitud" />
                 <ScalarProperty Name="detalleDireccion" ColumnName="detalleDireccion" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
               </MappingFragment>
