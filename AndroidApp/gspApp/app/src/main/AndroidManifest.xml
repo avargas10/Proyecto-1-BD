@@ -30,7 +30,8 @@
         <activity android:name=".Cuenta" />
         <activity android:name=".Home" />
         <activity android:name=".Pedidos" />
-        <activity android:name=".Recetas"></activity>
+        <activity android:name=".Recetas" />
+        <activity android:name=".ShoppingCart"></activity>
     </application>
 
 </manifest>

@@ -3,9 +3,11 @@ package com.example.adrian.gspapp;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Base64;
@@ -34,6 +36,7 @@ public class Pedidos extends Fragment {
     ListView list,sucursales;
     DatePickerDialog datePickerDialog;
     EditText recojo;
+    FloatingActionButton btncart;
     private JSONArray dataSucursales;
 
     @Override
@@ -42,6 +45,7 @@ public class Pedidos extends Fragment {
         list = (ListView) getView().findViewById(R.id.list);
         sucursales = (ListView) getView().findViewById(R.id.listaSucursales);
         recojo = (EditText) getView().findViewById(R.id.FechaRecojo);
+        btncart = (FloatingActionButton)getView().findViewById(R.id.ShoppingCart);
         recojo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,6 +64,12 @@ public class Pedidos extends Fragment {
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
+            }
+        });
+        btncart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(),ShoppingCart.class));
             }
         });
         getActivity().setTitle("Pedidos");
