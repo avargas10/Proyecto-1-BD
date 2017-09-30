@@ -7,10 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.adrian.gspapp.R;
+import com.example.adrian.gspapp.Tools.Connection;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Calendar;
 
@@ -56,6 +59,23 @@ public class nuevoPadecimiento extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try{
+                    JSONObject pad= new JSONObject();
+                    pad.put("idUsuario", MainActivity.clientInfo.getInt("Cedula"));
+                    pad.put("Nombre", nombre.getText());
+                    pad.put("Fecha", fecha.getText());
+                    pad.put("Descripcion", descrip.getText());
+                    System.out.println("DESCRIPCION: "+descrip.getText().toString());
+                    System.out.println("JSON: "+pad.toString());
+                   if(Connection.getInstance().regPadecimiento(pad)){
+                        Toast.makeText(getApplicationContext(),"Padecimiento Agregado Correctamente.", Toast.LENGTH_LONG).show();
+                       nombre.setText("");
+                       fecha.setText("");
+                       descrip.setText("");
+
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Error al agregar el Padecimiento.", Toast.LENGTH_LONG).show();
+
+                    }
 
                 }catch(Exception e){
                     e.printStackTrace();
