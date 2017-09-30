@@ -32,6 +32,9 @@
         <activity android:name=".Pedidos" />
         <activity android:name=".Recetas" />
         <activity android:name=".ShoppingCart"></activity>
+        <activity android:name=".Padecimientos" />
+        <activity android:name=".nuevoPadecimiento"
+            android:parentActivityName=".navigationDrawer"></activity>
     </application>
 
 </manifest>

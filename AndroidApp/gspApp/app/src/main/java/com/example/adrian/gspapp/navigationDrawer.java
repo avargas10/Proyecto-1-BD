@@ -105,6 +105,9 @@ public class navigationDrawer extends AppCompatActivity
             case R.id.nav_gallery:
                 fragment=new Recetas();
                 break;
+            case R.id.nav_padecimientos:
+                fragment=new Padecimientos();
+                break;
             case R.id.nav_manage:
                 fragment=new Cuenta();
                 break;

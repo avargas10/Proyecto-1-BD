@@ -13,7 +13,11 @@
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/pedido"
-            android:title="Pedidos" />
+            android:title="Agregar Pedidos" />
+        <item
+            android:id="@+id/nav_padecimientos"
+            android:icon="@drawable/padecimiento"
+            android:title="Padecimientos" />
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/account"
