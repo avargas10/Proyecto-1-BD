@@ -1,6 +1,8 @@
 package com.example.adrian.gspapp;
 
+import android.app.Application;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,6 +33,7 @@ public class Registro extends AppCompatActivity {
     DatePickerDialog datePickerDialog;
     private JSONArray dataProvincia, dataCanton, dataDistrito;
     private int idProvincia, idCanton, idDistrito;
+     Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +56,8 @@ public class Registro extends AppCompatActivity {
         provincia=(Spinner)findViewById(R.id.spinProvincia);
         canton=(Spinner)findViewById(R.id.spinCanton);
         distrito=(Spinner)findViewById(R.id.spinDistrito);
-        Connection.getInstance().getDirections(1,0);
+        Connection.getInstance().getDirections(1,0,this.getApplicationContext());
+        context=this.getApplicationContext();
 
         nacimiento.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,8 +100,8 @@ public class Registro extends AppCompatActivity {
                     data.put("Email", email.getText());
                     data.put("Penalizacion", 0);
                     data.put("Nacimiento", nacimiento.getText());
-                    data.put("Direccion", Connection.getInstance().registroDireccion(direccion).get("idDireccion"));
-                    if(Connection.getInstance().registroCliente(data)){
+                    data.put("Direccion", Connection.getInstance().registroDireccion(direccion, context).get("idDireccion"));
+                    if(Connection.getInstance().registroCliente(data)==1){
                         Toast.makeText(getApplicationContext(),"Usuario registrado con exito", Toast.LENGTH_SHORT).show();
                         username.setText("");
                         pass.setText("");
@@ -108,8 +112,10 @@ public class Registro extends AppCompatActivity {
                         email.setText("");
                         nacimiento.setText("");
                         direccionExacta.setText("");
-                    }else{
+                    }else if(Connection.getInstance().registroCliente(data)==0){
                         Toast.makeText(getApplicationContext(),"No se ha podido registrar el usuario, intentelo mas tarde.", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Error to connect with server!", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -204,10 +210,11 @@ public class Registro extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
     }
 
     private void fillProvincia() throws JSONException {
-        dataProvincia =Connection.getInstance().getDirections(1,0);
+        dataProvincia =Connection.getInstance().getDirections(1,0,this.getApplicationContext());
         List<String> allNames = new ArrayList<String>();
         for(int i=0; i<dataProvincia.length();i++){
             JSONObject objeto= (JSONObject) dataProvincia.get(i);
@@ -223,7 +230,7 @@ public class Registro extends AppCompatActivity {
     }
 
     private void fillCanton(int id) throws JSONException {
-        dataCanton =Connection.getInstance().getDirections(2,id);
+        dataCanton =Connection.getInstance().getDirections(2,id,this.getApplicationContext());
         List<String> allNames = new ArrayList<String>();
         for(int i=0; i<dataCanton.length();i++){
             JSONObject objeto= (JSONObject) dataCanton.get(i);
@@ -239,7 +246,7 @@ public class Registro extends AppCompatActivity {
     }
 
     private void fillDistrito(int id) throws JSONException {
-        dataDistrito =Connection.getInstance().getDirections(3,id);
+        dataDistrito =Connection.getInstance().getDirections(3,id,this.getApplicationContext());
         List<String> allNames = new ArrayList<String>();
         for(int i=0; i<dataDistrito.length();i++){
             JSONObject objeto= (JSONObject) dataDistrito.get(i);
