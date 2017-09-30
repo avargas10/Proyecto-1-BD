@@ -343,6 +343,33 @@ public class Connection {
 
     }
 
+    public JSONArray getPadecimientos(int id){
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        HttpURLConnection conn;
+        try{
+            URL url = new URL("http://"+Config.ip + ":58706/api/Padecimientos/"+Integer.toString(id) );
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            JSONArray jArray=new JSONArray(response.toString());
+            return jArray;
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public void openLogin(){
         Toast.makeText(context,"Error to connect with server!, try changing the ip address.", Toast.LENGTH_SHORT).show();
         ///Intent intent = new Intent(this.context, MainActivity.class);

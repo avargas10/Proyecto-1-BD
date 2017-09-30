@@ -10,8 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.adrian.gspapp.Tools.Connection;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
 public class Padecimientos extends Fragment {
     FloatingActionButton fab;
+    private JSONArray jArray=new JSONArray();
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -27,6 +33,12 @@ public class Padecimientos extends Fragment {
                 startActivity(intent);
             }
         });
+        try {
+            jArray= Connection.getInstance().getPadecimientos(MainActivity.clientInfo.getInt("Cedula"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        System.out.println("LISTA PADECIMIENTOS: "+jArray.toString());
 
     }
 

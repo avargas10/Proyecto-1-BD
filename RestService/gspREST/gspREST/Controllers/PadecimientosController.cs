@@ -22,7 +22,7 @@ namespace gspREST.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage regCliente([FromBody] PADECIMIENTO padecimiento)
+        public HttpResponseMessage regPadecimiento([FromBody] PADECIMIENTO padecimiento)
         {
             try
             {
@@ -38,6 +38,23 @@ namespace gspREST.Controllers
             catch (Exception ex)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        public IEnumerable<PADECIMIENTO> getPadecimientosbyId([FromUri] int id)
+        {
+            try
+            {
+                using (GasStationPharmacyDBEntities entities = new GasStationPharmacyDBEntities())
+                {
+                    entities.Configuration.LazyLoadingEnabled = false;
+                    var entity = entities.PADECIMIENTOS.ToList().Where(e => e.idUsuario == id);
+                    return entity;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
         }
     }
