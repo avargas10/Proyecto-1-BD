@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.widget.ListView;
 
+import com.example.adrian.gspapp.Tools.Config;
 import com.example.adrian.gspapp.Tools.Connection;
 import com.example.adrian.gspapp.Tools.CustomList;
 
@@ -31,20 +32,9 @@ public class ShoppingCart extends AppCompatActivity {
     }
 
     private void getProducts() throws JSONException {
-        dataShopping = Connection.getInstance().getProductos();
-        List<String> allProducts = new ArrayList<String>();
-        List<Bitmap> allimg = new ArrayList<>();
-
-        for(int i=0; i<dataShopping.length();i++){
-            JSONObject objeto= (JSONObject) dataShopping.get(i);
-            allProducts.add(objeto.getString("Nombre"));
-            byte[] decodedString = Base64.decode(objeto.getString("Image"), Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            allimg.add(decodedByte);
-        }
 
         CustomList adapter = new
-                CustomList(this, allProducts, allimg);
+                CustomList(this, Config.allProducts, Config.allimg);
         ShoppingList = (ListView)findViewById(R.id.Shoppinglist);
         ShoppingList.setAdapter(adapter);
 
