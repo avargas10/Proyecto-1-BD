@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
         password=(EditText) findViewById(R.id.txtPassword);
         pb=(ProgressBar)findViewById(R.id.progressBar1);
         pb.setVisibility(View.GONE);
-        final Context context= this;
+        final Context context=this.getApplicationContext();
+        Connection.getInstance().context=context;
 
 
         forgot.setOnClickListener(new View.OnClickListener() {

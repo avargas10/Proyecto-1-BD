@@ -1,11 +1,15 @@
 package com.example.adrian.gspapp.Tools;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.util.Log;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.adrian.gspapp.MainActivity;
+import com.example.adrian.gspapp.navigationDrawer;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -37,6 +41,7 @@ import static android.R.id.list;
 
 public class Connection {
     private static Connection instance;
+    public Context context;
 
     private Connection() {
 
@@ -55,7 +60,7 @@ public class Connection {
         try{
             URL myUrl = new URL(ip);
             HttpURLConnection connection = (HttpURLConnection)myUrl.openConnection();
-            connection.setConnectTimeout(15000);
+            connection.setConnectTimeout(10000);
             connection.connect();
             return true;
         } catch (Exception e) {
@@ -64,62 +69,66 @@ public class Connection {
     }
 
     public boolean clientLogin(String user, String pass) {
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-        HttpURLConnection conn;
-        try {
-            URL url = new URL("http://"+Config.ip + ":58706/api/Clientes?username=" + user + "&pass=" + pass);
-            conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setConnectTimeout(15000);
-            conn.connect();
-            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            if (response.toString().equals("true")) {
-                getClientInfo(user);
-                conn.disconnect();
-                return true;
-            } else {
-                conn.disconnect();
+        if(!isConnectedToServer("http://"+Config.ip+":58706")){
+            Toast.makeText(context,"Error to connect with server!", Toast.LENGTH_SHORT).show();
+
+            return false;
+        }else {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            HttpURLConnection conn;
+            try {
+                URL url = new URL("http://" + Config.ip + ":58706/api/Clientes?username=" + user + "&pass=" + pass);
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setConnectTimeout(15000);
+                conn.connect();
+                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                if (response.toString().equals("true")) {
+                    getClientInfo(user);
+                    conn.disconnect();
+                    return true;
+                } else {
+                    conn.disconnect();
+                    return false;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
                 return false;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            //new MyAsyncTask().execute(user,pass);
+            //return true;
         }
-        //new MyAsyncTask().execute(user,pass);
-        //return true;
-
 
     }
 
     public boolean registroCliente(JSONObject data) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
-        HttpURLConnection conn;
-        try {
-            URL url = new URL("http://"+Config.ip + ":58706/api/Clientes");
-            conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setDoOutput(true);
-            conn.setRequestMethod("POST");
-            OutputStream os = conn.getOutputStream();
-            os.write(data.toString().getBytes());
-            os.flush();
-            if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+            HttpURLConnection conn;
+            try {
+                URL url = new URL("http://" + Config.ip + ":58706/api/Clientes");
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setDoOutput(true);
+                conn.setRequestMethod("POST");
+                OutputStream os = conn.getOutputStream();
+                os.write(data.toString().getBytes());
+                os.flush();
+                if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
                 return false;
-            } else {
-                return true;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
 
     }
 
@@ -268,5 +277,6 @@ public class Connection {
         }
         return null;
     }
+
 
 }
