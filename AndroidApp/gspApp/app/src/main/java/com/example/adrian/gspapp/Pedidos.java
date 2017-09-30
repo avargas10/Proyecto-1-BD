@@ -1,18 +1,19 @@
 package com.example.adrian.gspapp;
 
+import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 
 import com.example.adrian.gspapp.Tools.Connection;
+import com.example.adrian.gspapp.Tools.CustomList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +32,11 @@ public class Pedidos extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         list = (ListView) getView().findViewById(R.id.list);
         getActivity().setTitle("Pedidos");
+        try {
+            getProducts();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Nullable
@@ -39,21 +45,27 @@ public class Pedidos extends Fragment {
         return inflater.inflate(R.layout.activity_pedidos, container, false);
     }
 
+    Integer[] imgid={
+    };
+
     private void getProducts() throws JSONException {
         dataProducts = Connection.getInstance().getProductos();
         List<String> allProducts = new ArrayList<String>();
+        List<Bitmap> allimg = new ArrayList<>();
+
         for(int i=0; i<dataProducts.length();i++){
             JSONObject objeto= (JSONObject) dataProducts.get(i);
             allProducts.add(objeto.getString("Nombre"));
+            byte[] decodedString = Base64.decode(objeto.getString("Image"), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            allimg.add(decodedByte);
         }
-        ArrayAdapter<String> dataAdapter;
-        dataAdapter = new ArrayAdapter<String>
-                (this.getContext(), android.R.layout.simple_list_item_1, allProducts );
 
-        dataAdapter.setDropDownViewResource
-                (android.R.layout.simple_list_item_1);
+        CustomList adapter = new
+                CustomList((Activity) this.getContext(), allProducts, allimg);
+        list=(ListView)getView().findViewById(R.id.list);
+        list.setAdapter(adapter);
 
-        list.setAdapter(dataAdapter);
     }
 
 }
