@@ -81,12 +81,9 @@ public class MainActivity extends AppCompatActivity {
         registro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Connection.getInstance().isConnectedToServer(Config.ip)){
-               Intent intent = new Intent(context, Registro.class);
-                startActivity(intent);}else{
-                    Toast.makeText(getApplicationContext(),"Error to connect with server!, try changing the ip address.", Toast.LENGTH_LONG).show();
 
-                }
+               Intent intent = new Intent(context, Registro.class);
+                startActivity(intent);
             }
         });
 
@@ -122,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog,int which) {
                         Toast.makeText(getApplicationContext(),"Ip Changed", Toast.LENGTH_SHORT).show();
                         Config.ip = input.getText().toString();
-                        if(Connection.getInstance().isConnectedToServer("http://"+Config.ip+":58706")){
+                        if(Connection.getInstance().isConnectedToServer(Config.ip)){
 
                         }else{
                             Toast.makeText(getApplicationContext(),"Error to connect with server!", Toast.LENGTH_SHORT).show();

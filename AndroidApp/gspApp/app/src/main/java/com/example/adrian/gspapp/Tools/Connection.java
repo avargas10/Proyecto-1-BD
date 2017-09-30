@@ -59,7 +59,7 @@ public class Connection {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         try{
-            URL myUrl = new URL(ip);
+            URL myUrl = new URL("http://"+ip+":58706");
             HttpURLConnection connection = (HttpURLConnection)myUrl.openConnection();
             connection.setConnectTimeout(10000);
             connection.connect();
@@ -195,10 +195,6 @@ public class Connection {
     public JSONArray getDirections(int type, int id){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        if(!isConnectedToServer(Config.ip)){
-            openLogin();
-
-        }else {
         HttpURLConnection conn;
         switch (type){
             case 1:
@@ -258,10 +254,9 @@ public class Connection {
                 }
                 break;
         }
-        JSONArray arr=new JSONArray();
-        return arr;
-    }
+
         return null;
+
     }
     public JSONArray getProductos(){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
