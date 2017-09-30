@@ -90,16 +90,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 pb.setVisibility(View.VISIBLE);
                 if(Connection.getInstance().clientLogin(username.getText().toString(),
-                        password.getText().toString())==1){
+                        password.getText().toString())){
                     username.setText("");
                     password.setText("");
                     Intent intent = new Intent(context, navigationDrawer.class);
                     startActivity(intent);
-                }else if(Connection.getInstance().clientLogin(username.getText().toString(),
-                        password.getText().toString())==0){
-                    Toast.makeText(getApplicationContext(),"Usuario o Contraseña incorrectos.", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(getApplicationContext(),"Error to connect with server!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Usuario o Contraseña incorrectos.", Toast.LENGTH_SHORT).show();
                 }
                 pb.setVisibility(View.GONE);
             }
@@ -121,10 +118,11 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"Ip Changed", Toast.LENGTH_SHORT).show();
                         Config.ip = input.getText().toString();
                         if(Connection.getInstance().isConnectedToServer("http://"+Config.ip+":58706")){
-                            //Toast.makeText(getApplicationContext(),"Connected!", Toast.LENGTH_SHORT).show();
+
                         }else{
-                            Toast.makeText(getApplicationContext(),"Error to connect with server!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"Error to connect with server!", Toast.LENGTH_SHORT).show();
                         }
+
                     }
                 });
 
