@@ -1,0 +1,119 @@
+<div class="text-center" style="padding:50px 0" >
+	<div class="logo"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</div>
+	<!-- Main Form -->
+
+	      <div class="login-form-main-message"></div>
+	      <div class="main-login-form" ng-controller="userController">
+	        <div class="login-group">
+				<div class="container">
+				  <table class="table">
+				    <thead>
+				      <tr>
+				        <th>Personal Information</th>
+				        <th>Account Information</th>
+				        <th>Adresss Information</th>
+				      </tr>
+				    </thead>
+				    <tbody>    
+				      <tr >
+				        <td class="success">
+				        	<div class="form-group">
+				            <label for="reg_username" class="sr-only">Name</label>
+				            <input type="text" class="form-control" id="reg_username" name="reg_username" placeholder="Name" data-ng-model="Name" >
+				          </div>
+				         
+				          <div class="form-group">
+				            <label for="reg_username" class="sr-only">Surname</label>
+				            <input type="text" class="form-control" id="reg_username" name="reg_username" placeholder="Surname" data-ng-model="Surname" > 
+				          </div>
+				          
+				          
+				          <div class="form-group">
+				            <label for="reg_username" class="sr-only">Second Surname</label>
+				            <input type="text" class="form-control" id="reg_username" name="reg_username" placeholder="Second Surname" data-ng-model="SecondSurname" ></div>
+				            
+				            <div class="form-group">
+				            <label for="reg_username" class="sr-only">Identification</label>
+				            <input type="text" class="form-control" id="reg_username" name="reg_username" placeholder="Identification" data-ng-model="Surname" >       
+				          </div>
+				          <div class="form-group">			            
+					             <i class="fa fa-calendar" aria-hidden="true"></i> Born
+					              <input type="datetime-local" ng-model="fecha" name="dateUser" required><br>  
+				          </div>
+				          </td>
+				        <td class="danger">
+				        	  <div class="form-group">
+				        	  	<div class="input-group">
+							    <span class="input-group-addon" id="btnGroupAddon">@</span>
+							    <input type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="btnGroupAddon" data-ng-model="Email" >
+							  </div>
+							</div>
+				         
+				          <div class="form-group">
+				            <label for="reg_username" class="sr-only">Username</label>
+				            <input type="text" class="form-control" id="reg_username" name="reg_username" placeholder="Username" data-ng-model="Username" > 
+				          </div>
+				          
+				          
+				          <div class="form-group">
+				            <label for="reg_username" class="sr-only">Password</label>
+				            <input type="password" class="form-control" id="reg_username" name="reg_username" placeholder="Password" data-ng-model="Password" ></div>
+				            
+				            <div class="form-group">
+				            <label for="reg_username" class="sr-only">Comfirm Password</label>
+				            <input type="password" class="form-control" id="reg_username" name="reg_username" placeholder="Comfirm Password" data-ng-model="ConfirmPassword" ></div>
+				          </td>
+				          <td class="info">
+				        	  <div class="form-group">
+									 <div class="form-group">
+										  <label for="exampleInputEmail1">State</label>
+										  <select class="form-control form-control-sm" ng-model="selectedProvincia ng-click="UpdateDirection()"> 
+										  <option ng-repeat="state in states" >{{state.Nombre}}</option>
+										</select>
+										  </div>
+							</div>
+				         
+				          <div class="form-group">
+									 <div class="form-group">
+										  <label for="exampleInputEmail1">City</label>
+										   <select class="form-control form-control-sm" ng-model="selectedItem"> 
+										  <option value="createUser" >Create User</option>
+										  <option value="deleteUser">Delete User</option>
+									
+										</select>
+										  </div>
+							</div>
+				         
+				          
+				          
+				          <div class="form-group">
+									 <div class="form-group">
+										  <label for="exampleInputEmail1">District</label>
+										   <select class="form-control form-control-sm" ng-model="selectedItem"> 
+										  <option value="createUser" >Create User</option>
+										  <option value="deleteUser">Delete User</option>
+									
+										</select>
+										  </div>
+							</div>
+				         
+				            
+				            <div class="form-group">
+				            <label for="reg_username" class="sr-only">Address Description</label>
+				            <input type="text" class="form-control" id="reg_username" name="reg_username" placeholder="Address Description" data-ng-model="Address" ></div>
+				          </td>
+				      </tr>
+				      
+			
+				    </tbody>
+				  </table>
+				  <div>
+				  <button data-ng-click="UpdateDirection()" type="button" class="btn btn-large btn-info"> Sign Up</button>
+				<button data-ng-controller="mainController" data-ng-click="" type="button" class="btn btn-outline-secondary"> Already a User</button></div>
+				</div>
+				</div>
+				</div>
+
+				
+	<!-- end:Main Form -->
+</div>

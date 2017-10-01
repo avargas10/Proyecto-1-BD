@@ -1,0 +1,48 @@
+
+<div class="text-center" style="padding:50px 0" >
+	<div class="logo"><i class="fa fa-user-circle" aria-hidden="true"></i> Log In</div>
+	<!-- Main Form -->
+	<div class="login-form-1" >
+		<form id="login-form" class="text-left">
+			<div class="login-form-main-message"></div>
+			<div class="main-login-form" data-ng-controller="userController">
+				<div class="login-group">
+
+					<div class="form-group">
+						<label for="lg_username" class="sr-only"> Username</label>
+						<input type="text" class="form-control" id="lg_password" name="lg_password" placeholder= "username" data-ng-model="username">
+					</div>
+					<div class="form-group">
+						<label for="lg_password" class="sr-only">Password</label>
+						<input type="password" class="form-control" id="lg_password" name="lg_password" placeholder="password" data-ng-model="password">
+					</div>
+						<br></br>
+					<div class="form-group">
+						<button type="button" class="btn btn-large btn-info" ng-click="loginUser(username,password,gRecaptchaResponse)"><i class="fa fa-sign-in" aria-hidden="true"></i> Sign In</button>
+						<button ng-controller="mainController" type="button" class="btn btn-outline-secondary" ng-click="register()"><i class="fa fa-user-plus" aria-hidden="true"></i> Sign Up</button>
+					</div>
+				</div>
+
+				<div class="form-group login-group-checkbox">
+					<input type="checkbox" class="" id="reg_agree" name="reg_agree" ng-model="admin"
+					>
+					<label for="reg_agree"><i class="fa fa-user-secret" aria-hidden="true"></i> Employee</a></label>
+				</div>
+			<div
+	        vc-recaptcha
+	        ng-model="gRecaptchaResponse"
+	        theme="dark"
+	        key="'6Lcb0jEUAAAAAGjvk_YL7MI9sUcQVlNPP8b5-a8R'"
+	        ></div>
+					<div vc-recaptcha ></div>
+				</div>.  
+
+				<div class="etc-login-form">
+					<p>forgot your password? <a>click here</a></p>
+				</div>
+				</div>
+			</form>
+
+		</div>
+		<!-- end:Main Form -->
+	</div>

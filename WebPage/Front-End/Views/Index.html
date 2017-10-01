@@ -1,16 +1,104 @@
-<!doctype html>
-<html ng-app>
+<!DOCTYPE html>
+<html data-ng-app="mainModule">
   <head>
-    <title>My AngularJS App</title>
-    <script src="../Scripts/angular.min.js"></script>
-    <script src="../Scripts/principalModule.js"></script>
+    <title>CE Team Dashboard</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script data-require="angularjs@1.3.5" data-semver="1.3.5" src="https://code.angularjs.org/1.3.5/angular.min.js"></script>
+    <script data-require="angular-route@*" data-semver="1.3.5" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+     <link rel="stylesheet" href="../CSS/logStyles.css" />
+    <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <script src="../scripts/script.js"></script>
+    <script src="../scripts/angular-recaptcha.min.js"></script>
+    <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+    
+  .carousel-inner img {
+      width: 100%; /* Set width to 100% */
+      margin: auto;
+      min-height:200px;
+      max-height:400px;
+  }
+
+  /* Hide the carousel text when the screen is less than 600 pixels wide */
+  @media (max-width: 600px) {
+    .carousel-caption {
+      display: none; 
+    }
+  }
+  </style>
   </head>
-  <body ng-app="slideShowExample">
-  <div ng-controller="slideShowCtrl">
-    <div slideshow>
-      <div slide ng-repeat="slide in slides"></div>
-          
+
+  <body>
+    <div id = "MainPage" data-ng-controller="mainController">
+    <nav class="navbar navbar-inverse" >
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"> <i class="fa fa-heartbeat" aria-hidden="true" style= "color:red"></i> Gas Station Pharmacy</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li data-ng-click = "getUser()" class="active">
+              <a  >Home</a>
+            </li>
+            <li ng-show="isActive()">
+              <a> Products</a>
+            </li>
+            <li ng-show="isActive()">
+              <a href="#">My Prescriptions</a>
+            </li>
+            <li>
+              <a href="#">Contact Us</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a  ng-show="isActive()">
+                <i class="fa fa-user-circle" aria-hidden="true"></i> {{getUser()}}</a>
+            </li>
+            <li>
+              <a data-ng-click = "login()" ng-show="!isActive()">
+                <span  class="glyphicon glyphicon-log-in"></span> Log In</a>
+            </li>
+            
+          <li>
+                <a data-ng-click = "logOutUser()" ng-show="isActive()">
+                <span  class="glyphicon glyphicon-log-out"></span> Log Out</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class = "row">
+      <div class = "col-xs-12">
+        <div data-ng-view></div>
+      </div>
     </div>
-  </div>
-</body>
+    
+    <footer class="container-fluid text-center">
+      <p>Life is to fast to be sick</p>
+    </footer>
+  </body>
 </html>
