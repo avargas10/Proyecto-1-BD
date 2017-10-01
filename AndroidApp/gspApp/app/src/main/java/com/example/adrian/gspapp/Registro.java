@@ -208,50 +208,56 @@ public class Registro extends AppCompatActivity {
 
     private void fillProvincia() throws JSONException {
         dataProvincia =Connection.getInstance().getDirections(1,0);
-        List<String> allNames = new ArrayList<String>();
-        for(int i=0; i<dataProvincia.length();i++){
-            JSONObject objeto= (JSONObject) dataProvincia.get(i);
-            allNames.add(objeto.getString("Nombre"));
-        }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_spinner_item, allNames );
 
-        dataAdapter.setDropDownViewResource
-                (android.R.layout.simple_spinner_dropdown_item);
+            List<String> allNames = new ArrayList<String>();
+            for (int i = 0; i < dataProvincia.length(); i++) {
+                JSONObject objeto = (JSONObject) dataProvincia.get(i);
+                allNames.add(objeto.getString("Nombre"));
+            }
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
+                    (this, android.R.layout.simple_spinner_item, allNames);
 
-        provincia.setAdapter(dataAdapter);
+            dataAdapter.setDropDownViewResource
+                    (android.R.layout.simple_spinner_dropdown_item);
+
+            provincia.setAdapter(dataAdapter);
+
     }
 
     private void fillCanton(int id) throws JSONException {
-        dataCanton =Connection.getInstance().getDirections(2,id);
-        List<String> allNames = new ArrayList<String>();
-        for(int i=0; i<dataCanton.length();i++){
-            JSONObject objeto= (JSONObject) dataCanton.get(i);
-            allNames.add(objeto.getString("Nombre"));
-        }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_spinner_item, allNames );
 
-        dataAdapter.setDropDownViewResource
-                (android.R.layout.simple_spinner_dropdown_item);
+            dataCanton = Connection.getInstance().getDirections(2, id);
+            List<String> allNames = new ArrayList<String>();
+            for (int i = 0; i < dataCanton.length(); i++) {
+                JSONObject objeto = (JSONObject) dataCanton.get(i);
+                allNames.add(objeto.getString("Nombre"));
+            }
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
+                    (this, android.R.layout.simple_spinner_item, allNames);
 
-        canton.setAdapter(dataAdapter);
+            dataAdapter.setDropDownViewResource
+                    (android.R.layout.simple_spinner_dropdown_item);
+
+            canton.setAdapter(dataAdapter);
+
     }
 
     private void fillDistrito(int id) throws JSONException {
-        dataDistrito =Connection.getInstance().getDirections(3,id);
-        List<String> allNames = new ArrayList<String>();
-        for(int i=0; i<dataDistrito.length();i++){
-            JSONObject objeto= (JSONObject) dataDistrito.get(i);
-            allNames.add(objeto.getString("Nombre"));
-        }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_spinner_item, allNames );
 
-        dataAdapter.setDropDownViewResource
-                (android.R.layout.simple_spinner_dropdown_item);
+            dataDistrito = Connection.getInstance().getDirections(3, id);
+            List<String> allNames = new ArrayList<String>();
+            for (int i = 0; i < dataDistrito.length(); i++) {
+                JSONObject objeto = (JSONObject) dataDistrito.get(i);
+                allNames.add(objeto.getString("Nombre"));
+            }
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
+                    (this, android.R.layout.simple_spinner_item, allNames);
 
-        distrito.setAdapter(dataAdapter);
+            dataAdapter.setDropDownViewResource
+                    (android.R.layout.simple_spinner_dropdown_item);
+
+            distrito.setAdapter(dataAdapter);
+
     }
 
 }

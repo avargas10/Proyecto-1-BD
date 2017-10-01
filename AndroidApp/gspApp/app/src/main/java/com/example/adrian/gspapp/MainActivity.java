@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
         password=(EditText) findViewById(R.id.txtPassword);
         pb=(ProgressBar)findViewById(R.id.progressBar1);
         pb.setVisibility(View.GONE);
-        final Context context= this;
+        final Context context=this.getApplicationContext();
+        Connection.getInstance().context=context;
 
 
         forgot.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         registro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                Intent intent = new Intent(context, Registro.class);
                 startActivity(intent);
             }
@@ -117,6 +119,12 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog,int which) {
                         Toast.makeText(getApplicationContext(),"Ip Changed", Toast.LENGTH_SHORT).show();
                         Config.ip = input.getText().toString();
+                        if(Connection.getInstance().isConnectedToServer(Config.ip)){
+
+                        }else{
+                            Toast.makeText(getApplicationContext(),"Error to connect with server!", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 });
 

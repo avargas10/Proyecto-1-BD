@@ -27,6 +27,8 @@ namespace dataAcces
         public Nullable<int> idProvincia { get; set; }
         public Nullable<int> idCanton { get; set; }
         public Nullable<int> idDistrito { get; set; }
+        public Nullable<double> Latitud { get; set; }
+        public Nullable<double> Longitud { get; set; }
         public string detalleDireccion { get; set; }
         public string Nombre { get; set; }
     

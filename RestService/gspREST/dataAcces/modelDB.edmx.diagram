@@ -4,26 +4,26 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c613d22023ef4db1bddf7008897bf195" Name="Diagram1">
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.CANTON" Width="1.5" PointX="3" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.CLIENTE" Width="1.5" PointX="9.75" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.DETALLEPEDIDO" Width="1.5" PointX="15" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.DETALLERECETA" Width="1.5" PointX="15" PointY="22" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.DIRECCIONE" Width="1.5" PointX="7.5" PointY="13.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.DISTRITO" Width="1.5" PointX="5.25" PointY="18.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.EMPLEADO" Width="1.5" PointX="9.75" PointY="17" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.EMPLEADOXSUCURSAL" Width="1.5" PointX="14.75" PointY="15" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.EMPRESA" Width="1.5" PointX="8.25" PointY="21.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.ESTADO" Width="1.5" PointX="10.5" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PADECIMIENTO" Width="1.5" PointX="12" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PEDIDO" Width="1.5" PointX="12.75" PointY="9.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PRODUCTO" Width="1.5" PointX="12.75" PointY="21.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PRODUCTOXSUCURSAL" Width="1.5" PointX="15.75" PointY="11.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PROVEEDORE" Width="1.5" PointX="10.5" PointY="22" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PROVINCIA" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.RECETA" Width="1.5" PointX="12" PointY="16.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.ROLE" Width="1.5" PointX="12.5" PointY="25.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="GasStationPharmacyDBModel.SUCURSAL" Width="1.5" PointX="10.5" PointY="12" IsExpanded="true" />
+      <Diagram DiagramId="702cf2271fed4951be71086428b42976" Name="Diagram1">
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.CANTON" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.CLIENTE" Width="1.5" PointX="9.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.DETALLEPEDIDO" Width="1.5" PointX="15" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.DETALLERECETA" Width="1.5" PointX="15" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.DIRECCIONE" Width="1.5" PointX="7.5" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.DISTRITO" Width="1.5" PointX="5.25" PointY="20.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.EMPLEADO" Width="1.5" PointX="9.75" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.EMPLEADOXSUCURSAL" Width="1.5" PointX="12.75" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.EMPRESA" Width="1.5" PointX="8.25" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.ESTADO" Width="1.5" PointX="10.5" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PADECIMIENTO" Width="1.5" PointX="12" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PEDIDO" Width="1.5" PointX="12.75" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PRODUCTO" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PRODUCTOXSUCURSAL" Width="1.5" PointX="15.75" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PROVEEDORE" Width="1.5" PointX="10.5" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.PROVINCIA" Width="1.5" PointX="0.75" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.RECETA" Width="1.5" PointX="12" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.ROLE" Width="1.5" PointX="10.5" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GasStationPharmacyDBModel.SUCURSAL" Width="1.5" PointX="10.5" PointY="14.125" IsExpanded="true" />
         <AssociationConnector Association="GasStationPharmacyDBModel.FK__CANTON__idProvin__5DCAEF64" ManuallyRouted="false" />
         <AssociationConnector Association="GasStationPharmacyDBModel.FK__DIRECCION__Canto__52593CB8" ManuallyRouted="false" />
         <AssociationConnector Association="GasStationPharmacyDBModel.FK__DISTRITO__idCant__5CD6CB2B" ManuallyRouted="false" />

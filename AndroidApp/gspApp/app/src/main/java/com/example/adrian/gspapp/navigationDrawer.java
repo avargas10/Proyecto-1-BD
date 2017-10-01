@@ -1,5 +1,6 @@
 package com.example.adrian.gspapp;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,9 +25,12 @@ import com.example.adrian.gspapp.Tools.Config;
 
 import org.json.JSONException;
 
+import java.util.Calendar;
+
 public class navigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     TextView menuName, menuUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +38,7 @@ public class navigationDrawer extends AppCompatActivity
         setContentView(R.layout.activity_principal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -98,6 +105,9 @@ public class navigationDrawer extends AppCompatActivity
             case R.id.nav_gallery:
                 fragment=new Recetas();
                 break;
+            case R.id.nav_padecimientos:
+                fragment=new Padecimientos();
+                break;
             case R.id.nav_manage:
                 fragment=new Cuenta();
                 break;
@@ -156,4 +166,6 @@ public class navigationDrawer extends AppCompatActivity
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+
 }
