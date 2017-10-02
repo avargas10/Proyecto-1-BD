@@ -21,6 +21,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -29,8 +30,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.adrian.gspapp.Tools.Config;
 import com.example.adrian.gspapp.Tools.Connection;
 import com.example.adrian.gspapp.Tools.CustomList;
 
@@ -38,6 +41,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -58,6 +62,7 @@ public class Pedidos extends Fragment {
     static List<String> allProducts;
     static List<Bitmap> allimg;
     static List<Integer> precios;
+    String encodedprescription=null;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -67,6 +72,28 @@ public class Pedidos extends Fragment {
         recojo = (EditText) getView().findViewById(R.id.FechaRecojo);
         submit = (Button) getView().findViewById(R.id.Submit);
         btncart = (FloatingActionButton)getView().findViewById(R.id.ShoppingCart);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                // selected item
+                String selectedproduct = ((TextView) view.findViewById(R.id.txt2)).getText().toString();
+                ImageView imgview = (ImageView) view.findViewById(R.id.img2);
+                imgview.setDrawingCacheEnabled(true);
+                Bitmap selectedimg = Bitmap.createBitmap(imgview.getDrawingCache());
+                int selectedprice = Integer.parseInt(((TextView) view.findViewById(R.id.price2)).getText().toString());
+                String selectedpres = ((TextView) view.findViewById(R.id.pres2)).getText().toString();
+
+
+                Config.allProducts.add(selectedproduct);
+                Config.allimg.add(selectedimg);
+                Config.precios.add(selectedprice);
+                Config.prescription.add(selectedpres);
+
+
+            }
+        });
+
         recojo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,29 +124,19 @@ public class Pedidos extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
-                if(reqpres){
+
+                if(RequirePrescription()){
                     builder = new AlertDialog.Builder(getContext());
                     builder.setMessage("You need to enter a prescription to continue")
                             .setTitle("Prescription Request");
-                    final ImageButton input = new ImageButton(getContext());
-                    input.setImageResource(R.drawable.camera);
-                    builder.setView(input);
-                    input.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                            if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
-                                startActivityForResult(takePictureIntent, CAMERA_REQUEST);
-
-                            }
-                        }
-                    });
-
                     builder.setPositiveButton("SEND",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,int which) {
-                                    Toast.makeText(getContext(),"Products List Sended", Toast.LENGTH_SHORT).show();
+                                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                    if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
+                                        startActivityForResult(takePictureIntent, CAMERA_REQUEST);
 
+                                    }
                                 }
                             });
 
@@ -132,7 +149,10 @@ public class Pedidos extends Fragment {
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
-                else{}
+                else{
+                    cleanVariables();
+                    Toast.makeText(getContext(),"Request send",Toast.LENGTH_LONG).show();
+                }
             }
         });
         getActivity().setTitle("Pedidos");
@@ -144,11 +164,28 @@ public class Pedidos extends Fragment {
         }
 
     }
+
+    private boolean RequirePrescription() {
+        for(int i = 0 ; i < Config.prescription.size() ; i++){
+            if(Config.prescription.get(i).equalsIgnoreCase("Require prescription")){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
-            Log.e("compability test......","entre a este metodo.......");
 
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            photo.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            byte[] byteArray = byteArrayOutputStream .toByteArray();
+
+            encodedprescription = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            if(encodedprescription != null) {
+                cleanVariables();
+            }
         }
     }
 
@@ -176,7 +213,6 @@ public class Pedidos extends Fragment {
             allimg.add(decodedByte);
             precios.add(objeto.getInt("Precio"));
             if(objeto.getInt("reqPrescripcion") == 1){
-                reqpres = true;
                 prescription.add("Require prescription");
             }
             else{
@@ -185,7 +221,7 @@ public class Pedidos extends Fragment {
         }
 
         CustomList adapter = new
-                CustomList((Activity) this.getContext(), allProducts, allimg, precios, prescription);
+                CustomList((Activity) this.getContext(), allProducts, allimg, precios, prescription,Config.ADD);
         list=(ListView)getView().findViewById(R.id.list);
         list.setAdapter(adapter);
 
@@ -206,6 +242,17 @@ public class Pedidos extends Fragment {
 
         sucursales.setAdapter(dataAdapter);
 
+    }
+    private void cleanVariables(){
+        prescription.clear();
+        allProducts.clear();
+        allimg.clear();
+        precios.clear();
+        encodedprescription=null;
+        Config.allProducts.clear();
+        Config.prescription.clear();
+        Config.precios.clear();
+        Config.allimg.clear();
     }
 
 

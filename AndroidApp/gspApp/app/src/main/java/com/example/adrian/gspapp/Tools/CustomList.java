@@ -23,30 +23,44 @@ public class CustomList extends ArrayAdapter<String>{
     private final List imageId;
     private final List precios;
     private final List prescription;
-    public CustomList(Activity context, List web, List imageId, List precios, List prescription) {
+    private final int place;
+    public CustomList(Activity context, List web, List imageId, List precios, List prescription, int place) {
         super(context, R.layout.list_design, web);
         this.context = context;
         this.web = web;
         this.imageId = imageId;
         this.precios = precios;
         this.prescription = prescription;
+        this.place = place;
 
     }
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        LayoutInflater inflater = context.getLayoutInflater();
-        View rowView= inflater.inflate(R.layout.list_design, null, true);
-        TextView txtTitle = (TextView) rowView.findViewById(R.id.txt2);
-        TextView txtPrecios = (TextView) rowView.findViewById(R.id.price2);
-        TextView txtPres = (TextView) rowView.findViewById(R.id.pres2);
+        try {
+            LayoutInflater inflater = context.getLayoutInflater();
+            View rowView = inflater.inflate(R.layout.list_design, null, true);
+            TextView txtTitle = (TextView) rowView.findViewById(R.id.txt2);
+            TextView txtPrecios = (TextView) rowView.findViewById(R.id.price2);
+            TextView txtPres = (TextView) rowView.findViewById(R.id.pres2);
+            ImageView imageView = (ImageView) rowView.findViewById(R.id.img2);
+            ImageView img = (ImageView) rowView.findViewById(R.id.imageView1);
 
 
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.img2);
-        txtTitle.setText((String) web.get(position));
-        txtPrecios.setText("   -   $" + String.valueOf(precios.get(position)));
-        txtPres.setText((String) prescription.get(position));
+            txtTitle.setText((String) web.get(position));
+            txtPrecios.setText(String.valueOf(precios.get(position)));
+            txtPres.setText((String) prescription.get(position));
 
-        imageView.setImageBitmap((Bitmap)imageId.get(position));
-        return rowView;
+            imageView.setImageBitmap((Bitmap) imageId.get(position));
+
+            if(place == 0){
+                img.setImageResource(R.drawable.add);
+            }
+            else if(place == 1){
+                img.setImageResource(R.drawable.delete);
+            }
+
+            return rowView;
+        }catch (Exception e){}
+        return context.getLayoutInflater().inflate(R.layout.list_design, null, true);
     }
 }
