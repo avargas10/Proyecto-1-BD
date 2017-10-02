@@ -20,5 +20,13 @@ namespace gspREST.Controllers
                 return entities.PRODUCTOS.ToList();
             }
         }
+        public IEnumerable<PRODUCTOXSUCURSAL> ProductosxSucursal([FromUri] int id)
+        {
+            using (GasStationPharmacyDBEntities entities = new GasStationPharmacyDBEntities())
+            {
+                entities.Configuration.LazyLoadingEnabled = false;
+                return entities.PRODUCTOXSUCURSALs.ToList().Where(e => e.idSucursal == id);
+            }
+        }
     }
 }

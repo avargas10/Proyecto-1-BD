@@ -2,7 +2,6 @@ package com.example.adrian.gspapp;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,7 +16,6 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,7 +50,7 @@ public class Pedidos extends Fragment {
     EditText recojo;
     FloatingActionButton btncart;
     Button submit;
-    private JSONArray dataSucursales;
+    private JSONArray dataSucursales,dataPxS;
     private boolean reqpres = false;
     private static final int CAMERA_REQUEST = 1888;
     AlertDialog.Builder builder;
@@ -62,7 +58,11 @@ public class Pedidos extends Fragment {
     static List<String> allProducts;
     static List<Bitmap> allimg;
     static List<Integer> precios;
+    static List<Integer> available;
+    static List<Integer> idproducto;
+    static ArrayList<String> unavailable;
     String encodedprescription=null;
+    static int sucursal = 0;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -89,7 +89,15 @@ public class Pedidos extends Fragment {
                 Config.allimg.add(selectedimg);
                 Config.precios.add(selectedprice);
                 Config.prescription.add(selectedpres);
+                Config.idproducto.add(idproducto.get(position));
 
+
+            }
+        });
+        sucursales.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                sucursal = position + 1;
 
             }
         });
@@ -150,8 +158,10 @@ public class Pedidos extends Fragment {
                     dialog.show();
                 }
                 else{
-                    cleanVariables();
-                    Toast.makeText(getContext(),"Request send",Toast.LENGTH_LONG).show();
+                    submitresult();
+
+
+
                 }
             }
         });
@@ -163,6 +173,48 @@ public class Pedidos extends Fragment {
             e.printStackTrace();
         }
 
+    }
+
+    private void submitresult() {
+        if(!Config.allProducts.isEmpty()) {
+            try {
+                if(IsProductAvaible()) {
+                    Toast.makeText(getContext(), "Request send", Toast.LENGTH_LONG).show();
+                    cleanVariables();
+                }
+                else{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setMessage("One or more products could not be found in the store you chose")
+                            .setTitle("Error Finding products");
+                    final ListView input = new ListView(getContext());
+
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
+                            (getContext(), android.R.layout.simple_list_item_1, unavailable);
+
+                    dataAdapter.setDropDownViewResource
+                            (android.R.layout.simple_spinner_dropdown_item);
+
+                    input.setAdapter(dataAdapter);
+
+                    builder.setView(input);
+
+                    builder.setPositiveButton("ok",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            } catch (JSONException e) {
+                Toast.makeText(getContext(), "Error", Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+        }
+        else{
+            Toast.makeText(getContext(), "Shopping Cart is empty", Toast.LENGTH_LONG).show();
+        }
     }
 
     private boolean RequirePrescription() {
@@ -184,7 +236,7 @@ public class Pedidos extends Fragment {
 
             encodedprescription = Base64.encodeToString(byteArray, Base64.DEFAULT);
             if(encodedprescription != null) {
-                cleanVariables();
+                submitresult();
             }
         }
     }
@@ -204,6 +256,7 @@ public class Pedidos extends Fragment {
         allProducts = new ArrayList<String>();
         allimg = new ArrayList<>();
         precios = new ArrayList<>();
+        idproducto = new ArrayList<>();
 
         for(int i=0; i<dataProducts.length();i++){
             JSONObject objeto= (JSONObject) dataProducts.get(i);
@@ -212,6 +265,7 @@ public class Pedidos extends Fragment {
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             allimg.add(decodedByte);
             precios.add(objeto.getInt("Precio"));
+            idproducto.add(objeto.getInt("idProducto"));
             if(objeto.getInt("reqPrescripcion") == 1){
                 prescription.add("Require prescription");
             }
@@ -243,16 +297,37 @@ public class Pedidos extends Fragment {
         sucursales.setAdapter(dataAdapter);
 
     }
+    private boolean IsProductAvaible() throws JSONException {
+        dataPxS =Connection.getInstance().getProductosxSucursal(sucursal);
+        unavailable = new ArrayList<String>();
+        available = new ArrayList<Integer>();
+        for (int i = 0; i < dataPxS.length(); i++) {
+            JSONObject objeto = (JSONObject) dataPxS.get(i);
+            available.add(objeto.getInt("codProducto"));
+
+        }
+        for(int i = 0 ; i < Config.idproducto.size() ; i++){
+            if(!available.contains(Config.idproducto.get(i))){
+                unavailable.add(Config.allProducts.get(i));
+            }
+        }
+
+        if(unavailable.isEmpty()){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
     private void cleanVariables(){
-        prescription.clear();
-        allProducts.clear();
-        allimg.clear();
-        precios.clear();
         encodedprescription=null;
         Config.allProducts.clear();
         Config.prescription.clear();
         Config.precios.clear();
         Config.allimg.clear();
+        Config.idproducto.clear();
+        unavailable.clear();
     }
 
 

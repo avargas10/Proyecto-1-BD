@@ -186,9 +186,44 @@ public class Connection {
             }
             JSONObject client =new JSONObject(response.toString());
             MainActivity.clientInfo=client;
+            Config.ClientLogged = client;
             System.out.println("CLIENTE: "+MainActivity.clientInfo);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    public JSONArray getProductosxSucursal(int id){
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        HttpURLConnection conn;
+        try {
+        URL url = new URL("http://"+Config.ip + ":58706/api/Productos/ProductosxSucursal?id="+id );
+        conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+
+        conn.connect();
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        JSONArray jArray=new JSONArray(response.toString());
+
+        return jArray;
+
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+            return null;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

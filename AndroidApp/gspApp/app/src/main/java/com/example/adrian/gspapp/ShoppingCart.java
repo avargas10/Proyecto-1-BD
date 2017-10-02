@@ -42,6 +42,7 @@ public class ShoppingCart extends AppCompatActivity {
                 Config.allimg.remove(position);
                 Config.precios.remove(position);
                 Config.prescription.remove(position);
+                Config.idproducto.remove(position);
                 adapter.notifyDataSetChanged();
 
             }
