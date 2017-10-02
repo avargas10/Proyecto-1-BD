@@ -14,4 +14,5 @@ public abstract class Config {
     public static List<String> allProducts = new ArrayList<String>();
     public static List<Bitmap> allimg = new ArrayList<>();
     public static List<Integer> precios = new ArrayList<>();
+    public static List<String> prescription = new ArrayList<String>();
 }

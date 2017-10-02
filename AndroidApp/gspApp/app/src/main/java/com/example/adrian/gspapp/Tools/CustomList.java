@@ -22,25 +22,29 @@ public class CustomList extends ArrayAdapter<String>{
     private final List web;
     private final List imageId;
     private final List precios;
-    public CustomList(Activity context, List web, List imageId, List precios) {
-        super(context, R.layout.list_single, web);
+    private final List prescription;
+    public CustomList(Activity context, List web, List imageId, List precios, List prescription) {
+        super(context, R.layout.list_design, web);
         this.context = context;
         this.web = web;
         this.imageId = imageId;
         this.precios = precios;
+        this.prescription = prescription;
 
     }
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        View rowView= inflater.inflate(R.layout.list_single, null, true);
-        TextView txtTitle = (TextView) rowView.findViewById(R.id.txt);
-        TextView txtPrecios = (TextView) rowView.findViewById(R.id.price);
+        View rowView= inflater.inflate(R.layout.list_design, null, true);
+        TextView txtTitle = (TextView) rowView.findViewById(R.id.txt2);
+        TextView txtPrecios = (TextView) rowView.findViewById(R.id.price2);
+        TextView txtPres = (TextView) rowView.findViewById(R.id.pres2);
 
 
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
+        ImageView imageView = (ImageView) rowView.findViewById(R.id.img2);
         txtTitle.setText((String) web.get(position));
         txtPrecios.setText("   -   $" + String.valueOf(precios.get(position)));
+        txtPres.setText((String) prescription.get(position));
 
         imageView.setImageBitmap((Bitmap)imageId.get(position));
         return rowView;
