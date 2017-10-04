@@ -13,49 +13,22 @@ namespace gspREST.Controllers
 {
     public class ClientesController : ApiController
     {
-        public IEnumerable<Dictionary<string, object>> Serialize(SqlDataReader reader)
-        {
-            var results = new List<Dictionary<string, object>>();
-            var cols = new List<string>();
-            for (var i = 0; i < reader.FieldCount; i++)
-                cols.Add(reader.GetName(i));
-
-            while (reader.Read())
-                results.Add(SerializeRow(cols, reader));
-
-            return results;
-        }
-        private Dictionary<string, object> SerializeRow(IEnumerable<string> cols,
-                                                        SqlDataReader reader)
-        {
-            var result = new Dictionary<string, object>();
-            foreach (var col in cols)
-                result.Add(col, reader[col]);
-            return result;
-        }
+        JSONSerializer serial = new JSONSerializer();
 
         [HttpGet]
         public IEnumerable<Dictionary<string, object>> getAll()
         {
-
-            /*using (GasStationPharmacyDBEntities entities = new GasStationPharmacyDBEntities())
-            {
-                entities.Configuration.LazyLoadingEnabled = false;
-                return entities.CLIENTEs.ToList();
-            }*/
             string DatabaseConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GasStationPharmacyDB"].ConnectionString;
 
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("SELECT * FROM CLIENTE WHERE Nombre='Rodolfo' AND pApellido='Solano'", conn);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM CLIENTE", conn);
                 cmd.Connection = conn;
                 conn.Open();
                 String[] mylist;
                 using (var reader = cmd.ExecuteReader())
                 {
-                    
-                    var r = Serialize(reader);
-                    string json = JsonConvert.SerializeObject(r);
+                    var r = serial.Serialize(reader);
                     return r;
                 }
 

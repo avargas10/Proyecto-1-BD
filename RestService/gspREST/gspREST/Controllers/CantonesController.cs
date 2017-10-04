@@ -5,29 +5,45 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using dataAcces;
+using System.Data.SqlClient;
 
 namespace gspREST.Controllers
 {
     public class CantonesController : ApiController
     {
-        
+        JSONSerializer serial = new JSONSerializer();
+        string DatabaseConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GasStationPharmacyDB"].ConnectionString;
 
         [HttpGet]
-        public IEnumerable<CANTON> getAll()
-        {
+        public IEnumerable<Dictionary<string, object>> getAll()
+        {   
 
-            using (GasStationPharmacyDBEntities entities = new GasStationPharmacyDBEntities())
+            using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
-                entities.Configuration.LazyLoadingEnabled = false;
-                return entities.CANTONs.ToList();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM CANTON", conn);
+                cmd.Connection = conn;
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    var r = serial.Serialize(reader);
+                    return r;
+                }
+
             }
         }
-        public IEnumerable<CANTON> getDistritos([FromUri] int Provincia)
+        public IEnumerable<Dictionary<string, object>> getCantones([FromUri] int Provincia)
         {
-            using (GasStationPharmacyDBEntities entities = new GasStationPharmacyDBEntities())
+            using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
-                entities.Configuration.LazyLoadingEnabled = false;
-                return entities.CANTONs.ToList().Where(e => e.idProvincia == Provincia);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM CANTON WHERE idProvincia=@provincia", conn);
+                cmd.Connection = conn;
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    var r = serial.Serialize(reader);
+                    return r;
+                }
+
             }
         }
     }

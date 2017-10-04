@@ -53,11 +53,6 @@ namespace gspREST.Controllers
                 {
 
                     var r = Serialize(reader);
-<<<<<<< HEAD
-                    //string json = JsonConvert.SerializeObject(r);
-=======
-                   // string json = JsonConvert.SerializeObject(r);
->>>>>>> 15af81b355f0887a6125e4148d9da23684ce6fab
                     return r;
                 }
 
