@@ -2,6 +2,7 @@ package com.example.adrian.gspapp;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -27,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.adrian.gspapp.Tools.Config;
@@ -47,6 +49,7 @@ public class Pedidos extends Fragment {
     JSONArray dataProducts;
     ListView list,sucursales;
     DatePickerDialog datePickerDialog;
+    TimePickerDialog timePickerDialog;
     EditText recojo;
     FloatingActionButton btncart;
     Button submit;
@@ -63,6 +66,8 @@ public class Pedidos extends Fragment {
     static ArrayList<String> unavailable;
     String encodedprescription=null;
     static int sucursal = 0;
+    EditText fecha;
+    EditText telefono;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -71,6 +76,8 @@ public class Pedidos extends Fragment {
         sucursales = (ListView) getView().findViewById(R.id.listaSucursales);
         recojo = (EditText) getView().findViewById(R.id.FechaRecojo);
         submit = (Button) getView().findViewById(R.id.Submit);
+        fecha = (EditText)getView().findViewById(R.id.FechaRecojo);
+        telefono  = (EditText)getView().findViewById(R.id.Telefono);
         btncart = (FloatingActionButton)getView().findViewById(R.id.ShoppingCart);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -110,6 +117,15 @@ public class Pedidos extends Fragment {
                 int mYear = c.get(Calendar.YEAR);
                 int mMonth = c.get(Calendar.MONTH);
                 int mDay = c.get(Calendar.DAY_OF_MONTH);
+                timePickerDialog = new TimePickerDialog(getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                                String txt = recojo.getText().toString();
+                                recojo.setText(txt+"T"+String.valueOf(i)+":"+String.valueOf(i1)+":"+"00");
+                            }
+                        }, 0, 0, true);
+                timePickerDialog.show();
                 datePickerDialog = new DatePickerDialog(getContext(),
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
@@ -179,7 +195,7 @@ public class Pedidos extends Fragment {
         if(!Config.allProducts.isEmpty()) {
             try {
                 if(IsProductAvaible()) {
-                    Toast.makeText(getContext(), "Request send", Toast.LENGTH_LONG).show();
+                    regPedido();
                     cleanVariables();
                 }
                 else{
@@ -214,6 +230,28 @@ public class Pedidos extends Fragment {
         }
         else{
             Toast.makeText(getContext(), "Shopping Cart is empty", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void regPedido() {
+        try{
+            JSONObject pad= new JSONObject();
+            pad.put("sucursalRecojo", sucursal);
+            pad.put("idCliente", Config.ClientLogged.get("Cedula"));
+            pad.put("horaRecojo", fecha.getText());
+            pad.put("Telefono", telefono.getText());
+            pad.put("Imagen", encodedprescription);
+            pad.put("Estado", 1);
+
+            if(Connection.getInstance().regPedido(pad)){
+                Toast.makeText(getContext(),"Pedido enviado correctamente.", Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(getContext(),"Error al agregar el pedido.", Toast.LENGTH_LONG).show();
+
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -328,6 +366,8 @@ public class Pedidos extends Fragment {
         Config.allimg.clear();
         Config.idproducto.clear();
         unavailable.clear();
+        fecha.setText("");
+        telefono.setText("");
     }
 
 
