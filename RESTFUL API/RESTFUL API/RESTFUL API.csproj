@@ -182,8 +182,13 @@
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\DireccionesController.cs" />
     <Compile Include="Controllers\DistritoController.cs" />
+    <Compile Include="Controllers\EmpleadosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PadecimientosController.cs" />
+    <Compile Include="Controllers\PedidosController.cs" />
+    <Compile Include="Controllers\ProductosController.cs" />
     <Compile Include="Controllers\ProvinciasController.cs" />
+    <Compile Include="Controllers\SucursalController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -192,8 +197,13 @@
     <Compile Include="Models\cantonModel.cs" />
     <Compile Include="Models\clienteModel.cs" />
     <Compile Include="Models\direccionesModel.cs" />
+    <Compile Include="Models\empleadosModel.cs" />
     <Compile Include="Models\modelDistrito.cs" />
+    <Compile Include="Models\padecimientosModel.cs" />
+    <Compile Include="Models\pedidosModel.cs" />
+    <Compile Include="Models\productosModel.cs" />
     <Compile Include="Models\provinciaModel.cs" />
+    <Compile Include="Models\sucursalModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
