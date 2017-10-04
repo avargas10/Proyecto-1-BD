@@ -6,7 +6,7 @@ app.config(function($routeProvider, $locationProvider){
 	when('/login',{templateUrl: '../Views/login-view.html',controller: 'userController'}).
 	when('/register',{templateUrl: '../Views/register.html',controller: 'userController'}).
 	when('/pedido',{templateUrl: '../Views/pedido.html',controller: 'userController'}).
-		otherwise({ redirectTo: '/Home'});
+		otherwise({ redirectTo: '/pedido'});
 	// $locationProvider.html5Mode(true);
 });
 
