@@ -36,6 +36,7 @@ namespace gspREST.Controllers
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
                 SqlCommand cmd = new SqlCommand("SELECT * FROM CANTON WHERE idProvincia=@provincia", conn);
+                cmd.Parameters.AddWithValue("@provincia",Provincia);
                 cmd.Connection = conn;
                 conn.Open();
                 using (var reader = cmd.ExecuteReader())

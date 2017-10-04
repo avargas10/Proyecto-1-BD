@@ -59,7 +59,7 @@ public class Connection {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         try{
-            URL myUrl = new URL("http://"+ip+":58706");
+            URL myUrl = new URL("http://"+ip+":39342");
             HttpURLConnection connection = (HttpURLConnection)myUrl.openConnection();
             connection.setConnectTimeout(10000);
             connection.connect();
@@ -79,7 +79,7 @@ public class Connection {
             StrictMode.setThreadPolicy(policy);
             HttpURLConnection conn;
             try {
-                URL url = new URL("http://" + Config.ip + ":58706/api/Clientes?username=" + user + "&pass=" + pass);
+                URL url = new URL("http://" + Config.ip + ":39342/api/Clientes?username=" + user + "&pass=" + pass);
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setConnectTimeout(15000);
@@ -118,7 +118,7 @@ public class Connection {
         }else {
             HttpURLConnection conn;
             try {
-                URL url = new URL("http://" + Config.ip + ":58706/api/Clientes");
+                URL url = new URL("http://" + Config.ip + ":39342/api/Clientes");
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestProperty("Content-Type", "application/json");
                 conn.setDoOutput(true);
@@ -144,7 +144,7 @@ public class Connection {
 
         HttpURLConnection conn;
         try {
-            URL url = new URL("http://"+Config.ip + ":58706/api/Direcciones");
+            URL url = new URL("http://"+Config.ip + ":39342/api/Direcciones");
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setDoOutput(true);
@@ -174,7 +174,7 @@ public class Connection {
         StrictMode.setThreadPolicy(policy);
         HttpURLConnection conn;
         try {
-            URL url = new URL("http://"+Config.ip + ":58706/api/Clientes?username=" + user );
+            URL url = new URL("http://"+Config.ip + ":39342/api/Clientes?username=" + user );
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();
@@ -197,7 +197,7 @@ public class Connection {
         StrictMode.setThreadPolicy(policy);
         HttpURLConnection conn;
         try {
-        URL url = new URL("http://"+Config.ip + ":58706/api/Productos/ProductosxSucursal?id="+id );
+        URL url = new URL("http://"+Config.ip + ":39342/api/Productos/ProductosxSucursal?id="+id );
         conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
 
@@ -234,7 +234,7 @@ public class Connection {
         switch (type){
             case 1:
                 try {
-                    URL url = new URL("http://"+Config.ip + ":58706/api/Provincias/" );
+                    URL url = new URL("http://"+Config.ip + ":39342/api/Provincias/" );
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");
                     conn.connect();
@@ -252,7 +252,7 @@ public class Connection {
                 break;
             case 2:
                 try {
-                    URL url = new URL("http://"+Config.ip + ":58706/api/Cantones?Provincia="+Integer.toString(id));
+                    URL url = new URL("http://"+Config.ip + ":39342/api/Cantones?Provincia="+Integer.toString(id));
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");
                     conn.connect();
@@ -271,7 +271,7 @@ public class Connection {
                 break;
             case 3:
                 try {
-                    URL url = new URL("http://"+Config.ip + ":58706/api/Distrito?canton="+Integer.toString(id) );
+                    URL url = new URL("http://"+Config.ip + ":39342/api/Distrito?canton="+Integer.toString(id) );
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");
                     conn.connect();
@@ -298,7 +298,7 @@ public class Connection {
         StrictMode.setThreadPolicy(policy);
         HttpURLConnection conn;
         try{
-            URL url = new URL("http://"+Config.ip + ":58706/api/Productos/" );
+            URL url = new URL("http://"+Config.ip + ":39342/api/Productos/" );
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();
@@ -324,7 +324,7 @@ public class Connection {
         StrictMode.setThreadPolicy(policy);
         HttpURLConnection conn;
         try{
-            URL url = new URL("http://"+Config.ip + ":58706/api/Sucursal/" );
+            URL url = new URL("http://"+Config.ip + ":39342/api/Sucursal/" );
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();
@@ -353,7 +353,7 @@ public class Connection {
 
         HttpURLConnection conn;
         try {
-            URL url = new URL("http://"+Config.ip + ":58706/api/Padecimientos");
+            URL url = new URL("http://"+Config.ip + ":39342/api/Padecimientos");
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setDoOutput(true);
@@ -385,7 +385,7 @@ public class Connection {
 
         HttpURLConnection conn;
         try {
-            URL url = new URL("http://"+Config.ip + ":58706/api/Pedidos");
+            URL url = new URL("http://"+Config.ip + ":39342/api/Pedidos");
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setDoOutput(true);
@@ -416,7 +416,7 @@ public class Connection {
         StrictMode.setThreadPolicy(policy);
         HttpURLConnection conn;
         try{
-            URL url = new URL("http://"+Config.ip + ":58706/api/Padecimientos/"+Integer.toString(id) );
+            URL url = new URL("http://"+Config.ip + ":39342/api/Padecimientos/"+Integer.toString(id) );
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();
