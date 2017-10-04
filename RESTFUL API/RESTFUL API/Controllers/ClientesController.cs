@@ -44,9 +44,10 @@ namespace RESTFUL_API.Controllers
                 conn.Open();
                 using (var reader = cmd.ExecuteReader())
                 {
-                    var r = serial.Serialize(reader);
                     if (reader.Read())
                     {
+                        reader.Close();
+                        var r = serial.singleserialize(cmd.ExecuteReader());
                         return Request.CreateResponse(HttpStatusCode.OK, r);
                     }
                     else {
