@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Data.SqlClient;
 using Newtonsoft.Json;
-
+using System.Web.Script.Serialization;
+using RESTFUL_API.Models;
 
 namespace RESTFUL_API.Controllers
 {
@@ -107,28 +107,30 @@ namespace RESTFUL_API.Controllers
 
             }
         }
-        public HttpResponseMessage regCliente([FromBody] String cliente)
+
+        [HttpPost]
+        public HttpResponseMessage regCliente([FromBody] clienteModel cliente)
         {
             try
             {
                 using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO CLIENTE(Cedula, Nombre, pApellido, sApellido, Password, Username, Email, Nacimiento, Penalizacion, Direccion) VALUES (@cedula,@nombre,@papillido,@sapellido,@password,@username,@email,@nacimiento,@penalizacion,@direccion)", conn);
-                    cmd.Parameters.AddWithValue("@cedula", JsonConvert.DeserializeObject("Cedula"));
-                    cmd.Parameters.AddWithValue("@nombre", JsonConvert.DeserializeObject("Nombre"));
-                    cmd.Parameters.AddWithValue("@papellido", JsonConvert.DeserializeObject("Papellido"));
-                    cmd.Parameters.AddWithValue("@sapellido", JsonConvert.DeserializeObject("sApellido"));
-                    cmd.Parameters.AddWithValue("@password", JsonConvert.DeserializeObject("Password"));
-                    cmd.Parameters.AddWithValue("@username", JsonConvert.DeserializeObject("Username"));
-                    cmd.Parameters.AddWithValue("@email", JsonConvert.DeserializeObject("Email"));
-                    cmd.Parameters.AddWithValue("@nacimiento", JsonConvert.DeserializeObject("Nacimiento"));
-                    cmd.Parameters.AddWithValue("@penalizacion", JsonConvert.DeserializeObject("Penalizacion"));
-                    cmd.Parameters.AddWithValue("@direccion", JsonConvert.DeserializeObject("Direccion"));
+                    SqlCommand cmd = new SqlCommand("INSERT INTO CLIENTE(Cedula, Nombre, pApellido, sApellido, Password, Username, Email, Nacimiento, Penalizacion, Direccion) VALUES (@cedula,@nombre,@papellido,@sapellido,@password,@username,@email,@nacimiento,@penalizacion,@direccion)", conn);
+                    cmd.Parameters.AddWithValue("@cedula", cliente.Cedula);
+                    cmd.Parameters.AddWithValue("@nombre", cliente.Nombre);
+                    cmd.Parameters.AddWithValue("@papellido", cliente.pApellido);
+                    cmd.Parameters.AddWithValue("@sapellido", cliente.sApellido);
+                    cmd.Parameters.AddWithValue("@password", cliente.Password);
+                    cmd.Parameters.AddWithValue("@username", cliente.Username);
+                    cmd.Parameters.AddWithValue("@email", cliente.Email);
+                    cmd.Parameters.AddWithValue("@nacimiento", cliente.Nacimiento);
+                    cmd.Parameters.AddWithValue("@penalizacion", cliente.Penalizacion);
+                    cmd.Parameters.AddWithValue("@direccion", cliente.Direccion);
                     cmd.Connection = conn;
                     conn.Open();
+                    cmd.ExecuteReader();
                     var message = Request.CreateResponse(HttpStatusCode.Created, cliente);
                     return message;
-                    
                 }
             }
             catch (Exception ex)

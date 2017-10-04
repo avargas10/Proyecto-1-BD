@@ -252,7 +252,7 @@ public class Connection {
                 break;
             case 2:
                 try {
-                    URL url = new URL("http://"+Config.ip + ":58706/api/Cantones?Provincia="+Integer.toString(id));
+                    URL url = new URL("http://"+Config.ip + ":58706/api/Cantones?idProvincia="+Integer.toString(id));
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");
                     conn.connect();
@@ -271,7 +271,7 @@ public class Connection {
                 break;
             case 3:
                 try {
-                    URL url = new URL("http://"+Config.ip + ":58706/api/Distrito?canton="+Integer.toString(id) );
+                    URL url = new URL("http://"+Config.ip + ":58706/api/Distrito?idCanton="+Integer.toString(id) );
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");
                     conn.connect();
