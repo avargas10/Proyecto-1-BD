@@ -4,21 +4,61 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Data.SqlClient;
 using dataAcces;
-
+using System.Collections;
+using Newtonsoft.Json;
 
 namespace gspREST.Controllers
 {
     public class ClientesController : ApiController
     {
+        public IEnumerable<Dictionary<string, object>> Serialize(SqlDataReader reader)
+        {
+            var results = new List<Dictionary<string, object>>();
+            var cols = new List<string>();
+            for (var i = 0; i < reader.FieldCount; i++)
+                cols.Add(reader.GetName(i));
+
+            while (reader.Read())
+                results.Add(SerializeRow(cols, reader));
+
+            return results;
+        }
+        private Dictionary<string, object> SerializeRow(IEnumerable<string> cols,
+                                                        SqlDataReader reader)
+        {
+            var result = new Dictionary<string, object>();
+            foreach (var col in cols)
+                result.Add(col, reader[col]);
+            return result;
+        }
+
         [HttpGet]
-        public IEnumerable<CLIENTE> getAll()
+        public IEnumerable<Dictionary<string, object>> getAll()
         {
 
-            using (GasStationPharmacyDBEntities entities = new GasStationPharmacyDBEntities())
+            /*using (GasStationPharmacyDBEntities entities = new GasStationPharmacyDBEntities())
             {
                 entities.Configuration.LazyLoadingEnabled = false;
                 return entities.CLIENTEs.ToList();
+            }*/
+            string DatabaseConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GasStationPharmacyDB"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT * FROM CLIENTE WHERE Nombre='Rodolfo' AND pApellido='Solano'", conn);
+                cmd.Connection = conn;
+                conn.Open();
+                String[] mylist;
+                using (var reader = cmd.ExecuteReader())
+                {
+                    
+                    var r = Serialize(reader);
+                    string json = JsonConvert.SerializeObject(r);
+                    return r;
+                }
+
             }
         }
         [HttpGet]
@@ -57,21 +97,30 @@ namespace gspREST.Controllers
                 }
             }
         }
-
+        [HttpPost]
         public bool clientLogin([FromUri]string username, [FromUri]string pass)
         {
-            using(GasStationPharmacyDBEntities entities =new GasStationPharmacyDBEntities())
+            string DatabaseConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GasStationPharmacyDB"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
-                entities.Configuration.LazyLoadingEnabled = false;
-                var entity = entities.CLIENTEs.FirstOrDefault(e => (e.Username == username) && (e.Password == pass));
-                if (entity != null)
+                SqlCommand cmd = new SqlCommand("SELECT * FROM CLIENTE WHERE Username=@user AND Password=@pass", conn);
+                cmd.Parameters.AddWithValue("@user",username);
+                cmd.Parameters.AddWithValue("@pass", pass);
+                cmd.Connection = conn;
+                conn.Open();
+                String[] mylist;
+                using (var reader = cmd.ExecuteReader())
                 {
-                    return true;
+                    if (reader.Read())
+                    {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
                 }
-                else
-                {
-                    return false;
-                }
+
             }
         }
 
