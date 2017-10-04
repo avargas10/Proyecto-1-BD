@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Web.Http;
 using dataAcces;
 using System.Data.SqlClient;
-using Newtonsoft.Json;
 
 namespace gspREST.Controllers
 {
@@ -54,7 +53,7 @@ namespace gspREST.Controllers
                 {
 
                     var r = Serialize(reader);
-                    string json = JsonConvert.SerializeObject(r);
+                   // string json = JsonConvert.SerializeObject(r);
                     return r;
                 }
 
