@@ -14,11 +14,24 @@ namespace RESTFUL_API
             var cols = new List<string>();
             for (var i = 0; i < reader.FieldCount; i++)
                 cols.Add(reader.GetName(i));
-
+            
             while (reader.Read())
+            {
+                
                 results.Add(SerializeRow(cols, reader));
-
+            }
             return results;
+        }
+        public Dictionary<string, object> singleserialize(SqlDataReader reader)
+        {
+            var results = new List<Dictionary<string, object>>();
+            var cols = new List<string>();
+            for (var i = 0; i < reader.FieldCount; i++)
+            {
+                cols.Add(reader.GetName(i));
+            }
+            reader.Read();
+            return SerializeRow(cols, reader);
         }
         private Dictionary<string, object> SerializeRow(IEnumerable<string> cols,
                                                         SqlDataReader reader)
