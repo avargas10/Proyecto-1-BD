@@ -38,7 +38,7 @@ namespace RESTFUL_API.Controllers
         {
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("SELECT Cedula, Nombre, pApellido, sApellido, Password, Username, Email, Nacimiento, Penalizacion, Direccion FROM CLIENTE WHERE Cedula='@id'", conn);
+                SqlCommand cmd = new SqlCommand("SELECT Cedula, Nombre, pApellido, sApellido, Password, Username, Email, Nacimiento, Penalizacion, Direccion FROM CLIENTE WHERE Cedula=@id", conn);
                 cmd.Parameters.AddWithValue("@id",id);
                 cmd.Connection = conn;
                 conn.Open();
