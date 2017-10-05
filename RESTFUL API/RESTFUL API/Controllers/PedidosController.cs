@@ -48,8 +48,8 @@ namespace RESTFUL_API.Controllers
                     cmd.Parameters.AddWithValue("@estado", pedido.Estado);
                     cmd.Connection = conn;
                     conn.Open();
-                    cmd.ExecuteReader();
-                    var message = Request.CreateResponse(HttpStatusCode.Created, pedido);
+                    var message = Request.CreateResponse(HttpStatusCode.Created, serial.singleserialize(cmd.ExecuteReader()));
+                    conn.Close();
                     return message;
                 }
             }
