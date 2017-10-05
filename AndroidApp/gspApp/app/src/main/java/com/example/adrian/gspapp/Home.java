@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,9 @@ public class Home extends Fragment {
         List<String> allNames = new ArrayList<String>();
         for (int i = 0; i < dataPedidos.length(); i++) {
             JSONObject objeto = (JSONObject) dataPedidos.get(i);
-            allNames.add("Pedido #" + objeto.getString("idPedido") + " - " + objeto.getString("sucursalRecojo") );
+            JSONObject sucursal = Connection.getInstance().getSucursalbyId(objeto.getInt("sucursalRecojo")).getJSONObject(0);
+            Log.e("sucursal", sucursal.toString());
+            allNames.add("Pedido #" + objeto.getString("idPedido") + " - " + sucursal.getString("Nombre") );
         }
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
                 (getContext(), android.R.layout.simple_list_item_1, allNames);
