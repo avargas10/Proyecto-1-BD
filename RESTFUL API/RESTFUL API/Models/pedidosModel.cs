@@ -12,7 +12,7 @@ namespace RESTFUL_API.Models
         public Nullable<int> idCliente { get; set; }
         public Nullable<System.DateTime> horaRecojo { get; set; }
         public Nullable<int> Telefono { get; set; }
-        public byte[] Imagen { get; set; }
+        public String Imagen { get; set; }
         public Nullable<int> Estado { get; set; }
     }
 }

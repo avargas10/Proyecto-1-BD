@@ -122,7 +122,19 @@ public class Pedidos extends Fragment {
                             @Override
                             public void onTimeSet(TimePicker timePicker, int i, int i1) {
                                 String txt = recojo.getText().toString();
-                                recojo.setText(txt+"T"+String.valueOf(i)+":"+String.valueOf(i1)+":"+"00");
+                                if(String.valueOf(i).length()==1 && String.valueOf(i1).length()==1){
+                                    recojo.setText(txt+"T0"+String.valueOf(i)+":0"+String.valueOf(i1)+":"+"00");
+                                }
+                                else if(String.valueOf(i).length()==1 && String.valueOf(i1).length()==2){
+                                    recojo.setText(txt+"T0"+String.valueOf(i)+":"+String.valueOf(i1)+":"+"00");
+                                }
+                                else if(String.valueOf(i).length()==2 && String.valueOf(i1).length()==1){
+                                    recojo.setText(txt+"T"+String.valueOf(i)+":0"+String.valueOf(i1)+":"+"00");
+                                }
+                                else{
+                                    recojo.setText(txt+"T"+String.valueOf(i)+":"+String.valueOf(i1)+":"+"00");
+                                }
+
                             }
                         }, 0, 0, true);
                 timePickerDialog.show();
@@ -195,8 +207,13 @@ public class Pedidos extends Fragment {
         if(!Config.allProducts.isEmpty()) {
             try {
                 if(IsProductAvaible()) {
-                    regPedido();
-                    cleanVariables();
+                    if(telefono.getText().toString().isEmpty() || fecha.getText().toString().isEmpty()){
+                        Toast.makeText(getContext(), "Please fill all the blank spaces", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        regPedido();
+                        cleanVariables();
+                    }
                 }
                 else{
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -240,7 +257,8 @@ public class Pedidos extends Fragment {
             pad.put("idCliente", Config.ClientLogged.get("Cedula"));
             pad.put("horaRecojo", fecha.getText());
             pad.put("Telefono", telefono.getText());
-            pad.put("Imagen", encodedprescription);
+            if(encodedprescription == null){ pad.put("Imagen", "");}
+            else{pad.put("Imagen", encodedprescription);}
             pad.put("Estado", 1);
 
             if(Connection.getInstance().regPedido(pad)){
