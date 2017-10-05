@@ -254,10 +254,9 @@ public class Pedidos extends Fragment {
 
     private void regDetalle() {
         try{
-            Log.e("lectura",String.valueOf(Config.idproducto.size()));
             for(int i = 0; i < Config.idproducto.size() ; i++) {
                 JSONObject pad = new JSONObject();
-                pad.put("idProducto", Config.idproducto.get(0));
+                pad.put("idProducto", Config.idproducto.get(i));
                 pad.put("idPedido", numpedido);
                 pad.put("idCantidad", 1);
                 Connection.getInstance().regDetalle(pad);

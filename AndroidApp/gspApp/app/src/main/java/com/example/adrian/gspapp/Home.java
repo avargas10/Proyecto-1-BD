@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.adrian.gspapp.Tools.Config;
@@ -28,7 +29,7 @@ import java.util.List;
 public class Home extends Fragment {
 
     ListView pedidosList;
-    private JSONArray dataPedidos;
+    private JSONArray dataPedidos,dataSucursales;
     CustomList adapter;
 
     @Override
@@ -36,6 +37,11 @@ public class Home extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Pedidos");
         pedidosList = (ListView)getView().findViewById(R.id.pedidoslist);
+        try {
+            getPedidos();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         pedidosList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -50,11 +56,21 @@ public class Home extends Fragment {
         return inflater.inflate(R.layout.activity_home, container, false);
     }
 
-    private void getProducts() throws JSONException {
+    private void getPedidos() throws JSONException {
+        dataPedidos = Connection.getInstance().getPedidobyId(Config.ClientLogged.getInt("Cedula"));
 
-        adapter = new
-                CustomList((Activity) this.getContext(), Config.allProducts, Config.allimg,Config.precios,Config.prescription,Config.DELETE);
-        pedidosList.setAdapter(adapter);
+        List<String> allNames = new ArrayList<String>();
+        for (int i = 0; i < dataPedidos.length(); i++) {
+            JSONObject objeto = (JSONObject) dataPedidos.get(i);
+            allNames.add("Pedido #" + objeto.getString("idPedido") + " - " + objeto.getString("sucursalRecojo") );
+        }
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
+                (getContext(), android.R.layout.simple_list_item_1, allNames);
+
+        dataAdapter.setDropDownViewResource
+                (android.R.layout.simple_spinner_dropdown_item);
+
+        pedidosList.setAdapter(dataAdapter);
 
     }
 
