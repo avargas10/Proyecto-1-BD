@@ -9,6 +9,7 @@ create table CLIENTE(
   Nacimiento DATE,
   Penalizacion INT,
   Direccion INT,
+  Estado INT,
   PRIMARY KEY (Cedula),
 );
 
@@ -59,6 +60,7 @@ create table SUCURSAL(
   Longitud FLOAT,
   detalleDireccion VARCHAR(50),
   Nombre VARCHAR(30),
+  Estado INT,
   PRIMARY KEY(idSucursal)
 );
 
@@ -69,7 +71,7 @@ create table PRODUCTOS(
   esMedicamento INT,
   reqPrescripcion INT,
   Image VARCHAR(MAX),
-  Precio INT, 
+  Estado INT,
   PRIMARY KEY(idProducto)
 );
 
@@ -83,7 +85,8 @@ create table PROVEEDORES(
 create table RECETAS(
 	idReceta INT NOT NULL IDENTITY(1,1),
   idCliente INT,
-  Imagen IMAGE,
+  Imagen VARCHAR(MAX),
+  Estado INT,
   PRIMARY KEY(idReceta)
 );
 
@@ -103,6 +106,7 @@ create table EMPLEADO(
   sApellido VARCHAR(50),
   Nacimiento DATE,
   Direccion INT,
+  Estado INT,
   PRIMARY KEY(idEmpleado)
 );
 
@@ -138,6 +142,7 @@ create table PROVINCIA(
 
 
 
+
 create table EMPLEADOXSUCURSAL(
 	idSucursal INT NOT NULL,
   idEmpleado INT NOT NULL,
@@ -149,6 +154,7 @@ create table PRODUCTOXSUCURSAL(
 	idSucursal INT NOT NULL,
   codProducto INT NOT NULL,
   Cantidad INT,
+  Precio INT,
   PRIMARY KEY(idSucursal, codProducto)
 );
 
