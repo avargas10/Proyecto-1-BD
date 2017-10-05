@@ -16,5 +16,6 @@ namespace RESTFUL_API.Models
         public Nullable<double> Longitud { get; set; }
         public string detalleDireccion { get; set; }
         public string Nombre { get; set; }
+        public int Estado { get; set; }
     }
 }

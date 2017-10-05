@@ -14,5 +14,6 @@ namespace RESTFUL_API.Models
         public Nullable<int> reqPrescripcion { get; set; }
         public string Image { get; set; }
         public Nullable<int> Precio { get; set; }
+        public int Estado { get; set; }
     }
 }
