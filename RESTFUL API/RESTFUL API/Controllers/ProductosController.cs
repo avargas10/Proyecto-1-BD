@@ -32,7 +32,7 @@ namespace RESTFUL_API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         public IEnumerable<Dictionary<string, object>> ProductosxSucursal([FromUri] int id)
         {
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))

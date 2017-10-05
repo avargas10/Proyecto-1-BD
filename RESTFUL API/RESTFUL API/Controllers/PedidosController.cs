@@ -19,7 +19,7 @@ namespace RESTFUL_API.Controllers
         {
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("SELECT idPedido,sucursalRecojo,idCliente,horaRecojo,Telefono,Imagen,Estado FROM PEDIDO", conn);
+                SqlCommand cmd = new SqlCommand("SELECT idPedido,sucursalRecojo,idCliente,horaRecojo,Telefono,Imagen,Estado FROM PEDIDOS", conn);
                 cmd.Connection = conn;
                 conn.Open();
                 using (var reader = cmd.ExecuteReader())
@@ -39,7 +39,7 @@ namespace RESTFUL_API.Controllers
             {
                 using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO PEDIDO(sucursalRecojo,idCliente,horaRecojo,Telefono,Imagen,Estado) VALUES (@sucursal,@cliente,@hora,@telefono,@imagen,@estado)", conn);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO PEDIDOS(sucursalRecojo,idCliente,horaRecojo,Telefono,Imagen,Estado) VALUES (@sucursal,@cliente,@hora,@telefono,@imagen,@estado)", conn);
                     cmd.Parameters.AddWithValue("@sucursal", pedido.sucursalRecojo);
                     cmd.Parameters.AddWithValue("@cliente", pedido.idCliente);
                     cmd.Parameters.AddWithValue("@hora", pedido.horaRecojo);
@@ -64,7 +64,7 @@ namespace RESTFUL_API.Controllers
         {
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("SELECT idPedido,sucursalRecojo,idCliente,horaRecojo,Telefono,Imagen,Estado FROM PEDIDO WHERE idCliente=@id", conn);
+                SqlCommand cmd = new SqlCommand("SELECT idPedido,sucursalRecojo,idCliente,horaRecojo,Telefono,Imagen,Estado FROM PEDIDOS WHERE idCliente=@id", conn);
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Connection = conn;
                 conn.Open();
