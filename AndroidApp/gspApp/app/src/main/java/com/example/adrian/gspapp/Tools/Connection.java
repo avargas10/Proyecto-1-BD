@@ -402,8 +402,7 @@ public class Connection {
 
             }
             JSONObject jArray=new JSONObject(response.toString());
-            Log.e("readed num", String.valueOf(jArray.get("idPedido")));
-            return 1;
+            return jArray.getInt("idPedido");
         } catch (Exception e) {
             e.printStackTrace();
             return -1;
@@ -434,6 +433,7 @@ public class Connection {
                 response.append(inputLine);
 
             }
+            conn.disconnect();
             return true;
         } catch (Exception e) {
             e.printStackTrace();

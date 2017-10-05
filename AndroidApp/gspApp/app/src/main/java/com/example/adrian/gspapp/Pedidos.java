@@ -254,15 +254,16 @@ public class Pedidos extends Fragment {
 
     private void regDetalle() {
         try{
-
-            for(int i = 0; i < Config.idproducto.size() ; i++){
-                JSONObject pad= new JSONObject();
-                pad.put("idProducto",Config.idproducto.get(i));
-                pad.put("idPedido",numpedido);
-                pad.put("Cantidad",1);
+            Log.e("lectura",String.valueOf(Config.idproducto.size()));
+            for(int i = 0; i < Config.idproducto.size() ; i++) {
+                JSONObject pad = new JSONObject();
+                pad.put("idProducto", Config.idproducto.get(0));
+                pad.put("idPedido", numpedido);
+                pad.put("idCantidad", 1);
                 Connection.getInstance().regDetalle(pad);
             }
-            //Toast.makeText(getContext(),"Detalle Agregado Correctamente", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Detalle Agregado Correctamente", Toast.LENGTH_LONG).show();
+
 
         }catch(Exception e){
             Toast.makeText(getContext(),"Error al agregar detalle", Toast.LENGTH_LONG).show();
