@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     TextView forgot, registro;
     EditText username, password;
     private ProgressBar pb;
-    public  static JSONObject clientInfo;
+    public  static JSONObject clientInfo, clientDir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

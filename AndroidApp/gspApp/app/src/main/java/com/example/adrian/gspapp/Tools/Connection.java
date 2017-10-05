@@ -184,8 +184,22 @@ public class Connection {
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
+            conn.disconnect();
             JSONObject client =new JSONObject(response.toString());
             MainActivity.clientInfo=client;
+            URL url1 = new URL("http://"+Config.ip + ":58706/api/Direcciones/" + Integer.toString(MainActivity.clientInfo.getInt("Direccion")) );
+            conn = (HttpURLConnection) url1.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+            BufferedReader in1 = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+            String inputLine1;
+            StringBuffer response1 = new StringBuffer();
+            while ((inputLine1 = in1.readLine()) != null) {
+                response1.append(inputLine1);
+            }
+            conn.disconnect();
+            JSONObject client1 =new JSONObject(response1.toString());
+            MainActivity.clientDir=client1;
             Config.ClientLogged = client;
             System.out.println("CLIENTE: "+MainActivity.clientInfo);
         } catch (Exception e) {
