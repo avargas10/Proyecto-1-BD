@@ -378,7 +378,7 @@ public class Connection {
 
     }
 
-    public boolean regPedido(JSONObject pedido){
+    public int regPedido(JSONObject pedido){
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -401,7 +401,39 @@ public class Connection {
                 response.append(inputLine);
 
             }
-            Log.e("returned message",response.toString());
+            JSONObject jArray=new JSONObject(response.toString());
+            Log.e("readed num", String.valueOf(jArray.get("idPedido")));
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+
+
+    }
+    public boolean regDetalle(JSONObject pedido){
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        HttpURLConnection conn;
+        try {
+            URL url = new URL("http://"+Config.ip + ":58706/api/DetallePedido");
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.setRequestMethod("POST");
+            OutputStream os = conn.getOutputStream();
+            os.write(pedido.toString().getBytes());
+            os.flush();
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();

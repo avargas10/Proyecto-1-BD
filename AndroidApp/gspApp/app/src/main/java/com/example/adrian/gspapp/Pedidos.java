@@ -68,6 +68,7 @@ public class Pedidos extends Fragment {
     static int sucursal = 0;
     EditText fecha;
     EditText telefono;
+    int numpedido;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -212,6 +213,7 @@ public class Pedidos extends Fragment {
                     }
                     else {
                         regPedido();
+                        regDetalle();
                         cleanVariables();
                     }
                 }
@@ -250,6 +252,24 @@ public class Pedidos extends Fragment {
         }
     }
 
+    private void regDetalle() {
+        try{
+
+            for(int i = 0; i < Config.idproducto.size() ; i++){
+                JSONObject pad= new JSONObject();
+                pad.put("idProducto",Config.idproducto.get(i));
+                pad.put("idPedido",numpedido);
+                pad.put("Cantidad",1);
+                Connection.getInstance().regDetalle(pad);
+            }
+            //Toast.makeText(getContext(),"Detalle Agregado Correctamente", Toast.LENGTH_LONG).show();
+
+        }catch(Exception e){
+            Toast.makeText(getContext(),"Error al agregar detalle", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
+
     private void regPedido() {
         try{
             JSONObject pad= new JSONObject();
@@ -260,13 +280,8 @@ public class Pedidos extends Fragment {
             if(encodedprescription == null){ pad.put("Imagen", "");}
             else{pad.put("Imagen", encodedprescription);}
             pad.put("Estado", 1);
+            numpedido =Connection.getInstance().regPedido(pad);
 
-            if(Connection.getInstance().regPedido(pad)){
-                Toast.makeText(getContext(),"Pedido enviado correctamente.", Toast.LENGTH_LONG).show();
-            }else{
-                Toast.makeText(getContext(),"Error al agregar el pedido.", Toast.LENGTH_LONG).show();
-
-            }
 
         }catch(Exception e){
             e.printStackTrace();

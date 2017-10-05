@@ -180,6 +180,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\CantonesController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\DetallePedidoController.cs" />
     <Compile Include="Controllers\DireccionesController.cs" />
     <Compile Include="Controllers\DistritoController.cs" />
     <Compile Include="Controllers\EmpleadosController.cs" />
@@ -196,6 +197,7 @@
     <Compile Include="JSONSerializer.cs" />
     <Compile Include="Models\cantonModel.cs" />
     <Compile Include="Models\clienteModel.cs" />
+    <Compile Include="Models\DetallePedidoModel.cs" />
     <Compile Include="Models\direccionesModel.cs" />
     <Compile Include="Models\empleadosModel.cs" />
     <Compile Include="Models\modelDistrito.cs" />
