@@ -138,6 +138,102 @@ public class Connection {
         }
     }
 
+    public boolean updateCliente(JSONObject data) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        if(!isConnectedToServer(Config.ip)){
+            openLogin();
+
+            return false;
+        }else {
+            HttpURLConnection conn;
+            try {
+                URL url = new URL("http://" + Config.ip + ":58706/api/Clientes");
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setDoOutput(true);
+                conn.setRequestMethod("PUT");
+                OutputStream os = conn.getOutputStream();
+                os.write(data.toString().getBytes());
+                os.flush();
+                if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+    }
+
+    public boolean sendEmail(String username){
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        if(!isConnectedToServer(Config.ip)){
+            openLogin();
+
+            return false;
+        }else {
+            HttpURLConnection conn;
+            try {
+                URL url = new URL("http://" + Config.ip + ":58706/api/Clientes?username="+username);
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setConnectTimeout(15000);
+                conn.setRequestMethod("POST");
+                conn.connect();
+                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                if (response.toString().equals("true")) {
+                    conn.disconnect();
+                    return true;
+                } else {
+                    conn.disconnect();
+                    return false;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+    }
+
+    public  boolean deleteClient(JSONObject data){
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        if(!isConnectedToServer(Config.ip)){
+            openLogin();
+
+            return false;
+        }else {
+            HttpURLConnection conn;
+            try {
+                URL url = new URL("http://" + Config.ip + ":58706/api/Clientes");
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setDoOutput(true);
+                conn.setRequestMethod("DELETE");
+                OutputStream os = conn.getOutputStream();
+                os.write(data.toString().getBytes());
+                os.flush();
+                if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+    }
+
     public JSONObject registroDireccion(JSONObject dataDir) throws JSONException {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -150,6 +246,37 @@ public class Connection {
             conn.setDoOutput(true);
             conn.setDoInput(true);
             conn.setRequestMethod("POST");
+            OutputStream os = conn.getOutputStream();
+            os.write(dataDir.toString().getBytes());
+            os.flush();
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            JSONObject jData = new JSONObject(response.toString());
+            return jData;
+        } catch (Exception e) {
+            e.printStackTrace();
+            JSONObject jData = new JSONObject();
+            jData.put("idDireccion",1);
+            return jData;
+        }
+    }
+
+    public JSONObject updateDireccion(JSONObject dataDir) throws  JSONException{
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        HttpURLConnection conn;
+        try {
+            URL url = new URL("http://"+Config.ip + ":58706/api/Direcciones");
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.setRequestMethod("PUT");
             OutputStream os = conn.getOutputStream();
             os.write(dataDir.toString().getBytes());
             os.flush();
@@ -184,12 +311,70 @@ public class Connection {
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
+            conn.disconnect();
             JSONObject client =new JSONObject(response.toString());
             MainActivity.clientInfo=client;
+            URL url1 = new URL("http://"+Config.ip + ":58706/api/Direcciones/" + Integer.toString(MainActivity.clientInfo.getInt("Direccion")) );
+            conn = (HttpURLConnection) url1.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+            BufferedReader in1 = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+            String inputLine1;
+            StringBuffer response1 = new StringBuffer();
+            while ((inputLine1 = in1.readLine()) != null) {
+                response1.append(inputLine1);
+            }
+            conn.disconnect();
+            JSONObject client1 =new JSONObject(response1.toString());
+            MainActivity.clientDir=client1;
             Config.ClientLogged = client;
             System.out.println("CLIENTE: "+MainActivity.clientInfo);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    public JSONArray getPedidobyId(int id){
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        HttpURLConnection conn;
+        try {
+            URL url = new URL("http://"+Config.ip + ":58706/api/Pedidos?id=" + id );
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            JSONArray jArray=new JSONArray(response.toString());
+            return jArray;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public JSONArray getSucursalbyId(int id){
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        HttpURLConnection conn;
+        try {
+            URL url = new URL("http://"+Config.ip + ":58706/api/Sucursal?id=" + id );
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            JSONArray jo=new JSONArray(response.toString());
+            return jo;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
     public JSONArray getProductosxSucursal(int id){
@@ -402,8 +587,7 @@ public class Connection {
 
             }
             JSONObject jArray=new JSONObject(response.toString());
-            Log.e("readed num", String.valueOf(jArray.get("idPedido")));
-            return 1;
+            return jArray.getInt("idPedido");
         } catch (Exception e) {
             e.printStackTrace();
             return -1;
@@ -434,6 +618,7 @@ public class Connection {
                 response.append(inputLine);
 
             }
+            conn.disconnect();
             return true;
         } catch (Exception e) {
             e.printStackTrace();

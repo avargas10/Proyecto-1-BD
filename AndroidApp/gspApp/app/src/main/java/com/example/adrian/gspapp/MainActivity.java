@@ -6,15 +6,9 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,15 +18,12 @@ import com.example.adrian.gspapp.Tools.Connection;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
     Button login;
     TextView forgot, registro;
     EditText username, password;
     private ProgressBar pb;
-    public  static JSONObject clientInfo;
+    public  static JSONObject clientInfo, clientDir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,33 +41,6 @@ public class MainActivity extends AppCompatActivity {
         final Context context=this.getApplicationContext();
         Connection.getInstance().context=context;
 
-
-        forgot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("Enter your username to send your password to your email")
-                        .setTitle("Password Recovery");
-                final EditText input = new EditText(context);
-                builder.setView(input);
-                builder.setPositiveButton("SEND",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int which) {
-                                Toast.makeText(getApplicationContext(),"Email Sended", Toast.LENGTH_SHORT).show();
-
-                            }
-                        });
-
-                builder.setNegativeButton("CANCEL",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
 
         registro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +89,33 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(),"Error to connect with server!", Toast.LENGTH_SHORT).show();
                         }
 
+                    }
+                });
+
+        builder.setNegativeButton("CANCEL",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public  void sendEmail(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Enter your username to send your password to your email")
+                .setTitle("Password Recovery");
+        final EditText input = new EditText(this);
+        builder.setView(input);
+        builder.setPositiveButton("SEND",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int which) {
+                        if(Connection.getInstance().sendEmail(input.getText().toString())){
+                            Toast.makeText(getApplicationContext(),"Email Sended", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(getApplicationContext(),"Error Sending the Email!", Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
 

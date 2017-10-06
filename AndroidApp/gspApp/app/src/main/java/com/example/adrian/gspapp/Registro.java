@@ -182,7 +182,7 @@ public class Registro extends AppCompatActivity {
                     for(int a=0; a<dataDistrito.length();a++){
                         JSONObject objeto=(JSONObject)dataDistrito.get(a);
                         if(objeto.getString("Nombre").equals(name)){
-                            id=objeto.getInt("idCanton");
+                            id=objeto.getInt("idDistrito");
                             break;
                         }
 

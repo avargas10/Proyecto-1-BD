@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using Newtonsoft.Json;
 using System.Web.Script.Serialization;
 using RESTFUL_API.Models;
+using System.Net.Mail;
 
 namespace RESTFUL_API.Controllers
 {
@@ -88,7 +89,7 @@ namespace RESTFUL_API.Controllers
         {
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("SELECT * FROM CLIENTE WHERE Username=@user AND Password=@pass", conn);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM CLIENTE WHERE Username=@user AND Password=@pass AND Estado=1", conn);
                 cmd.Parameters.AddWithValue("@user", username);
                 cmd.Parameters.AddWithValue("@pass", pass);
                 cmd.Connection = conn;
@@ -97,6 +98,7 @@ namespace RESTFUL_API.Controllers
                 {
                     if (reader.Read())
                     {
+                        reader.Close();
                         return true;
                     }
                     else
@@ -115,7 +117,7 @@ namespace RESTFUL_API.Controllers
             {
                 using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO CLIENTE(Cedula, Nombre, pApellido, sApellido, Password, Username, Email, Nacimiento, Penalizacion, Direccion) VALUES (@cedula,@nombre,@papellido,@sapellido,@password,@username,@email,@nacimiento,@penalizacion,@direccion)", conn);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO CLIENTE(Cedula, Nombre, pApellido, sApellido, Password, Username, Email, Nacimiento, Penalizacion, Direccion, Estado) VALUES (@cedula,@nombre,@papellido,@sapellido,@password,@username,@email,@nacimiento,@penalizacion,@direccion,1)", conn);
                     cmd.Parameters.AddWithValue("@cedula", cliente.Cedula);
                     cmd.Parameters.AddWithValue("@nombre", cliente.Nombre);
                     cmd.Parameters.AddWithValue("@papellido", cliente.pApellido);
@@ -136,6 +138,108 @@ namespace RESTFUL_API.Controllers
             catch (Exception ex)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        [HttpPut]
+        public HttpResponseMessage updateCliente([FromBody] clienteModel cliente)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UPDATE  CLIENTE SET  Nombre=@nombre, pApellido=@papellido, sApellido=@sapellido, Password=@password, Username=@username, Email=@email, Nacimiento=@nacimiento WHERE Cedula=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", cliente.Cedula);
+                    cmd.Parameters.AddWithValue("@nombre", cliente.Nombre);
+                    cmd.Parameters.AddWithValue("@papellido", cliente.pApellido);
+                    cmd.Parameters.AddWithValue("@sapellido", cliente.sApellido);
+                    cmd.Parameters.AddWithValue("@password", cliente.Password);
+                    cmd.Parameters.AddWithValue("@username", cliente.Username);
+                    cmd.Parameters.AddWithValue("@email", cliente.Email);
+                    cmd.Parameters.AddWithValue("@nacimiento", cliente.Nacimiento);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    cmd.ExecuteReader();
+                    var message = Request.CreateResponse(HttpStatusCode.Created, cliente);
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+
+        [HttpDelete]
+        public HttpResponseMessage deleteCliente([FromBody] clienteModel del)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UPDATE  CLIENTE SET  Estado=0 WHERE Cedula=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", del.Cedula);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    cmd.ExecuteReader();
+                    var message = Request.CreateResponse(HttpStatusCode.Created, del);
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        [HttpPost]
+        public bool senEmail([FromUri]string username)
+        {
+            object pass, email;
+            using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT Password, Email FROM CLIENTE WHERE Username=@user AND Estado=1", conn);
+                cmd.Parameters.AddWithValue("@user", username);
+                cmd.Connection = conn;
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        reader.Close();
+                        var reader1 = cmd.ExecuteReader();
+                        serial.singleserialize(reader1).TryGetValue("Password", out pass);
+                        reader1.Close();
+                        serial.singleserialize(cmd.ExecuteReader()).TryGetValue("Email", out email);
+                         try
+                         {
+                             MailMessage mail = new MailMessage();
+                             SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+
+                             mail.From = new MailAddress("gsppassrecovery@gmail.com");
+                             mail.To.Add(email.ToString());
+                             mail.Subject = "Your Password for GSP";
+                             mail.Body = "This is your password for all GSP platforms, Mobile App and Web Page. Password: "+pass.ToString();
+
+                             SmtpServer.Port = 587;
+                             SmtpServer.Credentials = new System.Net.NetworkCredential("gsppassrecovery@gmail.com", "bases2017");
+                             SmtpServer.EnableSsl = true;
+
+                             SmtpServer.Send(mail);
+                            return true;
+                         }
+                         catch (Exception ex)
+                         {
+                            return false;
+                         }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
             }
         }
 
