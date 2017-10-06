@@ -46,7 +46,7 @@ namespace RESTFUL_API.Controllers
                     if (reader.Read())
                     {
                         reader.Close();
-                        var r = serial.singleserialize(cmd.ExecuteReader());
+                        var r = serial.Serialize(cmd.ExecuteReader());
                         conn.Close();
                         return Request.CreateResponse(HttpStatusCode.OK, r);
                     }
@@ -83,5 +83,7 @@ namespace RESTFUL_API.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
+
+    
     }
 }
