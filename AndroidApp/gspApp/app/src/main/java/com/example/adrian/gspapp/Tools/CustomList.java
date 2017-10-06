@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.example.adrian.gspapp.R;
@@ -43,21 +44,41 @@ public class CustomList extends ArrayAdapter<String>{
             TextView txtPrecios = (TextView) rowView.findViewById(R.id.price2);
             TextView txtPres = (TextView) rowView.findViewById(R.id.pres2);
             ImageView imageView = (ImageView) rowView.findViewById(R.id.img2);
-            ImageView img = (ImageView) rowView.findViewById(R.id.imageView1);
+            if(place==0) {
+                NumberPicker np = (NumberPicker) rowView.findViewById(R.id.np);
+
+                //Populate NumberPicker values from minimum and maximum value range
+                //Set the minimum value of NumberPicker
+                np.setMinValue(0);
+                //Specify the maximum value/number of NumberPicker
+                np.setMaxValue(10);
+
+                //Gets whether the selector wheel wraps when reaching the min/max value.
+                np.setWrapSelectorWheel(true);
+
+            }
+            else if (place==1){
+                NumberPicker np = (NumberPicker) rowView.findViewById(R.id.np);
+
+                //Populate NumberPicker values from minimum and maximum value range
+                //Set the minimum value of NumberPicker
+                np.setMinValue(0);
+                //Specify the maximum value/number of NumberPicker
+                np.setMaxValue(10);
+
+                //Gets whether the selector wheel wraps when reaching the min/max value.
+                np.setWrapSelectorWheel(true);
+                np.setValue(Config.cantidad.get(position));
+
+            }
 
 
             txtTitle.setText((String) web.get(position));
             txtPrecios.setText(String.valueOf(precios.get(position)));
             txtPres.setText((String) prescription.get(position));
 
-            imageView.setImageBitmap((Bitmap) imageId.get(position));
 
-            if(place == 0){
-                img.setImageResource(R.drawable.add);
-            }
-            else if(place == 1){
-                img.setImageResource(R.drawable.delete);
-            }
+            imageView.setImageBitmap((Bitmap) imageId.get(position));
 
             return rowView;
         }catch (Exception e){}

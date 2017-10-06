@@ -36,26 +36,14 @@
         </ImageView>
     </LinearLayout>
     <!-- Rightend Arrow -->
-    <ImageView
 
-        android:id="@+id/imageView1"
-
-        android:contentDescription="@string/app_name"
-
-        android:layout_width="30dp"
-
-        android:layout_height="30dp"
-
-        android:layout_alignParentRight="true"
-
-        android:layout_centerVertical="true"
-
-        android:src="@drawable/add" >
-    </ImageView>
-    <Spinner
-        android:id="@+id/scantidad"
+    <NumberPicker
+        android:id="@+id/np"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></Spinner>
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        />
     <!-- City-->
     <TextView
 
