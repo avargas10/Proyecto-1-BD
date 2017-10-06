@@ -28,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.NumberPicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -93,13 +94,15 @@ public class Pedidos extends Fragment {
                 Bitmap selectedimg = Bitmap.createBitmap(imgview.getDrawingCache());
                 int selectedprice = Integer.parseInt(((TextView) view.findViewById(R.id.price2)).getText().toString());
                 String selectedpres = ((TextView) view.findViewById(R.id.pres2)).getText().toString();
-
+                final Spinner sp = (Spinner) view.findViewById(R.id.idcant);
+                int cant = Integer.parseInt(sp.getSelectedItem().toString());
 
                 Config.allProducts.add(selectedproduct);
                 Config.allimg.add(selectedimg);
                 Config.precios.add(selectedprice);
                 Config.prescription.add(selectedpres);
                 Config.idproducto.add(idproducto.get(position));
+                Config.cantidad.add(cant);
 
 
             }
@@ -265,7 +268,7 @@ public class Pedidos extends Fragment {
                 JSONObject pad = new JSONObject();
                 pad.put("idProducto", Config.idproducto.get(i));
                 pad.put("idPedido", numpedido);
-                pad.put("idCantidad", 1);
+                pad.put("idCantidad", Config.cantidad.get(i));
                 Connection.getInstance().regDetalle(pad);
             }
                 Toast.makeText(getContext(), "Detalle Agregado Correctamente", Toast.LENGTH_LONG).show();
@@ -329,7 +332,6 @@ public class Pedidos extends Fragment {
     };
 
     private void getProducts() throws JSONException {
-        Log.e("sucursal",String.valueOf(sucursal));
         dataProducts = Connection.getInstance().getProductosxSucursal(sucursal);
         allrelation = new ArrayList<Integer>();
         prescription = new ArrayList<String>();
@@ -342,11 +344,9 @@ public class Pedidos extends Fragment {
             JSONObject objeto= (JSONObject) dataProducts.get(x);
             allrelation.add(objeto.getInt("codProducto"));
             precios.add(objeto.getInt("Precio"));
-            Log.e("objeto PXS",objeto.toString());
         }
         for(int i = 0; i < allrelation.size() ; i++){
             JSONObject objeto = Connection.getInstance().getProductobyId(allrelation.get(i));
-            Log.e("objeto Producto",objeto.toString());
             allProducts.add(objeto.getString("Nombre"));
             byte[] decodedString = Base64.decode(objeto.getString("Image"), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -413,6 +413,7 @@ public class Pedidos extends Fragment {
         Config.precios.clear();
         Config.allimg.clear();
         Config.idproducto.clear();
+        Config.cantidad.clear();
         unavailable.clear();
         fecha.setText("");
         telefono.setText("");

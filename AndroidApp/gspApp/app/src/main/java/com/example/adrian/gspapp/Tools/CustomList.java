@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.adrian.gspapp.R;
@@ -44,35 +45,20 @@ public class CustomList extends ArrayAdapter<String>{
             TextView txtPrecios = (TextView) rowView.findViewById(R.id.price2);
             TextView txtPres = (TextView) rowView.findViewById(R.id.pres2);
             ImageView imageView = (ImageView) rowView.findViewById(R.id.img2);
+
             if(place==0) {
-                NumberPicker np = (NumberPicker) rowView.findViewById(R.id.np);
 
-                //Populate NumberPicker values from minimum and maximum value range
-                //Set the minimum value of NumberPicker
-                np.setMinValue(0);
-                //Specify the maximum value/number of NumberPicker
-                np.setMaxValue(10);
+                Spinner spinner = (Spinner) rowView.findViewById(R.id.idcant);
+// Create an ArrayAdapter using the string array and a default spinner layout
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
+                        R.array.cantidad_array, android.R.layout.simple_spinner_item);
 
-                //Gets whether the selector wheel wraps when reaching the min/max value.
-                np.setWrapSelectorWheel(true);
-
-            }
-            else if (place==1){
-                NumberPicker np = (NumberPicker) rowView.findViewById(R.id.np);
-
-                //Populate NumberPicker values from minimum and maximum value range
-                //Set the minimum value of NumberPicker
-                np.setMinValue(0);
-                //Specify the maximum value/number of NumberPicker
-                np.setMaxValue(10);
-
-                //Gets whether the selector wheel wraps when reaching the min/max value.
-                np.setWrapSelectorWheel(true);
-                np.setValue(Config.cantidad.get(position));
+// Specify the layout to use when the list of choices appears
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+                spinner.setAdapter(adapter);
 
             }
-
-
             txtTitle.setText((String) web.get(position));
             txtPrecios.setText(String.valueOf(precios.get(position)));
             txtPres.setText((String) prescription.get(position));
