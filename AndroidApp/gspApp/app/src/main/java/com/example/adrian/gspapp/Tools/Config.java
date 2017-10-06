@@ -22,5 +22,6 @@ public abstract class Config {
     public static final int DELETE = 1;
     public  static JSONObject ClientLogged;
     public static int PedidoReciente=-1;
+    public static List<Integer> cantidad = new ArrayList<Integer>();
 
 }
