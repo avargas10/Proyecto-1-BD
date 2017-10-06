@@ -168,6 +168,42 @@ public class Connection {
         }
     }
 
+    public boolean sendEmail(String username){
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        if(!isConnectedToServer(Config.ip)){
+            openLogin();
+
+            return false;
+        }else {
+            HttpURLConnection conn;
+            try {
+                URL url = new URL("http://" + Config.ip + ":58706/api/Clientes?username="+username);
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setConnectTimeout(15000);
+                conn.setRequestMethod("POST");
+                conn.connect();
+                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                if (response.toString().equals("true")) {
+                    conn.disconnect();
+                    return true;
+                } else {
+                    conn.disconnect();
+                    return false;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+    }
+
     public  boolean deleteClient(JSONObject data){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);

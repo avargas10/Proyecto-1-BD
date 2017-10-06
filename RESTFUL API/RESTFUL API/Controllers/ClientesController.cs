@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using Newtonsoft.Json;
 using System.Web.Script.Serialization;
 using RESTFUL_API.Models;
+using System.Net.Mail;
 
 namespace RESTFUL_API.Controllers
 {
@@ -189,6 +190,56 @@ namespace RESTFUL_API.Controllers
             catch (Exception ex)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        [HttpPost]
+        public bool senEmail([FromUri]string username)
+        {
+            object pass, email;
+            using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT Password, Email FROM CLIENTE WHERE Username=@user AND Estado=1", conn);
+                cmd.Parameters.AddWithValue("@user", username);
+                cmd.Connection = conn;
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        reader.Close();
+                        var reader1 = cmd.ExecuteReader();
+                        serial.singleserialize(reader1).TryGetValue("Password", out pass);
+                        reader1.Close();
+                        serial.singleserialize(cmd.ExecuteReader()).TryGetValue("Email", out email);
+                         try
+                         {
+                             MailMessage mail = new MailMessage();
+                             SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+
+                             mail.From = new MailAddress("gsppassrecovery@gmail.com");
+                             mail.To.Add(email.ToString());
+                             mail.Subject = "Your Password for GSP";
+                             mail.Body = "This is your password for all GSP platforms, Mobile App and Web Page. Password: "+pass.ToString();
+
+                             SmtpServer.Port = 587;
+                             SmtpServer.Credentials = new System.Net.NetworkCredential("gsppassrecovery@gmail.com", "bases2017");
+                             SmtpServer.EnableSsl = true;
+
+                             SmtpServer.Send(mail);
+                            return true;
+                         }
+                         catch (Exception ex)
+                         {
+                            return false;
+                         }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
             }
         }
 

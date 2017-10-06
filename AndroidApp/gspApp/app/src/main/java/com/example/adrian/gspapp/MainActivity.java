@@ -42,33 +42,6 @@ public class MainActivity extends AppCompatActivity {
         Connection.getInstance().context=context;
 
 
-        forgot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-                builder.setMessage("Enter your username to send your password to your email")
-                        .setTitle("Password Recovery");
-                final EditText input = new EditText(getApplicationContext());
-                builder.setView(input);
-                builder.setPositiveButton("SEND",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int which) {
-                                Toast.makeText(getApplicationContext(),"Email Sended", Toast.LENGTH_SHORT).show();
-
-                            }
-                        });
-
-                builder.setNegativeButton("CANCEL",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
-
         registro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,6 +89,33 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(),"Error to connect with server!", Toast.LENGTH_SHORT).show();
                         }
 
+                    }
+                });
+
+        builder.setNegativeButton("CANCEL",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public  void sendEmail(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Enter your username to send your password to your email")
+                .setTitle("Password Recovery");
+        final EditText input = new EditText(this);
+        builder.setView(input);
+        builder.setPositiveButton("SEND",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int which) {
+                        if(Connection.getInstance().sendEmail(input.getText().toString())){
+                            Toast.makeText(getApplicationContext(),"Email Sended", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(getApplicationContext(),"Error Sending the Email!", Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
 
