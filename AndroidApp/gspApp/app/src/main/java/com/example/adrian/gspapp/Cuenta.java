@@ -1,8 +1,11 @@
 package com.example.adrian.gspapp;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,7 +18,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.adrian.gspapp.Tools.Config;
 import com.example.adrian.gspapp.Tools.Connection;
 
 import org.json.JSONArray;
@@ -40,7 +45,6 @@ public class Cuenta extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         getActivity().setTitle("Administrar Cuenta");
-
         cedula=getView().findViewById(R.id.editId);
         nombre=getView().findViewById(R.id.editName);
         pApellido=getView().findViewById(R.id.editSurname);
@@ -65,6 +69,7 @@ public class Cuenta extends Fragment {
             email.setText(MainActivity.clientInfo.getString("Email"));
             nacimiento.setText(MainActivity.clientInfo.getString("Nacimiento").split("T")[0]);
             direccion.setText(MainActivity.clientDir.getString("Descripcion"));
+            password.setText(MainActivity.clientInfo.getString("Password"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -89,6 +94,90 @@ public class Cuenta extends Fragment {
                 datePickerDialog.show();
             }
         });
+
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage("Are you sure to update the information?")
+                        .setTitle("Update Info");
+                builder.setPositiveButton("YES",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int which) {
+                                JSONObject data = new JSONObject();
+                                JSONObject address =new JSONObject();
+                                try {
+                                    address.put("idDireccion", MainActivity.clientDir.getInt("idDireccion"));
+                                    address.put("Provincia", idProvincia);
+                                    address.put("Canton", idCanton);
+                                    address.put("Distrito", idDistrito);
+                                    address.put("Descripcion", direccion.getText());
+                                    System.out.println("DIRECCION:  "+address.toString());
+                                    data.put("Cedula", Integer.parseInt(cedula.getText().toString()));
+                                    data.put("Nombre", nombre.getText().toString());
+                                    data.put("pApellido", pApellido.getText().toString());
+                                    data.put("sApellido", sApellido.getText().toString());
+                                    data.put("Password", password.getText().toString());
+                                    data.put("Username", username.getText().toString());
+                                    data.put("Email", email.getText());
+                                    data.put("Penalizacion", 0);
+                                    data.put("Nacimiento", nacimiento.getText());
+                                    data.put("Direccion", Connection.getInstance().updateDireccion(address).get("idDireccion"));
+                                    if(Connection.getInstance().updateCliente(data)){
+                                        Toast.makeText(getContext(),"Informacion Actualizada con exito", Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        Toast.makeText(getContext(),"No se ha podido actualizar el usuario, intentelo mas tarde.", Toast.LENGTH_LONG).show();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+
+                builder.setNegativeButton("NO",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage("Are you sure to delete the account?")
+                        .setTitle("Account Delete");
+                builder.setPositiveButton("YES",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int which) {
+                            if(Connection.getInstance().deleteClient(MainActivity.clientInfo)){
+                                Toast.makeText(getContext(),"Account Deleted!", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getContext(), MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                            }else{
+                                Toast.makeText(getContext(),"Error deleting the account!", Toast.LENGTH_SHORT).show();
+                            }
+
+                            }
+                        });
+
+                builder.setNegativeButton("NO",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+
         provincia.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -153,7 +242,7 @@ public class Cuenta extends Fragment {
                     for(int a=0; a<dataDistrito.length();a++){
                         JSONObject objeto=(JSONObject)dataDistrito.get(a);
                         if(objeto.getString("Nombre").equals(name)){
-                            id=objeto.getInt("idCanton");
+                            id=objeto.getInt("idDistrito");
                             break;
                         }
 
@@ -172,7 +261,6 @@ public class Cuenta extends Fragment {
 
         try {
             fillProvincia();
-           // fillSpinners();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -229,23 +317,8 @@ public class Cuenta extends Fragment {
                 (android.R.layout.simple_spinner_dropdown_item);
 
         distrito.setAdapter(dataAdapter);
-        fillSpinners();
-
     }
 
-    private void fillSpinners() throws JSONException {
-        provincia.setSelection(MainActivity.clientDir.getInt("Provincia")-1);
-        if(MainActivity.clientDir.getInt("Canton")%2==0){
-            canton.setSelection(1);
-        }else{
-            canton.setSelection(0);
-        }
-        if(MainActivity.clientDir.getInt("Distrito")%2==0){
-            distrito.setSelection(1);
-        }else{
-            distrito.setSelection(0);
-        }
-    }
 
     @Nullable
     @Override

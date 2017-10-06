@@ -140,5 +140,57 @@ namespace RESTFUL_API.Controllers
             }
         }
 
+        [HttpPut]
+        public HttpResponseMessage updateCliente([FromBody] clienteModel cliente)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UPDATE  CLIENTE SET  Nombre=@nombre, pApellido=@papellido, sApellido=@sapellido, Password=@password, Username=@username, Email=@email, Nacimiento=@nacimiento WHERE Cedula=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", cliente.Cedula);
+                    cmd.Parameters.AddWithValue("@nombre", cliente.Nombre);
+                    cmd.Parameters.AddWithValue("@papellido", cliente.pApellido);
+                    cmd.Parameters.AddWithValue("@sapellido", cliente.sApellido);
+                    cmd.Parameters.AddWithValue("@password", cliente.Password);
+                    cmd.Parameters.AddWithValue("@username", cliente.Username);
+                    cmd.Parameters.AddWithValue("@email", cliente.Email);
+                    cmd.Parameters.AddWithValue("@nacimiento", cliente.Nacimiento);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    cmd.ExecuteReader();
+                    var message = Request.CreateResponse(HttpStatusCode.Created, cliente);
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+
+        [HttpDelete]
+        public HttpResponseMessage deleteCliente([FromBody] clienteModel del)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UPDATE  CLIENTE SET  Estado=0 WHERE Cedula=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", del.Cedula);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    cmd.ExecuteReader();
+                    var message = Request.CreateResponse(HttpStatusCode.Created, del);
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
     }
 }

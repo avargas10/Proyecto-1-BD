@@ -84,6 +84,33 @@ namespace RESTFUL_API.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
+
+        [HttpPut]
+        public HttpResponseMessage updateDireccion([FromBody] direccionesModel direccion)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UPDATE  DIRECCIONES SET Provincia=@provincia, Canton=@canton, Distrito=@distrito, Descripcion=@descripcion WHERE idDireccion=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", direccion.idDireccion);
+                    cmd.Parameters.AddWithValue("@provincia", direccion.Provincia);
+                    cmd.Parameters.AddWithValue("@canton", direccion.Canton);
+                    cmd.Parameters.AddWithValue("@distrito", direccion.Distrito);
+                    cmd.Parameters.AddWithValue("@descripcion", direccion.Descripcion);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    cmd.ExecuteReader();
+                    var message = Request.CreateResponse(HttpStatusCode.Created, direccion);
+                    conn.Close();
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
     }
     
 }
