@@ -64,6 +64,7 @@ public class Pedidos extends Fragment {
     static List<Integer> available;
     static List<Integer> idproducto;
     static ArrayList<String> unavailable;
+    ArrayList<Integer> allrelation;
     String encodedprescription=null;
     static int sucursal = 0;
     EditText fecha;
@@ -89,13 +90,13 @@ public class Pedidos extends Fragment {
                 ImageView imgview = (ImageView) view.findViewById(R.id.img2);
                 imgview.setDrawingCacheEnabled(true);
                 Bitmap selectedimg = Bitmap.createBitmap(imgview.getDrawingCache());
-                //int selectedprice = Integer.parseInt(((TextView) view.findViewById(R.id.price2)).getText().toString());
+                int selectedprice = Integer.parseInt(((TextView) view.findViewById(R.id.price2)).getText().toString());
                 String selectedpres = ((TextView) view.findViewById(R.id.pres2)).getText().toString();
 
 
                 Config.allProducts.add(selectedproduct);
                 Config.allimg.add(selectedimg);
-                //Config.precios.add(selectedprice);
+                Config.precios.add(selectedprice);
                 Config.prescription.add(selectedpres);
                 Config.idproducto.add(idproducto.get(position));
 
@@ -105,7 +106,13 @@ public class Pedidos extends Fragment {
         sucursales.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                sucursal = position + 1;
+                try {
+                    sucursal = position + 1;
+                    getProducts();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
 
             }
         });
@@ -196,7 +203,6 @@ public class Pedidos extends Fragment {
         });
         getActivity().setTitle("Pedidos");
         try {
-            getProducts();
             getSucursales();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -322,20 +328,28 @@ public class Pedidos extends Fragment {
     };
 
     private void getProducts() throws JSONException {
-        dataProducts = Connection.getInstance().getProductos();
+        Log.e("sucursal",String.valueOf(sucursal));
+        dataProducts = Connection.getInstance().getProductosxSucursal(sucursal);
+        allrelation = new ArrayList<Integer>();
         prescription = new ArrayList<String>();
         allProducts = new ArrayList<String>();
         allimg = new ArrayList<>();
-        //precios = new ArrayList<>();
+        precios = new ArrayList<>();
         idproducto = new ArrayList<>();
 
-        for(int i=0; i<dataProducts.length();i++){
-            JSONObject objeto= (JSONObject) dataProducts.get(i);
+        for(int x = 0 ; x < dataProducts.length();x++){
+            JSONObject objeto= (JSONObject) dataProducts.get(x);
+            allrelation.add(objeto.getInt("codProducto"));
+            precios.add(objeto.getInt("Precio"));
+            Log.e("objeto PXS",objeto.toString());
+        }
+        for(int i = 0; i < allrelation.size() ; i++){
+            JSONObject objeto = Connection.getInstance().getProductobyId(allrelation.get(i));
+            Log.e("objeto Producto",objeto.toString());
             allProducts.add(objeto.getString("Nombre"));
             byte[] decodedString = Base64.decode(objeto.getString("Image"), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             allimg.add(decodedByte);
-            //precios.add(objeto.getInt("Precio"));
             idproducto.add(objeto.getInt("idProducto"));
             if(objeto.getInt("reqPrescripcion") == 1){
                 prescription.add("Require prescription");
@@ -346,7 +360,7 @@ public class Pedidos extends Fragment {
         }
 
         CustomList adapter = new
-                CustomList((Activity) this.getContext(), allProducts, allimg, prescription,Config.ADD);
+                CustomList((Activity) this.getContext(), allProducts, allimg, prescription,Config.ADD,precios);
         list=(ListView)getView().findViewById(R.id.list);
         list.setAdapter(adapter);
 
