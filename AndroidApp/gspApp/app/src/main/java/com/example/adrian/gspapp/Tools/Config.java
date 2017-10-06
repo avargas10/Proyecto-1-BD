@@ -23,5 +23,6 @@ public abstract class Config {
     public  static JSONObject ClientLogged;
     public static int PedidoReciente=-1;
     public static List<Integer> cantidad = new ArrayList<Integer>();
+    public static int currentorder=0;
 
 }

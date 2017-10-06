@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:descendantFocusability="blocksDescendants"
+
+    android:layout_width="fill_parent"
+
+    android:layout_height="wrap_content"
+
+    android:background="@drawable/list_selector"
+
+    android:orientation="horizontal"
+
+    android:padding="5dip" >
+    <!-- ListRow Left side Thumbnail image -->
+    <LinearLayout
+
+        android:id="@+id/thumbnail"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentLeft="true"
+
+        android:layout_marginRight="5dip"
+
+        android:padding="3dip" >
+        <ImageView
+
+            android:id="@+id/edit_img2"
+
+            android:contentDescription="@string/app_name"
+
+            android:layout_width="100dip"
+
+            android:layout_height="100dip">
+        </ImageView>
+    </LinearLayout>
+    <!-- Rightend Arrow -->
+
+    <EditText
+        android:id="@+id/edit_idcant"
+        android:inputType="number"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:focusable="false"
+        android:focusableInTouchMode="true"
+        android:layout_centerVertical="true"></EditText>
+
+    <!-- City-->
+    <TextView
+
+        android:id="@+id/edit_txt2"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_toRightOf="@+id/img"
+
+        android:layout_marginLeft="125dip"
+
+        android:layout_centerVertical="true"
+
+        android:paddingBottom ="10dip"
+
+        android:textColor="#040404"
+
+        android:textSize="20dip"
+        android:text="test"
+
+        android:textStyle="bold"
+
+        android:typeface="sans" >
+    </TextView>
+    <!-- Weather Information-->
+    <TextView
+
+        android:id="@+id/edit_price2"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/txt2"
+
+        android:layout_alignLeft="@+id/txt2"
+
+        android:paddingTop="25dip"
+
+        android:text="test price"
+        android:layout_centerHorizontal="true"
+
+        android:textColor="#343434"
+
+        android:textSize="15dip" >
+    </TextView>
+    <TextView
+
+        android:id="@+id/edit_pres2"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/price2"
+
+        android:layout_alignLeft="@+id/price2"
+
+        android:text="Requiere Prescripcion"
+
+        android:layout_centerHorizontal="true"
+
+        android:textColor="#ff0000"
+
+        android:textSize="15dip" >
+    </TextView>
+</RelativeLayout>

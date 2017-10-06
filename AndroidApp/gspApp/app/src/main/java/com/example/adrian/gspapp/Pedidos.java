@@ -104,6 +104,8 @@ public class Pedidos extends Fragment {
                 Config.idproducto.add(idproducto.get(position));
                 Config.cantidad.add(cant);
 
+                Toast.makeText(getContext(),"Added to cart",Toast.LENGTH_SHORT).show();
+
 
             }
         });
