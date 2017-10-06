@@ -5,8 +5,9 @@ app.config(function($routeProvider, $locationProvider){
 	when('/Home', {templateUrl: '../Views/home-view.html', controller: 'mainController'}).
 	when('/login',{templateUrl: '../Views/login-view.html',controller: 'userController'}).
 	when('/register',{templateUrl: '../Views/register.html',controller: 'userController'}).
-	when('/pedido',{templateUrl: '../Views/pedido.html',controller: 'userController'}).
-		otherwise({ redirectTo: '/pedido'});
+  when('/pedido',{templateUrl: '../Views/pedido.html',controller: 'userController'}).
+  when('/products',{templateUrl: '../Views/client.html',controller: 'userController'}).
+		otherwise({ redirectTo: '/Home'});
 	// $locationProvider.html5Mode(true);
 });
 
@@ -43,25 +44,26 @@ function($scope,$http,$location,$routeParams,userService){
   	return userService.getUser();
   }
   $scope.logOutUser = function(){
-	  	userService.logout();
-	};
-  $scope.login = function(){ 
-    $location.path("/login");
+      userService.logout();
+      $location.path("/Home");
   };
-    $scope.register = function(){ 
 
-    $location.path("/register");
-  };
-  $scope.forgot = function(){ 
-    $location.path("/Home");
-  };
-  $scope.chooseOption = function(option){ 
+  $scope.goTo = function(option){ 
     switch (option) {
-            case 'createUser':
-                $location.path("/register");
+            case 'home':
+                $location.path("/Home");
                 break;
-            case 'deleteUser':
-                $location.path("/deleteUser");
+            case 'products':
+                $location.path("/products");
+                break;
+            case 'login':
+                $location.path("/login");
+                break;
+            case 'mybag':
+                $location.path("/pedido");
+                break;
+            case 'signup':
+                $location.path("/register");
                 break;
             default:
         }
@@ -104,12 +106,15 @@ function($scope,$http,$location,$routeParams,userService){
 
   $scope.loginUser = function(username,password,getCaptcha){
   	if(!isBlank(username)  && !isBlank(password) ){
-    var url = 'http://10.0.1.17:58706/api/Clientes?username=' + username + '&pass=' + password;
+    var url = 'http://localhost:58706/api/Clientes?username=' + username + '&pass=' + password;
     $http.post(url).then(function(msg){
-    	if(msg){
+    	if(msg.data){
     		userService.setUser(username);
     		$location.path("/Home");
-    	}
+      }
+      else{
+        alert("Error(02): Can't sign in, username or password incorrect");
+      }
     }); }
     else{
     	alert("Error(01): Can't sign in, space in blank or not getCaptcha");
@@ -117,16 +122,18 @@ function($scope,$http,$location,$routeParams,userService){
 };
 
 $scope.UpdateDirection = function(){
-    var url = 'http://10.0.1.17:58706/api/Provincias';
+    var url = 'http://localhost:58706/api/Provincias';
     $http.get(url).then(function(msg){
     		states = msg.data;
     	});
     $scope.states = states;
+
 };
 $scope.UpdateCities = function(_id){
-    var url = 'http://10.0.1.17:58706/api/Cantones?Provincia='+_id;
+    var url = 'http://localhost:58706/api/Cantones?Provincia='+_id;
     $http.get(url).then(function(msg){
-    		cities = msg.data;
+        cities = msg.data;
+        console.log(cities);
     	});
     $scope.cities = cities;
 };

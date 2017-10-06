@@ -67,8 +67,8 @@
 				        	  <div class="form-group">
 									 <div class="form-group">
 										  <label for="exampleInputEmail1">State</label>
-										  <select class="form-control form-control-sm" ng-model="selectedProvincia ng-click="UpdateDirection()"> 
-										  <option ng-repeat="state in states" >{{state.Nombre}}</option>
+										  <select class="form-control form-control-sm" ng-model="selectedProvincia" ng-click="UpdateDirection()"> 
+										  <option ng-repeat="state in states"  ng-model = "state.idProvincia" >{{state.idProvincia}}</option>
 										</select>
 										  </div>
 							</div>
@@ -76,9 +76,9 @@
 				          <div class="form-group">
 									 <div class="form-group">
 										  <label for="exampleInputEmail1">City</label>
-										   <select class="form-control form-control-sm" ng-model="selectedItem"> 
-										  <option value="createUser" >Create User</option>
-										  <option value="deleteUser">Delete User</option>
+										   <select class="form-control form-control-sm" ng-model="selectedItem" ng-click="UpdateCities(selectedProvincia)"> 
+										  <option ng-repeat="city in cities" >{{city.Nombre}}</option>
+										  
 									
 										</select>
 										  </div>

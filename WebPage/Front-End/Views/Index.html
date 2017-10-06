@@ -15,8 +15,8 @@
      <link rel="stylesheet" href="../CSS/logStyles.css" />
     <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <script src="../scripts/script.js"></script>
-    <script src="../scripts/angular-recaptcha.min.js"></script>
+    <script src="../Scripts/script.js"></script>
+    <script src="../Scripts/angular-recaptcha.min.js"></script>
     <style>
     /* Remove the navbar's default margin-bottom and rounded borders */ 
     .navbar {
@@ -56,7 +56,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#"> <i class="fa fa-heartbeat" aria-hidden="true" style= "color:red"></i> Gas Station Pharmacy</a>
+          <a class="navbar-brand" ng-click="goTo('home')"> <i class="fa fa-heartbeat" aria-hidden="true" style= "color:red"></i> Gas Station Pharmacy</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
@@ -64,7 +64,7 @@
               <a  >Home</a>
             </li>
             <li ng-show="isActive()">
-              <a> Products</a>
+              <a data-ng-click = "goTo('products')"> Products</a>
             </li>
             <li ng-show="isActive()">
               <a href="#">My Prescriptions</a>
@@ -74,19 +74,22 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
+            
+            <ul class="nav navbar-nav" ng-show="isActive()">
+              <li class="dropdown" >
+                <a  class="dropdown-toggle" data-toggle="dropdown">{{getUser() }}  <span class="glyphicon glyphicon-user pull-right"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a ><i class="fa fa-cogs" aria-hidden="true"></i>   Account Settings</i></a></li>
+                  <li><a data-ng-click = "goTo('mybag')"><i class="fa fa-shopping-cart" aria-hidden="true"></i>   My Bag</a></li>
+                  <li><a data-ng-click = "logOutUser()"><i class="fa fa-sign-out" aria-hidden="true"></i>   Sign Out</a></li>
+                </ul>
+              </li>
+            </ul>
             <li>
-              <a  ng-show="isActive()">
-                <i class="fa fa-user-circle" aria-hidden="true"></i> {{getUser()}}</a>
-            </li>
-            <li>
-              <a data-ng-click = "login()" ng-show="!isActive()">
+              <a data-ng-click = "goTo('login')" ng-show="!isActive()">
                 <span  class="glyphicon glyphicon-log-in"></span> Log In</a>
             </li>
-            
-          <li>
-                <a data-ng-click = "logOutUser()" ng-show="isActive()">
-                <span  class="glyphicon glyphicon-log-out"></span> Log Out</a>
-            </li>
+          
           </ul>
         </div>
       </div>
