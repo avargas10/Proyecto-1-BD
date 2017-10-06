@@ -52,6 +52,10 @@
 
         android:src="@drawable/add" >
     </ImageView>
+    <Spinner
+        android:id="@+id/scantidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></Spinner>
     <!-- City-->
     <TextView
 
