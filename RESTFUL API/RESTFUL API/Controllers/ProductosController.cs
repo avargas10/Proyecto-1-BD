@@ -50,5 +50,24 @@ namespace RESTFUL_API.Controllers
 
             }
         }
+
+        [HttpPost]
+        public Dictionary<string, object> ProductobyCod([FromUri] int Cod)
+        {
+            using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT idProducto,Proveedor,Nombre,esMedicamento,reqPrescripcion,Image FROM PRODUCTOS WHERE idProducto=@cod", conn);
+                cmd.Parameters.AddWithValue("@cod", Cod);
+                cmd.Connection = conn;
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    var r = serial.singleserialize(reader);
+                    conn.Close();
+                    return r;
+                }
+
+            }
+        }
     }
 }
