@@ -21,15 +21,15 @@ public class CustomList extends ArrayAdapter<String>{
     private final Activity context;
     private final List web;
     private final List imageId;
-    private final List precios;
+    //private final List precios;
     private final List prescription;
     private final int place;
-    public CustomList(Activity context, List web, List imageId, List precios, List prescription, int place) {
+    public CustomList(Activity context, List web, List imageId, List prescription, int place) {
         super(context, R.layout.list_design, web);
         this.context = context;
         this.web = web;
         this.imageId = imageId;
-        this.precios = precios;
+        //this.precios = precios;
         this.prescription = prescription;
         this.place = place;
 
@@ -47,7 +47,8 @@ public class CustomList extends ArrayAdapter<String>{
 
 
             txtTitle.setText((String) web.get(position));
-            txtPrecios.setText(String.valueOf(precios.get(position)));
+            //txtPrecios.setText(String.valueOf(precios.get(position)));
+            txtPrecios.setText(String.valueOf("1000"));
             txtPres.setText((String) prescription.get(position));
 
             imageView.setImageBitmap((Bitmap) imageId.get(position));

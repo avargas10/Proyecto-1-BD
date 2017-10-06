@@ -89,13 +89,13 @@ public class Pedidos extends Fragment {
                 ImageView imgview = (ImageView) view.findViewById(R.id.img2);
                 imgview.setDrawingCacheEnabled(true);
                 Bitmap selectedimg = Bitmap.createBitmap(imgview.getDrawingCache());
-                int selectedprice = Integer.parseInt(((TextView) view.findViewById(R.id.price2)).getText().toString());
+                //int selectedprice = Integer.parseInt(((TextView) view.findViewById(R.id.price2)).getText().toString());
                 String selectedpres = ((TextView) view.findViewById(R.id.pres2)).getText().toString();
 
 
                 Config.allProducts.add(selectedproduct);
                 Config.allimg.add(selectedimg);
-                Config.precios.add(selectedprice);
+                //Config.precios.add(selectedprice);
                 Config.prescription.add(selectedpres);
                 Config.idproducto.add(idproducto.get(position));
 
@@ -326,7 +326,7 @@ public class Pedidos extends Fragment {
         prescription = new ArrayList<String>();
         allProducts = new ArrayList<String>();
         allimg = new ArrayList<>();
-        precios = new ArrayList<>();
+        //precios = new ArrayList<>();
         idproducto = new ArrayList<>();
 
         for(int i=0; i<dataProducts.length();i++){
@@ -335,7 +335,7 @@ public class Pedidos extends Fragment {
             byte[] decodedString = Base64.decode(objeto.getString("Image"), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             allimg.add(decodedByte);
-            precios.add(objeto.getInt("Precio"));
+            //precios.add(objeto.getInt("Precio"));
             idproducto.add(objeto.getInt("idProducto"));
             if(objeto.getInt("reqPrescripcion") == 1){
                 prescription.add("Require prescription");
@@ -346,7 +346,7 @@ public class Pedidos extends Fragment {
         }
 
         CustomList adapter = new
-                CustomList((Activity) this.getContext(), allProducts, allimg, precios, prescription,Config.ADD);
+                CustomList((Activity) this.getContext(), allProducts, allimg, prescription,Config.ADD);
         list=(ListView)getView().findViewById(R.id.list);
         list.setAdapter(adapter);
 
