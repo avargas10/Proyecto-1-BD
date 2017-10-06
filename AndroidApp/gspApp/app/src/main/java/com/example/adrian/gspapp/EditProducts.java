@@ -36,9 +36,9 @@ public class EditProducts extends AppCompatActivity {
 
     private void getProducts() throws JSONException {
 
-        CustomList adapter = new
-                ProductsList((Activity) this, allProducts, allimg, prescription,Config.ADD,precios);
-        editlist.setAdapter(adapter);
+       // CustomList adapter = new
+       //         ProductsList((Activity) this, allProducts, allimg, prescription,Config.ADD,precios);
+        //editlist.setAdapter(adapter);
 
     }
 }
