@@ -22,7 +22,7 @@ app.controller("contEmplAdmin",["$scope","$http",
         }, function(error){ console.log(error);})}
 
         $scope.init = function(){
-          var url = 'http://192.168.1.204:58706/api/Empleados';
+          var url = 'http://192.168.1.203:58706/api/Empleados';
           $http.get(url).then(function(msg){
             emp= msg.data;
             $scope.employeelist = emp;
@@ -51,16 +51,7 @@ app.controller("contEmplAdmin",["$scope","$http",
 
 app.controller("contRolAdmin", ["$scope","$http",
   function($scope,$http) {
-
-
-    $scope.rollist=[
-    {'name':'Cashier', 'desc': 'pay' ,'id': '40'},
-    {'name':'Pharmacist', 'desc': 'medicaments' ,'id': '10'},
-    {'name':'Cashier', 'desc': 'pay' ,'id': '30'},
-    {'name':'Pharmacist', 'desc': 'medicaments' ,'id': '100'},
-    ];
-
-
+    $scope.rollist;
     $scope.getHttp= function(url , callback){
       var httpObject = $http.get(url);
       httpObject.then(function(promise){
@@ -74,18 +65,12 @@ app.controller("contRolAdmin", ["$scope","$http",
         }, function(error){ console.log(error);})}
 
         $scope.init = function(){
-          var url = 'http://192.168.1.204:58706/api/Clientes';
+          var url = 'http://192.168.1.203:58706/api/Roles';
           $http.get(url).then(function(msg){
-            client= msg.data;
-            $scope.clientlist = client;
+            $scope.rollist= msg.data;
           });
 
         };
-
-
-
-
-
 
 
         $scope.edit=function(){
@@ -96,6 +81,11 @@ app.controller("contRolAdmin", ["$scope","$http",
         }
 
       }]);
+
+function newRol(){
+    window.location.href="../Views/nuevRol.html";
+}
+
 
 
 //controlador clientes vista administrador
@@ -118,7 +108,7 @@ app.controller("contClientAdmin",["$scope","$http",
         }, function(error){ console.log(error);})}
 
         $scope.init = function(){
-          var url = 'http://192.168.1.204:58706/api/Clientes';
+          var url = 'http://192.168.1.203:58706/api/Clientes';
           $http.get(url).then(function(msg){
             client= msg.data;
             $scope.clientlist = client;
@@ -140,12 +130,7 @@ app.controller("contClientAdmin",["$scope","$http",
 
 app.controller("contSucAdmin", ["$scope","$http",
   function($scope,$http) {
-    $scope.sucList=[
-        {'name':'San Pedro', 'desc': 'Blanca' ,'admin': 'Marco'},
-        {'name':'San Jose', 'desc': 'Verde' ,'admin': 'Fofo'},
-        {'name':'Heredia', 'desc': 'Rojo' ,'admin': 'Vargas'},
-        {'name':'Alajuela', 'desc': 'Negro' ,'admin': 'Pato'},
-    ];
+    $scope.sucList;
 
 
 
@@ -162,7 +147,7 @@ app.controller("contSucAdmin", ["$scope","$http",
         }, function(error){ console.log(error);})}
 
         $scope.init = function(){
-          var url = 'http://192.168.1.204:58706/api/Sucursal';
+          var url = 'http://192.168.1.203:58706/api/Sucursal';
           $http.get(url).then(function(msg){
             $scope.sucList= msg.data;
           });
@@ -203,7 +188,7 @@ function newSuc(){
         }, function(error){ console.log(error);})}
 
         $scope.init = function(){
-          var url = 'http://192.168.1.204:58706/api/Productos';
+          var url = 'http://192.168.1.203:58706/api/Productos';
           $http.get(url).then(function(msg){
             client = msg.data;
             $scope.medList = client;
@@ -231,47 +216,32 @@ function newSuc(){
 }
 
 
-//controlador rol vista de administrador
-
- app.controller("contRolAdmin", 
-  function($scope) {
-    $scope.rollist=[
-        {'name':'Cashier', 'desc': 'pay' ,'id': '40'},
-        {'name':'Pharmacist', 'desc': 'medicaments' ,'id': '10'},
-        {'name':'Cashier', 'desc': 'pay' ,'id': '30'},
-        {'name':'Pharmacist', 'desc': 'medicaments' ,'id': '100'},
-    ];
-
-
-
-    $scope.edit=function(){
-    }
-    $scope.delete=function(){
-        this.rollist.pop();
-        animation();
-    }
-
-  });
-
-function newRol(){
-    window.location.href="../Views/nuevRol.html";
-}
-
 
 //nuevo rol vista administrador
 
- app.controller("contNuevRolAdmin", 
-  function($scope) {
+app.controller("contNuevRolAdmin", ["$scope","$http",
+  function($scope,$http) {
     $scope.id = "";
     $scope.name="";
     $scope.desc="";
 
+    $scope.createRol=function(nme,descr){
+      var url='http://192.168.1.203:58706/api/Roles';
+      var sendData={"Nombre": nme, "Descripcion":descr};
 
-    $scope.createProduct=function(){
-      alert($scope.id+','+$scope.name+','+$scope.desc);
+      alert(nme+descr);
+
+      $http.post(url,sendData)
+      .then(
+        function successCallback(response){
+
+        },function errorCallBack(response){
+
+        });
       animation();
-    }
-  });
+    };
+
+  }]);
 
 
 
@@ -302,7 +272,7 @@ app.controller("contMedNuevAdmin", ["$scope","$http",
         }, function(error){ console.log(error);})}
 
         $scope.init = function(){
-          var url = 'http://192.168.1.204:58706/api/Sucursal';
+          var url = 'http://192.168.1.203:58706/api/Sucursal';
           $http.get(url).then(function(msg){
             $scope.sucList = msg.data;
           });
@@ -310,13 +280,21 @@ app.controller("contMedNuevAdmin", ["$scope","$http",
         }
 
 
-
-
-
         $scope.createProduct=function(){
-          alert($scope.id+','+$scope.suc+','+$scope.presc);
+          var url='http://192.168.1.203:58706/api/Roles';
+          var sendData={"Nombre": nme, "Descripcion":descr};
+
+          alert(nme+descr);
+
+          $http.post(url,sendData)
+          .then(
+            function successCallback(response){
+
+            },function errorCallBack(response){
+
+            });
           animation();
-        }
+        };
 
       }]);
 
@@ -340,18 +318,56 @@ var openFile = function(event) {
  app.controller("contNuevSucAdmin", ["$scope","$http",
 
   function($scope,$http) {
-    $scope.id = "";
+    $scope.idEmp = "";
     $scope.name="";
-    $scope.desc="";
-    $scope.admin="";
+    $scope.idCant="";
+    $scope.idProv="";
+    $scope.idDist="";
     $scope.dir="";
     $scope.lat="";
     $scope.lng="";
 
+    $scope.empList;
+    $scope.provList;
+    $scope.cantList;
+    $scope.distList;
+
+
+    $scope.init = function(){
+      var url = 'http://192.168.1.203:58706/api/Distrito';
+      $http.get(url).then(function(msg){
+        $scope.distList = msg.data;
+        
+      });
+      url = 'http://192.168.1.203:58706/api/Cantones';
+      $http.get(url).then(function(msg){
+        $scope.cantList = msg.data;
+      });
+      url = 'http://192.168.1.203:58706/api/Empresa';
+      $http.get(url).then(function(msg){
+        $scope.empList = msg.data;
+      });
+      url = 'http://192.168.1.203:58706/api/Provincias';
+      $http.get(url).then(function(msg){
+        $scope.provList = msg.data;
+      });
+
+    }
 
 
     $scope.createProduct=function(){
-      alert($scope.id+','+$scope.lat+','+$scope.lng);
+      var url='http://192.168.1.203:58706/api/Roles';
+      var sendData={"Nombre": nme, "Descripcion":descr};
+
+      alert(nme+descr);
+
+      $http.post(url,sendData)
+      .then(
+        function successCallback(response){
+
+        },function errorCallBack(response){
+
+        });
       animation();
     }
 
@@ -441,7 +457,9 @@ var chart = AmCharts.makeChart( "chartdivr", {
 
 
 
-
+  function isBlank(str) {
+    return (!str || /^\s*$/.test(str));
+  }
 
 
 
