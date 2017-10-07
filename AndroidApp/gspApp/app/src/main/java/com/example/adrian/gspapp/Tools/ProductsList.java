@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.adrian.gspapp.EditProducts;
 import com.example.adrian.gspapp.R;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public class ProductsList extends ArrayAdapter<String> {
 
     }
     @Override
-    public View getView(final int position, final View view, ViewGroup parent) {
+    public View getView(int position, final View view, ViewGroup parent) {
         try {
             LayoutInflater inflater = context.getLayoutInflater();
             final View rowView = inflater.inflate(R.layout.edit_product, null, true);
@@ -48,7 +49,7 @@ public class ProductsList extends ArrayAdapter<String> {
             //TextView txtPrecios = (TextView) rowView.findViewById(R.id.edit_price2);
             TextView txtPres = (TextView) rowView.findViewById(R.id.edit_pres2);
             ImageView imageView = (ImageView) rowView.findViewById(R.id.edit_img2);
-            TextView txtcant = (TextView) rowView.findViewById(R.id.edit_idcant);
+            final TextView txtcant = (TextView) rowView.findViewById(R.id.edit_idcant);
 
             final Spinner spinner = (Spinner) rowView.findViewById(R.id.spinner_cant);
 // Create an ArrayAdapter using the string array and a default spinner layout
@@ -59,35 +60,17 @@ public class ProductsList extends ArrayAdapter<String> {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
             spinner.setAdapter(adapter);
-
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-                @Override
-                public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                           int arg2, long arg3) {
-
-                    String imc_met=spinner.getSelectedItem().toString();
-                    TextView txtc = (TextView) rowView.findViewById(R.id.edit_idcant);
-                    txtc.setText(imc_met);
-                    Config.selectedcant.set(position,Integer.getInteger(imc_met));
-
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> arg0) {
-                    // TODO Auto-generated method stub
-
-                }
-            });
-
+            int i = adapter.getPosition(cantidad.get(position).toString());
+            spinner.setSelection(i);
 
             txtTitle.setText((String) web.get(position));
             //txtPrecios.setText(String.valueOf(precios.get(position)));
             txtPres.setText((String) prescription.get(position));
-            txtcant.setText(String.valueOf(cantidad.get(position)));
+            //txtcant.setText(String.valueOf(cantidad.get(position)));
 
 
             imageView.setImageBitmap((Bitmap) imageId.get(position));
+
 
             return rowView;
         }catch (Exception e){}
