@@ -25,7 +25,8 @@ public class ProductsList extends ArrayAdapter<String> {
     private final List precios;
     private final List prescription;
     private final int place;
-    public ProductsList(Activity context, List web, List imageId, List prescription, int place, List precios) {
+    private final List cantidad;
+    public ProductsList(Activity context, List web, List imageId, List prescription, int place, List precios, List cant) {
         super(context, R.layout.list_design, web);
         this.context = context;
         this.web = web;
@@ -33,6 +34,7 @@ public class ProductsList extends ArrayAdapter<String> {
         this.precios = precios;
         this.prescription = prescription;
         this.place = place;
+        this.cantidad = cant;
 
     }
     @Override
@@ -40,27 +42,17 @@ public class ProductsList extends ArrayAdapter<String> {
         try {
             LayoutInflater inflater = context.getLayoutInflater();
             View rowView = inflater.inflate(R.layout.list_design, null, true);
-            TextView txtTitle = (TextView) rowView.findViewById(R.id.txt2);
-            TextView txtPrecios = (TextView) rowView.findViewById(R.id.price2);
-            TextView txtPres = (TextView) rowView.findViewById(R.id.pres2);
-            ImageView imageView = (ImageView) rowView.findViewById(R.id.img2);
+            TextView txtTitle = (TextView) rowView.findViewById(R.id.edit_txt2);
+            TextView txtPrecios = (TextView) rowView.findViewById(R.id.edit_price2);
+            TextView txtPres = (TextView) rowView.findViewById(R.id.edit_pres2);
+            ImageView imageView = (ImageView) rowView.findViewById(R.id.edit_img2);
+            TextView txtcant = (TextView) rowView.findViewById(R.id.edit_idcant);
 
-            if(place==0) {
 
-                Spinner spinner = (Spinner) rowView.findViewById(R.id.idcant);
-// Create an ArrayAdapter using the string array and a default spinner layout
-                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
-                        R.array.cantidad_array, android.R.layout.simple_spinner_item);
-
-// Specify the layout to use when the list of choices appears
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-                spinner.setAdapter(adapter);
-
-            }
             txtTitle.setText((String) web.get(position));
             txtPrecios.setText(String.valueOf(precios.get(position)));
             txtPres.setText((String) prescription.get(position));
+            txtcant.setText(String.valueOf(cantidad.get(position)));
 
 
             imageView.setImageBitmap((Bitmap) imageId.get(position));
