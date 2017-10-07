@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.adrian.gspapp.EditProducts;
 import com.example.adrian.gspapp.R;
@@ -41,7 +42,7 @@ public class ProductsList extends ArrayAdapter<String> {
 
     }
     @Override
-    public View getView(int position, final View view, ViewGroup parent) {
+    public View getView(final int position, final View view, ViewGroup parent) {
         try {
             LayoutInflater inflater = context.getLayoutInflater();
             final View rowView = inflater.inflate(R.layout.edit_product, null, true);
@@ -62,6 +63,28 @@ public class ProductsList extends ArrayAdapter<String> {
             spinner.setAdapter(adapter);
             int i = adapter.getPosition(cantidad.get(position).toString());
             spinner.setSelection(i);
+
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                @Override
+                public void onItemSelected(AdapterView<?> parent,
+                                           View view, int pos, long id) {
+                    Log.e("cantidades inicial",Config.selectedcant.toString());
+                    try{
+                        String read = parent.getItemAtPosition(pos).toString();
+                        Config.selectedcant.set(position,Integer.parseInt(read));
+                        Log.e("cantidades final c",Config.selectedcant.toString());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        Log.e("cantidades final i",Config.selectedcant.toString());
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView parent) {
+                    // Do nothing.
+                }
+            });
 
             txtTitle.setText((String) web.get(position));
             //txtPrecios.setText(String.valueOf(precios.get(position)));

@@ -35,23 +35,22 @@
 
     <h1>Order List</h1>
 
-    <div class="list-group" ng-controller="contPedidoStore">
+    <div class="list-group" ng-controller="contPedidoStore" data-ng-init="init()">
 
       <div ng-repeat="o in listOrders | orderBy: 'date'">
 
         <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
           <div class="d-flex justify-content-between">
-           <h5 class="mb-1">{{o.cliente}} </h5>
+            <img class="img-fluid" src="data:image/png;base64,{{o.Imagen}}" alt="Card image cap">
+           <h5 class="mb-1">{{o.idPedido}} </h5>
            <textarea name="inputList" ng-model="o.productos" cols="15">
            </textarea>
 
            <div class="form-group select">
-            <label>Estado</label>
+            <label>Estado: {{o.Estado}}</label>
             <select class="form-control" id="cantidad" ng-model="state" required>
-              <option>Nuevo</option>
-              <option>Preparado</option>
-              <option>Facturado</option>
-              <option>Retirado</option>
+              <option ng-repeat="s in statesId">{{s.id}} {{s.estado}}</option>
+
             </select>
           </div>
           <button type="button" class="btn btn-primary" ng-click="update(state)">
@@ -63,10 +62,10 @@
     </div>
 
 
-    </div>
+  </div>
 
-    <div id="snackbar">Order updated</div>
-      
+  <div id="snackbar">Order updated</div>
+
 
 
 

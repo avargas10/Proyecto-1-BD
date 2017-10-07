@@ -62,15 +62,15 @@
 
     
 
-    <div class="list-group" ng-controller="contEmplAdmin">
+    <div class="list-group" data-ng-init="init()" ng-controller="contEmplAdmin">
 
       <div ng-repeat="e in employeelist">
 
         <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
           <div class="d-flex justify-content-between">
-           <h5 class="mb-1">{{e.name}} <br><br> {{e.id}} <br><br> </h5>
-           <p>{{e.tel}} </p>
-           <p>{{e.rol}}</p>
+           <h5 class="mb-1">{{e.Nombre}} <br><br> {{e.idEmpleado}}<br><br> </h5>
+           <p>{{e.Username}} </p>
+           <p>{{e.Email}}</p>
            <div class="form-group select">
 
             <button type="button" class="btn btn-primary" ng-click="edit(c.name, c.id)">

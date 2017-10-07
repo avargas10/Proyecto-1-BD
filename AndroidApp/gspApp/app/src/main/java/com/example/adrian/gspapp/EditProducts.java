@@ -120,6 +120,15 @@ public class EditProducts extends AppCompatActivity {
 
             }
 
+            Config.selectedallProducts.clear();
+            Config.selectedallrelation.clear();
+            Config.selectedallimg.clear();
+            Config.selectedprecios.clear();
+            Config.selectedprescription.clear();
+            Config.selectedidproducto.clear();
+            Config.selectedcant.clear();
+            Toast.makeText(this,"Order Updated",Toast.LENGTH_LONG).show();
+            finish();
 
         }catch(Exception e){
             e.printStackTrace();
@@ -151,7 +160,6 @@ public class EditProducts extends AppCompatActivity {
         for(int x = 0 ; x < dataPedidos.length();x++){
             JSONObject objeto= (JSONObject) dataPedidos.get(x);
             Config.selectedallrelation.add(objeto.getInt("idProducto"));
-            Log.e("cantidad",String.valueOf(objeto.getInt("Cantidad")));
             Config.selectedcant.add(objeto.getInt("Cantidad"));
         }
         for(int i = 0; i < Config.selectedallrelation.size() ; i++){

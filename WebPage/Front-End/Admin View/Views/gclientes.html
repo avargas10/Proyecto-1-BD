@@ -62,15 +62,15 @@
 
 
 
-    <div class="list-group" ng-controller="contClientAdmin">
+    <div class="list-group" data-ng-init="init()" ng-controller="contClientAdmin" >
 
-      <div ng-repeat="c in clientlist">
+      <div ng-repeat="c in clientlist" >
 
         <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
           <div class="d-flex justify-content-between">
-           <img class="img-fluid" src="" alt="Card image cap">        
-           <h5 class="mb-1">{{c.name}} <br><br> {{c.id}} <br><br> </h5>
-           <p>{{c.tel}} </p>
+           <h5 class="mb-1">{{c.Nombre}} {{c.pApellido}}<br><br> {{c.Cedula}} <br><br> </h5>
+           <p>{{c.Username}} </p>
+           <p>{{c.Email}}</p>
            <div class="form-group select">
 
             <button type="button" class="btn btn-primary" ng-click="edit(c.name, c.id)">

@@ -3,26 +3,42 @@ var app= angular.module("mainModule",[]);
 
 //Controldor empleados vista administrador
 
-app.controller("contEmplAdmin", 
-  function($scope) {
-    $scope.employeelist=[
-        {'name':'Marco', 'tel': '2222222' ,'id': '40', 'rol':'Cajero'},
-        {'name':'Adrian', 'tel': '8888888888' ,'id': '10', 'rol':'Farmaceutico'}, 
-        {'name':'Andres', 'tel': '2333333333' ,'id': '30', 'rol':'Cajero'},
-        {'name':'Rodolfo', 'tel': '8999999999' ,'id': '100', 'rol':'Farmaceutico'}
-    ];
+app.controller("contEmplAdmin",["$scope","$http",
+  function($scope,$http) {
+    $scope.employeelist;
+    var emp;
 
 
+    $scope.getHttp= function(url , callback){
+      var httpObject = $http.get(url);
+      httpObject.then(function(promise){
+        callback(promise.data);
+      }, function(error){ console.log(error);})}
 
-    $scope.edit=function(){
-    }
+      $scope.postHttp = function(url,data,callback){
+        var httpObject = $http.post(url,data);
+        httpObject.then(function(promise){
+          callback(promise.data);
+        }, function(error){ console.log(error);})}
 
-    $scope.delete=function(){
-        this.employeelist.pop();
-        animation();
-    }
+        $scope.init = function(){
+          var url = 'http://192.168.1.204:58706/api/Empleados';
+          $http.get(url).then(function(msg){
+            emp= msg.data;
+            $scope.employeelist = emp;
+          });
 
-  });
+        };
+
+        $scope.edit=function(){
+        }
+
+        $scope.delete=function(){
+          this.employeelist.pop();
+          animation();
+        }
+
+      }]);
 
 
 
@@ -33,38 +49,82 @@ app.controller("contEmplAdmin",
 //controlador roles vista administrador
 
 
-app.controller("contRolAdmin", 
-  function($scope) {
+app.controller("contRolAdmin", ["$scope","$http",
+  function($scope,$http) {
+
+
     $scope.rollist=[
-        {'name':'Cashier', 'desc': 'pay' ,'id': '40'},
-        {'name':'Pharmacist', 'desc': 'medicaments' ,'id': '10'},
-        {'name':'Cashier', 'desc': 'pay' ,'id': '30'},
-        {'name':'Pharmacist', 'desc': 'medicaments' ,'id': '100'},
+    {'name':'Cashier', 'desc': 'pay' ,'id': '40'},
+    {'name':'Pharmacist', 'desc': 'medicaments' ,'id': '10'},
+    {'name':'Cashier', 'desc': 'pay' ,'id': '30'},
+    {'name':'Pharmacist', 'desc': 'medicaments' ,'id': '100'},
     ];
 
 
+    $scope.getHttp= function(url , callback){
+      var httpObject = $http.get(url);
+      httpObject.then(function(promise){
+        callback(promise.data);
+      }, function(error){ console.log(error);})}
 
-    $scope.edit=function(){
-    }
-    $scope.delete=function(){
-        this.rollist.pop();
-        animation();
-    }
+      $scope.postHttp = function(url,data,callback){
+        var httpObject = $http.post(url,data);
+        httpObject.then(function(promise){
+          callback(promise.data);
+        }, function(error){ console.log(error);})}
 
-  });
+        $scope.init = function(){
+          var url = 'http://192.168.1.204:58706/api/Clientes';
+          $http.get(url).then(function(msg){
+            client= msg.data;
+            $scope.clientlist = client;
+          });
+
+        };
+
+
+
+
+
+
+
+        $scope.edit=function(){
+        }
+        $scope.delete=function(){
+          this.rollist.pop();
+          animation();
+        }
+
+      }]);
 
 
 //controlador clientes vista administrador
 
-app.controller("contClientAdmin",
-  function($scope) {
-    $scope.clientlist=[
-        {'name':'Marco', 'tel': '2222222' ,'id': '40'},
-        {'name':'Adrian', 'tel': '8888888888' ,'id': '10'},
-        {'name':'Andres', 'tel': '2333333333' ,'id': '30'},
-        {'name':'Rodolfo', 'tel': '8999999999' ,'id': '100'},
-    ];
+app.controller("contClientAdmin",["$scope","$http",
+  function($scope,$http) {
+    $scope.clientlist;
+    var client;
 
+    $scope.getHttp= function(url , callback){
+      var httpObject = $http.get(url);
+      httpObject.then(function(promise){
+        callback(promise.data);
+      }, function(error){ console.log(error);})}
+
+      $scope.postHttp = function(url,data,callback){
+        var httpObject = $http.post(url,data);
+        httpObject.then(function(promise){
+          callback(promise.data);
+        }, function(error){ console.log(error);})}
+
+        $scope.init = function(){
+          var url = 'http://192.168.1.204:58706/api/Clientes';
+          $http.get(url).then(function(msg){
+            client= msg.data;
+            $scope.clientlist = client;
+          });
+
+        };
 
 
     $scope.edit=function(){
@@ -74,12 +134,12 @@ app.controller("contClientAdmin",
         animation();
     }
 
-  });
+  }]);
 
 //controlador sucursales vista administrador
 
-app.controller("contSucAdmin", 
-  function($scope) {
+app.controller("contSucAdmin", ["$scope","$http",
+  function($scope,$http) {
     $scope.sucList=[
         {'name':'San Pedro', 'desc': 'Blanca' ,'admin': 'Marco'},
         {'name':'San Jose', 'desc': 'Verde' ,'admin': 'Fofo'},
@@ -89,14 +149,36 @@ app.controller("contSucAdmin",
 
 
 
+    $scope.getHttp= function(url , callback){
+      var httpObject = $http.get(url);
+      httpObject.then(function(promise){
+        callback(promise.data);
+      }, function(error){ console.log(error);})}
+
+      $scope.postHttp = function(url,data,callback){
+        var httpObject = $http.post(url,data);
+        httpObject.then(function(promise){
+          callback(promise.data);
+        }, function(error){ console.log(error);})}
+
+        $scope.init = function(){
+          var url = 'http://192.168.1.204:58706/api/Sucursal';
+          $http.get(url).then(function(msg){
+            $scope.sucList= msg.data;
+          });
+
+        };
+
+
+
     $scope.edit=function(name,id){
     }
     $scope.delete=function(){
-        this.medList.pop();
+        this.sucList.pop();
         animation();
     }
 
-  });
+  }]);
 
 function newSuc(){
     window.location.href = "../Views/nuevSuc.html";
@@ -104,28 +186,48 @@ function newSuc(){
 
  //gestion medicamentos vista administrador
 
- app.controller("contMedAdmin", 
-  function($scope) {
-    $scope.medList=[
-        {'name':'Tabcin', 'price': '50' ,'id': '1212'},
-        {'name':'Talerdin', 'price': '20' ,'id': '2121'},
-        {'name':'Condones', 'price': '30' ,'id': '4343'},
-        {'name':'Suero', 'price': '60' ,'id': '3434'},
-    ];
+ app.controller("contMedAdmin",["$scope","$http",
+  function($scope,$http) {
+    $scope.medList;
+    var client;
+    $scope.getHttp= function(url , callback){
+      var httpObject = $http.get(url);
+      httpObject.then(function(promise){
+        callback(promise.data);
+      }, function(error){ console.log(error);})}
+
+      $scope.postHttp = function(url,data,callback){
+        var httpObject = $http.post(url,data);
+        httpObject.then(function(promise){
+          callback(promise.data);
+        }, function(error){ console.log(error);})}
+
+        $scope.init = function(){
+          var url = 'http://192.168.1.204:58706/api/Productos';
+          $http.get(url).then(function(msg){
+            client = msg.data;
+            $scope.medList = client;
+          });
+
+        }
 
 
 
-    $scope.edit=function(name,id){
-    }
-    $scope.delete=function(){
-        this.medList.pop();
-        animation();
-    }
+        $scope.edit=function(name,id){
+        }
 
-  });
+        $scope.delete=function(){
+          this.medList.pop();
+          animation();
+        }
 
-function newProd(){
-    window.location.href = "../Views/nuevMed.html";
+      //this.getProducts();
+
+
+      }]);
+
+ function newProd(){
+  window.location.href = "../Views/nuevMed.html";
 }
 
 
@@ -176,22 +278,47 @@ function newRol(){
 //controlador nuevo medicamento vista administrador
 
 
-app.controller("contMedNuevAdmin", 
-  function($scope) {
+app.controller("contMedNuevAdmin", ["$scope","$http",
+  function($scope,$http) {
     $scope.id = "";
     $scope.name="";
     $scope.presc="";
     $scope.house="";
     $scope.qty="";
+    $scope.suc="";
+    $scope.sucList;
 
 
-    $scope.createProduct=function(){
-      alert($scope.id+','+$scope.name+','+$scope.presc);
-      animation();
-    }
+    $scope.getHttp= function(url , callback){
+      var httpObject = $http.get(url);
+      httpObject.then(function(promise){
+        callback(promise.data);
+      }, function(error){ console.log(error);})}
+
+      $scope.postHttp = function(url,data,callback){
+        var httpObject = $http.post(url,data);
+        httpObject.then(function(promise){
+          callback(promise.data);
+        }, function(error){ console.log(error);})}
+
+        $scope.init = function(){
+          var url = 'http://192.168.1.204:58706/api/Sucursal';
+          $http.get(url).then(function(msg){
+            $scope.sucList = msg.data;
+          });
+
+        }
 
 
-  });
+
+
+
+        $scope.createProduct=function(){
+          alert($scope.id+','+$scope.suc+','+$scope.presc);
+          animation();
+        }
+
+      }]);
 
 
 var openFile = function(event) {
@@ -210,21 +337,25 @@ var openFile = function(event) {
 //nueva sucursal vista administrador
 
 
- app.controller("contNuevSucAdmin", 
-  function($scope) {
+ app.controller("contNuevSucAdmin", ["$scope","$http",
+
+  function($scope,$http) {
     $scope.id = "";
     $scope.name="";
     $scope.desc="";
     $scope.admin="";
     $scope.dir="";
+    $scope.lat="";
+    $scope.lng="";
+
 
 
     $scope.createProduct=function(){
-      alert($scope.id+','+$scope.name+','+$scope.presc);
+      alert($scope.id+','+$scope.lat+','+$scope.lng);
       animation();
     }
 
-  });
+  }]);
 
 //Vista estadistica
 

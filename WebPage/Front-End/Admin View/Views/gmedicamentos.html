@@ -63,18 +63,18 @@
     </div>
 
 
-    <div class="list-group" ng-controller="contMedAdmin">
+    <div class="list-group" data-ng-init="init()" ng-controller="contMedAdmin">
 
       <div ng-repeat="m in medList">
 
         <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
           <div class="d-flex justify-content-between">
-           <img class="img-fluid" src="" alt="Card image cap">        
-           <h5 class="mb-1">{{m.name}} <br><br> {{m.id}} <br><br> </h5>
-           <p>{{m.price}} </p>
+           <img class="img-fluid" src="data:image/png;base64,{{m.Image}}" alt="Card image cap">        
+           <h5 class="mb-1">{{m.Nombre}} <br><br> {{m.idProducto}}<br><br> </h5>
+           <p>{{m.esMedicamento}} </p>
            <div class="form-group select">
 
-            <button type="button" class="btn btn-primary" ng-click="edit(c.name, c.id)">
+            <button type="button" class="btn btn-primary" ng-click="getProducts()">
               Edit
             </button>
             <br>
