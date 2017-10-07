@@ -27,7 +27,7 @@ public class nuevoPadecimiento extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuevo_padecimiento);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Registrar Padecimiento");
 
         nombre=(EditText) findViewById(R.id.txtNombrePad);
@@ -71,9 +71,10 @@ public class nuevoPadecimiento extends AppCompatActivity {
                        nombre.setText("");
                        fecha.setText("");
                        descrip.setText("");
-                      // Padecimientos.allNames.add(pad.getString("Nombre") + " - " +pad.get("Fecha").toString()+" - " +
-                        //       pad.getString("Descripcion") );
-                       Padecimientos.allNames.clear();
+                       Padecimientos.allNames.add(pad.getString("Nombre") + " - " +pad.get("Fecha").toString()+" - " +
+                            pad.getString("Descripcion") );
+                       Padecimientos.dataAdapter.notifyDataSetChanged();
+                      // Padecimientos.allNames.clear();
                     }else{
                         Toast.makeText(getApplicationContext(),"Error al agregar el Padecimiento.", Toast.LENGTH_LONG).show();
 

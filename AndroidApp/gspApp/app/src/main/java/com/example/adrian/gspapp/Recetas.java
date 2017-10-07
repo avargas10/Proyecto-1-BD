@@ -1,129 +1,153 @@
 package com.example.adrian.gspapp;
 
-import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
-import com.example.adrian.gspapp.Tools.Config;
-import com.example.adrian.gspapp.Tools.CustomList;
-import com.example.adrian.gspapp.Tools.RecetasList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import Interfaz.PostAdapter;
+import Interfaz.Swipe.SwipeMenu;
+import Interfaz.Swipe.SwipeMenuCreator;
+import Interfaz.Swipe.SwipeMenuItem;
+import Interfaz.Swipe.SwipeMenuListView;
 
 public class Recetas extends Fragment {
-    private static  final  String TAG="Recetas";
-    JSONObject ob1, obj2, obj3, obj4, obj5, obj6, obj7, obj8 ,obj9;
+
     JSONArray listaPost;
-    static List<JSONObject> data= new ArrayList<JSONObject>();
+    JSONObject ob1, obj2, obj3, obj4, obj5, obj6, obj7, obj8 ,obj9, obj10;
+
+    private SwipeMenuListView lista;
+    PostAdapter adapter;
+    SwipeMenuCreator creator;
+    private  AppAdapter mAdapter;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         getActivity().setTitle("Recetas");
-        SwipeMenuListView listView=getView().findViewById(R.id.listView);
 
-        RecetasList adapter = null;
         try {
-            System.out.println("AQUI ESTOY!!!!");
-            adapter = new
-                    RecetasList((Activity) this.getContext(), datos());
+            datos();
         } catch (JSONException e) {
-            System.out.println("ECEPCION!!!!!!!!!!");
             e.printStackTrace();
         }
-        // list=(ListView)getView().findViewById(R.id.list);
-        listView.setAdapter(adapter);
-       /* try {
-            adapter = new PostAdapter(getActivity(), datos());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
-
-
-        SwipeMenuCreator creator = new SwipeMenuCreator() {
+        lista = getView().findViewById(R.id.listView);
+        mAdapter=new AppAdapter();
+        lista.setAdapter(mAdapter);
+        creator = new SwipeMenuCreator() {
 
             @Override
             public void create(SwipeMenu menu) {
                 // create "open" item
-                SwipeMenuItem openItem = new SwipeMenuItem(
+                SwipeMenuItem share = new SwipeMenuItem(
                         getContext());
                 // set item background
-                openItem.setBackground(new ColorDrawable(Color.rgb(0x1a, 0xa3,
-                        0xff)));
+                share.setBackground(new ColorDrawable(Color.parseColor("#1aa3ff")));
                 // set item width
-                openItem.setWidth(170);
+                share.setWidth(dp2px(90));
                 // set item title
-                openItem.setTitle("Open");
+                share.setTitle("EDIT");
                 // set item title fontsize
-                openItem.setTitleSize(18);
+                share.setTitleSize(18);
                 // set item title font color
-                openItem.setTitleColor(Color.WHITE);
+                share.setTitleColor(Color.WHITE);
                 // add to menu
-                menu.addMenuItem(openItem);
+                menu.addMenuItem(share);
 
-                // create "delete" item
-                SwipeMenuItem deleteItem = new SwipeMenuItem(
+
+                SwipeMenuItem delete = new SwipeMenuItem(
                         getContext());
                 // set item background
-                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
-                        0x3F, 0x25)));
+                delete.setBackground(new ColorDrawable(Color.parseColor("#e15258")));
                 // set item width
-                deleteItem.setWidth(170);
-                // set a icon
-                deleteItem.setIcon(R.drawable.ic_delete);
+                delete.setWidth(dp2px(90));
+                // set item title                        adapter.notifyDataSetChanged();
+
+                delete.setTitle("DELETE");
+                // set item title fontsize
+                delete.setTitleSize(18);
+                // set item title font color
+                delete.setTitleColor(Color.WHITE);
                 // add to menu
-                menu.addMenuItem(deleteItem);
+                menu.addMenuItem(delete);
             }
         };
-
-// set creator
-        listView.setMenuCreator(creator);
-
-        listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
-
+        // set creator
+        lista.setMenuCreator(creator);
+        lista.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+
                 switch (index) {
                     case 0:
-                        Toast.makeText(getContext(),"uno",Toast.LENGTH_LONG).show();
+
                         break;
                     case 1:
-                        Toast.makeText(getContext(),"Delete",Toast.LENGTH_LONG).show();
+                        mAdapter.delete(position);
+                        lista.setAdapter(mAdapter);
+
                         break;
                 }
-                // false : close the menu; true : not close the menu
+                return false;
+            }
+        });
+
+        lista.setOnSwipeListener(new SwipeMenuListView.OnSwipeListener() {
+
+            @Override
+            public void onSwipeStart(int position) {
+                // swipe start
+            }
+
+            @Override
+            public void onSwipeEnd(int position) {
+                // swipe end
+            }
+        });
+
+        lista.setOnMenuStateChangeListener(new SwipeMenuListView.OnMenuStateChangeListener() {
+            @Override
+            public void onMenuOpen(int position) {
+            }
+
+            @Override
+            public void onMenuClose(int position) {
+            }
+        });
+
+        lista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                           int position, long id) {
+                Toast.makeText(getContext(), position + " long click", Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
     }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_recetas, container, false);
+    private int dp2px(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                getResources().getDisplayMetrics());
     }
 
-    private List datos() throws JSONException {
-
+    private JSONArray datos() throws JSONException {
         ob1 = new JSONObject();
         obj2 = new JSONObject();
         obj3 = new JSONObject();
@@ -133,6 +157,7 @@ public class Recetas extends Fragment {
         obj7 = new JSONObject();
         obj8 = new JSONObject();
         obj9 = new JSONObject();
+        obj10= new JSONObject();
         listaPost = new JSONArray();
 
         ob1.put("titulo", "documentacion");
@@ -171,21 +196,108 @@ public class Recetas extends Fragment {
         obj9.put("indicador", "Pendiente");
         obj9.put("contenido", "zip");
 
+        obj10.put("titulo", "PRUEBA");
+        obj10.put("indicador", "Pendiente");
+        obj10.put("contenido", "PRUEBA");
 
 
+        listaPost.put(ob1);
+        listaPost.put(obj2);
+        listaPost.put(obj3);
+        listaPost.put(obj4);
+        listaPost.put(obj5);
+        listaPost.put(obj6);
+        listaPost.put(obj7);
+        listaPost.put(obj8);
+        listaPost.put(obj9);
+        listaPost.put(obj10);
 
-        data.add(ob1);
-        data.add(obj2);
-        data.add(obj3);
-        data.add(obj4);
-        data.add(obj5);
-        data.add(obj6);
-        data.add(obj7);
-        data.add(obj8);
-        data.add(obj9);
-
-        return data;
+        return listaPost;
     }
+
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.activity_recetas, container, false);
+    }
+
+    class AppAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return listaPost.length();
+        }
+
+        @Override
+        public JSONObject getItem(int position) {
+            try {
+                return (JSONObject) listaPost.get(position);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public int getViewTypeCount() {
+            // menu type count
+            return 3;
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            // current menu type
+            return position % 3;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = View.inflate(getContext(),
+                        R.layout.post_principal, null);
+                new ViewHolder(convertView);
+            }
+            ViewHolder holder = (ViewHolder) convertView.getTag();
+            try {
+                JSONObject obj=listaPost.getJSONObject(position);
+                holder.tv_name.setText(obj.getString("titulo"));
+                holder.tv_descrip.setText(obj.getString("contenido"));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return convertView;
+        }
+        public void delete(int pos){
+            try {
+                Toast.makeText(getContext(), "Se ha eliminado el archivo "+ listaPost.getJSONObject(pos).getString("titulo")+"."+
+                                listaPost.getJSONObject(pos).getString("contenido"),
+                        Toast.LENGTH_LONG).show();
+                listaPost.remove(pos);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        class ViewHolder {
+            TextView tv_name;
+            TextView tv_descrip;
+            public ViewHolder(View view) {
+                tv_name = view.findViewById(R.id.titulo_postPrincipal);
+                tv_descrip=view.findViewById(R.id.descripcion_postPrincipal);
+                view.setTag(this);
+            }
+        }
+
+
+    }
+
 
 
 }
