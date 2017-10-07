@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ import java.util.List;
 public class nuevaReceta extends AppCompatActivity {
     ListView list;
     ImageView imagen;
+    EditText doctor;
     private static final int CAMERA_REQUEST = 1888;
     String encodedprescription=null;
     JSONArray lista;
@@ -53,6 +55,7 @@ public class nuevaReceta extends AppCompatActivity {
         list=(ListView) findViewById(R.id.listregReceta);
         imagen=(ImageView) findViewById(R.id.imageViewReceta);
         send=(Button) findViewById(R.id.btnSendRecetas);
+        doctor=(EditText) findViewById(R.id.txtidDoctor);
         selectedItems=new ArrayList();
         try {
            // getProducts();

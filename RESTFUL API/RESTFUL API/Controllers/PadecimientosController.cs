@@ -56,6 +56,31 @@ namespace RESTFUL_API.Controllers
             }
         }
 
+        [HttpPut]
+        public HttpResponseMessage updatePadecimiento([FromBody] padecimientosModel padecimiento)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UPDATE  PADECIMIENTOS  SET idUsuario=@cedula, Fecha=@fecha, Nombre=@nombre, Descripcion=@descripcion WHERE idPadecimiento=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", padecimiento.idPadecimiento);
+                    cmd.Parameters.AddWithValue("@cedula", padecimiento.idUsuario);
+                    cmd.Parameters.AddWithValue("@fecha", padecimiento.Fecha);
+                    cmd.Parameters.AddWithValue("@nombre", padecimiento.Nombre);
+                    cmd.Parameters.AddWithValue("@descripcion", padecimiento.Descripcion);
+                    conn.Open();
+                    cmd.ExecuteReader();
+                    var message = Request.CreateResponse(HttpStatusCode.Created, padecimiento);
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
         [HttpGet]
         public IEnumerable<Dictionary<string, object>> getPadbyUserid(int id)
         {
