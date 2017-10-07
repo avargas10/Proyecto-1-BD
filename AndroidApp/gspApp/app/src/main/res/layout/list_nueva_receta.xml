@@ -10,7 +10,6 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginEnd="14dp"
-        app:srcCompat="@drawable/emptyCheck"
         android:layout_alignBottom="@+id/txtCodigoProductoRecetas"
         android:layout_alignParentEnd="true" />
 
