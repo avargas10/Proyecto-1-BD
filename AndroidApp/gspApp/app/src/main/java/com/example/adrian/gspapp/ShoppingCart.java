@@ -43,6 +43,7 @@ public class ShoppingCart extends AppCompatActivity {
                 Config.precios.remove(position);
                 Config.prescription.remove(position);
                 Config.idproducto.remove(position);
+                Config.cantidad.remove(position);
                 adapter.notifyDataSetChanged();
 
             }
@@ -59,7 +60,7 @@ public class ShoppingCart extends AppCompatActivity {
     private void getProducts() throws JSONException {
 
         adapter = new
-                CustomList(this, Config.allProducts, Config.allimg,Config.precios,Config.prescription,Config.DELETE);
+                CustomList(this, Config.allProducts, Config.allimg,Config.prescription,Config.DELETE,Config.precios);
         ShoppingList.setAdapter(adapter);
 
     }

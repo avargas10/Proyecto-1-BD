@@ -1,6 +1,7 @@
 package com.example.adrian.gspapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.Nullable;
@@ -45,8 +46,12 @@ public class Home extends Fragment {
         }
         pedidosList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
+                try {
+                    Config.currentorder = ((JSONObject)dataPedidos.get(position)).getInt("idPedido");
+                    startActivity(new Intent(getContext(),EditProducts.class));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -64,7 +69,6 @@ public class Home extends Fragment {
         for (int i = 0; i < dataPedidos.length(); i++) {
             JSONObject objeto = (JSONObject) dataPedidos.get(i);
             JSONObject sucursal = Connection.getInstance().getSucursalbyId(objeto.getInt("sucursalRecojo")).getJSONObject(0);
-            Log.e("sucursal", sucursal.toString());
             allNames.add("Pedido #" + objeto.getString("idPedido") + " - " + sucursal.getString("Nombre") );
         }
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>

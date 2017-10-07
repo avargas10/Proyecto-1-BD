@@ -260,3 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 RESTFUL API/RESTFUL API/Web.config
+AndroidApp/gspApp/app/src/main/res/layout/list_nueva_receta.xml

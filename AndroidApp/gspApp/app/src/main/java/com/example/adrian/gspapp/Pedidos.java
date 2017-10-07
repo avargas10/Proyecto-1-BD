@@ -16,7 +16,6 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +26,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -64,6 +64,7 @@ public class Pedidos extends Fragment {
     static List<Integer> available;
     static List<Integer> idproducto;
     static ArrayList<String> unavailable;
+    ArrayList<Integer> allrelation;
     String encodedprescription=null;
     static int sucursal = 0;
     EditText fecha;
@@ -85,19 +86,23 @@ public class Pedidos extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 // selected item
-                String selectedproduct = ((TextView) view.findViewById(R.id.txt2)).getText().toString();
+                String selectedproduct = ((TextView) view.findViewById(R.id.txtProductoRecetas)).getText().toString();
                 ImageView imgview = (ImageView) view.findViewById(R.id.img2);
                 imgview.setDrawingCacheEnabled(true);
                 Bitmap selectedimg = Bitmap.createBitmap(imgview.getDrawingCache());
-                int selectedprice = Integer.parseInt(((TextView) view.findViewById(R.id.price2)).getText().toString());
+                int selectedprice = Integer.parseInt(((TextView) view.findViewById(R.id.txtCodigoProductoRecetas)).getText().toString());
                 String selectedpres = ((TextView) view.findViewById(R.id.pres2)).getText().toString();
-
+                final Spinner sp = (Spinner) view.findViewById(R.id.idcant);
+                int cant = Integer.parseInt(sp.getSelectedItem().toString());
 
                 Config.allProducts.add(selectedproduct);
                 Config.allimg.add(selectedimg);
                 Config.precios.add(selectedprice);
                 Config.prescription.add(selectedpres);
                 Config.idproducto.add(idproducto.get(position));
+                Config.cantidad.add(cant);
+
+                Toast.makeText(getContext(),"Added to cart",Toast.LENGTH_SHORT).show();
 
 
             }
@@ -105,7 +110,13 @@ public class Pedidos extends Fragment {
         sucursales.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                sucursal = position + 1;
+                try {
+                    sucursal = position + 1;
+                    getProducts();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
 
             }
         });
@@ -196,7 +207,6 @@ public class Pedidos extends Fragment {
         });
         getActivity().setTitle("Pedidos");
         try {
-            getProducts();
             getSucursales();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -258,7 +268,7 @@ public class Pedidos extends Fragment {
                 JSONObject pad = new JSONObject();
                 pad.put("idProducto", Config.idproducto.get(i));
                 pad.put("idPedido", numpedido);
-                pad.put("idCantidad", 1);
+                pad.put("idCantidad", Config.cantidad.get(i));
                 Connection.getInstance().regDetalle(pad);
             }
                 Toast.makeText(getContext(), "Detalle Agregado Correctamente", Toast.LENGTH_LONG).show();
@@ -322,20 +332,25 @@ public class Pedidos extends Fragment {
     };
 
     private void getProducts() throws JSONException {
-        dataProducts = Connection.getInstance().getProductos();
+        dataProducts = Connection.getInstance().getProductosxSucursal(sucursal);
+        allrelation = new ArrayList<Integer>();
         prescription = new ArrayList<String>();
         allProducts = new ArrayList<String>();
         allimg = new ArrayList<>();
         precios = new ArrayList<>();
         idproducto = new ArrayList<>();
 
-        for(int i=0; i<dataProducts.length();i++){
-            JSONObject objeto= (JSONObject) dataProducts.get(i);
+        for(int x = 0 ; x < dataProducts.length();x++){
+            JSONObject objeto= (JSONObject) dataProducts.get(x);
+            allrelation.add(objeto.getInt("codProducto"));
+            precios.add(objeto.getInt("Precio"));
+        }
+        for(int i = 0; i < allrelation.size() ; i++){
+            JSONObject objeto = Connection.getInstance().getProductobyId(allrelation.get(i));
             allProducts.add(objeto.getString("Nombre"));
             byte[] decodedString = Base64.decode(objeto.getString("Image"), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             allimg.add(decodedByte);
-            precios.add(objeto.getInt("Precio"));
             idproducto.add(objeto.getInt("idProducto"));
             if(objeto.getInt("reqPrescripcion") == 1){
                 prescription.add("Require prescription");
@@ -346,7 +361,7 @@ public class Pedidos extends Fragment {
         }
 
         CustomList adapter = new
-                CustomList((Activity) this.getContext(), allProducts, allimg, precios, prescription,Config.ADD);
+                CustomList((Activity) this.getContext(), allProducts, allimg, prescription,Config.ADD,precios);
         list=(ListView)getView().findViewById(R.id.list);
         list.setAdapter(adapter);
 
@@ -398,6 +413,7 @@ public class Pedidos extends Fragment {
         Config.precios.clear();
         Config.allimg.clear();
         Config.idproducto.clear();
+        Config.cantidad.clear();
         unavailable.clear();
         fecha.setText("");
         telefono.setText("");

@@ -32,6 +32,32 @@ namespace RESTFUL_API.Controllers
             }
         }
 
+        [HttpGet]
+        public HttpResponseMessage getPedidosbyidPedido(int idPedido)
+        {
+            using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT idPedido,sucursalRecojo,idCliente,horaRecojo,Telefono,Imagen,Estado FROM PEDIDOS WHERE idPedido=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", idPedido);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var r = serial.singleserialize(reader);
+                        var message = Request.CreateResponse(HttpStatusCode.Accepted, r);
+                        conn.Close();
+                        return message;
+                    }
+                }catch(Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
+                }
+
+            }
+        }
+
         [HttpPost]
         public HttpResponseMessage regPedido([FromBody] pedidosModel pedido)
         {
@@ -75,6 +101,34 @@ namespace RESTFUL_API.Controllers
                     return r;
                 }
 
+            }
+        }
+
+        [HttpPut]
+        public HttpResponseMessage updatePedido(pedidosModel pedido)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UPDATE PEDIDOS SET sucursalRecojo=@sucursal, idCliente=@cliente, horaRecojo=@hora, Telefono=@telefono, Imagen=@imagen, Estado=@estado WHERE idPedido=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", pedido.idPedido);
+                    cmd.Parameters.AddWithValue("@sucursal", pedido.sucursalRecojo);
+                    cmd.Parameters.AddWithValue("@cliente", pedido.idCliente);
+                    cmd.Parameters.AddWithValue("@hora", pedido.horaRecojo);
+                    cmd.Parameters.AddWithValue("@telefono", pedido.Telefono);
+                    cmd.Parameters.AddWithValue("@imagen", pedido.Imagen);
+                    cmd.Parameters.AddWithValue("@estado", pedido.Estado);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    cmd.ExecuteReader();
+                    var message = Request.CreateResponse(HttpStatusCode.Created, pedido);
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
     }

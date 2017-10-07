@@ -1,6 +1,7 @@
 package com.example.adrian.gspapp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -9,9 +10,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.adrian.gspapp.Tools.Config;
 import com.example.adrian.gspapp.Tools.Connection;
 
 import org.json.JSONArray;
@@ -26,6 +33,9 @@ public class Padecimientos extends Fragment {
     public static JSONArray jArray=new JSONArray();
     public static ListView lista;
    public static List<String> allNames = new ArrayList<String>();
+    public static List<Integer> PadNames = new ArrayList<Integer>();
+    public static  ArrayAdapter<String> dataAdapter;
+
 
 
     @Override
@@ -41,6 +51,12 @@ public class Padecimientos extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), nuevoPadecimiento.class);
                 startActivity(intent);
+            }
+        });
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Config.currentPad = PadNames.get(position);
+                startActivity(new Intent(getContext(),EditPadecimientos.class));
             }
         });
         allNames.clear();
@@ -62,10 +78,11 @@ public class Padecimientos extends Fragment {
 
     public void getPadecimientos(JSONArray data) throws JSONException {
         System.out.println("PADECIMIENTOS: "+data.toString());
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
+         dataAdapter = new ArrayAdapter<String>
                 (getContext(), android.R.layout.simple_list_item_1, allNames);
         for (int i = 0; i < data.length(); i++) {
             JSONObject objeto = new JSONObject( data.get(i).toString());
+            PadNames.add(objeto.getInt("idPadecimiento"));
             allNames.add(objeto.getString("Nombre") + " - " +objeto.get("Fecha").toString().split("T")[0]+" - " +
                     objeto.getString("Descripcion") );
         }

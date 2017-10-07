@@ -5,7 +5,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -23,7 +26,8 @@
         </activity>
         <activity
             android:name=".Registro"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".navigationDrawer"
             android:label="@string/title_activity_principal"
@@ -37,6 +41,9 @@
         <activity
             android:name=".nuevoPadecimiento"
             android:parentActivityName=".navigationDrawer" />
+        <activity android:name=".EditProducts" />
+        <activity android:name=".nuevaReceta" />
+        <activity android:name=".EditPadecimientos"></activity>
     </application>
 
 </manifest>

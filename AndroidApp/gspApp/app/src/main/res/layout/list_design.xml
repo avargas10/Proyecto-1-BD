@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
+    android:descendantFocusability="blocksDescendants"
+
     android:layout_width="fill_parent"
 
     android:layout_height="wrap_content"
@@ -36,26 +38,20 @@
         </ImageView>
     </LinearLayout>
     <!-- Rightend Arrow -->
-    <ImageView
 
-        android:id="@+id/imageView1"
-
-        android:contentDescription="@string/app_name"
-
-        android:layout_width="30dp"
-
-        android:layout_height="30dp"
-
+    <Spinner
+        android:id="@+id/idcant"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:layout_alignParentRight="true"
+        android:focusable="false"
+        android:focusableInTouchMode="true"
+        android:layout_centerVertical="true"></Spinner>
 
-        android:layout_centerVertical="true"
-
-        android:src="@drawable/add" >
-    </ImageView>
     <!-- City-->
     <TextView
 
-        android:id="@+id/txt2"
+        android:id="@+id/txtProductoRecetas"
 
         android:layout_width="wrap_content"
 
@@ -81,15 +77,15 @@
     <!-- Weather Information-->
     <TextView
 
-        android:id="@+id/price2"
+        android:id="@+id/txtCodigoProductoRecetas"
 
         android:layout_width="wrap_content"
 
         android:layout_height="wrap_content"
 
-        android:layout_below="@+id/txt2"
+        android:layout_below="@+id/txtProductoRecetas"
 
-        android:layout_alignLeft="@+id/txt2"
+        android:layout_alignLeft="@+id/txtProductoRecetas"
 
         android:paddingTop="25dip"
 
@@ -108,9 +104,9 @@
 
         android:layout_height="wrap_content"
 
-        android:layout_below="@+id/price2"
+        android:layout_below="@+id/txtCodigoProductoRecetas"
 
-        android:layout_alignLeft="@+id/price2"
+        android:layout_alignLeft="@+id/txtCodigoProductoRecetas"
 
         android:text="Requiere Prescripcion"
 

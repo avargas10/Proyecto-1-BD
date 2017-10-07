@@ -30,8 +30,6 @@ INSERT INTO DISTRITO ( idCanton, Nombre) VALUES ( 8, 'Rio Cuarto');
 INSERT INTO DISTRITO ( idCanton, Nombre) VALUES ( 8, 'Bolivar');
 
 
-
-
 INSERT INTO ROLES ( Nombre, Descripcion) VALUES ('Ingeniero','Admin de la app');
 INSERT INTO ROLES ( Nombre, Descripcion) VALUES ('Cajero','Maneja diner en la farmacia');
 INSERT INTO ROLES ( Nombre, Descripcion) VALUES ('Farmaceutico','Vendedores especializados en medicina');
@@ -73,6 +71,17 @@ INSERT INTO EMPLEADOXSUCURSAL(idSucursal, idEmpleado, idRol) VALUES (4, 3, 2);
 INSERT INTO EMPLEADOXSUCURSAL(idSucursal, idEmpleado, idRol) VALUES (1, 4, 3);
 INSERT INTO EMPLEADOXSUCURSAL(idSucursal, idEmpleado, idRol) VALUES (2, 5, 1);
 
+INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,1,10,500);
+INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,2,10,1200);
+INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,3,10,250);
+INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,4,10,2200);
+INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,5,10,100);
+INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,6,10,400);
+INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,7,10,120);
+INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,8,10,875);
+INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,9,10,525);
+INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,10,10,330);
+INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (2,0,10,1200);
 
 INSERT INTO PROVEEDORES (idProveedor, Nombre, Telefono) VALUES (0,'Bayern', 22550890);
 INSERT INTO PROVEEDORES (idProveedor, Nombre, Telefono) VALUES (1,'Playboy', 22733665);
