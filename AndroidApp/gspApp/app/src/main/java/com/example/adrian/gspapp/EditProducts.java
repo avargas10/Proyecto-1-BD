@@ -5,6 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -70,6 +73,14 @@ public class EditProducts extends AppCompatActivity {
 
             }
         });
+        submit.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View view) {
+
+                UpdatePedido();
+            }
+        });
 
 
         try {
@@ -87,13 +98,26 @@ public class EditProducts extends AppCompatActivity {
                 Toast.makeText(this, "Please fill all the blank spaces", Toast.LENGTH_SHORT).show();
             }
             else {
+                Connection.getInstance().deleteDetalle(generaldata.getInt("idPedido"));
+
+                for(int i = 0; i < Config.selectedallrelation.size() ; i++){
+                    JSONObject pad = new JSONObject();
+                    pad.put("idProducto", Config.selectedallrelation.get(i));
+                    pad.put("idPedido", generaldata.getInt("idPedido"));
+                    pad.put("idCantidad", Config.selectedcant.get(i));
+                    Connection.getInstance().regDetalle(pad);
+                }
+
                 JSONObject pad = new JSONObject();
+                pad.put("idPedido",generaldata.getInt("idPedido"));
                 pad.put("sucursalRecojo", sucursal);
                 pad.put("idCliente", Config.ClientLogged.get("Cedula"));
                 pad.put("horaRecojo", fecha.getText());
                 pad.put("Telefono", telefono.getText());
                 pad.put("Imagen", encodedbyte);
-                pad.put("Estado", 1);
+                pad.put("Estado", generaldata.getInt("Estado"));
+                Connection.getInstance().UpdatePedido(pad);
+
             }
 
 
