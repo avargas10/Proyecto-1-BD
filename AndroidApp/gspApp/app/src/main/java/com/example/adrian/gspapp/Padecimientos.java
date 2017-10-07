@@ -26,6 +26,7 @@ public class Padecimientos extends Fragment {
     public static JSONArray jArray=new JSONArray();
     public static ListView lista;
    public static List<String> allNames = new ArrayList<String>();
+    public static  ArrayAdapter<String> dataAdapter;
 
 
     @Override
@@ -62,7 +63,7 @@ public class Padecimientos extends Fragment {
 
     public void getPadecimientos(JSONArray data) throws JSONException {
         System.out.println("PADECIMIENTOS: "+data.toString());
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
+         dataAdapter = new ArrayAdapter<String>
                 (getContext(), android.R.layout.simple_list_item_1, allNames);
         for (int i = 0; i < data.length(); i++) {
             JSONObject objeto = new JSONObject( data.get(i).toString());

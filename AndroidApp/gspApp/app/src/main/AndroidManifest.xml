@@ -41,7 +41,8 @@
         <activity
             android:name=".nuevoPadecimiento"
             android:parentActivityName=".navigationDrawer" />
-        <activity android:name=".EditProducts"></activity>
+        <activity android:name=".EditProducts" />
+        <activity android:name=".nuevaReceta"></activity>
     </application>
 
 </manifest>
