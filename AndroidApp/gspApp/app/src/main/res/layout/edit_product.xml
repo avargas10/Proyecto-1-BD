@@ -41,15 +41,14 @@
     </LinearLayout>
     <!-- Rightend Arrow -->
 
-    <EditText
-        android:id="@+id/edit_idcant"
-        android:inputType="number"
+    <Spinner
+        android:id="@+id/spinner_cant"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:focusable="false"
         android:focusableInTouchMode="true"
-        android:layout_centerVertical="true"></EditText>
+        android:layout_centerVertical="true"></Spinner>
 
     <!-- City-->
     <TextView
@@ -80,7 +79,7 @@
     <!-- Weather Information-->
     <TextView
 
-        android:id="@+id/edit_price2"
+        android:id="@+id/edit_idcant"
 
         android:layout_width="wrap_content"
 
@@ -107,9 +106,9 @@
 
         android:layout_height="wrap_content"
 
-        android:layout_below="@+id/edit_price2"
+        android:layout_below="@+id/edit_idcant"
 
-        android:layout_alignLeft="@+id/edit_price2"
+        android:layout_alignLeft="@+id/edit_idcant"
 
         android:text="Requiere Prescripcion"
 

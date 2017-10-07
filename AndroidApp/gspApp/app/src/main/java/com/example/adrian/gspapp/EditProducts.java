@@ -1,13 +1,20 @@
 package com.example.adrian.gspapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.adrian.gspapp.Tools.Config;
 import com.example.adrian.gspapp.Tools.Connection;
@@ -23,12 +30,30 @@ public class EditProducts extends AppCompatActivity {
 
     ListView editlist;
     private JSONArray dataPedidos;
+    public static ProductsList adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_products);
         editlist = (ListView) findViewById(R.id.EditList);
+
+        editlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Config.selectedallProducts.remove(position);
+                Config.selectedallrelation.remove(position);
+                Config.selectedallimg.remove(position);
+                Config.selectedprecios.remove(position);
+                Config.selectedprescription.remove(position);
+                Config.selectedidproducto.remove(position);
+                Config.selectedcant.remove(position);
+                adapter.notifyDataSetChanged();
+
+
+            }
+        });
+
         try {
             getProducts();
         } catch (JSONException e) {
@@ -36,41 +61,43 @@ public class EditProducts extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Config.selectedallProducts.clear();
+        Config.selectedallrelation.clear();
+        Config.selectedallimg.clear();
+        Config.selectedprecios.clear();
+        Config.selectedprescription.clear();
+        Config.selectedidproducto.clear();
+        Config.selectedcant.clear();
+        finish();
+    }
+
     private void getProducts() throws JSONException {
-        Log.e("order",String.valueOf(Config.currentorder));
         dataPedidos = Connection.getInstance().getDetallebyId(Config.currentorder);
-        ArrayList<Integer> allrelation = new ArrayList<Integer>();
-        ArrayList<String> prescription = new ArrayList<String>();
-        ArrayList<String> allProducts = new ArrayList<String>();
-        ArrayList<Bitmap> allimg = new ArrayList<>();
-        ArrayList<Integer> precios = new ArrayList<>();
-        ArrayList<Integer> idproducto = new ArrayList<>();
-        ArrayList<Integer> cant = new ArrayList<>();
-        Log.e("pedidos",dataPedidos.toString());
+
         for(int x = 0 ; x < dataPedidos.length();x++){
             JSONObject objeto= (JSONObject) dataPedidos.get(x);
-            allrelation.add(objeto.getInt("idProducto"));
-            cant.add(objeto.getInt("Cantidad"));
-            Log.e("objetos",objeto.toString());
+            Config.selectedallrelation.add(objeto.getInt("idProducto"));
+            Config.selectedcant.add(objeto.getInt("Cantidad"));
         }
-        for(int i = 0; i < allrelation.size() ; i++){
-            JSONObject objeto = Connection.getInstance().getProductobyId(allrelation.get(i));
-            Log.e("JSON producto",objeto.toString());
-            allProducts.add(objeto.getString("Nombre"));
+        for(int i = 0; i < Config.selectedallrelation.size() ; i++){
+            JSONObject objeto = Connection.getInstance().getProductobyId(Config.selectedallrelation.get(i));
+            Config.selectedallProducts.add(objeto.getString("Nombre"));
             byte[] decodedString = Base64.decode(objeto.getString("Image"), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            allimg.add(decodedByte);
-            idproducto.add(objeto.getInt("idProducto"));
+            Config.selectedallimg.add(decodedByte);
+            Config.selectedidproducto.add(objeto.getInt("idProducto"));
             if(objeto.getInt("reqPrescripcion") == 1){
-                prescription.add("Require prescription");
+                Config.selectedprescription.add("Require prescription");
             }
             else{
-                prescription.add("");
+                Config.selectedprescription.add("");
             }
         }
 
-        ProductsList adapter = new
-                ProductsList((Activity) this, allProducts, allimg, prescription,Config.ADD,precios,cant);
+        adapter = new
+                ProductsList((Activity) this, Config.selectedallProducts, Config.selectedallimg, Config.selectedprescription,Config.ADD,Config.selectedprecios,Config.selectedcant);
         editlist.setAdapter(adapter);
 
     }

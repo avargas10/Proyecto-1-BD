@@ -25,6 +25,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
+            android:descendantFocusability="beforeDescendants"
             android:layout_weight="0.24">
         </ListView>
     </LinearLayout>

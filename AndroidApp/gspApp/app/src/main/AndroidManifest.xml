@@ -12,7 +12,6 @@
 
     <application
         android:allowBackup="true"
-        android:windowSoftInputMode="adjustPan"
         android:icon="@drawable/main_icon"
         android:label="@string/app_name"
         android:roundIcon="@drawable/main_icon"
@@ -27,6 +26,7 @@
         </activity>
         <activity
             android:name=".Registro"
+            android:windowSoftInputMode="adjustPan"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".navigationDrawer"
