@@ -1,10 +1,12 @@
 package com.example.adrian.gspapp;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -34,13 +36,17 @@ import java.util.List;
 public class EditProducts extends AppCompatActivity {
 
     public static ListView editlist;
-    private JSONArray dataPedidos,generaldata;
+    private JSONArray dataPedidos;
+    private JSONObject generaldata;
     ListView sucursales;
     public static ProductsList adapter;
     private JSONArray dataSucursales;
     EditText fecha;
     EditText telefono;
     Button submit;
+    int sucursal = 1;
+    String encodedbyte;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +58,46 @@ public class EditProducts extends AppCompatActivity {
         fecha = (EditText)findViewById(R.id.Edit_FechaRecojo);
         telefono  = (EditText)findViewById(R.id.Edit_Telefono);
 
+        sucursales.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                try {
+                    sucursal = position + 1;
+                    getProducts();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
 
 
         try {
             getProducts();
             getSucursales();
+            getGeneral();
         } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void UpdatePedido() {
+        try{
+            if(telefono.getText().toString().isEmpty() || fecha.getText().toString().isEmpty()){
+                Toast.makeText(this, "Please fill all the blank spaces", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                JSONObject pad = new JSONObject();
+                pad.put("sucursalRecojo", sucursal);
+                pad.put("idCliente", Config.ClientLogged.get("Cedula"));
+                pad.put("horaRecojo", fecha.getText());
+                pad.put("Telefono", telefono.getText());
+                pad.put("Imagen", encodedbyte);
+                pad.put("Estado", 1);
+            }
+
+
+        }catch(Exception e){
             e.printStackTrace();
         }
     }
@@ -73,8 +113,12 @@ public class EditProducts extends AppCompatActivity {
         Config.selectedcant.clear();
         finish();
     }
-    public void getGeneral(){
-        generaldata = Connection.getInstance().getPedidobyId(Config.currentorder);
+    public void getGeneral() throws JSONException {
+        generaldata = Connection.getInstance().getPedidobyIdPedido(Config.currentorder);
+        fecha.setText(generaldata.getString("horaRecojo"));
+        telefono.setText(generaldata.getString("Telefono"));
+        sucursal = generaldata.getInt("sucursalRecojo");
+        encodedbyte = generaldata.getString("Imagen");
     }
 
     private void getProducts() throws JSONException {
@@ -83,6 +127,7 @@ public class EditProducts extends AppCompatActivity {
         for(int x = 0 ; x < dataPedidos.length();x++){
             JSONObject objeto= (JSONObject) dataPedidos.get(x);
             Config.selectedallrelation.add(objeto.getInt("idProducto"));
+            Log.e("cantidad",String.valueOf(objeto.getInt("Cantidad")));
             Config.selectedcant.add(objeto.getInt("Cantidad"));
         }
         for(int i = 0; i < Config.selectedallrelation.size() ; i++){

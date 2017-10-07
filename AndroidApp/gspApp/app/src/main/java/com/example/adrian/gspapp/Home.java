@@ -69,7 +69,6 @@ public class Home extends Fragment {
         for (int i = 0; i < dataPedidos.length(); i++) {
             JSONObject objeto = (JSONObject) dataPedidos.get(i);
             JSONObject sucursal = Connection.getInstance().getSucursalbyId(objeto.getInt("sucursalRecojo")).getJSONObject(0);
-            Log.e("sucursal", sucursal.toString());
             allNames.add("Pedido #" + objeto.getString("idPedido") + " - " + sucursal.getString("Nombre") );
         }
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
