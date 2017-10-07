@@ -76,5 +76,25 @@ namespace RESTFUL_API.Controllers
                 }
             }
         }
+        [HttpGet]
+        public Dictionary<string, object> getPadbyPadid(int idPad)
+        {
+            using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT idPadecimiento,idUsuario,Fecha,Nombre,Descripcion FROM PADECIMIENTOS" +
+                    " WHERE idPadecimiento=@id", conn);
+                cmd.Parameters.AddWithValue("@id", idPad);
+                cmd.Connection = conn;
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+
+                    reader.Close();
+                    var r = serial.singleserialize(cmd.ExecuteReader());
+                    return r;
+
+                }
+            }
+        }
     }
 }

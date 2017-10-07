@@ -5,6 +5,17 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+<<<<<<< HEAD
+=======
+    <ImageView
+        android:id="@+id/imgCheck"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="14dp"
+        android:layout_alignBottom="@+id/txtCodigoProductoRecetas"
+        android:layout_alignParentEnd="true" />
+
+>>>>>>> 8e1ceaf28577255c36e874cac4a38700ecb54e61
     <LinearLayout
 
         android:id="@+id/thumbnail"

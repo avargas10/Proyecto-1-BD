@@ -190,12 +190,14 @@
     <Compile Include="Controllers\DireccionesController.cs" />
     <Compile Include="Controllers\DistritoController.cs" />
     <Compile Include="Controllers\EmpleadosController.cs" />
+    <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PadecimientosController.cs" />
     <Compile Include="Controllers\PedidosController.cs" />
     <Compile Include="Controllers\ProductosController.cs" />
     <Compile Include="Controllers\ProvinciasController.cs" />
     <Compile Include="Controllers\RecetasController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SucursalController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -213,6 +215,7 @@
     <Compile Include="Models\productosModel.cs" />
     <Compile Include="Models\provinciaModel.cs" />
     <Compile Include="Models\recetasModel.cs" />
+    <Compile Include="Models\RolesModel.cs" />
     <Compile Include="Models\sucursalModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
