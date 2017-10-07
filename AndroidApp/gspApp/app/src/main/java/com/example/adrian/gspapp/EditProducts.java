@@ -63,14 +63,7 @@ public class EditProducts extends AppCompatActivity {
 
         sucursales.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                try {
-                    sucursal = position + 1;
-                    getProducts();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
+                sucursal = position + 1;
             }
         });
         submit.setOnClickListener(new View.OnClickListener() {
