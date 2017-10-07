@@ -2,9 +2,11 @@ package com.example.adrian.gspapp.Tools;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -25,7 +27,8 @@ public class ProductsList extends ArrayAdapter<String> {
     private final List precios;
     private final List prescription;
     private final int place;
-    public ProductsList(Activity context, List web, List imageId, List prescription, int place, List precios) {
+    private final List cantidad;
+    public ProductsList(Activity context, List web, List imageId, List prescription, int place, List precios, List cant) {
         super(context, R.layout.list_design, web);
         this.context = context;
         this.web = web;
@@ -33,40 +36,61 @@ public class ProductsList extends ArrayAdapter<String> {
         this.precios = precios;
         this.prescription = prescription;
         this.place = place;
+        this.cantidad = cant;
 
     }
     @Override
-    public View getView(int position, View view, ViewGroup parent) {
+    public View getView(final int position, final View view, ViewGroup parent) {
         try {
             LayoutInflater inflater = context.getLayoutInflater();
-            View rowView = inflater.inflate(R.layout.list_design, null, true);
-            TextView txtTitle = (TextView) rowView.findViewById(R.id.txt2);
-            TextView txtPrecios = (TextView) rowView.findViewById(R.id.price2);
-            TextView txtPres = (TextView) rowView.findViewById(R.id.pres2);
-            ImageView imageView = (ImageView) rowView.findViewById(R.id.img2);
+            final View rowView = inflater.inflate(R.layout.edit_product, null, true);
+            TextView txtTitle = (TextView) rowView.findViewById(R.id.edit_txt2);
+            //TextView txtPrecios = (TextView) rowView.findViewById(R.id.edit_price2);
+            TextView txtPres = (TextView) rowView.findViewById(R.id.edit_pres2);
+            ImageView imageView = (ImageView) rowView.findViewById(R.id.edit_img2);
+            TextView txtcant = (TextView) rowView.findViewById(R.id.edit_idcant);
 
-            if(place==0) {
-
-                Spinner spinner = (Spinner) rowView.findViewById(R.id.idcant);
+            final Spinner spinner = (Spinner) rowView.findViewById(R.id.spinner_cant);
 // Create an ArrayAdapter using the string array and a default spinner layout
-                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
-                        R.array.cantidad_array, android.R.layout.simple_spinner_item);
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
+                    R.array.cantidad_array, android.R.layout.simple_spinner_item);
 
 // Specify the layout to use when the list of choices appears
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
-                spinner.setAdapter(adapter);
+            spinner.setAdapter(adapter);
 
-            }
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                @Override
+                public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                           int arg2, long arg3) {
+
+                    String imc_met=spinner.getSelectedItem().toString();
+                    TextView txtc = (TextView) rowView.findViewById(R.id.edit_idcant);
+                    txtc.setText(imc_met);
+                    Config.selectedcant.set(position,Integer.getInteger(imc_met));
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> arg0) {
+                    // TODO Auto-generated method stub
+
+                }
+            });
+
+
             txtTitle.setText((String) web.get(position));
-            txtPrecios.setText(String.valueOf(precios.get(position)));
+            //txtPrecios.setText(String.valueOf(precios.get(position)));
             txtPres.setText((String) prescription.get(position));
+            txtcant.setText(String.valueOf(cantidad.get(position)));
 
 
             imageView.setImageBitmap((Bitmap) imageId.get(position));
 
             return rowView;
         }catch (Exception e){}
-        return context.getLayoutInflater().inflate(R.layout.list_design, null, true);
+        return context.getLayoutInflater().inflate(R.layout.edit_product, null, true);
     }
 }

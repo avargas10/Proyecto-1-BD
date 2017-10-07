@@ -26,5 +26,5 @@ function animation() {
 }
 
 function newRol(){
-    window.location.href="nuevRol.html";
+    window.location.href="../Views/nuevRol.html";
 }
