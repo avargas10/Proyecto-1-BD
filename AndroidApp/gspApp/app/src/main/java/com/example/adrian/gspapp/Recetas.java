@@ -2,11 +2,17 @@ package com.example.adrian.gspapp;
 
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.ImageFormat;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +28,9 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.URL;
 
 import Interfaz.PostAdapter;
 import Interfaz.Swipe.SwipeMenu;
@@ -32,9 +42,8 @@ public class Recetas extends Fragment {
 
     JSONArray listaPost;
     JSONObject ob1, obj2, obj3, obj4, obj5, obj6, obj7, obj8 ,obj9, obj10;
-
+    FloatingActionButton fab;
     private SwipeMenuListView lista;
-    PostAdapter adapter;
     SwipeMenuCreator creator;
     private  AppAdapter mAdapter;
 
@@ -49,8 +58,16 @@ public class Recetas extends Fragment {
             e.printStackTrace();
         }
         lista = getView().findViewById(R.id.listView);
+        fab= getView().findViewById(R.id.fabRecetas);
         mAdapter=new AppAdapter();
         lista.setAdapter(mAdapter);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), nuevaReceta.class);
+                startActivity(intent);
+            }
+        });
         creator = new SwipeMenuCreator() {
 
             @Override
@@ -288,9 +305,11 @@ public class Recetas extends Fragment {
         class ViewHolder {
             TextView tv_name;
             TextView tv_descrip;
+            ImageView imagen;
             public ViewHolder(View view) {
                 tv_name = view.findViewById(R.id.titulo_postPrincipal);
                 tv_descrip=view.findViewById(R.id.descripcion_postPrincipal);
+                imagen=view.findViewById(R.id.imagen1);
                 view.setTag(this);
             }
         }

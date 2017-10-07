@@ -91,7 +91,7 @@ namespace RESTFUL_API.Controllers
             {
                 using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
                 {
-                    SqlCommand cmd = new SqlCommand("DELETE FROM DETALLEPEDIDO WHERE idProducto=@id", conn);
+                    SqlCommand cmd = new SqlCommand("DELETE FROM DETALLEPEDIDO WHERE idPedido=@id", conn);
                     cmd.Parameters.AddWithValue("@id", idPedido);
                     cmd.Connection = conn;
                     conn.Open();

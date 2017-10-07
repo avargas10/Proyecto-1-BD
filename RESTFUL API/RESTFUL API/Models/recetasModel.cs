@@ -11,5 +11,6 @@ namespace RESTFUL_API.Models
         public Nullable<int> idCliente { get; set; }
         public string Imagen { get; set; }
         public int Estado { get; set; }
+        public int idDoctor { get; set; }
     }
 }

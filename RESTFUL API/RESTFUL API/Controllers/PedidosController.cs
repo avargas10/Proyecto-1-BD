@@ -32,6 +32,32 @@ namespace RESTFUL_API.Controllers
             }
         }
 
+        [HttpGet]
+        public HttpResponseMessage getPedidosbyidPedido(int idPedido)
+        {
+            using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT idPedido,sucursalRecojo,idCliente,horaRecojo,Telefono,Imagen,Estado FROM PEDIDOS WHERE idPedido=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", idPedido);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var r = serial.singleserialize(reader);
+                        var message = Request.CreateResponse(HttpStatusCode.Accepted, r);
+                        conn.Close();
+                        return message;
+                    }
+                }catch(Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
+                }
+
+            }
+        }
+
         [HttpPost]
         public HttpResponseMessage regPedido([FromBody] pedidosModel pedido)
         {

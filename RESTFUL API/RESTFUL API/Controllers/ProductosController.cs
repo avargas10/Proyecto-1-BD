@@ -32,6 +32,24 @@ namespace RESTFUL_API.Controllers
             }
         }
 
+        [HttpGet]
+        public IEnumerable<Dictionary<string, object>> getMedicamentos(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT idProducto,Proveedor,Nombre,esMedicamento,reqPrescripcion,Image FROM PRODUCTOS WHERE esMedicamento=1", conn);
+                cmd.Connection = conn;
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    var r = serial.Serialize(reader);
+                    conn.Close();
+                    return r;
+                }
+
+            }
+        }
+
         [HttpPost]
         public IEnumerable<Dictionary<string, object>> ProductosxSucursal([FromUri] int id)
         {

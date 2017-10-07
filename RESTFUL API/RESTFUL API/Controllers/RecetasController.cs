@@ -39,10 +39,11 @@ namespace RESTFUL_API.Controllers
             {
                 using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO RECETAS(idCliente,Imagen,Estado) VALUES (@cliente,@imagen,@estado)", conn);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO RECETAS(idCliente,Imagen,Estado, idDoctor) VALUES (@cliente,@imagen,@estado,@doctor)", conn);
                     cmd.Parameters.AddWithValue("@cliente", receta.idCliente);
                     cmd.Parameters.AddWithValue("@imagen", receta.Imagen);
                     cmd.Parameters.AddWithValue("@estado", 1);
+                    cmd.Parameters.AddWithValue("@doctor", receta.idDoctor);
                     cmd.Connection = conn;
                     conn.Open();
                     var message = Request.CreateResponse(HttpStatusCode.Created, serial.singleserialize(cmd.ExecuteReader()));
