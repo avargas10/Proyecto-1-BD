@@ -62,14 +62,15 @@
 
 
 
-    <div class="list-group" ng-controller="contSucAdmin">
+    <div class="list-group" ng-controller="contSucAdmin" data-ng-init="init()">
 
       <div ng-repeat="s in sucList">
 
         <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
           <div class="d-flex justify-content-between">
-           <h5 class="mb-1">{{s.name}} <br><br> {{s.desc}} <br><br> </h5>
-           <p>{{s.admin}} </p>
+           <h5 class="mb-1">{{s.Nombre}} <br></h5>
+           <h5> {{s.detalleDireccion}}  </h5>
+           <p>{{s.idSucursal}} </p>
            <div class="form-group select">
 
             <button type="button" class="btn btn-primary" ng-click="edit(c.name, c.id)">

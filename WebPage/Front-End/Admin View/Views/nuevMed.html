@@ -51,7 +51,7 @@
 
 
 
-    <form name="datReceta" ng-controller="contMedNuevAdmin">
+    <form name="datReceta" ng-controller="contMedNuevAdmin" data-ng-init="init()">
       <div class="form-row">
         <div class="form-group col-md-6">
           <label> Product ID</label>
@@ -89,12 +89,12 @@
 
       <div class="form-row">
         <div class="form-group col-md-6">
+          <label>Choose a store</label>
+          <select class="form-control" ng-model="suc" required>
+            <option ng-repeat="s in sucList">{{s.Nombre}}</option>
+          </select>
 
-          <label> Choose Image</label>
-          <input type="file" class="form-control-file" id="inputFile" onchange="openFile(event)" >
-          <small id="fileHelp" class="form-text text-muted">Select an image to represent the product</small>
-          
-          <img id="output">
+
 
         </div>
 
@@ -116,6 +116,17 @@
 
         </div>
         
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label> Choose Image</label>
+          <input type="file" class="form-control-file" id="inputFile" onchange="openFile(event)" >
+          <small id="fileHelp" class="form-text text-muted">Select an image to represent the product</small>
+          
+          <img id="output">
+        </div>
+        
+
       </div>
       
       <button type="submit" class="btn btn-primary" ng-click="createProduct()">
