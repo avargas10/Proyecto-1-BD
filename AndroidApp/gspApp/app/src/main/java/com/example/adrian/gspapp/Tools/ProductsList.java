@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.adrian.gspapp.EditProducts;
 import com.example.adrian.gspapp.R;
 
 import java.util.List;
@@ -70,7 +71,6 @@ public class ProductsList extends ArrayAdapter<String> {
                     TextView txtc = (TextView) rowView.findViewById(R.id.edit_idcant);
                     txtc.setText(imc_met);
                     Config.selectedcant.set(position,Integer.getInteger(imc_met));
-
                 }
 
                 @Override
@@ -80,7 +80,6 @@ public class ProductsList extends ArrayAdapter<String> {
                 }
             });
 
-
             txtTitle.setText((String) web.get(position));
             //txtPrecios.setText(String.valueOf(precios.get(position)));
             txtPres.setText((String) prescription.get(position));
@@ -88,6 +87,7 @@ public class ProductsList extends ArrayAdapter<String> {
 
 
             imageView.setImageBitmap((Bitmap) imageId.get(position));
+
 
             return rowView;
         }catch (Exception e){}

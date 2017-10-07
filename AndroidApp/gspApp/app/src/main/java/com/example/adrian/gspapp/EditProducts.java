@@ -4,12 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -25,37 +29,34 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EditProducts extends AppCompatActivity {
 
-    ListView editlist;
-    private JSONArray dataPedidos;
+    public static ListView editlist;
+    private JSONArray dataPedidos,generaldata;
+    ListView sucursales;
     public static ProductsList adapter;
+    private JSONArray dataSucursales;
+    EditText fecha;
+    EditText telefono;
+    Button submit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_products);
         editlist = (ListView) findViewById(R.id.EditList);
-
-        editlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Config.selectedallProducts.remove(position);
-                Config.selectedallrelation.remove(position);
-                Config.selectedallimg.remove(position);
-                Config.selectedprecios.remove(position);
-                Config.selectedprescription.remove(position);
-                Config.selectedidproducto.remove(position);
-                Config.selectedcant.remove(position);
-                adapter.notifyDataSetChanged();
+        sucursales = (ListView) findViewById(R.id.Edit_listaSucursales);
+        submit = (Button) findViewById(R.id.Edit_Submit);
+        fecha = (EditText)findViewById(R.id.Edit_FechaRecojo);
+        telefono  = (EditText)findViewById(R.id.Edit_Telefono);
 
 
-            }
-        });
 
         try {
             getProducts();
+            getSucursales();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -71,6 +72,9 @@ public class EditProducts extends AppCompatActivity {
         Config.selectedidproducto.clear();
         Config.selectedcant.clear();
         finish();
+    }
+    public void getGeneral(){
+        generaldata = Connection.getInstance().getPedidobyId(Config.currentorder);
     }
 
     private void getProducts() throws JSONException {
@@ -99,6 +103,24 @@ public class EditProducts extends AppCompatActivity {
         adapter = new
                 ProductsList((Activity) this, Config.selectedallProducts, Config.selectedallimg, Config.selectedprescription,Config.ADD,Config.selectedprecios,Config.selectedcant);
         editlist.setAdapter(adapter);
+
+    }
+
+    private void getSucursales() throws JSONException {
+        dataSucursales =Connection.getInstance().getSucursales();
+
+        List<String> allNames = new ArrayList<String>();
+        for (int i = 0; i < dataSucursales.length(); i++) {
+            JSONObject objeto = (JSONObject) dataSucursales.get(i);
+            allNames.add(objeto.getString("Nombre") + " - " + objeto.getString("detalleDireccion") );
+        }
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
+                (this, android.R.layout.simple_list_item_1, allNames);
+
+        dataAdapter.setDropDownViewResource
+                (android.R.layout.simple_spinner_dropdown_item);
+
+        sucursales.setAdapter(dataAdapter);
 
     }
 }
