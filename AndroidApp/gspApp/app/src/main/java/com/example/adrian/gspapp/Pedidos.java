@@ -16,7 +16,6 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -88,11 +86,11 @@ public class Pedidos extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 // selected item
-                String selectedproduct = ((TextView) view.findViewById(R.id.txt2)).getText().toString();
+                String selectedproduct = ((TextView) view.findViewById(R.id.txtProductoRecetas)).getText().toString();
                 ImageView imgview = (ImageView) view.findViewById(R.id.img2);
                 imgview.setDrawingCacheEnabled(true);
                 Bitmap selectedimg = Bitmap.createBitmap(imgview.getDrawingCache());
-                int selectedprice = Integer.parseInt(((TextView) view.findViewById(R.id.price2)).getText().toString());
+                int selectedprice = Integer.parseInt(((TextView) view.findViewById(R.id.txtCodigoProductoRecetas)).getText().toString());
                 String selectedpres = ((TextView) view.findViewById(R.id.pres2)).getText().toString();
                 final Spinner sp = (Spinner) view.findViewById(R.id.idcant);
                 int cant = Integer.parseInt(sp.getSelectedItem().toString());

@@ -51,7 +51,7 @@
     <!-- City-->
     <TextView
 
-        android:id="@+id/txt2"
+        android:id="@+id/txtProductoRecetas"
 
         android:layout_width="wrap_content"
 
@@ -77,15 +77,15 @@
     <!-- Weather Information-->
     <TextView
 
-        android:id="@+id/price2"
+        android:id="@+id/txtCodigoProductoRecetas"
 
         android:layout_width="wrap_content"
 
         android:layout_height="wrap_content"
 
-        android:layout_below="@+id/txt2"
+        android:layout_below="@+id/txtProductoRecetas"
 
-        android:layout_alignLeft="@+id/txt2"
+        android:layout_alignLeft="@+id/txtProductoRecetas"
 
         android:paddingTop="25dip"
 
@@ -104,9 +104,9 @@
 
         android:layout_height="wrap_content"
 
-        android:layout_below="@+id/price2"
+        android:layout_below="@+id/txtCodigoProductoRecetas"
 
-        android:layout_alignLeft="@+id/price2"
+        android:layout_alignLeft="@+id/txtCodigoProductoRecetas"
 
         android:text="Requiere Prescripcion"
 

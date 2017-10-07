@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -41,8 +40,8 @@ public class CustomList extends ArrayAdapter<String>{
         try {
             LayoutInflater inflater = context.getLayoutInflater();
             View rowView = inflater.inflate(R.layout.list_design, null, true);
-            TextView txtTitle = (TextView) rowView.findViewById(R.id.txt2);
-            TextView txtPrecios = (TextView) rowView.findViewById(R.id.price2);
+            TextView txtTitle = (TextView) rowView.findViewById(R.id.txtProductoRecetas);
+            TextView txtPrecios = (TextView) rowView.findViewById(R.id.txtCodigoProductoRecetas);
             TextView txtPres = (TextView) rowView.findViewById(R.id.pres2);
             ImageView imageView = (ImageView) rowView.findViewById(R.id.img2);
 
