@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.ListView;
 
 import com.example.adrian.gspapp.Tools.Config;
@@ -28,9 +29,15 @@ public class EditProducts extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_products);
         editlist = (ListView) findViewById(R.id.EditList);
+        try {
+            getProducts();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void getProducts() throws JSONException {
+        Log.e("order",String.valueOf(Config.currentorder));
         dataPedidos = Connection.getInstance().getDetallebyId(Config.currentorder);
         ArrayList<Integer> allrelation = new ArrayList<Integer>();
         ArrayList<String> prescription = new ArrayList<String>();
@@ -39,14 +46,16 @@ public class EditProducts extends AppCompatActivity {
         ArrayList<Integer> precios = new ArrayList<>();
         ArrayList<Integer> idproducto = new ArrayList<>();
         ArrayList<Integer> cant = new ArrayList<>();
-
+        Log.e("pedidos",dataPedidos.toString());
         for(int x = 0 ; x < dataPedidos.length();x++){
             JSONObject objeto= (JSONObject) dataPedidos.get(x);
             allrelation.add(objeto.getInt("idProducto"));
             cant.add(objeto.getInt("Cantidad"));
+            Log.e("objetos",objeto.toString());
         }
         for(int i = 0; i < allrelation.size() ; i++){
             JSONObject objeto = Connection.getInstance().getProductobyId(allrelation.get(i));
+            Log.e("JSON producto",objeto.toString());
             allProducts.add(objeto.getString("Nombre"));
             byte[] decodedString = Base64.decode(objeto.getString("Image"), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);

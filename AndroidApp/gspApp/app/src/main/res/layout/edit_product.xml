@@ -25,6 +25,8 @@
 
         android:layout_marginRight="5dip"
 
+        android:focusable="false"
+
         android:padding="3dip" >
         <ImageView
 
@@ -84,13 +86,13 @@
 
         android:layout_height="wrap_content"
 
-        android:layout_below="@+id/txt2"
+        android:layout_below="@+id/edit_txt2"
 
-        android:layout_alignLeft="@+id/txt2"
+        android:layout_alignLeft="@+id/edit_txt2"
 
         android:paddingTop="25dip"
 
-        android:text="test price"
+        android:text=""
         android:layout_centerHorizontal="true"
 
         android:textColor="#343434"
@@ -105,9 +107,9 @@
 
         android:layout_height="wrap_content"
 
-        android:layout_below="@+id/price2"
+        android:layout_below="@+id/edit_price2"
 
-        android:layout_alignLeft="@+id/price2"
+        android:layout_alignLeft="@+id/edit_price2"
 
         android:text="Requiere Prescripcion"
 

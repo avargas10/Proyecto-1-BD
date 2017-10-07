@@ -41,16 +41,16 @@ public class ProductsList extends ArrayAdapter<String> {
     public View getView(int position, View view, ViewGroup parent) {
         try {
             LayoutInflater inflater = context.getLayoutInflater();
-            View rowView = inflater.inflate(R.layout.list_design, null, true);
+            View rowView = inflater.inflate(R.layout.edit_product, null, true);
             TextView txtTitle = (TextView) rowView.findViewById(R.id.edit_txt2);
-            TextView txtPrecios = (TextView) rowView.findViewById(R.id.edit_price2);
+            //TextView txtPrecios = (TextView) rowView.findViewById(R.id.edit_price2);
             TextView txtPres = (TextView) rowView.findViewById(R.id.edit_pres2);
             ImageView imageView = (ImageView) rowView.findViewById(R.id.edit_img2);
             TextView txtcant = (TextView) rowView.findViewById(R.id.edit_idcant);
 
 
             txtTitle.setText((String) web.get(position));
-            txtPrecios.setText(String.valueOf(precios.get(position)));
+            //txtPrecios.setText(String.valueOf(precios.get(position)));
             txtPres.setText((String) prescription.get(position));
             txtcant.setText(String.valueOf(cantidad.get(position)));
 
@@ -59,6 +59,6 @@ public class ProductsList extends ArrayAdapter<String> {
 
             return rowView;
         }catch (Exception e){}
-        return context.getLayoutInflater().inflate(R.layout.list_design, null, true);
+        return context.getLayoutInflater().inflate(R.layout.edit_product, null, true);
     }
 }
