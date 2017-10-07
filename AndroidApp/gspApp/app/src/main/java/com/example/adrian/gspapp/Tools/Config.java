@@ -23,7 +23,7 @@ public abstract class Config {
     public  static JSONObject ClientLogged;
     public static int PedidoReciente=-1;
     public static List<Integer> cantidad = new ArrayList<Integer>();
-    public static int currentorder=0;
+    public static int currentorder, currentPad=0;
 
     public static ArrayList<Integer> selectedallrelation = new ArrayList<Integer>();
     public static ArrayList<String> selectedprescription = new ArrayList<String>();
