@@ -62,7 +62,7 @@
         </div>
         <div class="form-group col-md-6">
           <label>Name</label>
-          <input type="text" class="form-control" name="nameProd" placeholder="Name of the role" ng-model="name" ng-pattern="/^[A-Z][a-z]$/" required>
+          <input type="text" class="form-control" name="nameProd" placeholder="Name of the role" ng-model="name" required>
           <span ng-show="datReceta.numDoctor.$error.pattern">
             <small id="fileHelp" class="form-text text-muted">Name is not valid</small>
           </span>
@@ -72,7 +72,7 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label>Description</label>
-          <textarea class="form-control" name="inputList" ng-model="desc" ng-pattern="/^[A-Za-z0-9]/" required>
+          <textarea class="form-control" name="inputList" ng-model="desc"  required>
           </textarea>
           <span ng-show="datReceta.inputList.$error.pattern">
             <small id="fileHelp" class="form-text text-muted">Description not valid</small>
@@ -82,7 +82,7 @@
         
       </div>
       
-      <button type="submit" class="btn btn-primary" ng-click="createProduct()">
+      <button type="submit" class="btn btn-primary" ng-click="createRol(name,desc)">
       Create Role
       </button>
 

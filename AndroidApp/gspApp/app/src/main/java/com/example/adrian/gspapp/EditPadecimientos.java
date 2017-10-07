@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.adrian.gspapp.Tools.Config;
 import com.example.adrian.gspapp.Tools.Connection;
@@ -55,6 +56,27 @@ public class EditPadecimientos extends AppCompatActivity {
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
+            }
+        });
+        addPad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try{
+                    JSONObject pad= new JSONObject();
+                    pad.put("idPadecimiento",Config.currentPad);
+                    pad.put("idUsuario", MainActivity.clientInfo.getInt("Cedula"));
+                    pad.put("Nombre", nombre.getText());
+                    pad.put("Fecha", fecha.getText());
+                    pad.put("Descripcion", descrip.getText());
+                    System.out.println("DESCRIPCION: "+descrip.getText().toString());
+                    System.out.println("JSON: "+pad.toString());
+                    Connection.getInstance().UpdatePad(pad);
+                    Toast.makeText(getApplicationContext(),"Updated",Toast.LENGTH_LONG);
+                    finish();
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
             }
         });
 
