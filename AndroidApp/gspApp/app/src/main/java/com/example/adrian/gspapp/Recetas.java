@@ -1,13 +1,11 @@
 package com.example.adrian.gspapp;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.ImageFormat;
 import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -15,24 +13,21 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.adrian.gspapp.Tools.Config;
+import com.example.adrian.gspapp.Tools.Connection;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.net.URL;
-
-import Interfaz.PostAdapter;
 import Interfaz.Swipe.SwipeMenu;
 import Interfaz.Swipe.SwipeMenuCreator;
 import Interfaz.Swipe.SwipeMenuItem;
@@ -40,30 +35,33 @@ import Interfaz.Swipe.SwipeMenuListView;
 
 public class Recetas extends Fragment {
 
-    JSONArray listaPost;
-    JSONObject ob1, obj2, obj3, obj4, obj5, obj6, obj7, obj8 ,obj9, obj10;
+    public static JSONArray listaPost;
     FloatingActionButton fab;
-    private SwipeMenuListView lista;
+    public static SwipeMenuListView lista;
     SwipeMenuCreator creator;
-    private  AppAdapter mAdapter;
+    public static  AppAdapter mAdapter;
+
+
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle("Recetas");
+        getActivity().setTitle("Prescriptions");
 
         try {
-            datos();
+            listaPost= Connection.getInstance().getRecetas(MainActivity.clientInfo.getInt("Cedula"));
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
         lista = getView().findViewById(R.id.listView);
         fab= getView().findViewById(R.id.fabRecetas);
-        mAdapter=new AppAdapter();
+        mAdapter=new AppAdapter(this.getContext(), listaPost);
         lista.setAdapter(mAdapter);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Config.recetasFlag=true;
                 Intent intent = new Intent(getContext(), nuevaReceta.class);
                 startActivity(intent);
             }
@@ -114,6 +112,7 @@ public class Recetas extends Fragment {
 
                 switch (index) {
                     case 0:
+                        mAdapter.share(position);
 
                         break;
                     case 1:
@@ -164,73 +163,6 @@ public class Recetas extends Fragment {
                 getResources().getDisplayMetrics());
     }
 
-    private JSONArray datos() throws JSONException {
-        ob1 = new JSONObject();
-        obj2 = new JSONObject();
-        obj3 = new JSONObject();
-        obj4 = new JSONObject();
-        obj5 = new JSONObject();
-        obj6 = new JSONObject();
-        obj7 = new JSONObject();
-        obj8 = new JSONObject();
-        obj9 = new JSONObject();
-        obj10= new JSONObject();
-        listaPost = new JSONArray();
-
-        ob1.put("titulo", "documentacion");
-        ob1.put("indicador", "Realizado");
-        ob1.put("contenido", "docx ");
-
-        obj2.put("titulo", "foto1");
-        obj2.put("indicador", "Pendiente");
-        obj2.put("contenido", "jpg  ");
-
-        obj3.put("titulo", "resumenes");
-        obj3.put("indicador", "Pendiente");
-        obj3.put("contenido", "pdf ");
-
-        obj4.put("titulo", "back in black");
-        obj4.put("indicador", "Realizado");
-        obj4.put("contenido", "mp3 ");
-
-        obj5.put("titulo", "img11");
-        obj5.put("indicador", "Pendiente");
-        obj5.put("contenido", "jpg");
-
-        obj6.put("titulo", "algorithms");
-        obj6.put("indicador", "Realizado");
-        obj6.put("contenido", "pdf");
-
-        obj7.put("titulo", "portada");
-        obj7.put("indicador", "Realizado");
-        obj7.put("contenido", "png");
-
-        obj8.put("titulo", "presentacion_comu");
-        obj8.put("indicador", "Pendiente");
-        obj8.put("contenido", "pptx");
-
-        obj9.put("titulo", "bibliotecas");
-        obj9.put("indicador", "Pendiente");
-        obj9.put("contenido", "zip");
-
-        obj10.put("titulo", "PRUEBA");
-        obj10.put("indicador", "Pendiente");
-        obj10.put("contenido", "PRUEBA");
-
-
-        listaPost.put(ob1);
-        listaPost.put(obj2);
-        listaPost.put(obj3);
-        listaPost.put(obj4);
-        listaPost.put(obj5);
-        listaPost.put(obj6);
-        listaPost.put(obj7);
-        listaPost.put(obj8);
-        listaPost.put(obj9);
-        listaPost.put(obj10);
-
-        return listaPost;
-    }
 
 
     @Nullable
@@ -239,17 +171,25 @@ public class Recetas extends Fragment {
         return inflater.inflate(R.layout.activity_recetas, container, false);
     }
 
-    class AppAdapter extends BaseAdapter {
 
+    class AppAdapter extends ArrayAdapter<JSONObject>{
+        Context context;
+        JSONArray jArray;
+
+        public  AppAdapter(Context context, JSONArray li){
+            super(context, R.layout.post_principal);
+            this.context=context;
+            this.jArray=li;
+        }
         @Override
         public int getCount() {
-            return listaPost.length();
+            return this.jArray.length();
         }
 
         @Override
         public JSONObject getItem(int position) {
             try {
-                return (JSONObject) listaPost.get(position);
+                return (JSONObject) this.jArray.get(position);
             } catch (JSONException e) {
                 e.printStackTrace();
                 return null;
@@ -276,27 +216,36 @@ public class Recetas extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = View.inflate(getContext(),
+                convertView = View.inflate(this.context,
                         R.layout.post_principal, null);
                 new ViewHolder(convertView);
             }
             ViewHolder holder = (ViewHolder) convertView.getTag();
             try {
-                JSONObject obj=listaPost.getJSONObject(position);
-                holder.tv_name.setText(obj.getString("titulo"));
-                holder.tv_descrip.setText(obj.getString("contenido"));
-
+                JSONObject obj=this.jArray.getJSONObject(position);
+                holder.tv_name.setText("Id Prescription: "+obj.get("idReceta"));
+                holder.tv_descrip.setText("Id Doctor: "+obj.get("idDoctor"));
+                byte[] decodedString = Base64.decode(obj.getString("Imagen"), Base64.DEFAULT);
+                Bitmap image = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                holder.imagen.setImageBitmap(image);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             return convertView;
         }
+
         public void delete(int pos){
+                this.jArray.remove(pos);
+
+        }
+
+        public void share(int pos){
             try {
-                Toast.makeText(getContext(), "Se ha eliminado el archivo "+ listaPost.getJSONObject(pos).getString("titulo")+"."+
-                                listaPost.getJSONObject(pos).getString("contenido"),
-                        Toast.LENGTH_LONG).show();
-                listaPost.remove(pos);
+                Config.recetaparEditar=this.jArray.getJSONObject(pos);
+                Config.recetasFlag=false;
+                Config.medicamentoporReceta=Connection.getInstance().getProductos(this.jArray.getJSONObject(pos).getInt("idReceta"));
+                Intent intent = new Intent(getContext(), nuevaReceta.class);
+                startActivity(intent);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -309,13 +258,15 @@ public class Recetas extends Fragment {
             public ViewHolder(View view) {
                 tv_name = view.findViewById(R.id.titulo_postPrincipal);
                 tv_descrip=view.findViewById(R.id.descripcion_postPrincipal);
-                imagen=view.findViewById(R.id.imagen1);
+                imagen=view.findViewById(R.id.imgRecetasAdapter);
                 view.setTag(this);
             }
         }
 
 
+
     }
+
 
 
 

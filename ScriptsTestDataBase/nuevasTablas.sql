@@ -87,6 +87,7 @@ create table RECETAS(
   idCliente INT,
   Imagen VARCHAR(MAX),
   Estado INT,
+  idDoctor INT,
   PRIMARY KEY(idReceta)
 );
 
@@ -168,7 +169,6 @@ create table DETALLEPEDIDO(
 create table DETALLERECETA(
 	idMedicamento INT NOT NULL,
   idReceta INT NOT NULL,
-  Cantidad INT,
   PRIMARY KEY(idMedicamento, idReceta)
 );
 

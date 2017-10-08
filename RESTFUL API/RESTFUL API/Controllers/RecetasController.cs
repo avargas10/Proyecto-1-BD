@@ -39,7 +39,7 @@ namespace RESTFUL_API.Controllers
             {
                 using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO RECETAS(idCliente,Imagen,Estado, idDoctor) VALUES (@cliente,@imagen,@estado,@doctor)", conn);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO RECETAS(idCliente,Imagen,Estado, idDoctor) OUTPUT INSERTED.idReceta VALUES (@cliente,@imagen,@estado,@doctor)", conn);
                     cmd.Parameters.AddWithValue("@cliente", receta.idCliente);
                     cmd.Parameters.AddWithValue("@imagen", receta.Imagen);
                     cmd.Parameters.AddWithValue("@estado", 1);
@@ -62,7 +62,7 @@ namespace RESTFUL_API.Controllers
         {
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("SELECT idPedido,sucursalRecojo,idCliente,horaRecojo,Telefono,Imagen,Estado FROM PEDIDOS WHERE idCliente=@id", conn);
+                SqlCommand cmd = new SqlCommand("SELECT idReceta,idCliente,Imagen,Estado,idDoctor FROM RECETAS WHERE idCliente=@id AND Estado=1", conn);
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Connection = conn;
                 conn.Open();
@@ -73,6 +73,79 @@ namespace RESTFUL_API.Controllers
                     return r;
                 }
 
+            }
+        }
+
+        [HttpGet]
+        public HttpResponseMessage getRecetasbyidReceta(int idReceta)
+        {
+            using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT idReceta,idCliente,Imagen,Estado,idDoctor FROM RECETAS WHERE idReceta=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", idReceta);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var r = serial.singleserialize(reader);
+                        var message = Request.CreateResponse(HttpStatusCode.Accepted, r);
+                        conn.Close();
+                        return message;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
+                }
+
+            }
+        }
+
+        [HttpPut]
+        public HttpResponseMessage updatePedido(recetasModel receta)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UPDATE RECETAS SET Imagen=@imagen, idDoctor=@doctor WHERE idReceta=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", receta.idReceta);
+                    cmd.Parameters.AddWithValue("@imagen", receta.Imagen);
+                    cmd.Parameters.AddWithValue("@doctor", receta.idDoctor);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    cmd.ExecuteReader();
+                    var message = Request.CreateResponse(HttpStatusCode.Created, receta);
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        [HttpDelete]
+        public HttpResponseMessage deleteReceta([FromUri] int id)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UPDATE  RECETAS SET  Estado=0 WHERE idReceta=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    cmd.ExecuteReader();
+                    var message = Request.CreateResponse(HttpStatusCode.Created, id);
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
     }

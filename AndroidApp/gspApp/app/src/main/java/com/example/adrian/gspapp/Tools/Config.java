@@ -2,6 +2,7 @@ package com.example.adrian.gspapp.Tools;
 
 import android.graphics.Bitmap;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -32,5 +33,10 @@ public abstract class Config {
     public static ArrayList<Integer> selectedprecios = new ArrayList<>();
     public static ArrayList<Integer> selectedidproducto = new ArrayList<>();
     public static ArrayList<Integer> selectedcant = new ArrayList<>();
+
+    public static boolean recetasFlag=false;
+    public static int recetaRegistrada=0;
+    public  static JSONObject recetaparEditar= new JSONObject();
+    public static JSONArray medicamentoporReceta= new JSONArray();
 
 }

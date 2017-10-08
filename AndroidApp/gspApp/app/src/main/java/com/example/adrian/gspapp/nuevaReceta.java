@@ -1,13 +1,12 @@
 package com.example.adrian.gspapp;
 
 import android.app.Activity;
-import android.content.ClipData;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +24,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.adrian.gspapp.Tools.Config;
 import com.example.adrian.gspapp.Tools.Connection;
 
 import org.json.JSONArray;
@@ -47,11 +47,12 @@ public class nuevaReceta extends AppCompatActivity {
     List<Item> items;
     Button send;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nueva_receta);
-        getSupportActionBar().setTitle("Registrar Receta");
+        getSupportActionBar().setTitle("Prescription Settings");
         list=(ListView) findViewById(R.id.listregReceta);
         imagen=(ImageView) findViewById(R.id.imageViewReceta);
         send=(Button) findViewById(R.id.btnSendRecetas);
@@ -60,6 +61,17 @@ public class nuevaReceta extends AppCompatActivity {
         try {
            // getProducts();
             initItems();
+            if(!Config.recetasFlag){
+                JSONArray lisMed=Connection.getInstance().getProductos(Config.recetaparEditar.getInt("idReceta"));
+                for(int x=0;x<lisMed.length();x++){
+                    selectedItems.add(lisMed.getJSONObject(x).getInt("idMedicamento"));
+                }
+                encodedprescription=Config.recetaparEditar.getString("Imagen");
+                doctor.setText(Config.recetaparEditar.getString("idDoctor"));
+                byte[] decodedString = Base64.decode(encodedprescription, Base64.DEFAULT);
+                Bitmap image = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                imagen.setImageBitmap(image);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -87,7 +99,64 @@ public class nuevaReceta extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), selectedItems.toString(),Toast.LENGTH_LONG).show();
+                JSONObject obj= new JSONObject();
+                try {
+                    obj.put("idCliente", MainActivity.clientInfo.getInt("Cedula"));
+                    obj.put("Imagen", encodedprescription);
+                    obj.put("Estado", 1);
+                    obj.put("idDoctor", Integer.parseInt(String.valueOf(doctor.getText())));
+                    if(Config.recetasFlag){
+                        if(Connection.getInstance().registroRecetas(obj, selectedItems)){
+                            Toast.makeText(getApplicationContext(), "Prescription Created!", Toast.LENGTH_SHORT).show();
+                            doctor.setText("");
+                            imagen.setImageResource(R.drawable.cameras1);
+                            for(int i=0; i<mAdapter.list.size();i++){
+                                mAdapter.list.get(i).checked=false;
+                                mAdapter.notifyDataSetChanged();
+                            }
+                            obj.put("idReceta", Config.recetaRegistrada);
+                            Recetas.mAdapter.jArray.put(obj);
+                            Recetas.mAdapter.notifyDataSetChanged();
+                        }else{
+                           // Toast.makeText(getApplicationContext(), "Error Creating Prescription!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Prescription Created!", Toast.LENGTH_SHORT).show();
+                            doctor.setText("");
+                            imagen.setImageResource(R.drawable.cameras1);
+                            for(int i=0; i<mAdapter.list.size();i++){
+                                mAdapter.list.get(i).checked=false;
+                                mAdapter.notifyDataSetChanged();
+
+                            }
+                            obj.put("idReceta", Config.recetaRegistrada);
+                            Recetas.mAdapter.jArray.put(obj);
+                            Recetas.mAdapter.notifyDataSetChanged();
+                        }
+                    }else{
+                        obj.put("idReceta", Config.recetaparEditar.getInt("idReceta"));
+                        System.out.println("AQUI ESTA LA LISTA: "+selectedItems.toString());
+                        if(Connection.getInstance().updateRecetas(obj, selectedItems)){
+                            for(int a=0; a<Recetas.mAdapter.jArray.length();a++){
+                                if(Recetas.mAdapter.jArray.getJSONObject(a).getInt("idReceta")==Config.recetaparEditar.getInt("idReceta")) {
+                                    Recetas.mAdapter.jArray.remove(a);
+                                    Recetas.mAdapter.jArray.put(obj);
+                                    mAdapter.notifyDataSetChanged();
+                                    break;
+                                }
+                            }
+                        }else{
+                            for(int a=0; a<Recetas.mAdapter.jArray.length();a++){
+                                if(Recetas.mAdapter.jArray.getJSONObject(a).getInt("idReceta")==Config.recetaparEditar.getInt("idReceta")) {
+                                    Recetas.mAdapter.jArray.remove(a);
+                                    Recetas.mAdapter.jArray.put(obj);
+                                    mAdapter.notifyDataSetChanged();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -117,7 +186,7 @@ public class nuevaReceta extends AppCompatActivity {
             JSONObject obj= (JSONObject) lista.get(i);
             String titulo= (String) obj.get("Nombre");
             byte[] decodedString = Base64.decode(obj.getString("Image"), Base64.DEFAULT);
-            Bitmap image = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);;
+            Bitmap image = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             String s =  Integer.toString((Integer) obj.get("idProducto"));
             boolean b = false;
             Item item = new Item(image, titulo, s,b);
@@ -209,37 +278,40 @@ public class nuevaReceta extends AppCompatActivity {
             }
 
             viewHolder.icon.setImageBitmap(list.get(position).ItemDrawable);
-            viewHolder.checkBox.setChecked(list.get(position).checked);
-
             final String itemStr = list.get(position).ItemString;
             final String itemStr1 = list.get(position).ItemString2;
             viewHolder.text.setText(itemStr);
-            viewHolder.text1.setText("Codigo de Producto: "+itemStr1);
-            viewHolder.checkBox.setTag(position);
-
-            /*
-            viewHolder.checkBox.setOnCheckedChangeListener(
-                    new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    list.get(position).checked = b;
-
-                    Toast.makeText(getApplicationContext(),
-                            itemStr + "onCheckedChanged\nchecked: " + b,
-                            Toast.LENGTH_LONG).show();
+            viewHolder.text1.setText("Product Id: "+itemStr1);
+            if(!Config.recetasFlag){
+                for(int z=0;z<selectedItems.size();z++){
+                    if(selectedItems.get(z)==Integer.parseInt(itemStr1)){
+                        viewHolder.checkBox.setChecked(list.get(position).checked=true);
+                        break;
+                    }
                 }
-            });
-            */
+            }else {
+                viewHolder.checkBox.setChecked(list.get(position).checked);
+            }
+            viewHolder.checkBox.setTag(position);
 
             viewHolder.checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     boolean newState = !list.get(position).isChecked();
                     list.get(position).checked = newState;
+                    if(newState){
+                        selectedItems.add(Integer.parseInt(itemStr1));
+                    }else{
+                        for(int i=0; i<selectedItems.size();i++ ){
+                            if(selectedItems.get(i)==Integer.parseInt(itemStr1)){
+                                selectedItems.remove(i);
+                                break;
+                            }
+                        }
+                    }
                     Toast.makeText(getApplicationContext(),
                             itemStr + "setOnClickListener\nchecked: " + newState,
                             Toast.LENGTH_LONG).show();
-                    selectedItems.add(Integer.parseInt(itemStr1));
                 }
             });
 
@@ -251,48 +323,8 @@ public class nuevaReceta extends AppCompatActivity {
 
             return rowView;
         }
-            /*if (convertView == null) {
-                convertView = View.inflate(getApplicationContext(),
-                        R.layout.list_nueva_receta, null);
-                new AppAdapter.ViewHolder(convertView);
-            }
-            AppAdapter.ViewHolder holder = (AppAdapter.ViewHolder) convertView.getTag();
-
-                holder.tv_name.setText(items.get(position).ItemString);
-                holder.tv_descrip.setText("Codigo de Producto: "+items.get(position).ItemString2);
-                holder.imagen.setImageBitmap(items.get(position).ItemDrawable);
-               holder.check.setChecked(items.get(position).checked);
-
-            ViewHolder
-
-            return convertView;
-        }
-*/
 
 
-       /* class ViewHolder {
-            public TextView tv_name;
-           public TextView tv_descrip;
-            public CheckBox check;
-            public ImageView imagen;
-
-            public ViewHolder(View view) {
-                tv_name = view.findViewById(R.id.txtProductoRecetas);
-                tv_descrip = view.findViewById(R.id.txtCodigoProductoRecetas);
-                imagen = view.findViewById(R.id.imgRecetas);
-                check=view.findViewById(R.id.checkBox);
-                view.setTag(this);
-                check.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                    }
-                });
-            }
-
-
-
-        }*/
         class ViewHolder {
            CheckBox checkBox;
            ImageView icon;

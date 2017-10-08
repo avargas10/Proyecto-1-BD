@@ -50,6 +50,27 @@ namespace RESTFUL_API.Controllers
             }
         }
 
+        [HttpGet]
+        public  IEnumerable<Dictionary<string, object>> getProdictosSucursal(int idSucursal)
+        {
+            using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT PRODUCTOXSUCURSAL.idSucursal,PRODUCTOXSUCURSAL.Precio , PRODUCTOS.idProducto,PRODUCTOS.Proveedor,PRODUCTOS.Nombre," +
+                     "PRODUCTOS.esMedicamento,PRODUCTOS.reqPrescripcion,PRODUCTOS.Image " +
+                     "FROM [PRODUCTOXSUCURSAL] INNER JOIN [PRODUCTOS] ON PRODUCTOXSUCURSAL.codProducto = PRODUCTOS.idProducto WHERE (((PRODUCTOXSUCURSAL.idSucursal)=@id));", conn);
+                cmd.Parameters.AddWithValue("@id", idSucursal);
+                cmd.Connection = conn;
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    var r = serial.Serialize(reader);
+                    conn.Close();
+                    return r;
+                }
+
+            }
+        }
+
         [HttpPost]
         public IEnumerable<Dictionary<string, object>> ProductosxSucursal([FromUri] int id)
         {
