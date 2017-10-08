@@ -1,0 +1,44 @@
+<link rel="stylesheet" href="../CSS/storeProducts.css" />
+<body >
+    <div class="container-fluid">
+      <div ng-controller="storeController" class="row content" ng-init="getProducts()">
+        <div class="col-sm-3 sidenav" id="infoSucursal">
+          <h4 ng-controller="mainController"><i class="fa fa-user-circle-o" aria-hidden="true"></i> {{getUser()}}</h4>
+          <ul class="nav nav-pills nav-stacked" >
+            <li><a id='Store'><i class="fa fa-building" aria-hidden="true"></i> {{getStore().Nombre}}</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-sm-6">
+            <div class="container">
+            <div class="listing-block">
+                <div class="row" ng-repeat="product in products" >
+                        <div class="product-item">
+                          <div class="pi-img-wrapper">
+                            <img src="../images/pharmacy4.jpg" class="img-responsive">
+                            
+                            <div>
+                             <a class="btn add2cart">
+                                <i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</a>
+                            </div>
+                          </div>
+                          <h3><a href="shop-item.html">
+                                <i class="fa fa-medkit" aria-hidden="true"></i> {{product.Nombre}}</a></h3>
+                          <div class="pi-price">
+                                <i class="fa fa-money" aria-hidden="true"></i> ‎ ₡{{storeProducts[$index].Precio}}</div>
+
+                          <div class="col-xs-5">
+                              <input type="text" class="form-control" id="usr" placeholder="Quantity"> 
+                          </div>
+                          <div class="sticker sticker-new"></div>
+                        </div>
+          </div>
+        </div>
+        </div>
+            <br>
+            <br>
+
+          </div>
+        </div>
+      </div>
+    </body>

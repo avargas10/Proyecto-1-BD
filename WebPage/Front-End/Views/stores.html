@@ -2,11 +2,7 @@
 <script src="https://rawgit.com/nmccready/angular-simple-logger/master/dist/angular-simple-logger.js"></script>
 <script src="http://rawgit.com/angular-ui/angular-google-maps/master/dist/angular-google-maps.js"></script>
 <link rel="stylesheet" href="../CSS/stores.css" />
-<section class="head" >
-        <div class="container">
-            <h2 class="text-center"><span>Gas Station Stores</span>Costa Rica</a></h2>
-        </div>
-    </section>
+<br></br>
     <div class="clearfix"></div>
     <section class="search-box" ng-controller="storeController" ng-init="getStores()">
         <div class="container-fluid">
@@ -22,8 +18,8 @@
                                 <h4 class="card-title">{{store.Nombre}}</h4>
                                 <!--Text-->
                                 <p class="card-text">{{store.detalleDireccion}}</p>
-                                <button id="goToStore" type="button" ng-click="showStore(store.Latitud,store.Longitud)" class="btn btn-succes"><i class="fa fa-rocket" aria-hidden="true"></i> Go to Store</button>
-                                <button id="buyInStore" type="button" class="btn btn-succes" ng-controller="mainController" ng-show="isActive()"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Buy in this Store</button>
+                                <button id="goToStore" type="button" ng-click="" class="btn btn-succes"><i class="fa fa-rocket" aria-hidden="true"></i> Go to Store</button>
+                                <button id="buyInStore" type="button" ng-click="setStore(store)" class="btn btn-succes" ng-controller="mainController" ng-show="isActive()"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Buy in this Store</button>
                                 <br></br>
                                 
                             </div>
