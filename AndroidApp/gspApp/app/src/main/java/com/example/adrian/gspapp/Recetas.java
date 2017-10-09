@@ -1,6 +1,7 @@
 package com.example.adrian.gspapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -223,8 +225,8 @@ public class Recetas extends Fragment {
             ViewHolder holder = (ViewHolder) convertView.getTag();
             try {
                 JSONObject obj=this.jArray.getJSONObject(position);
-                holder.tv_name.setText("Id Prescription: "+obj.get("idReceta"));
-                holder.tv_descrip.setText("Id Doctor: "+obj.get("idDoctor"));
+                holder.tv_name.setText("Id Prescription: "+obj.getInt("idReceta"));
+                holder.tv_descrip.setText("Id Doctor: "+obj.getInt("idDoctor"));
                 byte[] decodedString = Base64.decode(obj.getString("Imagen"), Base64.DEFAULT);
                 Bitmap image = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                 holder.imagen.setImageBitmap(image);
@@ -234,8 +236,34 @@ public class Recetas extends Fragment {
             return convertView;
         }
 
-        public void delete(int pos){
-                this.jArray.remove(pos);
+        public void delete(final int pos){
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setMessage("Delete this prescription?")
+                    .setTitle("Delete Prescription");
+            builder.setPositiveButton("YES",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int which) {
+                            try {
+                                if(Connection.getInstance().deleteReceta(jArray.getJSONObject(pos).getInt("idReceta"))){
+                                    jArray.remove(pos);
+                                    mAdapter.notifyDataSetChanged();
+                                }else{
+                                    Toast.makeText(context, "Error Deleting the Prescription!", Toast.LENGTH_LONG);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+            builder.setNegativeButton("NO",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
 
         }
 

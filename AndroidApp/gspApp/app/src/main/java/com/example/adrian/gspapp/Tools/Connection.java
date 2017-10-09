@@ -220,7 +220,8 @@ public class Connection {
     }
 
     public boolean updateRecetas(JSONObject data, List med){
-
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         HttpURLConnection conn;
 
         try {
@@ -233,9 +234,10 @@ public class Connection {
             os.write(data.toString().getBytes());
             os.flush();
             if (conn.getResponseCode() == HttpURLConnection.HTTP_CREATED) {
-
+                conn.disconnect();
                 return deleteDetalleReceta(data.getInt("idReceta"), med);
             } else {
+                conn.disconnect();
                 return false;
             }
         } catch (Exception e) {
@@ -245,22 +247,53 @@ public class Connection {
     }
 
     public boolean deleteDetalleReceta(int id, List med){
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        HttpURLConnection conn;
         try {
-            HttpURLConnection conn;
-            URL url;
-            url = new URL("http://" + Config.ip + ":58706/api/DetalleReceta/" + Integer.toString(id));
+            URL url = new URL("http://" + Config.ip + ":58706/api/DetalleReceta?idReceta="+id);
             conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setDoOutput(true);
-            conn.setRequestMethod("DELETE");
+            conn.setConnectTimeout(15000);
+            conn.setRequestMethod("PUT");
             conn.connect();
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            conn.disconnect();
             return updateDetalleReceta(id, med);
         }catch(Exception e){
             e.printStackTrace();
             return false;
         }
     }
+
+    public boolean deleteReceta(int id){
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        HttpURLConnection conn;
+        try {
+            URL url = new URL("http://" + Config.ip + ":58706/api/Recetas/"+id);
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(15000);
+            conn.setRequestMethod("DELETE");
+            conn.connect();
+            if(conn.getResponseCode()==HttpURLConnection.HTTP_CREATED){
+                return true;
+            }else{
+                return false;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean updateDetalleReceta(int id, List med){
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         try {
             HttpURLConnection conn;
             JSONObject jData = new JSONObject();
@@ -276,7 +309,7 @@ public class Connection {
                 os.flush();
                 if (conn.getResponseCode() == HttpURLConnection.HTTP_CREATED) {
                     conn.disconnect();
-                    return true;
+                    //return true;
                 } else {
                     return false;
                 }
@@ -851,32 +884,7 @@ public class Connection {
         return null;
 
     }
-    /*public JSONArray getProductos(){
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-        HttpURLConnection conn;
-        try{
-            URL url = new URL("http://"+Config.ip + ":58706/api/Productos/" );
-            conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.connect();
-            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            JSONArray jArray=new JSONArray(response.toString());
-            return jArray;
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }*/
+
     public JSONArray getSucursales(){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -968,6 +976,7 @@ public class Connection {
 
 
     }
+
     public boolean regDetalle(JSONObject pedido){
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
