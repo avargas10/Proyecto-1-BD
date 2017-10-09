@@ -139,7 +139,8 @@ public class nuevaReceta extends AppCompatActivity {
                                 if(Recetas.mAdapter.jArray.getJSONObject(a).getInt("idReceta")==Config.recetaparEditar.getInt("idReceta")) {
                                     Recetas.mAdapter.jArray.remove(a);
                                     Recetas.mAdapter.jArray.put(obj);
-                                    mAdapter.notifyDataSetChanged();
+                                    Recetas.mAdapter.notifyDataSetChanged();
+                                    Toast.makeText(getApplicationContext(), "Prescription Edited!", Toast.LENGTH_LONG ).show();
                                     break;
                                 }
                             }
@@ -148,10 +149,13 @@ public class nuevaReceta extends AppCompatActivity {
                                 if(Recetas.mAdapter.jArray.getJSONObject(a).getInt("idReceta")==Config.recetaparEditar.getInt("idReceta")) {
                                     Recetas.mAdapter.jArray.remove(a);
                                     Recetas.mAdapter.jArray.put(obj);
-                                    mAdapter.notifyDataSetChanged();
+                                   Recetas.mAdapter.notifyDataSetChanged();
+                                    Toast.makeText(getApplicationContext(), "Prescription Edited!", Toast.LENGTH_LONG ).show();
                                     break;
                                 }
                             }
+                            Recetas.mAdapter.jArray.put(obj);
+                            mAdapter.notifyDataSetChanged();
                         }
                     }
                 } catch (JSONException e) {
