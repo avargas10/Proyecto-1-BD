@@ -39,10 +39,10 @@ INSERT INTO ROLES ( Nombre, Descripcion) VALUES ('Doctor','Medico general');
 INSERT INTO EMPRESA(Nombre) VALUES ('Phischel');
 INSERT INTO EMPRESA(Nombre) VALUES ('BombaTica');
 
-INSERT INTO SUCURSAL ( idEmpresa,idProvincia, idCanton, idDistrito, detalleDireccion, Nombre, Latitud, Longitud, Estado) VALUES (1,1, 1, 1, 'Centro Escazu', 'Bomba Escazu',9.9188508,-84.1542703,1);
-INSERT INTO SUCURSAL ( idEmpresa,idProvincia, idCanton, idDistrito, detalleDireccion, Nombre, Latitud, Longitud, Estado) VALUES (1,2, 3, 5,'Centro de Desamparados', 'Bomba Alajuela',9.8956567 ,-84.0784225,1);
-INSERT INTO SUCURSAL ( idEmpresa,idProvincia, idCanton, idDistrito, detalleDireccion, Nombre, Latitud, Longitud, Estado) VALUES (2,3, 5, 9,'Phischel Mall', 'Phischel Mall San Pedro',9.8383968,-83.8790763,1);
-INSERT INTO SUCURSAL ( idEmpresa,idProvincia, idCanton, idDistrito, detalleDireccion, Nombre, Latitud, Longitud, Estado) VALUES (2,4, 7, 14,'Phischel Central', 'Phischel San Jose', 9.8439947, -83.9696808,1);
+INSERT INTO SUCURSAL ( idEmpresa,idProvincia, idCanton, idDistrito, detalleDireccion, Nombre, Latitud, Longitud, Estado) VALUES (2,1, 1, 1, 'Centro Escazu', 'Bomba Escazu',9.9188508,-84.1542703,1);
+INSERT INTO SUCURSAL ( idEmpresa,idProvincia, idCanton, idDistrito, detalleDireccion, Nombre, Latitud, Longitud, Estado) VALUES (2,2, 3, 5,'Centro de Desamparados', 'Bomba Alajuela',9.8956567 ,-84.0784225,1);
+INSERT INTO SUCURSAL ( idEmpresa,idProvincia, idCanton, idDistrito, detalleDireccion, Nombre, Latitud, Longitud, Estado) VALUES (1,3, 5, 9,'Phischel Mall', 'Phischel Mall San Pedro',9.8383968,-83.8790763,1);
+INSERT INTO SUCURSAL ( idEmpresa,idProvincia, idCanton, idDistrito, detalleDireccion, Nombre, Latitud, Longitud, Estado) VALUES (1,4, 7, 14,'Phischel Central', 'Phischel San Jose', 9.8439947, -83.9696808,1);
 
 INSERT INTO DIRECCIONES(Provincia, Canton, Distrito, Descripcion) VALUES ( 1,1,2, 'Residencial Monterrey');
 INSERT INTO DIRECCIONES(Provincia, Canton, Distrito, Descripcion) VALUES ( 2,3,5,'Condomio los Pirulos');

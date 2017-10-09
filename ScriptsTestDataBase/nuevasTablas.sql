@@ -61,6 +61,7 @@ create table SUCURSAL(
   detalleDireccion VARCHAR(50),
   Nombre VARCHAR(30),
   Estado INT,
+  Imagen VARCHAR(MAX),
   PRIMARY KEY(idSucursal)
 );
 
