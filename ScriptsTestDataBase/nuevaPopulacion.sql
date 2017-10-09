@@ -71,18 +71,6 @@ INSERT INTO EMPLEADOXSUCURSAL(idSucursal, idEmpleado, idRol) VALUES (4, 3, 2);
 INSERT INTO EMPLEADOXSUCURSAL(idSucursal, idEmpleado, idRol) VALUES (1, 4, 3);
 INSERT INTO EMPLEADOXSUCURSAL(idSucursal, idEmpleado, idRol) VALUES (2, 5, 1);
 
-INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,1,10,500);
-INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,2,10,1200);
-INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,3,10,250);
-INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,4,10,2200);
-INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,5,10,100);
-INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,6,10,400);
-INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,7,10,120);
-INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,8,10,875);
-INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,9,10,525);
-INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,10,10,330);
-INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (2,0,10,1200);
-
 INSERT INTO PROVEEDORES (idProveedor, Nombre, Telefono) VALUES (0,'Bayern', 22550890);
 INSERT INTO PROVEEDORES (idProveedor, Nombre, Telefono) VALUES (1,'Playboy', 22733665);
 INSERT INTO PROVEEDORES (idProveedor, Nombre, Telefono) VALUES (2,'Distribuidor X', 22360911);
@@ -100,6 +88,18 @@ INSERT INTO PRODUCTOS(idProducto,Proveedor,Nombre,esMedicamento,reqPrescripcion,
 INSERT INTO PRODUCTOS(idProducto,Proveedor,Nombre,esMedicamento,reqPrescripcion, Estado) VALUES (8,1,'cigarros',0,0, 1);
 INSERT INTO PRODUCTOS(idProducto,Proveedor,Nombre,esMedicamento,reqPrescripcion, Estado) VALUES (9,2,'chicles',0,0, 1);
 INSERT INTO PRODUCTOS(idProducto,Proveedor,Nombre,esMedicamento,reqPrescripcion, Estado) VALUES (10,0,'cataflan',1,0, 1);
+
+INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,1,10,500);
+INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,2,10,1200);
+INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,3,10,250);
+INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,4,10,2200);
+INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,5,10,100);
+INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,6,10,400);
+INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,7,10,120);
+INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,8,10,875);
+INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,9,10,525);
+INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,10,10,330);
+INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (2,0,10,1200);
 
 
 INSERT INTO CLIENTE(Cedula,Nombre,pApellido,sApellido,Password,Username,Email,Nacimiento,Penalizacion, Direccion, Estado) VALUES (100020354,'Marvin','Fonseca','Fernandez','123','mfonseca','a@gmail.com','2000-09-10',0,1, 1);
