@@ -1,3 +1,6 @@
+//Probar la creacion creacion de sucursales
+
+
 var app= angular.module("mainModule",[]);
 
 
@@ -40,6 +43,10 @@ app.controller("contEmplAdmin",["$scope","$http",
 
       }]);
 
+function newEmploy(){
+  alert('Nuevo empleado');
+  window.location.href="../Views/nuevEmpleado.html";
+}
 
 
 
@@ -355,11 +362,14 @@ var openFile = function(event) {
     }
 
 
-    $scope.createProduct=function(){
-      var url='http://192.168.1.203:58706/api/Roles';
-      var sendData={"Nombre": nme, "Descripcion":descr};
+    $scope.createStore=function(idE,nme,idC,idP,idD,dr,lt,ln){
+      idE=idE.split("",1);
+      idC=idC.split("",1);
+      idP=idP.split("",1);
+      idD=idD.split("",1);
+      var url='http://192.168.1.203:58706/api/Sucursal';
+      var sendData={"Nombre": nme, "detalleDireccion":dr, "idEmpresa":idE, "idCanton":idC, "idProvincia": idP, "idDistrito":idD, "Latitud": lt, "Longitud": ln , "Estado":1};
 
-      alert(nme+descr);
 
       $http.post(url,sendData)
       .then(
