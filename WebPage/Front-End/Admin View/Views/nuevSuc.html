@@ -57,7 +57,7 @@
           <label for="sucursales">Company ID</label>
 
           <select  class="form-control" ng-model="idEmp" required>
-            <option ng-repeat="e in empList">Yes</option>
+            <option ng-repeat="e in empList">{{e.idEmpresa}}: {{e.Nombre}}</option>
 
           </select>
         </div>
@@ -103,11 +103,11 @@
           <div class="row">
             <div class="col">
               <label>Latitude</label>
-              <input type="text" class="form-control" placeholder="Latitude of the Store" ng-model="lat" ng-pattern="/^[0-9]{1,80}$/" required>
+              <input type="text" class="form-control" placeholder="Latitude of the Store" ng-model="lat" required>
             </div>
             <div class="col">
               <label>Longitude</label>
-              <input type="text" class="form-control" placeholder="Longitude of the Store" ng-model="lng" ng-pattern="/^[0-9]{1,80}$/" required>
+              <input type="text" class="form-control" placeholder="Longitude of the Store" ng-model="lng" required>
             </div>
 
             
@@ -125,7 +125,7 @@
         </div>
       </div>
       
-      <button type="submit" class="btn btn-primary" ng-click="createStore()">
+      <button type="submit" class="btn btn-primary" ng-click="createStore(idEmp,name, idCant, idProv, idDist, dir, lat, lng)">
       Create Store
       </button>
 

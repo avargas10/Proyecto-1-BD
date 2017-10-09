@@ -25,7 +25,7 @@ app.controller("contPedidoStore",["$scope","$http",
       }, function(error){ console.log(error);})}
 
         $scope.init = function(){
-            var url = 'http://192.168.1.204:58706/api/Pedidos';
+            var url = 'http://192.168.43.110:58706/api/Pedidos';
             $http.get(url).then(function(msg){
                 $scope.listOrders= msg.data;
                 $scope.state=listOrders.Estado;

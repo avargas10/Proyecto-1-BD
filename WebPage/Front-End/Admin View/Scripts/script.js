@@ -25,7 +25,7 @@ app.controller("contEmplAdmin",["$scope","$http",
         }, function(error){ console.log(error);})}
 
         $scope.init = function(){
-          var url = 'http://192.168.1.203:58706/api/Empleados';
+          var url = 'http://192.168.43.110:58706/api/Empleados';
           $http.get(url).then(function(msg){
             emp= msg.data;
             $scope.employeelist = emp;
@@ -72,7 +72,7 @@ app.controller("contRolAdmin", ["$scope","$http",
         }, function(error){ console.log(error);})}
 
         $scope.init = function(){
-          var url = 'http://192.168.1.203:58706/api/Roles';
+          var url = 'http://192.168.43.110:58706/api/Roles';
           $http.get(url).then(function(msg){
             $scope.rollist= msg.data;
           });
@@ -115,7 +115,7 @@ app.controller("contClientAdmin",["$scope","$http",
         }, function(error){ console.log(error);})}
 
         $scope.init = function(){
-          var url = 'http://192.168.1.203:58706/api/Clientes';
+          var url = 'http://192.168.43.110:58706/api/Clientes';
           $http.get(url).then(function(msg){
             client= msg.data;
             $scope.clientlist = client;
@@ -154,7 +154,7 @@ app.controller("contSucAdmin", ["$scope","$http",
         }, function(error){ console.log(error);})}
 
         $scope.init = function(){
-          var url = 'http://192.168.1.203:58706/api/Sucursal';
+          var url = 'http://192.168.43.110:58706/api/Sucursal';
           $http.get(url).then(function(msg){
             $scope.sucList= msg.data;
           });
@@ -195,7 +195,7 @@ function newSuc(){
         }, function(error){ console.log(error);})}
 
         $scope.init = function(){
-          var url = 'http://192.168.1.203:58706/api/Productos';
+          var url = 'http://192.168.43.110:58706/api/Productos';
           $http.get(url).then(function(msg){
             client = msg.data;
             $scope.medList = client;
@@ -233,7 +233,7 @@ app.controller("contNuevRolAdmin", ["$scope","$http",
     $scope.desc="";
 
     $scope.createRol=function(nme,descr){
-      var url='http://192.168.1.203:58706/api/Roles';
+      var url='http://192.168.43.110:58706/api/Roles';
       var sendData={"Nombre": nme, "Descripcion":descr};
 
       alert(nme+descr);
@@ -279,7 +279,7 @@ app.controller("contMedNuevAdmin", ["$scope","$http",
         }, function(error){ console.log(error);})}
 
         $scope.init = function(){
-          var url = 'http://192.168.1.203:58706/api/Sucursal';
+          var url = 'http://192.168.43.110:58706/api/Sucursal';
           $http.get(url).then(function(msg){
             $scope.sucList = msg.data;
           });
@@ -288,7 +288,7 @@ app.controller("contMedNuevAdmin", ["$scope","$http",
 
 
         $scope.createProduct=function(){
-          var url='http://192.168.1.203:58706/api/Roles';
+          var url='http://192.168.43.110:58706/api/Roles';
           var sendData={"Nombre": nme, "Descripcion":descr};
 
           alert(nme+descr);
@@ -341,20 +341,20 @@ var openFile = function(event) {
 
 
     $scope.init = function(){
-      var url = 'http://192.168.1.203:58706/api/Distrito';
+      var url = 'http://192.168.43.110:58706/api/Distrito';
       $http.get(url).then(function(msg){
         $scope.distList = msg.data;
         
       });
-      url = 'http://192.168.1.203:58706/api/Cantones';
+      url = 'http://192.168.43.110:58706/api/Cantones';
       $http.get(url).then(function(msg){
         $scope.cantList = msg.data;
       });
-      url = 'http://192.168.1.203:58706/api/Empresa';
+      url = 'http://192.168.43.110:58706/api/Empresa';
       $http.get(url).then(function(msg){
         $scope.empList = msg.data;
       });
-      url = 'http://192.168.1.203:58706/api/Provincias';
+      url = 'http://192.168.43.110:58706/api/Provincias';
       $http.get(url).then(function(msg){
         $scope.provList = msg.data;
       });
@@ -367,10 +367,9 @@ var openFile = function(event) {
       idC=idC.split("",1);
       idP=idP.split("",1);
       idD=idD.split("",1);
-      var url='http://192.168.1.203:58706/api/Sucursal';
-      var sendData={"Nombre": nme, "detalleDireccion":dr, "idEmpresa":idE, "idCanton":idC, "idProvincia": idP, "idDistrito":idD, "Latitud": lt, "Longitud": ln , "Estado":1};
-
-
+      var url='http://192.168.43.110:58706/api/Sucursal';
+      var sendData={"Nombre": nme, "detalleDireccion":dr, "idEmpresa":idE, "idCanton":idC, "idProvincia": idP, "idDistrito":idD, "Latitud": lt, "Longitud": ln , "Estado":"1"};
+      
       $http.post(url,sendData)
       .then(
         function successCallback(response){
@@ -378,6 +377,7 @@ var openFile = function(event) {
         },function errorCallBack(response){
 
         });
+        
       animation();
     }
 

@@ -52,9 +52,8 @@
           <h1>Stores Management</h1>
         </div>
         <div class="col">
-        <!--
-        <button type="button" class="btn btn-light" onclick="newSuc()">-->
-        <button type="button" class="btn btn-light" data-toggle="modal" data-target="#myModal">
+        
+        <button type="button" class="btn btn-light" onclick="newSuc()">
             Add Store
           </button>
 
@@ -75,7 +74,7 @@
            <p>{{s.idSucursal}} </p>
            <div class="form-group select">
 
-            <button type="button" class="btn btn-primary" ng-click="edit(c.name, c.id)">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
               Edit
             </button>
             <br>

@@ -52,9 +52,9 @@
           <h1>Roles Management</h1>
         </div>
         <div class="col">
-        <!--
-        <button type="button" class="btn btn-light" onclick="newRol()" data-toggle="modal" data-target="#rolModal"> -->
-        <button type="button" class="btn btn-light" data-toggle="modal" data-target="#rolModal">
+        
+        <button type="button" class="btn btn-light" onclick="newRol()" data-toggle="modal" data-target="#rolModal"> 
+
             Add Role
           </button>
 
@@ -73,7 +73,7 @@
            <p>{{r.Descripcion}} </p>
            <div class="form-group select">
 
-            <button type="button" class="btn btn-primary" ng-click="edit()">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#rolModal">
               Edit
             </button>
             <br>
