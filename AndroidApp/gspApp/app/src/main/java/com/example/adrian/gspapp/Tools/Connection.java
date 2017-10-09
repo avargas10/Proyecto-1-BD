@@ -269,6 +269,27 @@ public class Connection {
             return false;
         }
     }
+    public void deletePedido(int id){
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        HttpURLConnection conn;
+        try {
+            URL url = new URL("http://" + Config.ip + ":58706/api/Pedidos?id="+id);
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(15000);
+            conn.setRequestMethod("DELETE");
+            conn.connect();
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            conn.disconnect();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public boolean deleteReceta(int id){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();

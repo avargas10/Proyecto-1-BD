@@ -84,13 +84,34 @@ namespace RESTFUL_API.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
+        [HttpDelete]
+        public HttpResponseMessage deletePedido([FromUri] int id)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UPDATE  PEDIDOS SET  Estado=5 WHERE idPedido=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    cmd.ExecuteReader();
+                    var message = Request.CreateResponse(HttpStatusCode.Created, id);
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
 
         [HttpGet]
         public IEnumerable<Dictionary<string, object>> getPedidosbyId([FromUri] int id)
         {
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("SELECT idPedido,sucursalRecojo,idCliente,horaRecojo,Telefono,Imagen,Estado FROM PEDIDOS WHERE idCliente=@id", conn);
+                SqlCommand cmd = new SqlCommand("SELECT idPedido,sucursalRecojo,idCliente,horaRecojo,Telefono,Imagen,Estado FROM PEDIDOS WHERE idCliente=@id AND Estado!=5", conn);
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Connection = conn;
                 conn.Open();
@@ -132,4 +153,5 @@ namespace RESTFUL_API.Controllers
             }
         }
     }
+
 }

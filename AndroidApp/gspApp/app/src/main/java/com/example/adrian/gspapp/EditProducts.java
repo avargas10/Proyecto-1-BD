@@ -33,6 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,11 +44,13 @@ public class EditProducts extends AppCompatActivity {
     private JSONObject generaldata;
     ListView sucursales;
     public static ProductsList adapter;
+    private static final int CAMERA_REQUEST = 1888;
     FloatingActionButton btndelete;
     private JSONArray dataSucursales;
     EditText fecha;
     EditText telefono;
     Button submit;
+    AlertDialog.Builder builder;
     int sucursal = 1;
     String encodedbyte;
 
@@ -61,6 +64,7 @@ public class EditProducts extends AppCompatActivity {
         submit = (Button) findViewById(R.id.Edit_Submit);
         fecha = (EditText)findViewById(R.id.Edit_FechaRecojo);
         telefono  = (EditText)findViewById(R.id.Edit_Telefono);
+
         btndelete = (FloatingActionButton)findViewById(R.id.btnDelete);
 
         sucursales.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -68,14 +72,7 @@ public class EditProducts extends AppCompatActivity {
                 sucursal = position + 1;
             }
         });
-        submit.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onClick(View view) {
 
-                UpdatePedido();
-            }
-        });
         btndelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,9 +89,46 @@ public class EditProducts extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            photo.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            byte[] byteArray = byteArrayOutputStream .toByteArray();
+
+            encodedbyte = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            if(encodedbyte != null) {
+                UpdatePedido();
+            }
+        }
+    }
+
+    private boolean RequirePrescription() {
+        for(int i = 0 ; i < Config.selectedprescription.size() ; i++){
+            if(Config.selectedprescription.get(i).equalsIgnoreCase("Require prescription")){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     private void DeleteOrder() {
-
+        try {
+            Connection.getInstance().deletePedido(generaldata.getInt("idPedido"));
+            Config.selectedallProducts.clear();
+            Config.selectedallrelation.clear();
+            Config.selectedallimg.clear();
+            Config.selectedprecios.clear();
+            Config.selectedprescription.clear();
+            Config.selectedidproducto.clear();
+            Config.selectedcant.clear();
+            Toast.makeText(this,"Order Deleted",Toast.LENGTH_LONG).show();
+            finish();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void UpdatePedido() {
@@ -204,5 +238,36 @@ public class EditProducts extends AppCompatActivity {
 
         sucursales.setAdapter(dataAdapter);
 
+    }
+
+    public void btnMethodUpdate(View view) {
+        if(RequirePrescription()) {
+            builder = new AlertDialog.Builder(this);
+            builder.setMessage("Do you want to change Prescription Image?")
+                    .setTitle("Prescription Request");
+            builder.setPositiveButton("YES",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int which) {
+                            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            if (takePictureIntent.resolveActivity(getApplicationContext().getPackageManager()) != null) {
+                                startActivityForResult(takePictureIntent, CAMERA_REQUEST);
+
+                            }
+                        }
+                    });
+
+            builder.setNegativeButton("NO",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            UpdatePedido();
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+        }
+        else{
+            UpdatePedido();
+        }
     }
 }

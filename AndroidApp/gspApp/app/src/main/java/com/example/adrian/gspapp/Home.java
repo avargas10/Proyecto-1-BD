@@ -31,8 +31,7 @@ import java.util.List;
 public class Home extends Fragment {
 
     ListView pedidosList;
-    private JSONArray dataPedidos,dataSucursales;
-    CustomList adapter;
+    private JSONArray dataPedidos;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -79,6 +78,16 @@ public class Home extends Fragment {
 
         pedidosList.setAdapter(dataAdapter);
 
+    }
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        try {
+            getPedidos();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 }

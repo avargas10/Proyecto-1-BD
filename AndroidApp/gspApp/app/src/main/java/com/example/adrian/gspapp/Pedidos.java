@@ -199,9 +199,6 @@ public class Pedidos extends Fragment {
                 }
                 else{
                     submitresult();
-
-
-
                 }
             }
         });
