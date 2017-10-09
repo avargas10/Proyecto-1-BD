@@ -20,7 +20,7 @@
             android:layout_alignStart="@+id/txtUpdateDescripPad"
             android:layout_below="@+id/txtUpdateDescripPad"
             android:layout_marginTop="55dp"
-            android:text="Agregar Padecimiento" />
+            android:text="Update Padecimiento" />
 
         <EditText
             android:id="@+id/txtUpdateFechaPad"

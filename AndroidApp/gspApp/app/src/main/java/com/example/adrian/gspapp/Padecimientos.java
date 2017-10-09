@@ -92,5 +92,17 @@ public class Padecimientos extends Fragment {
         lista.setAdapter(dataAdapter);
 
     }
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        allNames.clear();
+        try {
+            jArray= Connection.getInstance().getPadecimientos(MainActivity.clientInfo.getInt("Cedula"));
+            getPadecimientos(jArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
