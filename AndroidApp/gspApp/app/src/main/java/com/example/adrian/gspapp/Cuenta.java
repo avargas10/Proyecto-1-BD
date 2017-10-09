@@ -44,7 +44,7 @@ public class Cuenta extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        getActivity().setTitle("Administrar Cuenta");
+        getActivity().setTitle("Manage Account");
         cedula=getView().findViewById(R.id.editId);
         nombre=getView().findViewById(R.id.editName);
         pApellido=getView().findViewById(R.id.editSurname);
@@ -125,9 +125,9 @@ public class Cuenta extends Fragment {
                                     data.put("Nacimiento", nacimiento.getText());
                                     data.put("Direccion", Connection.getInstance().updateDireccion(address).get("idDireccion"));
                                     if(Connection.getInstance().updateCliente(data)){
-                                        Toast.makeText(getContext(),"Informacion Actualizada con exito", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(),"Information update Success!", Toast.LENGTH_SHORT).show();
                                     }else{
-                                        Toast.makeText(getContext(),"No se ha podido actualizar el usuario, intentelo mas tarde.", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getContext(),"Error updating data!", Toast.LENGTH_LONG).show();
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
