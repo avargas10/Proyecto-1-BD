@@ -7,7 +7,7 @@
           <ul class="nav nav-pills nav-stacked" >
             <li><a  id='Store'><i class="fa fa-building" aria-hidden="true"></i> {{getStore().Nombre}}</a></li>
             <li><a  id='Store'><i class="fa fa-shopping-basket" aria-hidden="true"></i> My Orders</a></li>
-            <li><a  id='Store'><i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping Cart</a></li>
+            <li ng-controller="mainController" ng-click="goTo('mybag')"><a  id='Store'><i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping Cart</a></li>
             
           </ul>
         </div>
@@ -21,8 +21,8 @@
                             <img src="{{product.Image}}" class="img-responsive">
                             
                             <div>
-                             <a class="btn add2cart">
-                                <i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</a>
+                             <a class="btn add2cart" ng-click="addToBag(product)">
+                                <i class="fa fa-cart-plus"  aria-hidden="true"></i> Add to cart</a>
                             </div>
                           </div>
                           <h3><a >
@@ -31,11 +31,7 @@
                                   <i class="fa fa-file-text" aria-hidden="true"></i> Needs Prescription</a></h4>
                           <div class="pi-price">
                                 <i class="fa fa-money" aria-hidden="true"></i> ‎ ₡{{product.Precio}}</div>
-                          
-
-                          <div class="col-xs-5">
-                              <input type="text" class="form-control" id="usr" placeholder="Quantity"> 
-                          </div>
+                        
                           <div class="sticker sticker-new"></div>
                         </div>
           </div>

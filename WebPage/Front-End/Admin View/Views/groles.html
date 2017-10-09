@@ -52,14 +52,15 @@
           <h1>Roles Management</h1>
         </div>
         <div class="col">
-        <button type="button" class="btn btn-light" onclick="newRol()">
+        
+        <button type="button" class="btn btn-light" onclick="newRol()" data-toggle="modal" data-target="#rolModal"> 
+
             Add Role
           </button>
 
         </div>
       </div>
     </div>
-
 
 
     <div class="list-group" ng-controller="contRolAdmin" data-ng-init="init()">
@@ -72,7 +73,7 @@
            <p>{{r.Descripcion}} </p>
            <div class="form-group select">
 
-            <button type="button" class="btn btn-primary" ng-click="edit()">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#rolModal">
               Edit
             </button>
             <br>
@@ -89,9 +90,50 @@
     </div>
 
 
-    </div>
+  </div>
 
-    <div id="snackbar">Role Deleted</div>
+  <div id="snackbar">Role Deleted</div>
+
+
+
+  <div class="modal fade" id="rolModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update Role Info</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <label> Role ID</label>
+          <input type="text" class="form-control" name="idRec" placeholder="ID of the role" ng-model="id" ng-pattern="/^[0-9]{1,5}$/" required>
+
+          <label>Name</label>
+          <input type="text" class="form-control" name="nameProd" placeholder="Name of the role" ng-model="name" required>
+
+          <label>Description</label>
+          <textarea class="form-control" name="inputList" ng-model="desc"  required>
+          </textarea>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
 
 
 
