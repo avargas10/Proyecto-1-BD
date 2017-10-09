@@ -43,6 +43,7 @@ public class EditProducts extends AppCompatActivity {
     private JSONObject generaldata;
     ListView sucursales;
     public static ProductsList adapter;
+    FloatingActionButton btndelete;
     private JSONArray dataSucursales;
     EditText fecha;
     EditText telefono;
@@ -60,6 +61,7 @@ public class EditProducts extends AppCompatActivity {
         submit = (Button) findViewById(R.id.Edit_Submit);
         fecha = (EditText)findViewById(R.id.Edit_FechaRecojo);
         telefono  = (EditText)findViewById(R.id.Edit_Telefono);
+        btndelete = (FloatingActionButton)findViewById(R.id.btnDelete);
 
         sucursales.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -74,6 +76,12 @@ public class EditProducts extends AppCompatActivity {
                 UpdatePedido();
             }
         });
+        btndelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DeleteOrder();
+            }
+        });
 
 
         try {
@@ -83,6 +91,10 @@ public class EditProducts extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void DeleteOrder() {
+
     }
 
     private void UpdatePedido() {
