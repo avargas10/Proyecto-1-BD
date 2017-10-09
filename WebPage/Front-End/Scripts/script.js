@@ -12,6 +12,7 @@ app.config(function (uiGmapGoogleMapApiProvider, $routeProvider, $locationProvid
     when('/products', { templateUrl: '../Views/client.html', controller: 'userController' }).
     when('/stores', { templateUrl: '../Views/stores.html', controller: 'storeController' }).
     when('/storeProducts', { templateUrl: '../Views/storeProducts.html', controller: 'storeController' }).
+    when('/myBag', { templateUrl: '../Views/myBag.html', controller: 'storeController' }).
     otherwise({ redirectTo: '/Home' });
   // $locationProvider.html5Mode(true);
   uiGmapGoogleMapApiProvider.configure({
@@ -69,24 +70,10 @@ app.service('directionService', function () {
 });
 app.service('storeService', function () {
   var store;
-  var products = [];
-  var storeProducts = [];
   this.setStore = function (pStore) {
     store = pStore;
   }
-  this.cleanProducts=function(){
-      products=[];
-  }
-  this.setStoreProducts = function (pProducts) {
-    storeProducts = pProducts.sort();
-  }
-  this.getStoreProducts = function () { return storeProducts; }
-  this.getProducts = function () { return products; }
   this.getStore = function () { return store; }
-  this.addProduct = function (product) {
-    products.push(product);
-    console.log(products);
-  }
 });
 
 app.controller("mainController", ["$scope", "$http", "$location", "$routeParams", 'userService',
@@ -116,7 +103,7 @@ app.controller("mainController", ["$scope", "$http", "$location", "$routeParams"
           $location.path("/login");
           break;
         case 'mybag':
-          $location.path("/pedido");
+          $location.path("/myBag");
           break;
         case 'signup':
           $location.path("/register");
@@ -171,7 +158,7 @@ app.controller("userController", ["$scope", "$http", "$location", "$routeParams"
 
     $scope.loginUser = function (username, password, getCaptcha) {
       if (!isBlank(username) && !isBlank(password)) {
-        var url = 'http://localhost:58706/api/Clientes?username=' + username + '&pass=' + password;
+        var url = 'http://192.168.1.210:58706/api/Clientes?username=' + username + '&pass=' + password;
         $http.post(url).then(function (msg) {
           if (msg.data) {
             userService.setUser(username);
@@ -188,7 +175,7 @@ app.controller("userController", ["$scope", "$http", "$location", "$routeParams"
     };
     $scope.UpdateDirection = function () {
       console.log("direction update");
-      var url = 'http://localhost:58706/api/Provincias';
+      var url = 'http://192.168.1.210:58706/api/Provincias';
       $http.get(url)
         .then(function successCallback(data) {
           console.log(data);
@@ -200,7 +187,7 @@ app.controller("userController", ["$scope", "$http", "$location", "$routeParams"
     };
     $scope.UpdateCities = function (_id) {
       directionService.setState(_id);
-      var url = 'http://localhost:58706/api/Cantones?idProvincia=' + _id;
+      var url = 'http://192.168.1.210:58706/api/Cantones?idProvincia=' + _id;
       $http.get(url)
         .then(function successCallback(data) {
           console.log(data);
@@ -212,7 +199,7 @@ app.controller("userController", ["$scope", "$http", "$location", "$routeParams"
     };
     $scope.UpdateDistricts = function (_id) {
       directionService.setCity(_id);
-      var url = 'http://localhost:58706/api/Distrito?idCanton=' + _id;
+      var url = 'http://192.168.1.210:58706/api/Distrito?idCanton=' + _id;
       $http.get(url)
         .then(function successCallback(data) {
           console.log(data);
@@ -229,7 +216,7 @@ app.controller("userController", ["$scope", "$http", "$location", "$routeParams"
 
       if (createValidation(username, password, conPassword, name, surname, sSurname, id, date, email)) {
         if (password == conPassword) {
-          var url = 'http://localhost:58706/api/Clientes';
+          var url = 'http://192.168.1.210:58706/api/Clientes';
           var sendData = {
             "Cedula": parseInt(id),
             "Nombre": name,
@@ -268,7 +255,7 @@ app.controller("userController", ["$scope", "$http", "$location", "$routeParams"
     };
 
     $scope.setDirection = function (username, password, conPassword, name, surname, sSurname, id, dirSpec, date, email) {
-      var url = 'http://localhost:58706/api/Direcciones';
+      var url = 'http://192.168.1.210:58706/api/Direcciones';
       var sendData = {
         "Provincia": directionService.getState(),
         "Canton": directionService.getCity(),
@@ -304,7 +291,7 @@ app.controller("storeController", ["uiGmapGoogleMapApi", "$scope", "$http", "$lo
 
 
     $scope.getStores = function () {
-      var url = 'http://localhost:58706/api/Sucursal';
+      var url = 'http://192.168.1.210:58706/api/Sucursal';
       $http.get(url)
         .then(function successCallback(data) {
           console.log(data);
@@ -321,43 +308,15 @@ app.controller("storeController", ["uiGmapGoogleMapApi", "$scope", "$http", "$lo
     $scope.getStore = function () { return storeService.getStore() };
 
     $scope.getProducts = function () {
-      storeService.cleanProducts();
-      var url = 'http://localhost:58706/api/Productos/' + storeService.getStore().idSucursal;
-      $http.post(url)
-        .success(function (data) {
-          console.log(data);
-          storeService.setStoreProducts(data);
-          $scope.getProduct(data);
-        })
-        .error(function (data, status) {
-          console.error('Repos error', status, data);
-        })
-        .finally(function () {
-          console.log("finally finished evaluating");
-        });
+      var url = 'http://192.168.1.210:58706/api/Productos?idSucursal=' + storeService.getStore().idSucursal;
+      $http.get(url)
+      .then(function successCallback(data) {
+        console.log(data);
+        $scope.products = data.data;
+      },
+      function errorCallback(response) {
+        alert(response);
+      });
 
-    }
-
-
-    $scope.getProduct = function (products) {
-      var list = [];
-      var arrayLength = products.length;
-      for (var i = 0; i < arrayLength; i++) {
-        var url = 'http://localhost:58706/api/Productos?Cod=' + products[i].codProducto;
-        console.log(url);
-        $http.post(url)
-          .success(function (data) {
-            storeService.addProduct(data);
-          })
-          .error(function (data, status) {
-            console.error('Repos error', status, data);
-          })
-          .finally(function () {
-            console.log("finally finished evaluating");
-          });
-
-      }
-      $scope.products = storeService.getProducts();
-      $scope.storeProducts = storeService.getStoreProducts();
     }
   }]);

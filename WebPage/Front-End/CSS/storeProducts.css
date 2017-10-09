@@ -80,10 +80,6 @@
     line-height: 1.4;
     font-size: 12px;
 }
-.product-item .btn:hover {
-    background: #4b55ec;
-    border-color: #c8c8c8;
-}
 
 .product-item h3 {
     font-size: 14px;
@@ -94,8 +90,14 @@
 .product-item h3 a {
     color: #08d82a;
 }
-.product-item h3 a:hover {
-    color: #4b55ec;
+.product-item h4 {
+    font-size: 14px;
+    font-weight: 300;
+    padding-bottom: 4px;
+    margin-right: 100px;
+}
+.product-item h4 a {
+    color: #d69f1f;
 }
 .pi-price {
     color: #dd8677;
@@ -111,7 +113,7 @@
     text-transform: uppercase;
 }
 .product-item .add2cart:hover {
-            color: #fff;
-            background: #4b55ec;
-            border-color: #4b55ec;
+            color: rgb(230, 238, 231);
+            background: #e64545a9;
+            border-color: #dce0dd;
         }
