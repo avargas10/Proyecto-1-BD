@@ -14,6 +14,7 @@ app.config(function (uiGmapGoogleMapApiProvider, $routeProvider, $locationProvid
     when('/storeProducts', { templateUrl: '../Views/storeProducts.html', controller: 'storeController' }).
     when('/myBag', { templateUrl: '../Views/myBag.html', controller: 'storeController' }).
     when('/order', { templateUrl: '../Views/order.html', controller: 'orderController' }).
+    when('/prescription', { templateUrl: '../Views/prescription.html', controller: 'orderController' }).
     otherwise({ redirectTo: '/Home' });
   // $locationProvider.html5Mode(true);
   uiGmapGoogleMapApiProvider.configure({
@@ -129,6 +130,9 @@ app.controller("mainController", ["$scope", "$http", "$location", "$routeParams"
           break;
         case 'storeProducts':
           $location.path("/storeProducts");
+          break;
+        case 'prescription':
+          $location.path("/prescription");
           break;
         case 'signup':
           $location.path("/register");
@@ -332,6 +336,18 @@ app.controller("storeController", ["uiGmapGoogleMapApi", "$scope", "$http", "$lo
       $location.path("/storeProducts");
     };
     $scope.getStore = function () { return storeService.getStore() };
+
+    $scope.getAllProducts = function () {
+      var url = 'http://localhost:58706/api/Productos';
+      $http.get(url)
+      .then(function successCallback(data) {
+        console.log("all products: "+data.data);
+        $scope.AllProducts = data.data;
+      },
+      function errorCallback(response) {
+        alert(response);
+      });
+    }
 
     $scope.getProducts = function () {
       var url = 'http://localhost:58706/api/Productos?idSucursal=' + storeService.getStore().idSucursal;
