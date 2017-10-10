@@ -83,8 +83,9 @@ namespace RESTFUL_API.Controllers
             }
         }
 
+
         [HttpPost]
-        public bool clientLogin([FromUri]string username, [FromUri]string pass)
+        public bool EmpleadoLogin([FromUri]string username, [FromUri]string pass)
         {
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
