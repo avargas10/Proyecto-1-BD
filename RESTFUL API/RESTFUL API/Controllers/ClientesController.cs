@@ -291,8 +291,7 @@ namespace RESTFUL_API.Controllers
                             mail.From = new MailAddress("gspcontrollerconsole@gmail.com");
                             mail.To.Add(email.ToString());
                             mail.Subject = "Your Password for GSP";
-                            mail.Body = "Follow this link to confirm your gsp account: " + "http://192.168.1.60:8080";
-                            mail.IsBodyHtml = true;
+                            mail.Body = "Follow this link to confirm your gsp account: " + "http://localhost:21039/WebPage/Front-End/Views/#!/accountVer";
                             SmtpServer.Port = 587;
                             SmtpServer.Credentials = new System.Net.NetworkCredential("gspcontrollerconsole@gmail.com", "gspadmin2017");
                             SmtpServer.EnableSsl = true;
