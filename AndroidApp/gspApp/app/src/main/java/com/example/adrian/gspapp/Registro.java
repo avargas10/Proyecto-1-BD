@@ -99,6 +99,7 @@ public class Registro extends AppCompatActivity {
                     data.put("Direccion", Connection.getInstance().registroDireccion(direccion).get("idDireccion"));
                     if(Connection.getInstance().registroCliente(data)){
                         Toast.makeText(getApplicationContext(),"Usuario registrado con exito", Toast.LENGTH_SHORT).show();
+                        Connection.getInstance().ActivationEmail(username.getText().toString());
                         username.setText("");
                         pass.setText("");
                         name.setText("");
