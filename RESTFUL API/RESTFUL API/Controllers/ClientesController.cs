@@ -243,5 +243,55 @@ namespace RESTFUL_API.Controllers
             }
         }
 
+        [HttpPost]
+        public bool sendActivationEmail([FromUri]string usertoactivate)
+        {
+            object pass, email;
+            using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT Password, Email FROM CLIENTE WHERE Username=@user", conn);
+                cmd.Parameters.AddWithValue("@user", usertoactivate);
+                cmd.Connection = conn;
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        reader.Close();
+                        var reader1 = cmd.ExecuteReader();
+                        serial.singleserialize(reader1).TryGetValue("Password", out pass);
+                        reader1.Close();
+                        serial.singleserialize(cmd.ExecuteReader()).TryGetValue("Email", out email);
+                        try
+                        {
+                            MailMessage mail = new MailMessage();
+                            SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+
+                            mail.From = new MailAddress("gspcontrollerconsole@gmail.com");
+                            mail.To.Add(email.ToString());
+                            mail.Subject = "Your Password for GSP";
+                            mail.Body = "Follow this link to confirm your gsp account: " + "http://192.168.1.59:58706";
+                            mail.IsBodyHtml = true;
+                            SmtpServer.Port = 587;
+                            SmtpServer.Credentials = new System.Net.NetworkCredential("gspcontrollerconsole@gmail.com", "gspadmin2017");
+                            SmtpServer.EnableSsl = true;
+
+                            SmtpServer.Send(mail);
+                            return true;
+                        }
+                        catch (Exception ex)
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+            }
+        }
+
     }
 }
