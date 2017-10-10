@@ -17,8 +17,8 @@ create table PADECIMIENTOS(
 	idPadecimiento INT NOT NULL IDENTITY(1,1),
   idUsuario INT NOT NULL,
   Fecha DATE,
-  Nombre VARCHAR(20),
-  Descripcion VARCHAR(50),
+  Nombre VARCHAR(50),
+  Descripcion VARCHAR(200),
   PRIMARY KEY (idPadecimiento)
 
 );
@@ -35,7 +35,7 @@ create table DIRECCIONES(
   Provincia INT,
   Canton INT,
   Distrito INT,
-  Descripcion VARCHAR(100),
+  Descripcion VARCHAR(200),
   PRIMARY KEY(idDireccion),
 );
 
@@ -58,8 +58,8 @@ create table SUCURSAL(
   idDistrito INT,
   Latitud FLOAT,
   Longitud FLOAT,
-  detalleDireccion VARCHAR(50),
-  Nombre VARCHAR(30),
+  detalleDireccion VARCHAR(200),
+  Nombre VARCHAR(80),
   Estado INT,
   Imagen VARCHAR(MAX),
   PRIMARY KEY(idSucursal)
@@ -68,7 +68,7 @@ create table SUCURSAL(
 create table PRODUCTOS(
 	idProducto INT NOT NULL,
   Proveedor INT,
-  Nombre VARCHAR(30),
+  Nombre VARCHAR(80),
   esMedicamento INT,
   reqPrescripcion INT,
   Image VARCHAR(MAX),
@@ -78,7 +78,7 @@ create table PRODUCTOS(
 
 create table PROVEEDORES(
   idProveedor INT NOT NULL,
-  Nombre VARCHAR(30),
+  Nombre VARCHAR(80),
   Telefono INT,
   PRIMARY KEY(idProveedor)
 );
@@ -94,7 +94,7 @@ create table RECETAS(
 
 create table EMPRESA(
 	idEmpresa INT NOT NULL IDENTITY(1,1),
-  Nombre VARCHAR(20),
+  Nombre VARCHAR(50),
   PRIMARY KEY(idEmpresa)
 );
 
@@ -115,7 +115,7 @@ create table EMPLEADO(
 create table ROLES(
 	idRol INT NOT NULL IDENTITY(1,1),
   Nombre VARCHAR(20),
-  Descripcion VARCHAR(50),
+  Descripcion VARCHAR(100),
   PRIMARY KEY(idRol)
 );
 
