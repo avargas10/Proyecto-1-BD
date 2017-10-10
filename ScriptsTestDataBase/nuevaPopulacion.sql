@@ -119,3 +119,4 @@ INSERT INTO ESTADOS(Nombre) VALUES ('Nuevo');
 INSERT INTO ESTADOS(Nombre) VALUES ('Preparado');
 INSERT INTO ESTADOS(Nombre) VALUES ('Facturado');
 INSERT INTO ESTADOS(Nombre) VALUES ('Retirado');
+INSERT INTO ESTADOS(Nombre) VALUES ('Inactivo');
