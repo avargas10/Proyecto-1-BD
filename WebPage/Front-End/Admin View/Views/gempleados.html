@@ -65,6 +65,7 @@
     <div class="list-group" data-ng-init="init()" ng-controller="contEmplAdmin">
 
       <div ng-repeat="e in employeelist">
+      <div ng-if="e.idEmpresa==idAdmin">
 
         <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
           <div class="d-flex justify-content-between">
@@ -83,10 +84,10 @@
             </button>
           </div>
 
-
         </div>
       </a>
 
+    </div>
     </div>
 
 
