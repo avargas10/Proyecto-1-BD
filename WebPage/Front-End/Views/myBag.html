@@ -8,7 +8,7 @@
                             <tr class="pLabel" ng-repeat="product in bag">
                                     <td class="col-sm-8 col-md-6">
                                             <div class="media">
-                                                <a class="thumbnail pull-left" > <img class="media-object" src="{{product.Image}}" style="width: 72px; height: 72px;"> </a>
+                                                <a class="thumbnail pull-left" > <img class="img-responsive" src="data:image/jpg;base64,{{product.product.Image}}" style="width: 72px; height: 72px;"> </a>
                                                 <div class="media-body">
                                                     <h4 class="media-heading"><a><i class="fa fa-medkit" aria-hidden="true"></i> {{product.product.Nombre}}</a></h4>
                                                     <h5 class="media-heading"> by <a>{{getStore().Nombre}}</a></h5>
