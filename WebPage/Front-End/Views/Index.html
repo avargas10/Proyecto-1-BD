@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html data-ng-app="mainModule">
   <head>
-    <title>CE Team Dashboard</title>
+    <title>Gas Station Pharmacy</title>
     <meta charset="utf-8" />
     
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="../library/angular.min.js"></script>
     <script src="../library/lodash.js"></script>
-    <script src="../library/angular-simple-logger.js"></script>
-    <script src="../library/angular-google-maps.js"></script>
     <script src="../library/angular-route.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -56,9 +54,9 @@
             
             <ul class="nav navbar-nav" ng-show="isActive()">
               <li class="dropdown" >
-                <a  class="dropdown-toggle" data-toggle="dropdown">{{getUser() }}  <span class="glyphicon glyphicon-user pull-right"></span></a>
+                <a  class="dropdown-toggle" data-toggle="dropdown">{{getUser().Nombre}} {{getUser().pApellido}} </a>
                 <ul class="dropdown-menu">
-                  <li><a ><i class="fa fa-cogs" aria-hidden="true"></i>   Account Settings</i></a></li>
+                  <li><a data-ng-click = "goTo('userInfo')"><i class="fa fa-cogs" aria-hidden="true"></i>   Account Settings</i></a></li>
                   <li><a data-ng-click = "goTo('mybag')"><i class="fa fa-shopping-cart" aria-hidden="true"></i>   My Bag</a></li>
                   <li><a data-ng-click = "logOutUser()"><i class="fa fa-sign-out" aria-hidden="true"></i>   Sign Out</a></li>
                 </ul>

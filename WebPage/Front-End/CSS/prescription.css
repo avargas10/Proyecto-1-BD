@@ -11,7 +11,8 @@
   }
 .points_table  {
     width: 100%;
-    margin-top: 35px;
+	margin-top: 20px;
+	
 }
 .points_table thead {
 	width: 100%;
@@ -47,14 +48,14 @@
 
 .points_table>tbody>tr>td, .points_table>tbody>tr>th, .points_table>tfoot>tr>td, .points_table>tfoot>tr>th, .points_table>thead>tr>td, .points_table>thead>tr>th{
 	padding: 8px;
-	height: 50px;
+	height: 90px;
 	text-align: center;
 	line-height: 32px;
 }
 
 .pLabel {
 	background: #09ee5ddc;
-	color: #1cfd6ea2;
+	color: #2edb28a2;
 }
 
 .points_table_scrollbar{
@@ -78,4 +79,8 @@
 	border-radius: 10px;
 	background-color: rgb(112, 115, 121);
 	background-image: -webkit-linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.4) 50%, transparent, transparent)
+}
+
+.media-heading a {
+    color: #28c428;
 }

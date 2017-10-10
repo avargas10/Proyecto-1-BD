@@ -1,12 +1,13 @@
+var globalImage="";
 var app = angular.module("mainModule",
   ["ngRoute",
-    'vcRecaptcha',
-    'uiGmapgoogle-maps']);
+    'vcRecaptcha']);
 
-app.config(function (uiGmapGoogleMapApiProvider, $routeProvider, $locationProvider) {
+app.config(function ( $routeProvider, $locationProvider) {
   $routeProvider.
     when('/Home', { templateUrl: '../Views/home-view.html', controller: 'mainController' }).
     when('/login', { templateUrl: '../Views/login-view.html', controller: 'userController' }).
+    when('/userInfo', { templateUrl: '../Views/userInfo.html', controller: 'userController' }).
     when('/register', { templateUrl: '../Views/register.html', controller: 'userController' }).
     when('/pedido', { templateUrl: '../Views/pedido.html', controller: 'userController' }).
     when('/products', { templateUrl: '../Views/client.html', controller: 'userController' }).
@@ -14,14 +15,10 @@ app.config(function (uiGmapGoogleMapApiProvider, $routeProvider, $locationProvid
     when('/storeProducts', { templateUrl: '../Views/storeProducts.html', controller: 'storeController' }).
     when('/myBag', { templateUrl: '../Views/myBag.html', controller: 'storeController' }).
     when('/order', { templateUrl: '../Views/order.html', controller: 'orderController' }).
+    when('/accountVer', { templateUrl: '../Views/account.html', controller: 'userController' }).
     when('/prescription', { templateUrl: '../Views/prescription.html', controller: 'orderController' }).
     otherwise({ redirectTo: '/Home' });
   // $locationProvider.html5Mode(true);
-  uiGmapGoogleMapApiProvider.configure({
-    key: 'AIzaSyAIPxUS3YTey5p2garlnWopeev1MW5gtfY',
-    v: 3,
-    libraries: 'weather,geometry,visualization'
-  });
 });
 
 app.service('userService', function () {
@@ -85,7 +82,9 @@ app.service('storeService', function () {
     console.log("bag: "+pBag);
     bag = pBag;
   }
-  this.getBag=function(){return bag;}
+  this.getBag=function(){
+    console.log(bag);
+    return bag;}
   this.getTotalPrice=function(){return totalPrice;}
   this.addToBag=function(product){
     bag.push(product);
@@ -93,9 +92,41 @@ app.service('storeService', function () {
   }
   this.getStore = function () { return store; }
 });
+app.service('orderService',function(){
+ var newOrder = 
+ {
+   idSucursal:null,
+   phoneNumber:null,
+   idClient:null,
+   image:null,
+   date:null,
+ };
+ this.setImage=function(image){
+    newOrder.image = image;
+ }
+
+ this.clean=function(){
+   newOrder= {
+    idSucursal:null,
+    phoneNumber:null,
+    idClient:nul,
+    image:null,
+    date:null
+  };
+  imageActive=false;
+ }
+
+ this.getOrder=function(){return newOrder;}
+
+ this.setValues = function(Sucursal,phoneNumber,idClient,date){
+   newOrder.idSucursal=Sucursal;
+   newOrder.phoneNumber=phoneNumber;
+   newOrder.idClient=idClient;
+   newOrder.date=date;
+ }
 
 
-
+});
 app.controller("mainController", ["$scope", "$http", "$location", "$routeParams", 'userService',
 
   function ($scope, $http, $location, $routeParams, userService) {
@@ -116,11 +147,17 @@ app.controller("mainController", ["$scope", "$http", "$location", "$routeParams"
         case 'home':
           $location.path("/Home");
           break;
+        case 'verify':
+          $location.path("/accountVer");
+          break;
         case 'order':
           $location.path("/order");
           break;
         case 'products':
           $location.path("/products");
+          break;
+        case 'userInfo':
+          $location.path("/userInfo");
           break;
         case 'login':
           $location.path("/login");
@@ -180,6 +217,13 @@ app.controller("userController", ["$scope", "$http", "$location", "$routeParams"
       }, function (error) { console.log(error); })
     }
 
+    $scope.updateInfo=function(username, password, conPassword, name, surname, sSurname, id, dir, date, email){
+      console.log("username "+username);
+      console.log("name "+name);
+      console.log("surname "+surname);
+      console.log("email "+email);
+    }
+
     function isBlank(str) {
       return (!str || /^\s*$/.test(str));
     }
@@ -187,11 +231,16 @@ app.controller("userController", ["$scope", "$http", "$location", "$routeParams"
 
     $scope.loginUser = function (username, password, getCaptcha) {
       if (!isBlank(username) && !isBlank(password)) {
-        var url = 'http://localhost:58706/api/Clientes?username=' + username + '&pass=' + password;
+        var url = 'http://192.168.1.59:58706/api/Clientes?username=' + username + '&pass=' + password;
         $http.post(url).then(function (msg) {
           if (msg.data) {
-            userService.setUser(username);
-            $location.path("/Home");
+            var url = 'http://192.168.1.59:58706/api/Clientes?username='+username;
+            $scope.getHttp(url,(data)=>{
+              userService.setUser(data);
+              console.log(data);
+              $location.path("/Home");
+            })
+            
           }
           else {
             alert("Error(02): Can't sign in, username or password incorrect");
@@ -204,7 +253,7 @@ app.controller("userController", ["$scope", "$http", "$location", "$routeParams"
     };
     $scope.UpdateDirection = function () {
       console.log("direction update");
-      var url = 'http://localhost:58706/api/Provincias';
+      var url = 'http://192.168.1.59:58706/api/Provincias';
       $http.get(url)
         .then(function successCallback(data) {
           console.log(data);
@@ -216,7 +265,7 @@ app.controller("userController", ["$scope", "$http", "$location", "$routeParams"
     };
     $scope.UpdateCities = function (_id) {
       directionService.setState(_id);
-      var url = 'http://localhost:58706/api/Cantones?idProvincia=' + _id;
+      var url = 'http://192.168.1.59:58706/api/Cantones?idProvincia=' + _id;
       $http.get(url)
         .then(function successCallback(data) {
           console.log(data);
@@ -228,7 +277,7 @@ app.controller("userController", ["$scope", "$http", "$location", "$routeParams"
     };
     $scope.UpdateDistricts = function (_id) {
       directionService.setCity(_id);
-      var url = 'http://localhost:58706/api/Distrito?idCanton=' + _id;
+      var url = 'http://192.168.1.59:58706/api/Distrito?idCanton=' + _id;
       $http.get(url)
         .then(function successCallback(data) {
           console.log(data);
@@ -245,7 +294,7 @@ app.controller("userController", ["$scope", "$http", "$location", "$routeParams"
 
       if (createValidation(username, password, conPassword, name, surname, sSurname, id, date, email)) {
         if (password == conPassword) {
-          var url = 'http://localhost:58706/api/Clientes';
+          var url = 'http://192.168.1.59:58706/api/Clientes';
           var sendData = {
             "Cedula": parseInt(id),
             "Nombre": name,
@@ -257,22 +306,14 @@ app.controller("userController", ["$scope", "$http", "$location", "$routeParams"
             "Nacimiento": date,
             "Penalizacion": 0,
             "Direccion": dir,
-            "Estado": 1
+            "Estado": 0
           };
-          $http.post(url, sendData)
-            .success(function (data) {
-              console.log(data);
-              console.log(sendData);
-              if (data.Cedula == sendData.Cedula) {
-                $location.path("/login");
-              }
-            })
-            .error(function (data, status) {
-              console.error('Repos error', status, data);
-            })
-            .finally(function () {
-              console.log("finally finished repos");
-            });
+          console.log("user: "+sendData.Direccion);
+          $scope.postHttp(url,sendData,(data)=>{
+            if (data.Cedula == sendData.Cedula) {
+              sendMail(data.Cedula);
+            }
+          })
         }
         else {
           alert("Error(03): Passwords not match");
@@ -283,24 +324,37 @@ app.controller("userController", ["$scope", "$http", "$location", "$routeParams"
 
     };
 
+    function sendMail(id){
+      var url = 'http://192.168.1.59:58706/api/Clientes?cedula='+id;
+      var send;
+      $scope.postHttp(url,send,(data)=>{  
+        if(data){     
+          $location.path("/Home");
+        }
+        })
+    }
+
+    $scope.verify=function(id){
+      var url = 'http://192.168.1.59:58706/api/Clientes?cedEstado='+parseInt(id);
+      var send;
+        $scope.postHttp(url,send,(data)=>{  
+        if(data){     
+          $location.path("/login");
+        }
+        })
+    }
     $scope.setDirection = function (username, password, conPassword, name, surname, sSurname, id, dirSpec, date, email) {
-      var url = 'http://localhost:58706/api/Direcciones';
+      var url = 'http://192.168.1.59:58706/api/Direcciones';
       var sendData = {
         "Provincia": directionService.getState(),
         "Canton": directionService.getCity(),
         "Distrito": directionService.getDistrict(),
         "Descripcion": dirSpec
       };
-      $http.post(url, sendData)
-        .success(function (data) {
-          $scope.createUser(username, password, conPassword, name, surname, sSurname, id, data.idDireccion, date, email);
-        })
-        .error(function (data, status) {
-          console.error('Repos error', status, data);
-        })
-        .finally(function () {
-          console.log("finally finished evaluating");
-        });
+      $scope.postHttp(url,sendData,(data)=>{
+        console.log("dir: "+data.idDireccion);
+        $scope.createUser(username, password, conPassword, name, surname, sSurname, id, data.idDireccion, date, email);
+      })
     };
 
     function createValidation(username, password, conPassword, name, surname, sSurname, id, date, email) {
@@ -313,14 +367,14 @@ app.controller("userController", ["$scope", "$http", "$location", "$routeParams"
   }
 ]);
 
-app.controller("storeController", ["uiGmapGoogleMapApi", "$scope", "$http", "$location", "$routeParams", "userService", 'storeService',
-  function (uiGmapGoogleMapApi, $scope, $http, $location, $routeParams, userService, storeService) {
+app.controller("storeController", ["$scope", "$http", "$location", "$routeParams", "userService", 'storeService',
+  function ( $scope, $http, $location, $routeParams, userService, storeService) {
     $scope.map = { center: { latitude: 10.9517300, longitude: -85.1361000 }, zoom: 14 };
     $scope.options = { scrollwheel: false };
 
 
     $scope.getStores = function () {
-      var url = 'http://localhost:58706/api/Sucursal';
+      var url = 'http://192.168.1.59:58706/api/Sucursal';
       $http.get(url)
         .then(function successCallback(data) {
           console.log(data);
@@ -338,7 +392,7 @@ app.controller("storeController", ["uiGmapGoogleMapApi", "$scope", "$http", "$lo
     $scope.getStore = function () { return storeService.getStore() };
 
     $scope.getAllProducts = function () {
-      var url = 'http://localhost:58706/api/Productos';
+      var url = 'http://192.168.1.59:58706/api/Productos';
       $http.get(url)
       .then(function successCallback(data) {
         console.log("all products: "+data.data);
@@ -350,7 +404,7 @@ app.controller("storeController", ["uiGmapGoogleMapApi", "$scope", "$http", "$lo
     }
 
     $scope.getProducts = function () {
-      var url = 'http://localhost:58706/api/Productos?idSucursal=' + storeService.getStore().idSucursal;
+      var url = 'http://192.168.1.59:58706/api/Productos?idSucursal=' + storeService.getStore().idSucursal;
       $http.get(url)
       .then(function successCallback(data) {
         console.log(data);
@@ -365,7 +419,6 @@ app.controller("storeController", ["uiGmapGoogleMapApi", "$scope", "$http", "$lo
       if(!alreadyInBag(product)){
       console.log("added to bag: "+product );
       storeService.addToBag(product);
-      animation();
     }}
     $scope.getBag=function(){
       $scope.bag = storeService.getBag();
@@ -408,10 +461,74 @@ app.controller("storeController", ["uiGmapGoogleMapApi", "$scope", "$http", "$lo
       }
       return total;
     }
-
   }]);
 
 
-  app.controller("orderController", [ "$scope", "$http", "$location", "$routeParams", "userService", 'storeService',
-  function ($scope, $http, $location, $routeParams, userService, storeService) {
+
+
+  
+  
+app.controller("orderController", [ "orderService","$scope", "$http", "$location", "$routeParams", "userService", 'storeService',
+  function (orderService,$scope, $http, $location, $routeParams, userService, storeService) {
+    
+    $scope.placeOrder=function(phoneNumber,date){
+
+      var url = 'http://192.168.1.59:58706/api/Pedidos';
+      var sendData={
+        sucursalRecojo: storeService.getStore().idSucursal,
+        idCliente: userService.getUser().Cedula,
+        horaRecojo: date,
+        Telefono: parseInt(phoneNumber),
+        Imagen: globalImage,
+        Estado: 1
+      };
+      console.log("image: "+needPres());
+      if(needPres()){
+        if(!isEmpty(globalImage)){
+          $scope.postHttp(url,sendData,(data)=>{
+              console.log("order id: "+data);
+              storeService.cleanBag();
+              globalImage="";
+          })
+        }
+        else{alert("Image is require");}
+      }
+      else{
+        $scope.postHttp(url,sendData,(data)=>{
+          console.log("order id: "+data);
+          storeService.cleanBag();
+          globalImage="";
+      })
+      }
+    }
+
+    function isEmpty(str) {
+      return (!str || 0 === str.length);
+    }
+    function needPres(){
+      var bag  = storeService.getBag();
+      for (var index = 0; index < bag.length; index++) {
+        if(bag[index].product.reqPrescripcion==1){
+          return true;
+        }
+      }
+      return false;
+    }
   }]);
+
+  
+var openFile = function(event) {
+    var input = event.target;
+ 
+    var reader = new FileReader();
+    reader.onload = function(){
+      var dataURL = reader.result;
+      var output = document.getElementById('output');
+      output.src = dataURL;
+      globalImage = dataURL;
+      
+    };
+    reader.readAsDataURL(input.files[0]);
+ }
+ 
+

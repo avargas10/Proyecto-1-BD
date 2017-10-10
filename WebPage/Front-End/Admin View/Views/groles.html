@@ -66,6 +66,7 @@
     <div class="list-group" ng-controller="contRolAdmin" data-ng-init="init()">
 
       <div ng-repeat="r in rollist">
+      <div ng-if="r.idEmpresa==idAdmin">
 
         <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
           <div class="d-flex justify-content-between">
@@ -89,7 +90,7 @@
 
     </div>
 
-
+  </div>
   </div>
 
   <div id="snackbar">Role Deleted</div>

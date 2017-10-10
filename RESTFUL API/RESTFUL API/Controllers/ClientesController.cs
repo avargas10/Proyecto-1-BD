@@ -117,7 +117,7 @@ namespace RESTFUL_API.Controllers
             {
                 using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO CLIENTE(Cedula, Nombre, pApellido, sApellido, Password, Username, Email, Nacimiento, Penalizacion, Direccion, Estado) VALUES (@cedula,@nombre,@papellido,@sapellido,@password,@username,@email,@nacimiento,@penalizacion,@direccion,1)", conn);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO CLIENTE(Cedula, Nombre, pApellido, sApellido, Password, Username, Email, Nacimiento, Penalizacion, Direccion, Estado) VALUES (@cedula,@nombre,@papellido,@sapellido,@password,@username,@email,@nacimiento,@penalizacion,@direccion,0)", conn);
                     cmd.Parameters.AddWithValue("@cedula", cliente.Cedula);
                     cmd.Parameters.AddWithValue("@nombre", cliente.Nombre);
                     cmd.Parameters.AddWithValue("@papellido", cliente.pApellido);
@@ -138,6 +138,27 @@ namespace RESTFUL_API.Controllers
             catch (Exception ex)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+        [HttpPost]
+        public HttpResponseMessage UpdateEstado([FromUri] string cedEstado)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UPDATE  CLIENTE SET  Estado=1 WHERE Cedula=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", cedEstado);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    cmd.ExecuteReader();
+                    var message = Request.CreateResponse(HttpStatusCode.Created, "true");
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "false");
             }
         }
 
@@ -244,13 +265,13 @@ namespace RESTFUL_API.Controllers
         }
 
         [HttpPost]
-        public bool sendActivationEmail([FromUri]string usertoactivate)
+        public bool sendActivationEmail([FromUri]int cedula)
         {
             object pass, email;
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("SELECT Password, Email FROM CLIENTE WHERE Username=@user", conn);
-                cmd.Parameters.AddWithValue("@user", usertoactivate);
+                SqlCommand cmd = new SqlCommand("SELECT Password, Email FROM CLIENTE WHERE Cedula=@cedula", conn);
+                cmd.Parameters.AddWithValue("@cedula", cedula);
                 cmd.Connection = conn;
                 conn.Open();
                 using (var reader = cmd.ExecuteReader())
@@ -270,8 +291,7 @@ namespace RESTFUL_API.Controllers
                             mail.From = new MailAddress("gspcontrollerconsole@gmail.com");
                             mail.To.Add(email.ToString());
                             mail.Subject = "Your Password for GSP";
-                            mail.Body = "Follow this link to confirm your gsp account: " + "http://192.168.1.59:58706";
-                            mail.IsBodyHtml = true;
+                            mail.Body = "Follow this link to confirm your gsp account: " + "http://localhost:21039/WebPage/Front-End/Views/#!/accountVer";
                             SmtpServer.Port = 587;
                             SmtpServer.Credentials = new System.Net.NetworkCredential("gspcontrollerconsole@gmail.com", "gspadmin2017");
                             SmtpServer.EnableSsl = true;
