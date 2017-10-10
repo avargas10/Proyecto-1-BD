@@ -426,7 +426,7 @@ public class Connection {
         }
 
     }
-    public boolean ActivationEmail(String username){
+    public boolean ActivationEmail(int cedula){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         if(!isConnectedToServer(Config.ip)){
@@ -435,7 +435,7 @@ public class Connection {
         }else {
             HttpURLConnection conn;
             try {
-                URL url = new URL("http://" + Config.ip + ":58706/api/Clientes?usertoactivate="+username);
+                URL url = new URL("http://" + Config.ip + ":58706/api/Clientes?cedula="+cedula);
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setConnectTimeout(15000);
                 conn.setRequestMethod("POST");

@@ -68,6 +68,7 @@
     <div class="list-group" data-ng-init="init()" ng-controller="contMedAdmin">
 
       <div ng-repeat="m in medList">
+      <div ng-if="m.idEmpresa==idAdmin">
 
         <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
           <div class="d-flex justify-content-between">
@@ -89,7 +90,7 @@
 
         </div>
       </a>
-
+    </div>
     </div>
 
 

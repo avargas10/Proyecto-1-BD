@@ -66,6 +66,8 @@
     <div class="list-group" ng-controller="contSucAdmin" data-ng-init="init()">
 
       <div ng-repeat="s in sucList">
+      <div ng-if="s.idEmpresa==idAdmin">
+
 
         <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
           <div class="d-flex justify-content-between">
@@ -83,14 +85,12 @@
               Delete
             </button>
           </div>
-
-
         </div>
       </a>
 
     </div>
 
-
+  </div>
   </div>
 
   <div id="snackbar">Client Deleted</div>

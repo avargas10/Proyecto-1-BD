@@ -1,6 +1,9 @@
 //Probar la creacion creacion de sucursales
 
 
+//Se almacena el id de la empresa 
+var empresaAdmin;
+
 var app= angular.module("mainModule",[]);
 
 
@@ -9,6 +12,7 @@ var app= angular.module("mainModule",[]);
 app.controller("contEmplAdmin",["$scope","$http",
   function($scope,$http) {
     $scope.employeelist;
+    $scope. idAdmin=empresaAdmin;
     var emp;
 
 
@@ -32,6 +36,7 @@ app.controller("contEmplAdmin",["$scope","$http",
           });
 
         };
+
 
         $scope.edit=function(){
         }
@@ -59,6 +64,7 @@ function newEmploy(){
 app.controller("contRolAdmin", ["$scope","$http",
   function($scope,$http) {
     $scope.rollist;
+    $scope.idAdmin=empresaAdmin;
     $scope.getHttp= function(url , callback){
       var httpObject = $http.get(url);
       httpObject.then(function(promise){
@@ -101,6 +107,7 @@ app.controller("contClientAdmin",["$scope","$http",
   function($scope,$http) {
     $scope.clientlist;
     var client;
+    $scope.idAdmin=empresaAdmin;
 
     $scope.getHttp= function(url , callback){
       var httpObject = $http.get(url);
@@ -125,7 +132,10 @@ app.controller("contClientAdmin",["$scope","$http",
 
 
     $scope.edit=function(){
+      alert('hola');
+      alert(this.idAdmin);
     }
+
     $scope.delete=function(){
         this.clientlist.pop();
         animation();
@@ -139,7 +149,7 @@ app.controller("contSucAdmin", ["$scope","$http",
   function($scope,$http) {
     $scope.sucList;
 
-
+    $scope.idAdmin=empresaAdmin;
 
     $scope.getHttp= function(url , callback){
       var httpObject = $http.get(url);
@@ -181,6 +191,7 @@ function newSuc(){
  app.controller("contMedAdmin",["$scope","$http",
   function($scope,$http) {
     $scope.medList;
+    $scope.idAdmin=empresaAdmin;
     var client;
     $scope.getHttp= function(url , callback){
       var httpObject = $http.get(url);
@@ -194,6 +205,8 @@ function newSuc(){
           callback(promise.data);
         }, function(error){ console.log(error);})}
 
+        
+
         $scope.init = function(){
           var url = 'http://192.168.43.110:58706/api/Productos';
           $http.get(url).then(function(msg){
@@ -203,7 +216,7 @@ function newSuc(){
 
         }
 
-
+        
 
         $scope.edit=function(name,id){
         }
@@ -264,6 +277,7 @@ app.controller("contMedNuevAdmin", ["$scope","$http",
     $scope.qty="";
     $scope.suc="";
     $scope.sucList;
+    $scope.idAdmin=empresaAdmin;
 
 
     $scope.getHttp= function(url , callback){
@@ -339,6 +353,8 @@ var openFile = function(event) {
     $scope.cantList;
     $scope.distList;
 
+    $scope.idAdmin=empresaAdmin;
+
 
     $scope.init = function(){
       var url = 'http://192.168.43.110:58706/api/Distrito';
@@ -383,6 +399,17 @@ var openFile = function(event) {
 
   }]);
 
+
+var productos=[
+["Talerdin",200],
+["Tabcin",450],
+["Antifludes",100],
+["Condones",1000],
+["Suero",20]
+];
+
+
+
 //Vista estadistica
 
 var chart = AmCharts.makeChart("chartdiv", {
@@ -390,24 +417,24 @@ var chart = AmCharts.makeChart("chartdiv", {
   "theme": "light",
   "marginRight": 70,
   "dataProvider": [{
-    "country": "Talerdin",
-    "visits": 200,
+    "country": productos[0][0],
+    "visits": productos[0][1],
     "color": "#FF0F00"
   }, {
-    "country": "Tabcin",
-    "visits": 450,
+    "country": productos[1][0],
+    "visits": productos[1][1],
     "color": "#FF6600"
   }, {
-    "country": "Antifludes",
-    "visits": 100,
+    "country": productos[2][0],
+    "visits": productos[2][1],
     "color": "#FF9E01"
   }, {
-    "country": "Condones",
-    "visits": 1000,
+    "country": productos[3][0],
+    "visits": productos[3][1],
     "color": "#FCD202"
   }, {
-    "country": "Suero",
-    "visits": 20,
+    "country": productos[4][0],
+    "visits": productos[4][1],
     "color": "#F8FF01"
   }],
   "valueAxes": [{
