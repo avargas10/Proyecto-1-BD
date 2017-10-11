@@ -5,8 +5,8 @@
     <!-- Required meta tags -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="../CSS/groles.css">
-    <script src="../Scripts/script.js"></script>
+    <link rel="stylesheet" type="text/css" href="../CSS/Admin/gsucursales.css">
+    <script src="../Scripts/app.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -26,7 +26,7 @@
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav mr-auto mt-2 mt-md-0">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Roles <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="#">Stores <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="gempleados.html">Employees</a>
@@ -35,10 +35,10 @@
             <a class="nav-link" href="gmedicamentos.html">Medicines</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="gclientes.html">Clients</a>
+            <a class="nav-link" href="groles.html">Roles</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="gsucursales.html">Stores</a>
+            <a class="nav-link" href="gclientes.html">Clients</a>
           </li>
 
         </ul>
@@ -49,13 +49,12 @@
     <div class="container">
       <div class="row">
         <div class="col">
-          <h1>Roles Management</h1>
+          <h1>Stores Management</h1>
         </div>
         <div class="col">
         
-        <button type="button" class="btn btn-light" onclick="newRol()" data-toggle="modal" data-target="#rolModal"> 
-
-            Add Role
+        <button type="button" class="btn btn-light" onclick="newSuc()">
+            Add Store
           </button>
 
         </div>
@@ -63,28 +62,29 @@
     </div>
 
 
-    <div class="list-group" ng-controller="contRolAdmin" data-ng-init="init()">
 
-      <div ng-repeat="r in rollist">
-      <div ng-if="r.idEmpresa==idAdmin">
+    <div class="list-group" ng-controller="contSucAdmin" data-ng-init="init()">
+
+      <div ng-repeat="s in sucList">
+      <div ng-if="s.idEmpresa==idAdmin">
+
 
         <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
           <div class="d-flex justify-content-between">
-           <h5 class="mb-1">{{r.Nombre}} <br><br> {{r.idRol}} <br><br> </h5>
-           <p>{{r.Descripcion}} </p>
+           <h5 class="mb-1">{{s.Nombre}} <br></h5>
+           <h5> {{s.detalleDireccion}}  </h5>
+           <p>{{s.idSucursal}} </p>
            <div class="form-group select">
 
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#rolModal">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
               Edit
             </button>
             <br>
             <br>
-            <button type="button" class="btn btn-danger" ng-click="delete()">
+            <button type="button" class="btn btn-danger" ng-click="delete(c.name, cantidad)">
               Delete
             </button>
           </div>
-
-
         </div>
       </a>
 
@@ -93,42 +93,70 @@
   </div>
   </div>
 
-  <div id="snackbar">Role Deleted</div>
+  <div id="snackbar">Client Deleted</div>
 
 
-
-  <div class="modal fade" id="rolModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Update Role Info</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Update Sucursales Info</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
 
-          <label> Role ID</label>
-          <input type="text" class="form-control" name="idRec" placeholder="ID of the role" ng-model="id" ng-pattern="/^[0-9]{1,5}$/" required>
+          <label for="sucursales">Company ID</label>
+          <select  class="form-control" ng-model="idEmp" required>
+            <option ng-repeat="e in empList">Yes</option>
+
+          </select>
 
           <label>Name</label>
-          <input type="text" class="form-control" name="nameProd" placeholder="Name of the role" ng-model="name" required>
+          <input type="text" class="form-control" name="nameProd" placeholder="Name of the Store" ng-model="name" ng-pattern="/^[A-Z][a-z]$/" required>
 
-          <label>Description</label>
-          <textarea class="form-control" name="inputList" ng-model="desc"  required>
+          <label for="sucursales">Canton ID </label>
+
+          <select  class="form-control" ng-model="idCant" required>
+            <option ng-repeat="c in cantList">{{c.idCanton}} : {{c.Nombre}}</option>
+
+          </select>
+
+          <label for="sucursales">Province ID</label>
+
+          <select  class="form-control" ng-model="idProv" required>
+            <option ng-repeat="p in provList">{{p.idProvincia}} : {{p.Nombre}}</option>
+
+          </select>
+
+          <label for="sucursales">District ID</label>
+
+          <select  class="form-control" id="Prescription" ng-model="idDist" required>
+            <option ng-repeat="d in distList">{{d.idDistrito}} : {{d.Nombre}}</option>
+
+          </select>
+
+          <label>Latitude</label>
+          <input type="text" class="form-control" placeholder="Latitude of the Store" ng-model="lat" ng-pattern="/^[0-9]{1,80}$/" required>
+          <label>Longitude</label>
+          <input type="text" class="form-control" placeholder="Longitude of the Store" ng-model="lng" ng-pattern="/^[0-9]{1,80}$/" required>
+
+
+          <label>Direction</label>
+          <textarea class="form-control" name="inputList" ng-model="dir" ng-pattern="/^[A-Za-z0-9]/" required>
           </textarea>
+
+
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
-
-
 
 
 

@@ -1,10 +1,10 @@
-<link rel="stylesheet" href="../CSS/register.css" />
+<link rel="stylesheet" href="../CSS/Shared/register.css" />
 <div class="text-center" style="padding:50px 0" >
 	<div class="logo"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</div>
 	<!-- Main Form -->
 
 	      <div class="login-form-main-message"></div>
-	      <div class="main-login-form" ng-controller="mainController" >
+	      <div class="main-login-form" ng-controller="userController" data-ng-init="UpdateDirection()">
 		
 	        <div class="login-group">
 				<div class="container">
@@ -21,49 +21,49 @@
 				        <td class="primary">
 				        	<div class="form-group">
 				            <label for="reg_username" class="sr-only">Name</label>
-				            <input type="text" class="form-control" id="Name"   value=="{{getUser().Nombre}}" data-ng-model="name" >
+				            <input type="text" class="form-control" id="Name" name="reg_username" placeholder="Name" data-ng-model="name" >
 				          </div>
 				         
 				          <div class="form-group">
 				            <label for="reg_username" class="sr-only">Surname</label>
-				            <input type="text" class="form-control" id="Surname"  placeholder="{{getUser().pApellido}}" value="{{getUser().pApellido}}"  data-ng-model="surname" > 
+				            <input type="text" class="form-control" id="Surname" name="reg_username" placeholder="Surname" data-ng-model="surname" > 
 				          </div>
 				          
 				          
 				          <div class="form-group">
 				            <label for="reg_username" class="sr-only">Second Surname</label>
-				            <input type="text" class="form-control" id="sSurname"  value="{{getUser().sApellido}}" placeholder="{{getUser().sApellido}}" data-ng-model="sSurname" ></div>
+				            <input type="text" class="form-control" id="sSurname" name="reg_username" placeholder="Second Surname" data-ng-model="sSurname" ></div>
 				            
 				            <div class="form-group">
 				            <label for="reg_username" class="sr-only">Identification</label>
-				            <input type="text" class="form-control" id="Identification" ng-disabled="true" placeholder="{{getUser().Cedula}}" value="{{getUser().Cedula}}" data-ng-model="id" >       
+				            <input type="text" class="form-control" id="Identification" name="reg_username" placeholder="Identification" data-ng-model="id" >       
 				          </div>
 				          <div class="form-group">			            
 					              <i class="fa fa-calendar" aria-hidden="true"></i> Born
-					              <input type="datetime-local" ng-model="date" value="{{getUser().Nacimiento}}" name="dateUser" required><br>  
+					              <input type="datetime-local" ng-model="date" name="dateUser" required><br>  
 				          </div>
 				          </td>
 				        <td class="primary">
 				        	  <div class="form-group">
 				        	  	<div class="input-group">
 							    <span class="input-group-addon" id="btnGroupAddon">@</span>
-							    <input type="text" class="form-control" value="{{getUser().Email}}" placeholder="{{getUser().Email}}" aria-label="Email" aria-describedby="btnGroupAddon" data-ng-model="email" >
+							    <input type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="btnGroupAddon" data-ng-model="email" >
 							  </div>
 							</div>
 				         
 				          <div class="form-group">
 				            <label for="reg_username" class="sr-only">Username</label>
-				            <input type="text" class="form-control" id="username" placeholder="{{getUser().Username}}" ng-disabled="true" name="reg_username" value="{{getUser().Username}}" data-ng-model="username" > 
+				            <input type="text" class="form-control" id="username" name="reg_username" placeholder="Username" data-ng-model="username" > 
 				          </div>
 				          
 				          
 				          <div class="form-group">
 				            <label for="reg_username" class="sr-only">Password</label>
-				            <input type="password" class="form-control" id="password" placeholder="{{getUser().Password}}" name="reg_username" value="{{getUser().Password}}" data-ng-model="password" ></div>
+				            <input type="password" class="form-control" id="password" name="reg_username" placeholder="Password" data-ng-model="password" ></div>
 				            
 				            <div class="form-group">
 				            <label for="reg_username" class="sr-only">Confirm Password</label>
-				            <input type="password" class="form-control" id="cPassword" placeholder="{{getUser().Password}}" name="reg_username" value="{{getUser().Password}}" data-ng-model="cPassword" ></div>
+				            <input type="password" class="form-control" id="cPassword" name="reg_username" placeholder="Confirm Password" data-ng-model="cPassword" ></div>
 				          </td>
 				          <td class="primary">
 				        	  <div class="form-group">
@@ -102,7 +102,7 @@
 				    </tbody>
 				  </table>
 				  <div>
-				  <button type="button"  data-ng-click="updateInfo(username, password, cPassword, name, surname, sSurname, id, dirSpec, date, email)" class="btn btn-large btn-info"> Sign Up</button>
+				  <button type="button"  data-ng-click="setDirection(username,password,cPassword,name,surname,sSurname,id,dirSpec,date,email)" class="btn btn-large btn-info"> Sign Up</button>
 				</div>
 				</div>
 				</div>

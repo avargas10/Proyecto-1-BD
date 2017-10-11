@@ -10,8 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../CSS/nuevMed.css">
-    <script src="../Scripts/script.js"></script>
+    <link rel="stylesheet" type="text/css" href="../CSS/Admin/nuevSuc.css">
+    <script src="../Scripts/app.js"></script>
 
 
 
@@ -27,7 +27,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link" href="#">New Product <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="#">New Store <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="gempleados.html">Employees</a>
@@ -39,7 +39,7 @@
             <a class="nav-link" href="groles.html">Roles</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="gsucursales.html">Stores</a>
+            <a class="nav-link" href="gmedicamentos.html">Medicines</a>
           </li>
         </ul>
       </div>
@@ -47,22 +47,24 @@
     
 
 
-    <h1>New Product</h1>
+    <h1>New Store</h1>
 
 
 
-    <form name="datReceta" ng-controller="contMedNuevAdmin" data-ng-init="init()">
+    <form name="datReceta" ng-controller="contNuevSucAdmin" data-ng-init="init()">
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label> Product ID</label>
-          <input type="text" class="form-control" name="idRec" placeholder="ID of the product" ng-model="id" ng-pattern="/^[0-9]{1,5}$/" required>
-          <span ng-show="datReceta.idRec.$error.pattern">
-            <small class="form-text text-muted">ID not valid</small>
-          </span>
+          <label for="sucursales">Company ID</label>
+
+          <select  class="form-control" ng-model="idEmp" required>
+              <option ng-if="e.idEmpresa==idAdmin" ng-repeat="e in empList" >
+              {{e.idEmpresa}}: {{e.Nombre}}
+              </option>
+          </select>
         </div>
         <div class="form-group col-md-6">
           <label>Name</label>
-          <input type="text" class="form-control" name="nameProd" placeholder="Name of the product" ng-model="name" ng-pattern="/^[A-Z][a-z]$/" required>
+          <input type="text" class="form-control" name="nameProd" placeholder="Name of the Store" ng-model="name" ng-pattern="/^[A-Z][a-z]$/" required>
           <span ng-show="datReceta.numDoctor.$error.pattern">
             <small id="fileHelp" class="form-text text-muted">Name is not valid</small>
           </span>
@@ -70,73 +72,68 @@
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="sucursales">Pharmaceutical House</label>
-          <input type="text" class="form-control" name="house" placeholder="Name of the product" ng-model="house" ng-pattern="/^[A-Z][a-z]$/" required>
-          <span ng-show="datReceta.numDoctor.$error.pattern">
-            <small id="fileHelp" class="form-text text-muted">Name is not valid</small>
+          <label for="sucursales">Canton ID </label>
+
+          <select  class="form-control" ng-model="idCant" required>
+            <option ng-repeat="c in cantList">{{c.idCanton}} : {{c.Nombre}}</option>
+
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="sucursales">Province ID</label>
+
+          <select  class="form-control" ng-model="idProv" required>
+            <option ng-repeat="p in provList">{{p.idProvincia}} : {{p.Nombre}}</option>
+
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="sucursales">District ID</label>
+
+          <select  class="form-control" id="Prescription" ng-model="idDist" required>
+            <option ng-repeat="d in distList">{{d.idDistrito}} : {{d.Nombre}}</option>
+
+          </select>
+
+        </div>
+
+        <div class="form-group col-md-6">
+          <div class="row">
+            <div class="col">
+              <label>Latitude</label>
+              <input type="text" class="form-control" placeholder="Latitude of the Store" ng-model="lat" required>
+            </div>
+            <div class="col">
+              <label>Longitude</label>
+              <input type="text" class="form-control" placeholder="Longitude of the Store" ng-model="lng" required>
+            </div>
+
+            
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label>Direction</label>
+          <textarea class="form-control" name="inputList" ng-model="dir" ng-pattern="/^[A-Za-z0-9]/" required>
+          </textarea>
+          <span ng-show="datReceta.inputList.$error.pattern">
+            <small id="fileHelp" class="form-text text-muted">Direction not valid</small>
           </span>
         </div>
-        <div class="form-group col-md-6">
-          <label for="sucursales">Needs Prescription</label>
-
-          <select  class="form-control" id="Prescription" ng-model="presc" required>
-            <option>Yes</option>
-            <option>No</option>
-
-          </select>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label>Choose a store</label>
-          <select class="form-control" ng-model="suc" required>
-            <option ng-repeat="s in sucList">{{s.Nombre}}</option>
-          </select>
-
-
-
-        </div>
-
-        <div class="form-group col-md-6">
-          <label>Quantity available</label>
-          <select class="form-control" id="Company" ng-model="qty" required>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
-            <option>10</option>
-
-          </select>
-
-        </div>
-        
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label> Choose Image</label>
-          <input type="file" class="form-control-file" id="inputFile" onchange="openFile(event)" >
-          <small id="fileHelp" class="form-text text-muted">Select an image to represent the product</small>
-          
-          <img id="output">
-        </div>
-        
-
       </div>
       
-      <button type="submit" class="btn btn-primary" ng-click="createProduct()">
-      Create Product
+      <button type="submit" class="btn btn-primary" ng-click="createStore(idEmp,name, idCant, idProv, idDist, dir, lat, lng)">
+      Create Store
       </button>
 
     </form>
     
 
-    <div id="snackbar">Product Created</div>
+    <div id="snackbar">Store Created</div>
 
 
 

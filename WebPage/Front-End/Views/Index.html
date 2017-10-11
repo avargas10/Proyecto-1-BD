@@ -2,8 +2,9 @@
 <html data-ng-app="mainModule">
   <head>
     <title>Gas Station Pharmacy</title>
-    <meta charset="utf-8" />
     
+    <!--Library includes-->
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="../library/angular.min.js"></script>
     <script src="../library/lodash.js"></script>
@@ -14,23 +15,37 @@
     <script src="../library/bootstrap.min.js"></script>    
     <script src="../library/canvasjs.min.js"></script>
     <script src='../library/api.js'></script>
-    <link rel="stylesheet" href="../CSS/index.css" />
+    
+    <!--Imports app designs -->
+    <link rel="stylesheet" href="../CSS/Shared/index.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <!--Imports app scripts -->
     <script src="../Scripts/app.js"></script>
+    <script src="../Scripts/config.js"></script>
     <script src="../Scripts/Services/directionService.js"></script>
     <script src="../Scripts/Services/userService.js"></script>
     <script src="../Scripts/Services/orderService.js"></script>
     <script src="../Scripts/Services/storeService.js"></script>
     <script src="../Scripts/Services/receipeService.js"></script>
-    <script src="../Scripts/Controllers/mainController.js"></script>
-    <script src="../Scripts/Controllers/userController.js"></script>
-    <script src="../Scripts/Controllers/storeController.js"></script>
-    <script src="../Scripts/Controllers/orderController.js"></script>
-    <script src="../Scripts/Controllers/receipeController.js"></script>
+
+    <!--Imports client app scripts -->
+    <script src="../Scripts/Controllers/Client/mainController.js"></script>
+    <script src="../Scripts/Controllers/Client/userController.js"></script>
+    <script src="../Scripts/Controllers/Client/storeController.js"></script>
+    <script src="../Scripts/Controllers/Client/orderController.js"></script>
+    <script src="../Scripts/Controllers/Client/receipeController.js"></script>
     <script src="../Scripts/angular-recaptcha.min.js"></script>
-    <style>
-    
-  </style>
+
+    <!--Imports Admin app scripts -->
+    <script src="../Scripts/Controllers/Admin/contClientAdmin.js"></script>
+    <script src="../Scripts/Controllers/Admin/contEmplAdmin.js"></script>
+    <script src="../Scripts/Controllers/Admin/contMedAdmin.js"></script>
+    <script src="../Scripts/Controllers/Admin/contMedNuevAdmin.js"></script>
+    <script src="../Scripts/Controllers/Admin/contNuevRolAdmin.js"></script>
+    <script src="../Scripts/Controllers/Admin/contNuevSucAdmin.js"></script>
+    <script src="../Scripts/Controllers/Admin/contRolAdmin.js"></script>
+    <script src="../Scripts/Controllers/Admin/contSucAdmin.js"></script>
   </head>
 
   <body>

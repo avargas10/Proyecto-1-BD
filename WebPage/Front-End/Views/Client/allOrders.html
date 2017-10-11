@@ -1,31 +1,27 @@
-<link rel="stylesheet" href="../CSS/prescription.css" />
-<div class="container" data-ng-controller="receipeController">						
+<link rel="stylesheet" href="../CSS/Client/prescription.css" />
+<div class="container" data-ng-controller="orderController">						
             <div class="row" style="margin-top:20px">
                 <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
                     <form role="form">
                         <fieldset>
-                            <h2><i class="fa fa-file-text" aria-hidden="true" ng-controller="mainController"></i>{{getUser().Nombre}} Forms</h2>
+                            <h2><i class="fa fa-file-text" aria-hidden="true" ng-controller="mainController"></i>{{getUser().Nombre}} Orders</h2>
                             <hr class="colorgraph">
                             <div class="form-group">
-                                    <table class="points_table"  ng-init="getAllForms()">
+                                    <table class="points_table"  ng-init="getAllOrders()">
                                             <tbody class="points_table_scrollbar">
-                                                <tr class="pLabel" ng-repeat="form in forms" >
+                                                <tr class="pLabel" ng-repeat="order in Orders" >
                                                     
                                                     <td class="col-sm-8 col-md-6">
                                                                 <div class="media">
-                                                                    <a class="thumbnail pull-left" > <img class="media-object" src="{{form.Imagen}}" style="width: 80px; height: 70px;"> </a>
+                                                                    <a class="thumbnail pull-left" > <img class="media-object" src="{{order.Imagen}}" style="width: 80px; height: 70px;"> </a>
                                                                     <div class="media-body">
-                                                                        <h4 class="media-heading"><a><i class="fa fa-medkit" aria-hidden="true"></i> ID: {{form.idReceta}}</a></h4>
+                                                                        <h4 class="media-heading"><a><i class="fa fa-medkit" aria-hidden="true"></i> {{order.idPedido}}</a></h4>
                                                                     </div>
                                                                 </div></td>
                                                                 <td class="col-sm-1 col-md-1">
                                                                 <button type="button" ng-click="" class="btn btn-success">
-                                                                        <i class="fa fa-plus-circle" aria-hidden="true"></i> Edit</button>
+                                                                        <i class="fa fa-plus-circle" aria-hidden="true"></i> Edit Order </button>
                                                         </td>
-                                                        <td class="col-sm-5 col-md-5">
-                                                            <button type="button" ng-click="" class="btn btn-warning">
-                                                                    <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Bag</button>
-                                                    </td>
                                                 </tr>
                                             </tbody>
                                             
