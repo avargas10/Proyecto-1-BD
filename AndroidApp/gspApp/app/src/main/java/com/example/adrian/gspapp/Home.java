@@ -68,7 +68,8 @@ public class Home extends Fragment {
         for (int i = 0; i < dataPedidos.length(); i++) {
             JSONObject objeto = (JSONObject) dataPedidos.get(i);
             JSONObject sucursal = Connection.getInstance().getSucursalbyId(objeto.getInt("sucursalRecojo")).getJSONObject(0);
-            allNames.add("Pedido #" + objeto.getString("idPedido") + " - " + sucursal.getString("Nombre") );
+            JSONObject estado = Connection.getInstance().getEstadobyId(objeto.getInt("Estado"));
+            allNames.add("Pedido #" + objeto.getString("idPedido") + " - " + sucursal.getString("Nombre") + " - " + estado.getString("Nombre"));
         }
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
                 (getContext(), android.R.layout.simple_list_item_1, allNames);

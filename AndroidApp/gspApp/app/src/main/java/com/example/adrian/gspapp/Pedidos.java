@@ -16,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,13 +48,13 @@ import java.util.List;
 public class Pedidos extends Fragment {
 
     JSONArray dataProducts;
-    ListView list,sucursales;
+    ListView list,prescriptions;
     DatePickerDialog datePickerDialog;
     TimePickerDialog timePickerDialog;
     EditText recojo;
     FloatingActionButton btncart;
     Button submit;
-    private JSONArray dataSucursales,dataPxS;
+    private JSONArray dataPrescription,dataSucursales,dataPxS;
     private boolean reqpres = false;
     private static final int CAMERA_REQUEST = 1888;
     AlertDialog.Builder builder;
@@ -70,17 +71,60 @@ public class Pedidos extends Fragment {
     EditText fecha;
     EditText telefono;
     int numpedido;
+    private ArrayList<Integer> Recetasbyid;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         list = (ListView) getView().findViewById(R.id.list);
-        sucursales = (ListView) getView().findViewById(R.id.listaSucursales);
+        prescriptions = (ListView) getView().findViewById(R.id.listaPrescriptions);
         recojo = (EditText) getView().findViewById(R.id.FechaRecojo);
         submit = (Button) getView().findViewById(R.id.Submit);
         fecha = (EditText)getView().findViewById(R.id.FechaRecojo);
         telefono  = (EditText)getView().findViewById(R.id.Telefono);
         btncart = (FloatingActionButton)getView().findViewById(R.id.ShoppingCart);
+
+        final AlertDialog.Builder buildersuc = new AlertDialog.Builder(getContext());
+        buildersuc.setMessage("Select the store where you want to buy to continue")
+                .setTitle("Store Select");
+        final ListView input = new ListView(getContext());
+
+        ArrayAdapter<String> dataAdapter = null;
+        try {
+            dataAdapter = new ArrayAdapter<String>
+                    (getContext(), android.R.layout.simple_list_item_1, listSucursales());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        dataAdapter.setDropDownViewResource
+                (android.R.layout.simple_spinner_dropdown_item);
+
+        input.setAdapter(dataAdapter);
+
+        buildersuc.setView(input);
+
+        buildersuc.setPositiveButton("ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog dialog = buildersuc.create();
+        dialog.show();
+        input.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                try {
+                    sucursal = position + 1;
+                    getProducts();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -107,16 +151,43 @@ public class Pedidos extends Fragment {
 
             }
         });
-        sucursales.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        prescriptions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                try {
-                    sucursal = position + 1;
-                    getProducts();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            JSONArray products = Connection.getInstance().getProductos(Recetasbyid.get(position));
+                for(int i = 0 ; i < products.length(); i++){
+                    try {
+                        JSONObject object = products.getJSONObject(i);
+                        JSONObject prod = Connection.getInstance().getProductobyId(object.getInt("idMedicamento"));
+                        Config.allProducts.add(prod.getString("Nombre"));
 
+                        ImageView imgview = (ImageView) view.findViewById(R.id.img2);
+                        imgview.setDrawingCacheEnabled(true);
+                        Bitmap selectedimg = Bitmap.createBitmap(imgview.getDrawingCache());
+                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                        selectedimg.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                        byte[] byteArray = byteArrayOutputStream .toByteArray();
+                        encodedprescription = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                        byte[] decodedString = Base64.decode(prod.getString("Image"), Base64.DEFAULT);
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                        Config.allimg.add(decodedByte);
+                        try {
+                            JSONObject prodsuc = Connection.getInstance().getProductoSucursal(sucursal,object.getInt("idMedicamento"));
+                            Config.precios.add(prodsuc.getInt("Precio"));
+                        }
+                        catch (Exception e){
+                            Config.precios.add(0);
+                        }
+                        Config.prescription.add("PRESCRIPTED");
+                        Config.idproducto.add(object.getInt("idMedicamento"));
+                        Config.cantidad.add(1);
+                    } catch (JSONException e) {
+                        Log.e("falla","operation incomplete");
+                        e.printStackTrace();
+                    }
+                }
+                Toast.makeText(getContext(),"Added to cart",Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -204,7 +275,7 @@ public class Pedidos extends Fragment {
         });
         getActivity().setTitle("Pedidos");
         try {
-            getSucursales();
+            getPrescription();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -363,7 +434,32 @@ public class Pedidos extends Fragment {
         list.setAdapter(adapter);
 
     }
-    private void getSucursales() throws JSONException {
+    private void getPrescription() throws JSONException {
+        dataPrescription = Connection.getInstance().getRecetas(MainActivity.clientInfo.getInt("Cedula"));
+        Recetasbyid = new ArrayList<>();
+        ArrayList<String> idReceta = new ArrayList<>();
+        ArrayList<String> idDoctor = new ArrayList<>();
+        ArrayList<Bitmap> presimg = new ArrayList<>();
+        ArrayList<Integer> cedula = new ArrayList<>();
+
+
+        for(int i = 0; i < dataPrescription.length() ; i++){
+            JSONObject objeto = dataPrescription.getJSONObject(i);
+            idReceta.add("Receta #" + objeto.getString("idReceta"));
+            Recetasbyid.add(objeto.getInt("idReceta"));
+            byte[] decodedString = Base64.decode(objeto.getString("Imagen"), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            presimg.add(decodedByte);
+            idDoctor.add("ID Doctor: " + objeto.getString("idDoctor"));
+            cedula.add(objeto.getInt("idCliente"));
+        }
+
+        CustomList adapter = new
+                CustomList((Activity) this.getContext(), idReceta, presimg, idDoctor,Config.DELETE,cedula);
+        prescriptions.setAdapter(adapter);
+
+    }
+    private List<String> listSucursales() throws JSONException {
         dataSucursales =Connection.getInstance().getSucursales();
 
         List<String> allNames = new ArrayList<String>();
@@ -371,13 +467,7 @@ public class Pedidos extends Fragment {
             JSONObject objeto = (JSONObject) dataSucursales.get(i);
             allNames.add(objeto.getString("Nombre") + " - " + objeto.getString("detalleDireccion") );
         }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
-                (getContext(), android.R.layout.simple_list_item_1, allNames);
-
-        dataAdapter.setDropDownViewResource
-                (android.R.layout.simple_spinner_dropdown_item);
-
-        sucursales.setAdapter(dataAdapter);
+        return allNames;
 
     }
     private boolean IsProductAvaible() throws JSONException {

@@ -192,6 +192,7 @@
     <Compile Include="Controllers\DistritoController.cs" />
     <Compile Include="Controllers\EmpleadosController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
+    <Compile Include="Controllers\EstadosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PadecimientosController.cs" />
     <Compile Include="Controllers\PedidosController.cs" />
