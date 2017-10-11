@@ -3,10 +3,11 @@
 
     <div class="container">
       <div class="row">
-        <div class="col">
+        <div class="col-sm-6">
           <h1>Employee Management</h1>
         </div>
-        <div class="col">
+        <div class="col-sm-6">
+        <br>
         <button type="button" class="btn btn-light" onclick="newEmploy()">
             Add Employee
           </button>
@@ -21,30 +22,36 @@
     <div class="list-group" data-ng-init="init()" ng-controller="contEmplAdmin">
 
       <div ng-repeat="e in employeelist">
-      <div ng-if="e.idEmpresa==idAdmin">
+        <div ng-if="e.idEmpresa==idAdmin">
 
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
-          <div class="d-flex justify-content-between">
-           <h5 class="mb-1">{{e.Nombre}} <br><br> {{e.idEmpleado}}<br><br> </h5>
-           <p>{{e.Username}} </p>
-           <p>{{e.Email}}</p>
-           <div class="form-group select">
+          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
+            <div class="d-flex justify-content-between">
+              <div class="row">
+                <div class="col-sm-5">
+                  <h5>{{e.Nombre}} <br><br> {{e.idEmpleado}}<br><br> </h5>
+                </div>
+                <div class="col-sm-5">
+                  <p>{{e.Username}} </p>
+                  <p>{{e.Email}}</p>
+                </div>
+                <div class="col-sm-2">
 
-            <button type="button" class="btn btn-primary" ng-click="edit(c.name, c.id)">
-              Edit
-            </button>
-            <br>
-            <br>
-            <button type="button" class="btn btn-danger" ng-click="delete()">
-              Delete
-            </button>
+                  <button type="button" class="btn btn-primary" ng-click="edit(c.name, c.id)">
+                    Edit
+                  </button>
+                  <br>
+                  <br>
+                  <button type="button" class="btn btn-danger" ng-click="delete()">
+                    Delete
+                  </button>
+                </div>
+
+              </div>
+            </div>
+            </a>
+
           </div>
-
         </div>
-      </a>
-
-    </div>
-    </div>
 
 
     </div>

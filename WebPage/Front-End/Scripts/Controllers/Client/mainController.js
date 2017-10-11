@@ -90,14 +90,14 @@ angular.module("mainModule").controller("mainController", ["$scope", "$http", "$
       var httpObject = $http.get(url);
       httpObject.then(function (promise) {
         callback(promise.data);
-      }, function (error) { console.log(error); })
+      }, function (error) { alert(error.data); console.log(error); })
     }
 
     $scope.postHttp = function (url, data, callback) {
       var httpObject = $http.post(url, data);
       httpObject.then(function (promise) {
         callback(promise.data);
-      }, function (error) { console.log(error); })
+      }, function (error) { alert(error.data);  console.log(error); })
     }
   }
 ]);

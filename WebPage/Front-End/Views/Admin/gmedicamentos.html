@@ -2,11 +2,11 @@
 <link rel="stylesheet" href="../CSS/Admin/gmedicamentos.css" />
       <div class="container">
       <div class="row">
-        <div class="col">
+        <div class="col-sm-6">
           <h1>Product Management</h1>
         </div>
-        <div class="col">
-        
+        <div class="col-sm-6">
+        <br>
         <button type="button" ng-controller="mainController" class="btn btn-light" ng-click="goTo('nuevMed')">
         
             Add Product
@@ -20,23 +20,32 @@
     <div class="list-group" data-ng-init="init()" ng-controller="contMedAdmin">
 
       <div ng-repeat="m in medList">
-     
+
 
         <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
           <div class="d-flex justify-content-between">
-           <img class="img-fluid" src="data:image/png;base64,{{m.Image}}" alt="Card image cap">        
-           <h5 class="mb-1">{{m.Nombre}} <br><br> {{m.idProducto}}<br><br> </h5>
-           <p>{{m.esMedicamento}} </p>
-           <div class="form-group select">
 
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-              Edit
-            </button>
-            <br>
-            <br>
-            <button type="button" class="btn btn-danger" ng-click="delete(m.name, m.id)">
-              Delete
-            </button>
+            <div class="row">
+              <div class="col-sm-4">
+               <img class="img-fluid" src="data:image/png;base64,{{m.Image}}" alt="Card image cap">
+             </div>
+             <div class="col-sm-4">        
+               <h5 class="mb-1">{{m.Nombre}} <br><br> {{m.idProducto}}<br><br> </h5>
+             </div>
+             <div class="col-sm-2">
+               <p>{{m.esMedicamento}} </p>
+             </div>
+             <div class="col-sm-2">
+             <br>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                Edit
+              </button>
+              <br>
+              <br>
+              <button type="button" class="btn btn-danger" ng-click="delete(m.name, m.id)">
+                Delete
+              </button>
+            </div>
           </div>
 
 

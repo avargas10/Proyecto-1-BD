@@ -125,6 +125,6 @@ var openFile = function(event) {
 
     function getIp(){
       //var ipPato = "172.18.192.132";
-      var ipVargas = "172.18.194.31";
+      var ipVargas = "172.18.211.139";
       return ipVargas;
     }
