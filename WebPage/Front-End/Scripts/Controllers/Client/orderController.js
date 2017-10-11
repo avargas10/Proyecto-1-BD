@@ -78,4 +78,17 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
             alert(response);
           });
       };
+      $scope.getAllDetails=function(id){
+        console.log("entra");
+        var url = 'http://'+getIp()+':58706/api/Productos?idPed='+id;
+        $http.get(url)
+          .then(function successCallback(data) {
+            console.log(data);
+            $scope.currentOrder= data;
+            $location.path("/order");
+          },
+          function errorCallback(response) {
+            alert(response);
+          });
+      };
   }]);
