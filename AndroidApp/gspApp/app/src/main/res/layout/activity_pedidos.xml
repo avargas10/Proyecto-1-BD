@@ -18,10 +18,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Store to pick up">
+            android:hint="Prescriptions">
         </TextView>
         <ListView
-            android:id="@+id/listaSucursales"
+            android:id="@+id/listaPrescriptions"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_alignParentLeft="true"
