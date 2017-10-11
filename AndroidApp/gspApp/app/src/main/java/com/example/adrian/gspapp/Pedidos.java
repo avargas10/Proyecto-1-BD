@@ -16,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -159,17 +160,34 @@ public class Pedidos extends Fragment {
                         JSONObject object = products.getJSONObject(i);
                         JSONObject prod = Connection.getInstance().getProductobyId(object.getInt("idMedicamento"));
                         Config.allProducts.add(prod.getString("Nombre"));
-                        byte[] decodedString = Base64.decode(object.getString("Image"), Base64.DEFAULT);
+
+                        ImageView imgview = (ImageView) view.findViewById(R.id.img2);
+                        imgview.setDrawingCacheEnabled(true);
+                        Bitmap selectedimg = Bitmap.createBitmap(imgview.getDrawingCache());
+                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                        selectedimg.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                        byte[] byteArray = byteArrayOutputStream .toByteArray();
+                        encodedprescription = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                        byte[] decodedString = Base64.decode(prod.getString("Image"), Base64.DEFAULT);
                         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                         Config.allimg.add(decodedByte);
-                        Config.precios.add(selectedprice);
-                        Config.prescription.add(selectedpres);
-                        Config.idproducto.add(idproducto.get(position));
-                        Config.cantidad.add(cant);
+                        try {
+                            JSONObject prodsuc = Connection.getInstance().getProductoSucursal(sucursal,object.getInt("idMedicamento"));
+                            Config.precios.add(prodsuc.getInt("Precio"));
+                        }
+                        catch (Exception e){
+                            Config.precios.add(0);
+                        }
+                        Config.prescription.add("PRESCRIPTED");
+                        Config.idproducto.add(object.getInt("idMedicamento"));
+                        Config.cantidad.add(1);
                     } catch (JSONException e) {
+                        Log.e("falla","operation incomplete");
                         e.printStackTrace();
                     }
                 }
+                Toast.makeText(getContext(),"Added to cart",Toast.LENGTH_SHORT).show();
 
             }
         });

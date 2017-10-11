@@ -120,9 +120,17 @@ namespace RESTFUL_API.Controllers
                 conn.Open();
                 using (var reader = cmd.ExecuteReader())
                 {
-                    var r = serial.singleserialize(reader);
-                    conn.Close();
-                    return r;
+                    if (reader.Read())
+                    {
+                        reader.Close();
+                        var r = serial.singleserialize(cmd.ExecuteReader());
+                        conn.Close();
+                        return r;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
 
             }
