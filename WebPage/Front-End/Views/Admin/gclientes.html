@@ -3,10 +3,11 @@
 
     <div class="container">
       <div class="row">
-        <div class="col">
+        <div class="col-sm-6">
           <h1>Client Management</h1>
         </div>
-        <div class="col">
+        <div class="col-sm-6">
+        <br>
         <button type="button" class="btn btn-light" >
             Add Client
           </button>
@@ -24,26 +25,35 @@
 
         <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
           <div class="d-flex justify-content-between">
-           <h5 class="mb-1">{{c.Nombre}} {{c.pApellido}}<br><br> {{c.Cedula}} <br><br> </h5>
-           <p>{{c.Username}} </p>
-           <p>{{c.Email}}</p>
-           <div class="form-group select">
+            <div class="row">
+            <div class="col-sm-5">
+                <h5>{{c.Nombre}} {{c.pApellido}}<br><br> {{c.Cedula}} <br><br> </h5>
+              </div>
+              <div class="col-sm-5">
+                <p>{{c.Username}} </p>
+                <p>{{c.Email}}</p>
+              </div>
+              <div class="col-sm-2">
 
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-              Edit
-            </button>
-            <br>
-            <br>
-            <button type="button" class="btn btn-danger" ng-click="delete(c.name, cantidad)">
-              Delete
-            </button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                  Edit
+                </button>
+                <br>
+                <br>
+                <button type="button" class="btn btn-danger" ng-click="delete(c.name, cantidad)">
+                  Delete
+                </button>
+              </div>
+
+            </div>
+
+
+
+
           </div>
+        </a>
 
-
-        </div>
-      </a>
-
-    </div>
+      </div>
 
 
     </div>
