@@ -140,6 +140,7 @@ function newProd(){
     }
 
     function getIp(){
-      var ip = "172.18.192.132";
+      //var ipPato = "172.18.192.132";
+      var ipVragas = "172.18.194.31";
       return ip;
     }

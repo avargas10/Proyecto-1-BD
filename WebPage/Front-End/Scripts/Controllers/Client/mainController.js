@@ -60,6 +60,13 @@ angular.module("mainModule").controller("mainController", ["$scope", "$http", "$
         case 'gclientes':
           $location.path("/Admin/gclientes");
           break;
+        case 'gempleados':
+          $location.path("/Admin/gempleados");
+          break;
+
+        case 'estadistica':
+          $location.path("/Admin/estadistica");
+          break;
         default:
       }
     };
