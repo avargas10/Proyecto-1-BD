@@ -18,7 +18,7 @@ function($scope,$http) {
       }, function(error){ console.log(error);})}
 
       $scope.init = function(){
-        var url = 'http://localhost:58706/api/Empleados';
+        var url = 'http://'+getIp()+':58706/api/Empleados';
         $http.get(url).then(function(msg){
           emp= msg.data;
           $scope.employeelist = emp;

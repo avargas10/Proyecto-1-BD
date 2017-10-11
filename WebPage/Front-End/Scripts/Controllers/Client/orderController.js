@@ -4,7 +4,7 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
     
     $scope.placeOrder=function(phoneNumber,date){
 
-      var url = 'http://localhost:58706/api/Pedidos';
+      var url = 'http://'+getIp()+':58706/api/Pedidos';
       var sendData={
         sucursalRecojo: storeService.getStore().idSucursal,
         idCliente: userService.getUser().Cedula,
@@ -36,7 +36,7 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
      }}
 
     function addOrderDetail(id){
-      var url = 'http://localhost:58706/api/DetallePedido';
+      var url = 'http://'+getIp()+':58706/api/DetallePedido';
       var bag = storeService.getBag();
       for (var index = 0; index < bag.length; index++) {
         var sendData = {
@@ -68,11 +68,24 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
     }
 
     $scope.getAllOrders=function(){
-        var url = 'http://localhost:58706/api/Pedidos/'+userService.getUser().Cedula;
+        var url = 'http://'+getIp()+':58706/api/Pedidos/'+userService.getUser().Cedula;
         $http.get(url)
           .then(function successCallback(data) {
             console.log(data);
             $scope.Orders = data.data;
+          },
+          function errorCallback(response) {
+            alert(response);
+          });
+      };
+      $scope.getAllDetails=function(id){
+        console.log("entra");
+        var url = 'http://'+getIp()+':58706/api/Productos?idPed='+id;
+        $http.get(url)
+          .then(function successCallback(data) {
+            console.log(data);
+            $scope.currentOrder= data;
+            $location.path("/order");
           },
           function errorCallback(response) {
             alert(response);

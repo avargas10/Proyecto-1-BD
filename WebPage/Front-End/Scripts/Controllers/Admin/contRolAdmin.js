@@ -15,7 +15,7 @@ function($scope,$http) {
       }, function(error){ console.log(error);})}
 
       $scope.init = function(){
-        var url = 'http://192.168.43.110:58706/api/Roles';
+        var url = 'http://'+getIp()+':58706/api/Roles';
         $http.get(url).then(function(msg){
           $scope.rollist= msg.data;
         });

@@ -1,7 +1,7 @@
 angular.module("mainModule").controller("receipeController", [ "orderService","receipeService","$scope", "$http", "$location", "$routeParams", "userService", 'storeService',  
 function (orderService,receipeService,$scope, $http, $location, $routeParams, userService, storeService) {
 $scope.addReceipe=function(){
-  var url = 'http://localhost:58706/api/Recetas';
+  var url = 'http://'+getIp()+':58706/api/Recetas';
   var sendData= 
   {
     idCliente: userService.getUser().Cedula,
@@ -31,7 +31,7 @@ $scope.goBack=function(){
 }
 
 $scope.getAllForms=function(){
-  var url = 'http://localhost:58706/api/Recetas/'+userService.getUser().Cedula;
+  var url = 'http://'+getIp()+':58706/api/Recetas/'+userService.getUser().Cedula;
   $http.get(url)
     .then(function successCallback(data) {
       console.log(data);
@@ -57,7 +57,7 @@ $scope.deleteFromMeds=function(product){
 }
 
 function addReceipeDetail(id){
-  var url = 'http://localhost:58706/api/DetalleReceta';
+  var url = 'http://'+getIp()+':58706/api/DetalleReceta';
   var meds = receipeService.getMeds();
   for (var index = 0; index < meds.length; index++) {
     var sendData = {
@@ -79,7 +79,7 @@ function isEmpty(str) {
   return (!str || 0 === str.length);
 }
 $scope.getAllProducts = function () {
-  var url = 'http://localhost:58706/api/Productos';
+  var url = 'http://'+getIp()+':58706/api/Productos';
   $http.get(url)
   .then(function successCallback(data) {
     console.log("all products: "+data.data);

@@ -18,22 +18,6 @@ var openFile = function(event) {
  }
   
 
- function newEmploy(){
-  alert('Nuevo empleado');
-  window.location.href="../Views/nuevEmpleado.html";
-}
-
-function newRol(){
-  window.location.href="../Views/nuevRol.html";
-}
-
-function newSuc(){
-  window.location.href = "../Views/nuevSuc.html";
-}
-
-function newProd(){
-  window.location.href = "../Views/nuevMed.html";
-  }
 
 
   var productos=[
@@ -137,4 +121,10 @@ function newProd(){
         var x = document.getElementById("snackbar")
         x.className = "show";
         setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    }
+
+    function getIp(){
+      //var ipPato = "172.18.192.132";
+      var ipVargas = "172.18.194.31";
+      return ipVargas;
     }

@@ -31,10 +31,10 @@ function ($scope, $http, $location, $routeParams, userService, directionService)
 
   $scope.loginUser = function (username, password, getCaptcha) {
     if (!isBlank(username) && !isBlank(password)) {
-      var url = 'http://localhost:58706/api/Clientes?username=' + username + '&pass=' + password;
+      var url = 'http://'+getIp()+':58706/api/Clientes?username=' + username + '&pass=' + password;
       $http.post(url).then(function (msg) {
         if (msg.data) {
-          var url = 'http://localhost:58706/api/Clientes?username='+username;
+          var url = 'http://'+getIp()+':58706/api/Clientes?username='+username;
           $scope.getHttp(url,(data)=>{
             userService.setUser(data);
             console.log(data);
@@ -53,7 +53,7 @@ function ($scope, $http, $location, $routeParams, userService, directionService)
   };
   $scope.UpdateDirection = function () {
     console.log("direction update");
-    var url = 'http://localhost:58706/api/Provincias';
+    var url = 'http://'+getIp()+':58706/api/Provincias';
     $http.get(url)
       .then(function successCallback(data) {
         console.log(data);
@@ -65,7 +65,7 @@ function ($scope, $http, $location, $routeParams, userService, directionService)
   };
   $scope.UpdateCities = function (_id) {
     directionService.setState(_id);
-    var url = 'http://localhost:58706/api/Cantones?idProvincia=' + _id;
+    var url = 'http://'+getIp()+':58706/api/Cantones?idProvincia=' + _id;
     $http.get(url)
       .then(function successCallback(data) {
         console.log(data);
@@ -77,7 +77,7 @@ function ($scope, $http, $location, $routeParams, userService, directionService)
   };
   $scope.UpdateDistricts = function (_id) {
     directionService.setCity(_id);
-    var url = 'http://localhost:58706/api/Distrito?idCanton=' + _id;
+    var url = 'http://'+getIp()+':58706/api/Distrito?idCanton=' + _id;
     $http.get(url)
       .then(function successCallback(data) {
         console.log(data);
@@ -94,7 +94,7 @@ function ($scope, $http, $location, $routeParams, userService, directionService)
 
     if (createValidation(username, password, conPassword, name, surname, sSurname, id, date, email)) {
       if (password == conPassword) {
-        var url = 'http://localhost:58706/api/Clientes';
+        var url = 'http://'+getIp()+':58706/api/Clientes';
         var sendData = {
           "Cedula": parseInt(id),
           "Nombre": name,
@@ -125,7 +125,7 @@ function ($scope, $http, $location, $routeParams, userService, directionService)
   };
 
   function sendMail(id){
-    var url = 'http://localhost:58706/api/Clientes?cedula='+id;
+    var url = 'http://'+getIp()+':58706/api/Clientes?cedula='+id;
     var send;
     $scope.postHttp(url,send,(data)=>{  
       if(data){     
@@ -135,7 +135,7 @@ function ($scope, $http, $location, $routeParams, userService, directionService)
   }
 
   $scope.verify=function(id){
-    var url = 'http://localhost:58706/api/Clientes?cedEstado='+parseInt(id);
+    var url = 'http://'+getIp()+':58706/api/Clientes?cedEstado='+parseInt(id);
     var send;
       $scope.postHttp(url,send,(data)=>{  
       if(data){     
@@ -144,7 +144,7 @@ function ($scope, $http, $location, $routeParams, userService, directionService)
       })
   }
   $scope.setDirection = function (username, password, conPassword, name, surname, sSurname, id, dirSpec, date, email) {
-    var url = 'http://localhost:58706/api/Direcciones';
+    var url = 'http://'+getIp()+':58706/api/Direcciones';
     var sendData = {
       "Provincia": directionService.getState(),
       "Canton": directionService.getCity(),
