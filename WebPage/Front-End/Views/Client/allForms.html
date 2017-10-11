@@ -1,0 +1,47 @@
+<link rel="stylesheet" href="../CSS/Client/prescription.css" />
+<div class="container" data-ng-controller="receipeController">						
+            <div class="row" style="margin-top:20px">
+                <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+                    <form role="form">
+                        <fieldset>
+                            <h2><i class="fa fa-file-text" aria-hidden="true" ng-controller="mainController"></i>{{getUser().Nombre}} Forms</h2>
+                            <hr class="colorgraph">
+                            <div class="form-group">
+                                    <table class="points_table"  ng-init="getAllForms()">
+                                            <tbody class="points_table_scrollbar">
+                                                <tr class="pLabel" ng-repeat="form in forms" >
+                                                    
+                                                    <td class="col-sm-8 col-md-6">
+                                                                <div class="media">
+                                                                    <a class="thumbnail pull-left" > <img class="media-object" src="{{form.Imagen}}" style="width: 80px; height: 70px;"> </a>
+                                                                    <div class="media-body">
+                                                                        <h4 class="media-heading"><a><i class="fa fa-medkit" aria-hidden="true"></i> ID: {{form.idReceta}}</a></h4>
+                                                                    </div>
+                                                                </div></td>
+                                                                <td class="col-sm-1 col-md-1">
+                                                                <button type="button" ng-click="" class="btn btn-success">
+                                                                        <i class="fa fa-plus-circle" aria-hidden="true"></i> Edit</button>
+                                                        </td>
+                                                        <td class="col-sm-5 col-md-5">
+                                                            <button type="button" ng-click="" class="btn btn-warning">
+                                                                    <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Bag</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            
+                                        </table>
+                            <hr class="colorgraph">
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                        <a ng-controller="mainController" ng-click="goTo('mybag')" class="btn btn-lg btn-primary btn-block"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Edit My Bag</a>
+                                    </div>
+                            </div>
+                            <br></br>
+                            <br></br>
+                        </fieldset>
+                    </form>
+                    
+                </div>
+            </div>		
+            </div>
+<br></br>

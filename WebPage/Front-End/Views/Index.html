@@ -2,8 +2,9 @@
 <html data-ng-app="mainModule">
   <head>
     <title>Gas Station Pharmacy</title>
-    <meta charset="utf-8" />
     
+    <!--Library includes-->
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="../library/angular.min.js"></script>
     <script src="../library/lodash.js"></script>
@@ -14,13 +15,42 @@
     <script src="../library/bootstrap.min.js"></script>    
     <script src="../library/canvasjs.min.js"></script>
     <script src='../library/api.js'></script>
-    <link rel="stylesheet" href="../CSS/index.css" />
+    <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+    <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+    <script src="https://www.amcharts.com/lib/3/pie.js"></script>
+    <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+    <!--Imports app designs -->
+    <link rel="stylesheet" href="../CSS/Shared/index.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <script src="../Scripts/script.js"></script>
+
+    <!--Imports app scripts -->
+    <script src="../Scripts/app.js"></script>
+    <script src="../Scripts/config.js"></script>
+    <script src="../Scripts/Services/directionService.js"></script>
+    <script src="../Scripts/Services/userService.js"></script>
+    <script src="../Scripts/Services/orderService.js"></script>
+    <script src="../Scripts/Services/storeService.js"></script>
+    <script src="../Scripts/Services/receipeService.js"></script>
+
+    <!--Imports client app scripts -->
+    <script src="../Scripts/Controllers/Client/mainController.js"></script>
+    <script src="../Scripts/Controllers/Client/userController.js"></script>
+    <script src="../Scripts/Controllers/Client/storeController.js"></script>
+    <script src="../Scripts/Controllers/Client/orderController.js"></script>
+    <script src="../Scripts/Controllers/Client/receipeController.js"></script>
     <script src="../Scripts/angular-recaptcha.min.js"></script>
-    <style>
-    
-  </style>
+
+    <!--Imports Admin app scripts -->
+    <script src="../Scripts/Controllers/Admin/contClientAdmin.js"></script>
+    <script src="../Scripts/Controllers/Admin/contEmplAdmin.js"></script>
+    <script src="../Scripts/Controllers/Admin/contMedAdmin.js"></script>
+    <script src="../Scripts/Controllers/Admin/contMedNuevAdmin.js"></script>
+    <script src="../Scripts/Controllers/Admin/contNuevRolAdmin.js"></script>
+    <script src="../Scripts/Controllers/Admin/contNuevSucAdmin.js"></script>
+    <script src="../Scripts/Controllers/Admin/contRolAdmin.js"></script>
+    <script src="../Scripts/Controllers/Admin/contSucAdmin.js"></script>
   </head>
 
   <body>
@@ -44,7 +74,10 @@
                 <a data-ng-click = "goTo('stores')">Stores</a>
               </li>
             <li ng-show="isActive()">
-              <a data-ng-click = "goTo('order')">My Orders</a>
+              <a data-ng-click = "goTo('allOrders')">My Orders</a>
+            </li>
+            <li ng-show="isActive()">
+              <a data-ng-click = "goTo('allForms')">My Forms</a>
             </li>
             <li>
               <a  data-ng-click = "goTo('prescription')">Contact Us</a>

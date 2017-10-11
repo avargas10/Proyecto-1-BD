@@ -1,0 +1,86 @@
+/* Credit to bootsnipp.com for the css for the color graph */
+.colorgraph {
+    height: 5px;
+    border-top: 0;
+    background: #c4e17f;
+    border-radius: 5px;
+    background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  }
+.points_table  {
+    width: 100%;
+	margin-top: 20px;
+	
+}
+.points_table thead {
+	width: 100%;
+}
+
+.points_table tbody {
+	height: 300px;
+	overflow-y: auto;
+	width: 100%;
+}
+
+.points_table thead tr{
+	width: 99%;
+}
+
+ .points_table tr{
+ 	width: 100%;
+ }
+
+.points_table thead, .points_table tbody, .points_table tr, .points_table td, .points_table th{
+	display: inline-block;
+}
+
+.points_table thead{
+	background: #4dda2d00;
+	color: rgb(140, 146, 141);
+}
+
+.points_table tbody td, .points_table thead > tr> th{
+	float: left;
+	border-bottom-width: 0;
+}
+
+.points_table>tbody>tr>td, .points_table>tbody>tr>th, .points_table>tfoot>tr>td, .points_table>tfoot>tr>th, .points_table>thead>tr>td, .points_table>thead>tr>th{
+	padding: 8px;
+	height: 90px;
+	text-align: center;
+	line-height: 32px;
+}
+
+.pLabel {
+	background: #09ee5ddc;
+	color: #2edb28a2;
+}
+
+.points_table_scrollbar{
+	height: 20%;
+	overflow-y: scroll;
+}
+
+.points_table_scrollbar::-webkit-scrollbar-track{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.9);
+	border-radius: 10px;
+	background-color: #444444;
+}
+
+.points_table_scrollbar::-webkit-scrollbar{
+	width: 1%;
+	min-width: 5px;
+	background-color: #F5F5F5;
+}
+
+.points_table_scrollbar::-webkit-scrollbar-thumb{
+	border-radius: 10px;
+	background-color: rgb(112, 115, 121);
+	background-image: -webkit-linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.4) 50%, transparent, transparent)
+}
+
+.media-heading a {
+    color: #28c428;
+}

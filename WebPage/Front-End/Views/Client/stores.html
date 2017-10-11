@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="../CSS/Client/stores.css" />
+<br></br>
+    <div class="clearfix"></div>
+    <section class="search-box" ng-controller="storeController" ng-init="getStores()">
+        <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5 listing-block">                 
+                <!--Card-->
+                <div class="card" ng-repeat="store in stores">
+                            <img class="img-responsive" src="http://www.farma-value.com/costarica/ciudades/_07_%20MORAVIA/_00_%20MORAVIA/imagenes/imagen2.jpg" alt="Card image cap">
+                        
+                            <!--Card content-->
+                            <div class="card-body">
+                                <!--Title-->
+                                <h4 class="card-title">{{store.Nombre}}</h4>
+                                <!--Text-->
+                                <p class="card-text">{{store.detalleDireccion}}</p>
+                                <button id="goToStore" type="button" ng-click="" class="btn btn-succes"><i class="fa fa-rocket" aria-hidden="true"></i> Go to Store</button>
+                                <button id="buyInStore" type="button" ng-click="setStore(store)" class="btn btn-succes" ng-controller="mainController" ng-show="isActive()"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Buy in this Store</button>
+                                <br></br>
+                                
+                            </div>
+                        
+                        </div>
+                        
+                        <!--/.Card-->
+            
+            </div>
+            <div class="col-md-7 map-box mx-0 px-0">
+             </div>
+    </section>
+  

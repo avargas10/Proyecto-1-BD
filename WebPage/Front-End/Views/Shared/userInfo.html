@@ -1,0 +1,112 @@
+<link rel="stylesheet" href="../CSS/Shared/register.css" />
+<div class="text-center" style="padding:50px 0" >
+	<div class="logo"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</div>
+	<!-- Main Form -->
+
+	      <div class="login-form-main-message"></div>
+	      <div class="main-login-form" ng-controller="mainController" >
+		
+	        <div class="login-group">
+				<div class="container">
+				  <table class="table">
+				    <thead>
+				      <tr>
+				        <th>Personal Information</th>
+				        <th>Account Information</th>
+				        <th>Adresss Information</th>
+				      </tr>
+				    </thead>
+				    <tbody>    
+				      <tr >
+				        <td class="primary">
+				        	<div class="form-group">
+				            <label for="reg_username" class="sr-only">Name</label>
+				            <input type="text" class="form-control" id="Name"   value=="{{getUser().Nombre}}" data-ng-model="name" >
+				          </div>
+				         
+				          <div class="form-group">
+				            <label for="reg_username" class="sr-only">Surname</label>
+				            <input type="text" class="form-control" id="Surname"  placeholder="{{getUser().pApellido}}" value="{{getUser().pApellido}}"  data-ng-model="surname" > 
+				          </div>
+				          
+				          
+				          <div class="form-group">
+				            <label for="reg_username" class="sr-only">Second Surname</label>
+				            <input type="text" class="form-control" id="sSurname"  value="{{getUser().sApellido}}" placeholder="{{getUser().sApellido}}" data-ng-model="sSurname" ></div>
+				            
+				            <div class="form-group">
+				            <label for="reg_username" class="sr-only">Identification</label>
+				            <input type="text" class="form-control" id="Identification" ng-disabled="true" placeholder="{{getUser().Cedula}}" value="{{getUser().Cedula}}" data-ng-model="id" >       
+				          </div>
+				          <div class="form-group">			            
+					              <i class="fa fa-calendar" aria-hidden="true"></i> Born
+					              <input type="datetime-local" ng-model="date" value="{{getUser().Nacimiento}}" name="dateUser" required><br>  
+				          </div>
+				          </td>
+				        <td class="primary">
+				        	  <div class="form-group">
+				        	  	<div class="input-group">
+							    <span class="input-group-addon" id="btnGroupAddon">@</span>
+							    <input type="text" class="form-control" value="{{getUser().Email}}" placeholder="{{getUser().Email}}" aria-label="Email" aria-describedby="btnGroupAddon" data-ng-model="email" >
+							  </div>
+							</div>
+				         
+				          <div class="form-group">
+				            <label for="reg_username" class="sr-only">Username</label>
+				            <input type="text" class="form-control" id="username" placeholder="{{getUser().Username}}" ng-disabled="true" name="reg_username" value="{{getUser().Username}}" data-ng-model="username" > 
+				          </div>
+				          
+				          
+				          <div class="form-group">
+				            <label for="reg_username" class="sr-only">Password</label>
+				            <input type="password" class="form-control" id="password" placeholder="{{getUser().Password}}" name="reg_username" value="{{getUser().Password}}" data-ng-model="password" ></div>
+				            
+				            <div class="form-group">
+				            <label for="reg_username" class="sr-only">Confirm Password</label>
+				            <input type="password" class="form-control" id="cPassword" placeholder="{{getUser().Password}}" name="reg_username" value="{{getUser().Password}}" data-ng-model="cPassword" ></div>
+				          </td>
+				          <td class="primary">
+				        	  <div class="form-group">
+										<label>State</label>
+										<select multiple class="form-control" id="sucursales"  >
+												<option ng-repeat="state in states" ng-click="UpdateCities(state.idProvincia)">{{state.Nombre}}</option>
+											</select>
+
+							</div>
+				         
+				          <div class="form-group">
+											<label>City</label>
+													<select multiple class="form-control" id="sucursales"  >
+															<option ng-repeat="city in cities" ng-click="UpdateDistricts(city.idCanton)">{{city.Nombre}}</option>
+														</select>
+
+							</div>
+				         
+				          
+				          
+				          <div class="form-group">
+										  <label for="exampleInputEmail1">District</label>
+												<select multiple class="form-control" id="sucursales"  >
+														<option ng-repeat="district in districts" ng-click="setDistrict(district.idDistrito)">{{district.Nombre}}</option>
+													</select>
+							</div>
+				         
+				            
+				            <div class="form-group">
+				            <label for="reg_username" class="sr-only">Address Description</label>
+				            <input type="text" class="form-control" id="dirSpec" name="reg_username" placeholder="Address Description" data-ng-model="dirSpec" ></div>
+				          </td>
+				      </tr>
+				      
+			
+				    </tbody>
+				  </table>
+				  <div>
+				  <button type="button"  data-ng-click="updateInfo(username, password, cPassword, name, surname, sSurname, id, dirSpec, date, email)" class="btn btn-large btn-info"> Sign Up</button>
+				</div>
+				</div>
+				</div>
+
+				
+	<!-- end:Main Form -->
+</div>

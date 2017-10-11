@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Account verification</title>
+<link rel="stylesheet" type="text/css" href="../CSS/Client/account.css">
+</head>
+<body ng-controller="userController">
+
+<h1>Account Verification</h1>
+<div class="form-group">
+    <label for="lg_username" class="sr-only"> User ID</label>
+    <input type="text" class="form-control"  placeholder= "ID" data-ng-model="identification">
+</div>
+<p>Press the button to complete your account verification:</p>
+<button class="btn btn-success" data-ng-click="verify(identification)">Verificate</button>
+<br></br>
+
+</body>
+</html>
