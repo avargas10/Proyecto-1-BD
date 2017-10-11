@@ -10,6 +10,7 @@ create table CLIENTE(
   Penalizacion INT,
   Direccion INT,
   Estado INT,
+  Telefono INT,
   PRIMARY KEY (Cedula),
 );
 

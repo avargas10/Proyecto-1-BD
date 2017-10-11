@@ -102,11 +102,11 @@ INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (1,
 INSERT INTO PRODUCTOXSUCURSAL(idSucursal,codProducto,Cantidad,Precio) VALUES (2,0,10,1200);
 
 
-INSERT INTO CLIENTE(Cedula,Nombre,pApellido,sApellido,Password,Username,Email,Nacimiento,Penalizacion, Direccion, Estado) VALUES (100020354,'Marvin','Fonseca','Fernandez','123','mfonseca','a@gmail.com','2000-09-10',0,1, 1);
-INSERT INTO CLIENTE(Cedula,Nombre,pApellido,sApellido,Password,Username,Email,Nacimiento,Penalizacion, Direccion, Estado) VALUES (113459876,'Manuel','Calderon','Arango','123','mcalderon','a@gmail.com','2001-10-10',0,2,1);
-INSERT INTO CLIENTE(Cedula,Nombre,pApellido,sApellido,Password,Username,Email,Nacimiento,Penalizacion, Direccion, Estado) VALUES (309990888,'Valeria','Artavia','Meneces','123','vartavia','a@gmail.com','1988-04-09',0,3,1);
-INSERT INTO CLIENTE(Cedula,Nombre,pApellido,sApellido,Password,Username,Email,Nacimiento,Penalizacion, Direccion, Estado) VALUES (234789465,'Felix','Meneces','Garzona','123','FMG','a@gmail.com','1999-03-21',0,4,1);
-INSERT INTO CLIENTE(Cedula,Nombre,pApellido,sApellido,Password,Username,Email,Nacimiento,Penalizacion, Direccion, Estado) VALUES (203940576,'Alejandra','Rivas','Vega','123','ARV','a@gmail.com','1976-01-11',0,5,1);
+INSERT INTO CLIENTE(Cedula,Nombre,pApellido,sApellido,Password,Username,Email,Nacimiento,Penalizacion, Direccion, Estado, Telefono) VALUES (100020354,'Marvin','Fonseca','Fernandez','123','mfonseca','a@gmail.com','2000-09-10',0,1, 1,8888888);
+INSERT INTO CLIENTE(Cedula,Nombre,pApellido,sApellido,Password,Username,Email,Nacimiento,Penalizacion, Direccion, Estado, Telefono) VALUES (113459876,'Manuel','Calderon','Arango','123','mcalderon','a@gmail.com','2001-10-10',0,2,1, 8888888);
+INSERT INTO CLIENTE(Cedula,Nombre,pApellido,sApellido,Password,Username,Email,Nacimiento,Penalizacion, Direccion, Estado, Telefono) VALUES (309990888,'Valeria','Artavia','Meneces','123','vartavia','a@gmail.com','1988-04-09',0,3,1, 8888888);
+INSERT INTO CLIENTE(Cedula,Nombre,pApellido,sApellido,Password,Username,Email,Nacimiento,Penalizacion, Direccion, Estado, Telefono) VALUES (234789465,'Felix','Meneces','Garzona','123','FMG','a@gmail.com','1999-03-21',0,4,1, 8888888);
+INSERT INTO CLIENTE(Cedula,Nombre,pApellido,sApellido,Password,Username,Email,Nacimiento,Penalizacion, Direccion, Estado, Telefono) VALUES (203940576,'Alejandra','Rivas','Vega','123','ARV','a@gmail.com','1976-01-11',0,5,1, 8888888);
 
 
 INSERT INTO PADECIMIENTOS( idUsuario, Fecha, Nombre, Descripcion) VALUES ( 100020354, '2017-09-20', 'Asma', 'me ahogue');
