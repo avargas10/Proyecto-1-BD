@@ -138,3 +138,8 @@ function newProd(){
         x.className = "show";
         setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
     }
+
+    function getIp(){
+      var ip = "172.18.192.132";
+      return ip;
+    }

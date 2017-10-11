@@ -18,7 +18,7 @@ function($scope,$http) {
       
 
       $scope.init = function(){
-        var url = 'http://localhost:58706/api/Productos';
+        var url = 'http://'+getIp()+':58706/api/Productos';
         $http.get(url).then(function(msg){
           client = msg.data;
           $scope.medList = client;

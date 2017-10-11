@@ -5,7 +5,7 @@ function ( $scope, $http, $location, $routeParams, userService, storeService) {
 
 
   $scope.getStores = function () {
-    var url = 'http://localhost:58706/api/Sucursal';
+    var url = 'http://'+getIp()+':58706/api/Sucursal';
     $http.get(url)
       .then(function successCallback(data) {
         console.log(data);
@@ -25,7 +25,7 @@ function ( $scope, $http, $location, $routeParams, userService, storeService) {
 
 
   $scope.getProducts = function () {
-    var url = 'http://localhost:58706/api/Productos?idSucursal=' + storeService.getStore().idSucursal;
+    var url = 'http://'+getIp()+':58706/api/Productos?idSucursal=' + storeService.getStore().idSucursal;
     $http.get(url)
     .then(function successCallback(data) {
       console.log(data);
