@@ -148,5 +148,26 @@ namespace RESTFUL_API.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
+
+        [HttpGet]
+        public IEnumerable<Dictionary<string, object>> getProductosReceta(int idRec)
+        {
+            using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT RECETAS.idReceta,RECETAS.idCliente,RECETAS.Imagen,RECETAS.Estado, RECETAS.idDoctor," +
+                    "DETALLERECETA.idMedicamento " +
+                     "FROM [DETALLERECETA] INNER JOIN [RECETAS] ON DETALLERECETA.idReceta = RECETAS.idReceta WHERE (((RECETAS.idReceta)=@id));", conn);
+                cmd.Parameters.AddWithValue("@id", idRec);
+                cmd.Connection = conn;
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    var r = serial.Serialize(reader);
+                    conn.Close();
+                    return r;
+                }
+
+            }
+        }
     }
 }

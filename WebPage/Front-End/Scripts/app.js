@@ -17,7 +17,8 @@ var openFile = function(event) {
     reader.readAsDataURL(input.files[0]);
  }
   
-function newEmploy(){
+
+ function newEmploy(){
   alert('Nuevo empleado');
   window.location.href="../Views/nuevEmpleado.html";
 }
