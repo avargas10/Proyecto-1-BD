@@ -63,7 +63,21 @@ angular.module("mainModule").controller("mainController", ["$scope", "$http", "$
         case 'gempleados':
           $location.path("/Admin/gempleados");
           break;
-
+        case 'groles':
+          $location.path("/Admin/groles");
+          break;
+        case 'gsucursales':
+          $location.path("/Admin/gsucursales");
+          break;
+        case 'nuevMed':
+          $location.path("/Admin/nuevMed");
+          break;
+        case 'nuevSuc':
+          $location.path("/Admin/nuevSuc");
+          break;
+        case 'nuevRol':
+          $location.path("/Admin/nuevRol");
+          break;
         case 'estadistica':
           $location.path("/Admin/estadistica");
           break;

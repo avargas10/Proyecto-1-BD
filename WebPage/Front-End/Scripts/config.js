@@ -25,7 +25,7 @@ angular.module("mainModule").config(function ( $routeProvider, $locationProvider
       when('/Admin/nuevCliente', { templateUrl: '../Views/Admin/nuevCliente.html', controller: 'userController' }).
       when('/Admin/nuevEmpleado', { templateUrl: '../Views/Admin/nuevEmpleado.html', controller: 'userController' }).
       when('/Admin/nuevMed', { templateUrl: '../Views/Admin/nuevMed.html', controller: 'userController' }).
-      when('/Admin/nuevoRol', { templateUrl: '../Views/Admin/nuevoRol.html', controller: 'userController' }).
+      when('/Admin/nuevRol', { templateUrl: '../Views/Admin/nuevRol.html', controller: 'userController' }).
       when('/Admin/nuevSuc', { templateUrl: '../Views/Admin/nuevSuc.html', controller: 'userController' }).
   //----------------------Main View------------------------------------------------------------
       otherwise({ redirectTo: '/Home' });
