@@ -18,7 +18,7 @@ function($scope,$http) {
       
 
       $scope.init = function(){
-        var url = 'http://192.168.43.110:58706/api/Productos';
+        var url = 'http://localhost:58706/api/Productos';
         $http.get(url).then(function(msg){
           client = msg.data;
           $scope.medList = client;
