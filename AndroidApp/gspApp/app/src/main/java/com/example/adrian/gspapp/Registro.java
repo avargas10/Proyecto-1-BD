@@ -25,7 +25,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class Registro extends AppCompatActivity {
-    EditText username, name, pass, pApellido, sApellido, cedula, nacimiento, email, direccionExacta;
+    EditText username, name, pass, pApellido, sApellido, cedula, nacimiento, email, direccionExacta, telefono;
     Button registro;
     Spinner provincia, canton, distrito;
     DatePickerDialog datePickerDialog;
@@ -46,6 +46,7 @@ public class Registro extends AppCompatActivity {
         pApellido = (EditText) findViewById(R.id.txtApellido1);
         sApellido = (EditText) findViewById(R.id.txtApellido2);
         cedula = (EditText) findViewById(R.id.txtCedula);
+        telefono=(EditText) findViewById(R.id.txtTelefono);
         registro = (Button) findViewById(R.id.btnSignup);
         nacimiento= (EditText)  findViewById(R.id.txtNacimiento);
         email = (EditText) findViewById(R.id.txtEmail);
@@ -94,12 +95,13 @@ public class Registro extends AppCompatActivity {
                     data.put("Password", pass.getText().toString());
                     data.put("Username", username.getText().toString());
                     data.put("Email", email.getText());
+                    data.put("Telefono", Integer.parseInt(telefono.getText().toString()));
                     data.put("Penalizacion", 0);
                     data.put("Nacimiento", nacimiento.getText());
                     data.put("Direccion", Connection.getInstance().registroDireccion(direccion).get("idDireccion"));
-                    if(Connection.getInstance().registroCliente(data)){
+                    if(Connection.getInstance().registroCliente(data)==2){
                         Connection.getInstance().ActivationEmail(Integer.parseInt(cedula.getText().toString()));
-                        Toast.makeText(getApplicationContext(),"Usuario registrado con exito", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"User Created!", Toast.LENGTH_SHORT).show();
                         username.setText("");
                         pass.setText("");
                         name.setText("");
@@ -109,8 +111,15 @@ public class Registro extends AppCompatActivity {
                         email.setText("");
                         nacimiento.setText("");
                         direccionExacta.setText("");
-                    }else{
-                        Toast.makeText(getApplicationContext(),"No se ha podido registrar el usuario, intentelo mas tarde.", Toast.LENGTH_LONG).show();
+                        telefono.setText("");
+                    }else if(Connection.getInstance().registroCliente(data)==10){
+                        Toast.makeText(getApplicationContext(),"Connection error!", Toast.LENGTH_LONG).show();
+                    }else if(Connection.getInstance().registroCliente(data)==0){
+                        Toast.makeText(getApplicationContext(),"This user already exist!", Toast.LENGTH_LONG).show();
+                    }else if(Connection.getInstance().registroCliente(data)==1){
+                        Toast.makeText(getApplicationContext(),"This identification already exist!", Toast.LENGTH_LONG).show();
+                    }else if(Connection.getInstance().registroCliente(data)==3){
+                        Toast.makeText(getApplicationContext(),"This username already exist!", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

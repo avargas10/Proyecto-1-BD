@@ -108,13 +108,13 @@ public class Connection {
 
     }
 
-    public boolean registroCliente(JSONObject data) {
+    public int registroCliente(JSONObject data) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         if(!isConnectedToServer(Config.ip)){
             openLogin();
 
-            return false;
+            return 10;
         }else {
             HttpURLConnection conn;
             try {
@@ -126,14 +126,21 @@ public class Connection {
                 OutputStream os = conn.getOutputStream();
                 os.write(data.toString().getBytes());
                 os.flush();
-                if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-                    return false;
-                } else {
-                    return true;
+                if (conn.getResponseCode() == HttpURLConnection.HTTP_CREATED) {
+                    return 2;
+                } else if(conn.getResponseCode()==HttpURLConnection.HTTP_CONFLICT) {
+                    return 0;
+                }else if(conn.getResponseCode()==HttpURLConnection.HTTP_BAD_REQUEST){
+                    return 1;
+                }
+                else if(conn.getResponseCode()==HttpURLConnection.HTTP_BAD_GATEWAY){
+                    return 3;
+                }else{
+                    return 10;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                return false;
+                return 10;
             }
         }
     }
@@ -269,6 +276,7 @@ public class Connection {
             return false;
         }
     }
+
     public void deletePedido(int id){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -426,6 +434,7 @@ public class Connection {
         }
 
     }
+
     public boolean ActivationEmail(int cedula){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -722,6 +731,7 @@ public class Connection {
             return null;
         }
     }
+
     public JSONObject getEstadobyId(int id){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -894,6 +904,7 @@ public class Connection {
             return null;
         }
     }
+
     public JSONObject getProductoSucursal(int idSuc, int idProd){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);

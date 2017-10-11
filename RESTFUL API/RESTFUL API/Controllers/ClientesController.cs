@@ -62,7 +62,7 @@ namespace RESTFUL_API.Controllers
         {
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("SELECT Cedula, Nombre, pApellido, sApellido, Password, Username, Email, Nacimiento, Penalizacion, Direccion FROM CLIENTE WHERE Username=@user", conn);
+                SqlCommand cmd = new SqlCommand("SELECT Cedula, Nombre, pApellido, sApellido, Password, Username, Email, Nacimiento, Penalizacion, Direccion, Estado, Telefono FROM CLIENTE WHERE Username=@user", conn);
                 cmd.Parameters.AddWithValue("@user", username);
                 cmd.Connection = conn;
                 conn.Open();
@@ -117,22 +117,75 @@ namespace RESTFUL_API.Controllers
             {
                 using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO CLIENTE(Cedula, Nombre, pApellido, sApellido, Password, Username, Email, Nacimiento, Penalizacion, Direccion, Estado) VALUES (@cedula,@nombre,@papellido,@sapellido,@password,@username,@email,@nacimiento,@penalizacion,@direccion,0)", conn);
-                    cmd.Parameters.AddWithValue("@cedula", cliente.Cedula);
-                    cmd.Parameters.AddWithValue("@nombre", cliente.Nombre);
-                    cmd.Parameters.AddWithValue("@papellido", cliente.pApellido);
-                    cmd.Parameters.AddWithValue("@sapellido", cliente.sApellido);
-                    cmd.Parameters.AddWithValue("@password", cliente.Password);
-                    cmd.Parameters.AddWithValue("@username", cliente.Username);
-                    cmd.Parameters.AddWithValue("@email", cliente.Email);
-                    cmd.Parameters.AddWithValue("@nacimiento", cliente.Nacimiento);
-                    cmd.Parameters.AddWithValue("@penalizacion", cliente.Penalizacion);
-                    cmd.Parameters.AddWithValue("@direccion", cliente.Direccion);
-                    cmd.Connection = conn;
+                    object user, cedula, estado;
+                    SqlCommand cmd1;
+                    
+                    cmd1 =new SqlCommand("SELECT Estado, Cedula, Username FROM CLIENTE WHERE Cedula=@id OR Username=@user");
+                    cmd1.Parameters.AddWithValue("@id", cliente.Cedula);
+                    cmd1.Parameters.AddWithValue("@user", cliente.Username);
+                    cmd1.Connection = conn;
                     conn.Open();
-                    cmd.ExecuteReader();
-                    var message = Request.CreateResponse(HttpStatusCode.Created, cliente);
-                    return message;
+                    var reader = cmd1.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        reader.Close();
+                        var data = serial.singleserialize(cmd1.ExecuteReader());
+                        data.TryGetValue("Estado", out estado);
+                       data.TryGetValue("Cedula", out cedula);
+                        data.TryGetValue("Username", out user);
+                        conn.Close();
+                        if ((Convert.ToString(user).Equals(cliente.Username)) &&(Convert.ToInt32(cedula)==cliente.Cedula) &&(Convert.ToInt32(estado)==1))
+                        {
+                            return Request.CreateResponse(HttpStatusCode.Conflict, "Ya se encuentra Registrado");
+                        }
+                        else if((Convert.ToString(user).Equals(cliente.Username)) && (Convert.ToInt32(cedula) == cliente.Cedula) && (Convert.ToInt32(estado) == 0))
+                        {
+                            cmd1= new SqlCommand("UPDATE  CLIENTE SET  Nombre=@nombre, pApellido=@papellido, sApellido=@sapellido, Password=@password, Email=@email, Nacimiento=@nacimiento, Telefono=@telefono, Estado=1 WHERE Cedula=@id", conn);
+                            cmd1.Parameters.AddWithValue("@id", cliente.Cedula);
+                            cmd1.Parameters.AddWithValue("@nombre", cliente.Nombre);
+                            cmd1.Parameters.AddWithValue("@papellido", cliente.pApellido);
+                            cmd1.Parameters.AddWithValue("@sapellido", cliente.sApellido);
+                            cmd1.Parameters.AddWithValue("@password", cliente.Password);
+                            cmd1.Parameters.AddWithValue("@email", cliente.Email);
+                            cmd1.Parameters.AddWithValue("@nacimiento", cliente.Nacimiento);
+                            cmd1.Parameters.AddWithValue("@telefono", cliente.Telefono);
+                            cmd1.Connection = conn;
+                            conn.Open();
+                            cmd1.ExecuteReader();
+                            var message = Request.CreateResponse(HttpStatusCode.Created, cliente);
+                            conn.Close();
+                            return message;
+                        }
+                        else if(Convert.ToInt32(cedula)==cliente.Cedula)
+                        {
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, "Existe Cedula");
+                        }else if (Convert.ToString(user).Equals(cliente.Username))
+                        {
+                            return Request.CreateResponse(HttpStatusCode.BadGateway, "Existe Username");
+                        }
+                        
+                        return null;
+                    }
+                    else
+                    {
+                        SqlCommand cmd = new SqlCommand("INSERT INTO CLIENTE(Cedula, Nombre, pApellido, sApellido, Password, Username, Email, Nacimiento, Penalizacion, Direccion, Estado, Telefono) VALUES (@cedula,@nombre,@papellido,@sapellido,@password,@username,@email,@nacimiento,@penalizacion,@direccion,0, @telefono)", conn);
+                        cmd.Parameters.AddWithValue("@cedula", cliente.Cedula);
+                        cmd.Parameters.AddWithValue("@nombre", cliente.Nombre);
+                        cmd.Parameters.AddWithValue("@papellido", cliente.pApellido);
+                        cmd.Parameters.AddWithValue("@sapellido", cliente.sApellido);
+                        cmd.Parameters.AddWithValue("@password", cliente.Password);
+                        cmd.Parameters.AddWithValue("@username", cliente.Username);
+                        cmd.Parameters.AddWithValue("@email", cliente.Email);
+                        cmd.Parameters.AddWithValue("@nacimiento", cliente.Nacimiento);
+                        cmd.Parameters.AddWithValue("@penalizacion", cliente.Penalizacion);
+                        cmd.Parameters.AddWithValue("@direccion", cliente.Direccion);
+                        cmd.Parameters.AddWithValue("@telefono", cliente.Telefono);
+                        cmd.Connection = conn;
+                        conn.Open();
+                        cmd.ExecuteReader();
+                        var message = Request.CreateResponse(HttpStatusCode.Created, cliente);
+                        return message;
+                    }
                 }
             }
             catch (Exception ex)
@@ -140,6 +193,7 @@ namespace RESTFUL_API.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
+
         [HttpPost]
         public HttpResponseMessage UpdateEstado([FromUri] string cedEstado)
         {
@@ -169,7 +223,7 @@ namespace RESTFUL_API.Controllers
             {
                 using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
                 {
-                    SqlCommand cmd = new SqlCommand("UPDATE  CLIENTE SET  Nombre=@nombre, pApellido=@papellido, sApellido=@sapellido, Password=@password, Username=@username, Email=@email, Nacimiento=@nacimiento WHERE Cedula=@id", conn);
+                    SqlCommand cmd = new SqlCommand("UPDATE  CLIENTE SET  Nombre=@nombre, pApellido=@papellido, sApellido=@sapellido, Password=@password, Username=@username, Email=@email, Nacimiento=@nacimiento, Telefono=@telefono WHERE Cedula=@id", conn);
                     cmd.Parameters.AddWithValue("@id", cliente.Cedula);
                     cmd.Parameters.AddWithValue("@nombre", cliente.Nombre);
                     cmd.Parameters.AddWithValue("@papellido", cliente.pApellido);
@@ -178,6 +232,7 @@ namespace RESTFUL_API.Controllers
                     cmd.Parameters.AddWithValue("@username", cliente.Username);
                     cmd.Parameters.AddWithValue("@email", cliente.Email);
                     cmd.Parameters.AddWithValue("@nacimiento", cliente.Nacimiento);
+                    cmd.Parameters.AddWithValue("@telefono", cliente.Telefono);
                     cmd.Connection = conn;
                     conn.Open();
                     cmd.ExecuteReader();

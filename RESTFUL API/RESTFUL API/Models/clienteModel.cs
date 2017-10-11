@@ -18,6 +18,7 @@ namespace RESTFUL_API.Models
         public Nullable<int> Penalizacion { get; set; }
         public Nullable<int> Direccion { get; set; }
         public int Estado { get; set; }
+        public int Telefono { get; set; }
 
     }
 }

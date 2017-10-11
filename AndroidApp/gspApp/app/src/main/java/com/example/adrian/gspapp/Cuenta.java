@@ -32,7 +32,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class Cuenta extends Fragment {
-    EditText cedula, nombre, sApellido, pApellido, password, username, email, nacimiento, direccion;
+    EditText cedula, nombre, sApellido, pApellido, password, username, email, nacimiento, direccion, telefono;
     Spinner provincia, canton, distrito;
     TextView delete;
     Button update;
@@ -59,6 +59,7 @@ public class Cuenta extends Fragment {
         distrito=getView().findViewById(R.id.editSpinnerD);
         delete=getView().findViewById(R.id.txtDeleteAccount);
         update=getView().findViewById(R.id.btnEditClient);
+        telefono =getView().findViewById(R.id.txtEditPhone);
 
         try {
             cedula.setText(Integer.toString(MainActivity.clientInfo.getInt("Cedula")));
@@ -70,6 +71,7 @@ public class Cuenta extends Fragment {
             nacimiento.setText(MainActivity.clientInfo.getString("Nacimiento").split("T")[0]);
             direccion.setText(MainActivity.clientDir.getString("Descripcion"));
             password.setText(MainActivity.clientInfo.getString("Password"));
+            telefono.setText(Integer.toString(MainActivity.clientInfo.getInt("Telefono")));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -123,6 +125,7 @@ public class Cuenta extends Fragment {
                                     data.put("Email", email.getText());
                                     data.put("Penalizacion", 0);
                                     data.put("Nacimiento", nacimiento.getText());
+                                    data.put("Telefono", Integer.parseInt(telefono.getText().toString()));
                                     data.put("Direccion", Connection.getInstance().updateDireccion(address).get("idDireccion"));
                                     if(Connection.getInstance().updateCliente(data)){
                                         Toast.makeText(getContext(),"Information update Success!", Toast.LENGTH_SHORT).show();
