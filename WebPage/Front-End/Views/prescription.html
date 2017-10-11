@@ -1,13 +1,13 @@
 <link rel="stylesheet" href="../CSS/prescription.css" />
-<div class="container" data-ng-controller="orderController">						
+<div class="container" data-ng-controller="receipeController" >						
             <div class="row" style="margin-top:20px">
                 <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
                     <form role="form">
                         <fieldset>
-                            <h2><i class="fa fa-file-text" aria-hidden="true"></i> Please Choose Products For Prescription</h2>
+                            <h2><i class="fa fa-file-text" aria-hidden="true"></i> Products For Your Form</h2>
                             <hr class="colorgraph">
                             <div class="form-group">
-                                    <table class="points_table" ng-controller="storeController" ng-init="getAllProducts()">
+                                    <table class="points_table" ng-init="getAllProducts()">
                                             <tbody class="points_table_scrollbar">
                                                 <tr class="pLabel" ng-repeat="product in AllProducts" ng-show="product.esMedicamento==1">
                                                     
@@ -18,10 +18,14 @@
                                                                         <h4 class="media-heading"><a><i class="fa fa-medkit" aria-hidden="true"></i> {{product.Nombre}}</a></h4>
                                                                     </div>
                                                                 </div></td>
-                                                                <td class="col-sm-1 col-md-1">
-                                                                <button type="button" ng-click="" class="btn btn-success">
-                                                                        <i class="fa fa-plus-circle" aria-hidden="true"></i> Add To Prescription </button>
+                                                                <td class="col-sm-1 col-md-1"  >
+                                                                <button type="button" id="button1" class="btn btn-success" ng-click="addProduct(product); " ng-disabled="alreadyInForm(product)">
+                                                                        <i class="fa fa-plus-circle" aria-hidden="true" ></i> Add</button>
                                                         </td>
+                                                        <td class="col-sm-4 col-md-4"  >
+                                                            <button type="button" id="button1" class="btn btn-danger" ng-click="deleteFromMeds(product); " ng-disabled="!alreadyInForm(product)">
+                                                                    <i class="fa fa-minus-circle" aria-hidden="true" ></i> Delete</button>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                             
@@ -30,17 +34,17 @@
                                        
                                 <div class="form-group">
                                         
-                                                  <label> Select an Image for this Order</label>
+                                                  <label> Select an Image for this Form</label>
                                                   <input type="file" class="form-control-file" id="inputFile" onchange="openFile(event)" >
-                                                <img id="output">
+                                                  <img class="img-responsive"  id="output" style="width: 250px; height: 120px;">
                                                 </div>
                             <hr class="colorgraph">
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <input type="submit"  data-ng-click="" class="btn btn-lg btn-success btn-block" value="Submit Prescription">
+                                    <input type="submit"   ng-click="addReceipe()"  class="btn btn-lg btn-success btn-block" value="Create Form">
                                 </div>
                                 <div class="col-xs-6 col-sm-6 col-md-6">
-                                        <a ng-controller="mainController" ng-click="goTo('mybag')" class="btn btn-lg btn-primary btn-block"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Edit My Bag</a>
+                                        <a  ng-click="goBack()" class="btn btn-lg btn-primary btn-block"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Edit My Bag</a>
                                     </div>
                             </div>
                             <br></br>

@@ -6,7 +6,8 @@
           <h4 ng-controller="mainController"><i class="fa fa-user-circle-o" aria-hidden="true"></i> {{getUser().Nombre}} {{getUser().pApellido}}</h4>
           <ul class="nav nav-pills nav-stacked" >
             <li><a  id='Store'><i class="fa fa-building" aria-hidden="true"></i> {{getStore().Nombre}}</a></li>
-            <li><a  id='Store'><i class="fa fa-shopping-basket" aria-hidden="true"></i> My Orders</a></li>
+            <li><a  id='Store' ng-click="goTo('allOrders')"><i class="fa fa-shopping-basket" aria-hidden="true" ></i> My Orders</a></li>
+            <li><a  id='Store' ng-click="goTo('allForms')"><i class="fa fa-book" aria-hidden="true"></i> My Forms</a></li>
             <li ng-controller="mainController" ng-click="goTo('mybag')"><a  id='Store'><i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping Cart</a></li>
             
           </ul>
