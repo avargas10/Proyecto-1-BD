@@ -42,7 +42,7 @@ public class Padecimientos extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        getActivity().setTitle("Padecimientos");
+        getActivity().setTitle("Conditions");
         fab=(FloatingActionButton)getView().findViewById(R.id.fabButton);
         lista=(ListView) getView().findViewById(R.id.listaPad);
 

@@ -116,21 +116,73 @@ namespace RESTFUL_API.Controllers
             {
                 using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO EMPLEADO(idEmpleado, Nombre, pApellido, sApellido, Password, Username, Email, Nacimiento, Direccion) VALUES (@cedula,@nombre,@papellido,@sapellido,@password,@username,@email,@nacimiento,@direccion)", conn);
-                    cmd.Parameters.AddWithValue("@cedula", empleado.idEmpleado);
-                    cmd.Parameters.AddWithValue("@nombre", empleado.Nombre);
-                    cmd.Parameters.AddWithValue("@papellido", empleado.pApellido);
-                    cmd.Parameters.AddWithValue("@sapellido", empleado.sApellido);
-                    cmd.Parameters.AddWithValue("@password", empleado.Password);
-                    cmd.Parameters.AddWithValue("@username", empleado.Username);
-                    cmd.Parameters.AddWithValue("@email", empleado.Email);
-                    cmd.Parameters.AddWithValue("@nacimiento", empleado.Nacimiento);
-                    cmd.Parameters.AddWithValue("@direccion", empleado.Direccion);
-                    cmd.Connection = conn;
+                    object user, cedula, estado;
+                    SqlCommand cmd1;
+
+                    cmd1 = new SqlCommand("SELECT Estado, Cedula, Username FROM EMPLEADO WHERE idEmpleado=@id OR Username=@user");
+                    cmd1.Parameters.AddWithValue("@id", empleado.idEmpleado);
+                    cmd1.Parameters.AddWithValue("@user", empleado.Username);
+                    cmd1.Connection = conn;
                     conn.Open();
-                    cmd.ExecuteReader();
-                    var message = Request.CreateResponse(HttpStatusCode.Created, empleado);
-                    return message;
+                    var reader = cmd1.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        reader.Close();
+                        var data = serial.singleserialize(cmd1.ExecuteReader());
+                        data.TryGetValue("Estado", out estado);
+                        data.TryGetValue("idEmpleado", out cedula);
+                        data.TryGetValue("Username", out user);
+                        conn.Close();
+                        if ((Convert.ToString(user).Equals(empleado.Username)) && (Convert.ToInt32(cedula) == empleado.idEmpleado) && (Convert.ToInt32(estado) == 1))
+                        {
+                            return Request.CreateResponse(HttpStatusCode.Conflict, "This user already exist!");
+                        }
+                        else if ((Convert.ToString(user).Equals(empleado.Username)) && (Convert.ToInt32(cedula) == empleado.idEmpleado) && (Convert.ToInt32(estado) == 0))
+                        {
+                            cmd1 = new SqlCommand("UPDATE EMPLEADO SET  Nombre=@nombre, pApellido=@papellido, sApellido=@sapellido, Password=@password, Email=@email, Nacimiento=@nacimiento WHERE idEmpleado=@id", conn);
+                            cmd1.Parameters.AddWithValue("@id", empleado.idEmpleado);
+                            cmd1.Parameters.AddWithValue("@nombre", empleado.Nombre);
+                            cmd1.Parameters.AddWithValue("@papellido", empleado.pApellido);
+                            cmd1.Parameters.AddWithValue("@sapellido", empleado.sApellido);
+                            cmd1.Parameters.AddWithValue("@password", empleado.Password);
+                            cmd1.Parameters.AddWithValue("@email", empleado.Email);
+                            cmd1.Parameters.AddWithValue("@nacimiento", empleado.Nacimiento);
+                            cmd1.Connection = conn;
+                            conn.Open();
+                            cmd1.ExecuteReader();
+                            var message = Request.CreateResponse(HttpStatusCode.Created, empleado);
+                            conn.Close();
+                            return message;
+                        }
+                        else if (Convert.ToInt32(cedula) == empleado.idEmpleado)
+                        {
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, "Identification already exist!");
+                        }
+                        else if (Convert.ToString(user).Equals(empleado.Username))
+                        {
+                            return Request.CreateResponse(HttpStatusCode.BadGateway, "Username already exist!");
+                        }
+
+                        return null;
+                    }
+                    else
+                    {
+                        SqlCommand cmd = new SqlCommand("INSERT INTO EMPLEADO(idEmpleado, Nombre, pApellido, sApellido, Password, Username, Email, Nacimiento, Direccion ) VALUES (@cedula,@nombre,@papellido,@sapellido,@password,@username,@email,@nacimiento,@direccion)", conn);
+                        cmd.Parameters.AddWithValue("@cedula", empleado.idEmpleado);
+                        cmd.Parameters.AddWithValue("@nombre", empleado.Nombre);
+                        cmd.Parameters.AddWithValue("@papellido", empleado.pApellido);
+                        cmd.Parameters.AddWithValue("@sapellido", empleado.sApellido);
+                        cmd.Parameters.AddWithValue("@password", empleado.Password);
+                        cmd.Parameters.AddWithValue("@username", empleado.Username);
+                        cmd.Parameters.AddWithValue("@email", empleado.Email);
+                        cmd.Parameters.AddWithValue("@nacimiento", empleado.Nacimiento);
+                        cmd.Parameters.AddWithValue("@direccion", empleado.Direccion);
+                        cmd.Connection = conn;
+                        conn.Open();
+                        cmd.ExecuteReader();
+                        var message = Request.CreateResponse(HttpStatusCode.Created, empleado);
+                        return message;
+                    }
                 }
             }
             catch (Exception ex)

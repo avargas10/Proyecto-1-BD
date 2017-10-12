@@ -17,7 +17,7 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
       if(!storeService.isEmpty()){
       if(needPres()){
         if(!isEmpty(globalImage)){
-          sendData.Imagen= globalImage.split(",")[1]
+          sendData.Imagen= globalImage.split(",")[1];
           $scope.postHttp(url,sendData,(data)=>{
               addOrderDetail(data);
               globalImage="";
@@ -26,6 +26,7 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
         else{alert("Prescription Image is require");}
       }
       else{
+        sendData.Imagen= globalImage.split(",")[1];
         $scope.postHttp(url,sendData,(data)=>{
           addOrderDetail(data);
           globalImage="";
@@ -52,6 +53,8 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
         })
       }
       storeService.cleanBag();
+      $location.path("/allOrders");
+
     }
 
     function isEmpty(str) {
@@ -83,12 +86,31 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
         var url = 'http://'+getIp()+':58706/api/Productos?idPed='+id;
         $http.get(url)
           .then(function successCallback(data) {
-            console.log(data);
-            $scope.currentOrder= data;
+            console.log(data.data);
+            orderService.setOrder(data.data);
             $location.path("/order");
           },
           function errorCallback(response) {
             alert(response);
           });
       };
+
+      $scope.delete=function(id){
+        var url = 'http://'+getIp()+':58706/api/DetallePedido?idPedido='+id;
+        $http.put(url)
+        .then(
+            function(response){
+              // success callback
+              console.log("erase");
+            }, 
+            function(response){
+              // failure callback
+            }
+         );
+      }
+
+      $scope.getOrder=function(){$scope.tempOrder =  orderService.getOrder();
+      }
+
+
   }]);

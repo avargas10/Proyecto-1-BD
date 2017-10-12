@@ -32,12 +32,11 @@ public class ShoppingCart extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setTitle("Shopping Cart");
         setContentView(R.layout.activity_shopping_cart);
-        ShoppingList = (ListView)findViewById(R.id.Shoppinglist);
+        ShoppingList = (ListView) findViewById(R.id.Shoppinglist);
         ShoppingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
                 Config.allProducts.remove(position);
                 Config.allimg.remove(position);
                 Config.precios.remove(position);
@@ -60,7 +59,7 @@ public class ShoppingCart extends AppCompatActivity {
     private void getProducts() throws JSONException {
 
         adapter = new
-                CustomList(this, Config.allProducts, Config.allimg,Config.prescription,Config.DELETE,Config.precios);
+                CustomList(this, Config.allProducts, Config.allimg, Config.prescription, Config.DELETE, Config.precios);
         ShoppingList.setAdapter(adapter);
 
     }

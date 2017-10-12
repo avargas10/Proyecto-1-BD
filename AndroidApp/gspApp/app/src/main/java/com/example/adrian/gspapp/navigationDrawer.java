@@ -49,7 +49,8 @@ public class navigationDrawer extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        displaySelectedScreen(2131558578);
+        displaySelectedScreen(2131624200);
+
     }
 
     @Override

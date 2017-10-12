@@ -39,14 +39,28 @@ namespace RESTFUL_API.Controllers
             {
                 using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO ROLES(Nombre,Descripcion) VALUES (@nombre,@descripcion)", conn);
-                    cmd.Parameters.AddWithValue("@nombre", rol.Nombre);
-                    cmd.Parameters.AddWithValue("@descripcion", rol.Descripcion);
-                    cmd.Connection = conn;
+                    SqlCommand cmd1 = new SqlCommand("SELECT Nombre FROM ROLES WHERE Nombre=@nombre");
+                    cmd1.Parameters.AddWithValue("@nombre", rol.Nombre);
+                    cmd1.Connection = conn;
                     conn.Open();
-                    cmd.ExecuteReader();
-                    var message = Request.CreateResponse(HttpStatusCode.Created, rol);
-                    return message;
+                    var reader = cmd1.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        conn.Close();
+                        return Request.CreateResponse(HttpStatusCode.Conflict, "That rol name already exist!");
+                    }
+                    else
+                    {
+                        conn.Close();
+                        SqlCommand cmd = new SqlCommand("INSERT INTO ROLES(Nombre,Descripcion) VALUES (@nombre,@descripcion)", conn);
+                        cmd.Parameters.AddWithValue("@nombre", rol.Nombre);
+                        cmd.Parameters.AddWithValue("@descripcion", rol.Descripcion);
+                        cmd.Connection = conn;
+                        conn.Open();
+                        cmd.ExecuteReader();
+                        var message = Request.CreateResponse(HttpStatusCode.Created, rol);
+                        return message;
+                    }
                 }
             }
             catch (Exception ex)

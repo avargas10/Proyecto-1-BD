@@ -81,6 +81,9 @@ angular.module("mainModule").controller("mainController", ["$scope", "$http", "$
         case 'estadistica':
           $location.path("/Admin/estadistica");
           break;
+        case 'newOrder':
+          $location.path("/newOrder");
+          break;
         default:
       }
     };

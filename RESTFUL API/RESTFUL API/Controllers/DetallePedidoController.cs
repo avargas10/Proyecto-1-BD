@@ -69,7 +69,7 @@ namespace RESTFUL_API.Controllers
                     SqlCommand cmd = new SqlCommand("INSERT INTO DETALLEPEDIDO(idProducto,idPedido,Cantidad) VALUES (@producto,@pedido,@cantidad)", conn);
                     cmd.Parameters.AddWithValue("@producto", pedido.idProducto);
                     cmd.Parameters.AddWithValue("@pedido", pedido.idPedido);
-                    cmd.Parameters.AddWithValue("@cantidad", pedido.idCantidad);
+                    cmd.Parameters.AddWithValue("@cantidad", pedido.Cantidad);
                     cmd.Connection = conn;
                     conn.Open();
                     cmd.ExecuteReader();
@@ -107,6 +107,30 @@ namespace RESTFUL_API.Controllers
             }
 
 
+        }
+
+        [HttpPut]
+        public HttpResponseMessage updateDetalle(DetallePedidoModel detalle)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UPDATE DETALLEPEDIDO SET Cantidad=@cantidad WHERE idPedido=@id AND idProducto=@producto", conn);
+                    cmd.Parameters.AddWithValue("@id", detalle.idPedido);
+                    cmd.Parameters.AddWithValue("@producto", detalle.idProducto);
+                    cmd.Parameters.AddWithValue("@cantidad", detalle.Cantidad);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    cmd.ExecuteReader();
+                    var message = Request.CreateResponse(HttpStatusCode.Accepted, detalle);
+                    conn.Close();
+                    return message;
+                }
+                }catch(Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Error");
+            }
         }
     }
 }

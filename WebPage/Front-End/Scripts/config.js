@@ -11,6 +11,7 @@ angular.module("mainModule").config(function ( $routeProvider, $locationProvider
       when('/storeProducts', { templateUrl: '../Views/Client/storeProducts.html', controller: 'storeController' }).
       when('/myBag', { templateUrl: '../Views/Client/myBag.html', controller: 'storeController' }).
       when('/order', { templateUrl: '../Views/Client/order.html', controller: 'orderController' }).
+      when('/newOrder', { templateUrl: '../Views/Client/newOrder.html', controller: 'orderController' }).
       when('/allOrders', { templateUrl: '../Views/Client/allOrders.html', controller: 'orderController' }).
       when('/accountVer', { templateUrl: '../Views/Client/account.html', controller: 'userController' }).
       when('/prescription', { templateUrl: '../Views/Client/prescription.html', controller: 'receipeController' }).

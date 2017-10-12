@@ -4,10 +4,10 @@
     <section class="search-box" ng-controller="storeController" ng-init="getStores()">
         <div class="container-fluid">
         <div class="row">
-            <div class="col-md-5 listing-block">                 
+            <div class="col listing-block">                 
                 <!--Card-->
                 <div class="card" ng-repeat="store in stores">
-                            <img class="img-responsive" src="http://www.farma-value.com/costarica/ciudades/_07_%20MORAVIA/_00_%20MORAVIA/imagenes/imagen2.jpg" alt="Card image cap">
+                            <img class="img-responsive" src="data:image/jpg;base64,{{store.Imagen}}" alt="Card image cap">
                         
                             <!--Card content-->
                             <div class="card-body">

@@ -124,7 +124,7 @@ var openFile = function(event) {
     }
 
     function getIp(){
-      //var ipPato = "172.18.192.132";
-      var ipVargas = "172.18.211.139";
+      var ipPato = "192.168.1.68";
+      var ipVargas = "localhost";
       return ipVargas;
     }

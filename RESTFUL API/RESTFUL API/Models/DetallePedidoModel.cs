@@ -9,6 +9,6 @@ namespace RESTFUL_API.Models
     {
         public Nullable<int> idProducto { get; set; }
         public Nullable<int> idPedido { get; set; }
-        public Nullable<int> idCantidad { get; set; }
+        public Nullable<int> Cantidad { get; set; }
     }
 }

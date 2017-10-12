@@ -39,6 +39,7 @@ public class EditPadecimientos extends AppCompatActivity {
         fecha=(EditText) findViewById(R.id.txtUpdateFechaPad);
         descrip=(EditText) findViewById(R.id.txtUpdateDescripPad);
         addPad=(Button) findViewById(R.id.btnUpdatePad);
+        getSupportActionBar().setTitle("Edit Condition");
 
         addPad.setOnClickListener(new View.OnClickListener() {
             @Override

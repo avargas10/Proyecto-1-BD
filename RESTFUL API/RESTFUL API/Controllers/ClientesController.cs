@@ -136,7 +136,7 @@ namespace RESTFUL_API.Controllers
                         conn.Close();
                         if ((Convert.ToString(user).Equals(cliente.Username)) &&(Convert.ToInt32(cedula)==cliente.Cedula) &&(Convert.ToInt32(estado)==1))
                         {
-                            return Request.CreateResponse(HttpStatusCode.Conflict, "Ya se encuentra Registrado");
+                            return Request.CreateResponse(HttpStatusCode.Conflict, "This user already exist!");
                         }
                         else if((Convert.ToString(user).Equals(cliente.Username)) && (Convert.ToInt32(cedula) == cliente.Cedula) && (Convert.ToInt32(estado) == 0))
                         {
@@ -158,10 +158,10 @@ namespace RESTFUL_API.Controllers
                         }
                         else if(Convert.ToInt32(cedula)==cliente.Cedula)
                         {
-                            return Request.CreateResponse(HttpStatusCode.BadRequest, "Existe Cedula");
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, "Identification already exist!");
                         }else if (Convert.ToString(user).Equals(cliente.Username))
                         {
-                            return Request.CreateResponse(HttpStatusCode.BadGateway, "Existe Username");
+                            return Request.CreateResponse(HttpStatusCode.BadGateway, "Username already exist!");
                         }
                         
                         return null;

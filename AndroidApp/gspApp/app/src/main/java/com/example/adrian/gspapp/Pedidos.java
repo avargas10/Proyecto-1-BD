@@ -48,13 +48,13 @@ import java.util.List;
 public class Pedidos extends Fragment {
 
     JSONArray dataProducts;
-    ListView list,prescriptions;
+    ListView list, prescriptions;
     DatePickerDialog datePickerDialog;
     TimePickerDialog timePickerDialog;
     EditText recojo;
     FloatingActionButton btncart;
     Button submit;
-    private JSONArray dataPrescription,dataSucursales,dataPxS;
+    private JSONArray dataPrescription, dataSucursales, dataPxS;
     private boolean reqpres = false;
     private static final int CAMERA_REQUEST = 1888;
     AlertDialog.Builder builder;
@@ -66,7 +66,7 @@ public class Pedidos extends Fragment {
     static List<Integer> idproducto;
     static ArrayList<String> unavailable;
     ArrayList<Integer> allrelation;
-    String encodedprescription=null;
+    String encodedprescription = null;
     static int sucursal = 0;
     EditText fecha;
     EditText telefono;
@@ -76,14 +76,14 @@ public class Pedidos extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        getActivity().setTitle("Orders");
         list = (ListView) getView().findViewById(R.id.list);
         prescriptions = (ListView) getView().findViewById(R.id.listaPrescriptions);
         recojo = (EditText) getView().findViewById(R.id.FechaRecojo);
         submit = (Button) getView().findViewById(R.id.Submit);
-        fecha = (EditText)getView().findViewById(R.id.FechaRecojo);
-        telefono  = (EditText)getView().findViewById(R.id.Telefono);
-        btncart = (FloatingActionButton)getView().findViewById(R.id.ShoppingCart);
-
+        fecha = (EditText) getView().findViewById(R.id.FechaRecojo);
+        telefono = (EditText) getView().findViewById(R.id.Telefono);
+        btncart = (FloatingActionButton) getView().findViewById(R.id.ShoppingCart);
         final AlertDialog.Builder buildersuc = new AlertDialog.Builder(getContext());
         buildersuc.setMessage("Select the store where you want to buy to continue")
                 .setTitle("Store Select");
@@ -146,7 +146,7 @@ public class Pedidos extends Fragment {
                 Config.idproducto.add(idproducto.get(position));
                 Config.cantidad.add(cant);
 
-                Toast.makeText(getContext(),"Added to cart",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Added to cart", Toast.LENGTH_SHORT).show();
 
 
             }
@@ -154,8 +154,8 @@ public class Pedidos extends Fragment {
         prescriptions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            JSONArray products = Connection.getInstance().getProductos(Recetasbyid.get(position));
-                for(int i = 0 ; i < products.length(); i++){
+                JSONArray products = Connection.getInstance().getProductos(Recetasbyid.get(position));
+                for (int i = 0; i < products.length(); i++) {
                     try {
                         JSONObject object = products.getJSONObject(i);
                         JSONObject prod = Connection.getInstance().getProductobyId(object.getInt("idMedicamento"));
@@ -166,28 +166,27 @@ public class Pedidos extends Fragment {
                         Bitmap selectedimg = Bitmap.createBitmap(imgview.getDrawingCache());
                         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                         selectedimg.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                        byte[] byteArray = byteArrayOutputStream .toByteArray();
+                        byte[] byteArray = byteArrayOutputStream.toByteArray();
                         encodedprescription = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
                         byte[] decodedString = Base64.decode(prod.getString("Image"), Base64.DEFAULT);
                         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                         Config.allimg.add(decodedByte);
                         try {
-                            JSONObject prodsuc = Connection.getInstance().getProductoSucursal(sucursal,object.getInt("idMedicamento"));
+                            JSONObject prodsuc = Connection.getInstance().getProductoSucursal(sucursal, object.getInt("idMedicamento"));
                             Config.precios.add(prodsuc.getInt("Precio"));
-                        }
-                        catch (Exception e){
+                        } catch (Exception e) {
                             Config.precios.add(0);
                         }
                         Config.prescription.add("PRESCRIPTED");
                         Config.idproducto.add(object.getInt("idMedicamento"));
                         Config.cantidad.add(1);
                     } catch (JSONException e) {
-                        Log.e("falla","operation incomplete");
+                        Log.e("falla", "operation incomplete");
                         e.printStackTrace();
                     }
                 }
-                Toast.makeText(getContext(),"Added to cart",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Added to cart", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -205,17 +204,14 @@ public class Pedidos extends Fragment {
                             @Override
                             public void onTimeSet(TimePicker timePicker, int i, int i1) {
                                 String txt = recojo.getText().toString();
-                                if(String.valueOf(i).length()==1 && String.valueOf(i1).length()==1){
-                                    recojo.setText(txt+"T0"+String.valueOf(i)+":0"+String.valueOf(i1)+":"+"00");
-                                }
-                                else if(String.valueOf(i).length()==1 && String.valueOf(i1).length()==2){
-                                    recojo.setText(txt+"T0"+String.valueOf(i)+":"+String.valueOf(i1)+":"+"00");
-                                }
-                                else if(String.valueOf(i).length()==2 && String.valueOf(i1).length()==1){
-                                    recojo.setText(txt+"T"+String.valueOf(i)+":0"+String.valueOf(i1)+":"+"00");
-                                }
-                                else{
-                                    recojo.setText(txt+"T"+String.valueOf(i)+":"+String.valueOf(i1)+":"+"00");
+                                if (String.valueOf(i).length() == 1 && String.valueOf(i1).length() == 1) {
+                                    recojo.setText(txt + "T0" + String.valueOf(i) + ":0" + String.valueOf(i1) + ":" + "00");
+                                } else if (String.valueOf(i).length() == 1 && String.valueOf(i1).length() == 2) {
+                                    recojo.setText(txt + "T0" + String.valueOf(i) + ":" + String.valueOf(i1) + ":" + "00");
+                                } else if (String.valueOf(i).length() == 2 && String.valueOf(i1).length() == 1) {
+                                    recojo.setText(txt + "T" + String.valueOf(i) + ":0" + String.valueOf(i1) + ":" + "00");
+                                } else {
+                                    recojo.setText(txt + "T" + String.valueOf(i) + ":" + String.valueOf(i1) + ":" + "00");
                                 }
 
                             }
@@ -236,7 +232,7 @@ public class Pedidos extends Fragment {
         btncart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(),ShoppingCart.class));
+                startActivity(new Intent(getContext(), ShoppingCart.class));
             }
         });
         submit.setOnClickListener(new View.OnClickListener() {
@@ -244,13 +240,13 @@ public class Pedidos extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if(RequirePrescription()){
+                if (RequirePrescription()) {
                     builder = new AlertDialog.Builder(getContext());
                     builder.setMessage("You need to enter a prescription to continue")
                             .setTitle("Prescription Request");
                     builder.setPositiveButton("SEND",
                             new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,int which) {
+                                public void onClick(DialogInterface dialog, int which) {
                                     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                                     if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
                                         startActivityForResult(takePictureIntent, CAMERA_REQUEST);
@@ -267,13 +263,11 @@ public class Pedidos extends Fragment {
                             });
                     AlertDialog dialog = builder.create();
                     dialog.show();
-                }
-                else{
+                } else {
                     submitresult();
                 }
             }
         });
-        getActivity().setTitle("Pedidos");
         try {
             getPrescription();
         } catch (JSONException e) {
@@ -283,19 +277,17 @@ public class Pedidos extends Fragment {
     }
 
     private void submitresult() {
-        if(!Config.allProducts.isEmpty()) {
+        if (!Config.allProducts.isEmpty()) {
             try {
-                if(IsProductAvaible()) {
-                    if(telefono.getText().toString().isEmpty() || fecha.getText().toString().isEmpty()){
+                if (IsProductAvaible()) {
+                    if (telefono.getText().toString().isEmpty() || fecha.getText().toString().isEmpty()) {
                         Toast.makeText(getContext(), "Please fill all the blank spaces", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
+                    } else {
                         regPedido();
                         regDetalle();
                         cleanVariables();
                     }
-                }
-                else{
+                } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setMessage("One or more products could not be found in the store you chose")
                             .setTitle("Error Finding products");
@@ -324,51 +316,53 @@ public class Pedidos extends Fragment {
                 Toast.makeText(getContext(), "Error", Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             }
-        }
-        else{
+        } else {
             Toast.makeText(getContext(), "Shopping Cart is empty", Toast.LENGTH_LONG).show();
         }
     }
 
     private void regDetalle() {
-        try{
-            for(int i = 0; i < Config.idproducto.size() ; i++) {
+        try {
+            for (int i = 0; i < Config.idproducto.size(); i++) {
                 JSONObject pad = new JSONObject();
                 pad.put("idProducto", Config.idproducto.get(i));
                 pad.put("idPedido", numpedido);
-                pad.put("idCantidad", Config.cantidad.get(i));
+                pad.put("Cantidad", Config.cantidad.get(i));
                 Connection.getInstance().regDetalle(pad);
             }
-                Toast.makeText(getContext(), "Detalle Agregado Correctamente", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Detalle Agregado Correctamente", Toast.LENGTH_LONG).show();
 
 
-        }catch(Exception e){
-            Toast.makeText(getContext(),"Error al agregar detalle", Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Error al agregar detalle", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
     }
 
     private void regPedido() {
-        try{
-            JSONObject pad= new JSONObject();
+        try {
+            JSONObject pad = new JSONObject();
             pad.put("sucursalRecojo", sucursal);
             pad.put("idCliente", Config.ClientLogged.get("Cedula"));
             pad.put("horaRecojo", fecha.getText());
             pad.put("Telefono", telefono.getText());
-            if(encodedprescription == null){ pad.put("Imagen", "");}
-            else{pad.put("Imagen", encodedprescription);}
+            if (encodedprescription == null) {
+                pad.put("Imagen", "");
+            } else {
+                pad.put("Imagen", encodedprescription);
+            }
             pad.put("Estado", 1);
-            numpedido =Connection.getInstance().regPedido(pad);
+            numpedido = Connection.getInstance().regPedido(pad);
 
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private boolean RequirePrescription() {
-        for(int i = 0 ; i < Config.prescription.size() ; i++){
-            if(Config.prescription.get(i).equalsIgnoreCase("Require prescription")){
+        for (int i = 0; i < Config.prescription.size(); i++) {
+            if (Config.prescription.get(i).equalsIgnoreCase("Require prescription")) {
                 return true;
             }
         }
@@ -381,10 +375,10 @@ public class Pedidos extends Fragment {
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             photo.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-            byte[] byteArray = byteArrayOutputStream .toByteArray();
+            byte[] byteArray = byteArrayOutputStream.toByteArray();
 
             encodedprescription = Base64.encodeToString(byteArray, Base64.DEFAULT);
-            if(encodedprescription != null) {
+            if (encodedprescription != null) {
                 submitresult();
             }
         }
@@ -396,7 +390,7 @@ public class Pedidos extends Fragment {
         return inflater.inflate(R.layout.activity_pedidos, container, false);
     }
 
-    Integer[] imgid={
+    Integer[] imgid = {
     };
 
     private void getProducts() throws JSONException {
@@ -408,32 +402,32 @@ public class Pedidos extends Fragment {
         precios = new ArrayList<>();
         idproducto = new ArrayList<>();
 
-        for(int x = 0 ; x < dataProducts.length();x++){
-            JSONObject objeto= (JSONObject) dataProducts.get(x);
+        for (int x = 0; x < dataProducts.length(); x++) {
+            JSONObject objeto = (JSONObject) dataProducts.get(x);
             allrelation.add(objeto.getInt("codProducto"));
             precios.add(objeto.getInt("Precio"));
         }
-        for(int i = 0; i < allrelation.size() ; i++){
+        for (int i = 0; i < allrelation.size(); i++) {
             JSONObject objeto = Connection.getInstance().getProductobyId(allrelation.get(i));
             allProducts.add(objeto.getString("Nombre"));
             byte[] decodedString = Base64.decode(objeto.getString("Image"), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             allimg.add(decodedByte);
             idproducto.add(objeto.getInt("idProducto"));
-            if(objeto.getInt("reqPrescripcion") == 1){
+            if (objeto.getInt("reqPrescripcion") == 1) {
                 prescription.add("Require prescription");
-            }
-            else{
+            } else {
                 prescription.add("");
             }
         }
 
         CustomList adapter = new
-                CustomList((Activity) this.getContext(), allProducts, allimg, prescription,Config.ADD,precios);
-        list=(ListView)getView().findViewById(R.id.list);
+                CustomList((Activity) this.getContext(), allProducts, allimg, prescription, Config.ADD, precios);
+        list = (ListView) getView().findViewById(R.id.list);
         list.setAdapter(adapter);
 
     }
+
     private void getPrescription() throws JSONException {
         dataPrescription = Connection.getInstance().getRecetas(MainActivity.clientInfo.getInt("Cedula"));
         Recetasbyid = new ArrayList<>();
@@ -443,7 +437,7 @@ public class Pedidos extends Fragment {
         ArrayList<Integer> cedula = new ArrayList<>();
 
 
-        for(int i = 0; i < dataPrescription.length() ; i++){
+        for (int i = 0; i < dataPrescription.length(); i++) {
             JSONObject objeto = dataPrescription.getJSONObject(i);
             idReceta.add("Receta #" + objeto.getString("idReceta"));
             Recetasbyid.add(objeto.getInt("idReceta"));
@@ -455,23 +449,25 @@ public class Pedidos extends Fragment {
         }
 
         CustomList adapter = new
-                CustomList((Activity) this.getContext(), idReceta, presimg, idDoctor,Config.DELETE,cedula);
+                CustomList((Activity) this.getContext(), idReceta, presimg, idDoctor, Config.DELETE, cedula);
         prescriptions.setAdapter(adapter);
 
     }
+
     private List<String> listSucursales() throws JSONException {
-        dataSucursales =Connection.getInstance().getSucursales();
+        dataSucursales = Connection.getInstance().getSucursales();
 
         List<String> allNames = new ArrayList<String>();
         for (int i = 0; i < dataSucursales.length(); i++) {
             JSONObject objeto = (JSONObject) dataSucursales.get(i);
-            allNames.add(objeto.getString("Nombre") + " - " + objeto.getString("detalleDireccion") );
+            allNames.add(objeto.getString("Nombre") + " - " + objeto.getString("detalleDireccion"));
         }
         return allNames;
 
     }
+
     private boolean IsProductAvaible() throws JSONException {
-        dataPxS =Connection.getInstance().getProductosxSucursal(sucursal);
+        dataPxS = Connection.getInstance().getProductosxSucursal(sucursal);
         unavailable = new ArrayList<String>();
         available = new ArrayList<Integer>();
         for (int i = 0; i < dataPxS.length(); i++) {
@@ -479,22 +475,22 @@ public class Pedidos extends Fragment {
             available.add(objeto.getInt("codProducto"));
 
         }
-        for(int i = 0 ; i < Config.idproducto.size() ; i++){
-            if(!available.contains(Config.idproducto.get(i))){
+        for (int i = 0; i < Config.idproducto.size(); i++) {
+            if (!available.contains(Config.idproducto.get(i))) {
                 unavailable.add(Config.allProducts.get(i));
             }
         }
 
-        if(unavailable.isEmpty()){
+        if (unavailable.isEmpty()) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
 
     }
-    private void cleanVariables(){
-        encodedprescription=null;
+
+    private void cleanVariables() {
+        encodedprescription = null;
         Config.allProducts.clear();
         Config.prescription.clear();
         Config.precios.clear();

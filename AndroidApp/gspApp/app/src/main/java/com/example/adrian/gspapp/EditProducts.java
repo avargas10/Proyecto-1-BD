@@ -58,6 +58,7 @@ public class EditProducts extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setTitle("Edit Order");
         setContentView(R.layout.activity_edit_products);
         editlist = (ListView) findViewById(R.id.EditList);
         sucursales = (ListView) findViewById(R.id.Edit_listaSucursales);
