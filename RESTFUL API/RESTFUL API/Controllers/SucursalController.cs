@@ -75,21 +75,35 @@ namespace RESTFUL_API.Controllers
             {
                 using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO SUCURSAL (idEmpresa,idProvincia,idCanton,idDistrito,Latitud,Longitud, detalleDireccion,Nombre,Estado) VALUES (@empresa,@provincia,@canton,@distrito,@lat,@long,@detalle,@nombre,@estado)", conn);
-                    cmd.Parameters.AddWithValue("@empresa", suc.idEmpresa);
-                    cmd.Parameters.AddWithValue("@provincia", suc.idProvincia);
-                    cmd.Parameters.AddWithValue("@canton", suc.idCanton);
-                    cmd.Parameters.AddWithValue("@distrito", suc.idDistrito);
-                    cmd.Parameters.AddWithValue("@lat", suc.Latitud);
-                    cmd.Parameters.AddWithValue("@long", suc.Longitud);
-                    cmd.Parameters.AddWithValue("@detalle", suc.detalleDireccion);
-                    cmd.Parameters.AddWithValue("@nombre", suc.Nombre);
-                    cmd.Parameters.AddWithValue("@estado", suc.Estado);
-                    cmd.Connection = conn;
+                    SqlCommand cmd1 = new SqlCommand("SELECT Nombre FROM SUCURSAL WHERE Nombre=@nombre");
+                    cmd1.Parameters.AddWithValue("@nombre", suc.Nombre);
+                    cmd1.Connection = conn;
                     conn.Open();
-                    cmd.ExecuteReader();
-                    var message = Request.CreateResponse(HttpStatusCode.Created, suc);
-                    return message;
+                    var reader = cmd1.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        conn.Close();
+                        return Request.CreateResponse(HttpStatusCode.Conflict, "That Store name already exist!");
+                    }
+                    else
+                    {
+                        conn.Close();
+                        SqlCommand cmd = new SqlCommand("INSERT INTO SUCURSAL (idEmpresa,idProvincia,idCanton,idDistrito,Latitud,Longitud, detalleDireccion,Nombre,Estado) VALUES (@empresa,@provincia,@canton,@distrito,@lat,@long,@detalle,@nombre,@estado)", conn);
+                        cmd.Parameters.AddWithValue("@empresa", suc.idEmpresa);
+                        cmd.Parameters.AddWithValue("@provincia", suc.idProvincia);
+                        cmd.Parameters.AddWithValue("@canton", suc.idCanton);
+                        cmd.Parameters.AddWithValue("@distrito", suc.idDistrito);
+                        cmd.Parameters.AddWithValue("@lat", suc.Latitud);
+                        cmd.Parameters.AddWithValue("@long", suc.Longitud);
+                        cmd.Parameters.AddWithValue("@detalle", suc.detalleDireccion);
+                        cmd.Parameters.AddWithValue("@nombre", suc.Nombre);
+                        cmd.Parameters.AddWithValue("@estado", suc.Estado);
+                        cmd.Connection = conn;
+                        conn.Open();
+                        cmd.ExecuteReader();
+                        var message = Request.CreateResponse(HttpStatusCode.Created, suc);
+                        return message;
+                    }
                 }
             }
             catch (Exception ex)
