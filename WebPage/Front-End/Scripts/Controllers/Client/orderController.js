@@ -53,6 +53,8 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
         })
       }
       storeService.cleanBag();
+      $location.path("/allOrders");
+
     }
 
     function isEmpty(str) {
@@ -92,6 +94,20 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
             alert(response);
           });
       };
+
+      $scope.delete=function(id){
+        var url = 'http://'+getIp()+':58706/api/DetallePedido?idPedido='+id;
+        $http.put(url)
+        .then(
+            function(response){
+              // success callback
+              console.log("erase");
+            }, 
+            function(response){
+              // failure callback
+            }
+         );
+      }
 
       $scope.getOrder=function(){$scope.tempOrder =  orderService.getOrder();
       }
