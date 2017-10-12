@@ -185,7 +185,7 @@ namespace RESTFUL_API.Controllers
                         conn.Close();
                         if ((Convert.ToString(nombre).Equals(producto.Nombre)) && (Convert.ToInt32(cod) == producto.idProducto) && (Convert.ToInt32(estado) == 1))
                         {
-                            return Request.CreateResponse(HttpStatusCode.Conflict, "This user already exist!");
+                            return Request.CreateResponse(HttpStatusCode.Conflict, "This product already exist!");
                         }
                         else if ((Convert.ToString(nombre).Equals(producto.Nombre)) && (Convert.ToInt32(cod) == producto.idProducto) && (Convert.ToInt32(estado) == 0))
                         {
