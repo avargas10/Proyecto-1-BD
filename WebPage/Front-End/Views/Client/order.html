@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../CSS/Shared/logStyles.css" />
+<link rel="stylesheet" href="../CSS/Client/order.css" />
 <div class="container" data-ng-controller="orderController">						
             <div class="row" style="margin-top:20px">
                 <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3" ng-init="getOrder()">
@@ -8,44 +8,41 @@
                             <hr class="colorgraph">
                             <div class="form-group">
                                 <label for="lg_username" class="sr-only"> Phone Number</label>
-                                <input type="text" class="form-control" id="phone" name="number" placeholder= "+506 {{tempOrder.phoneNumber}}" data-ng-model="phoneNumber">
+                                <input type="text" class="form-control" id="phone" name="number" placeholder= "+506 {{tempOrder[0].Telefono}}" data-ng-model="phoneNumber">
                         </div>
                             <div class="form-group">
                                     <label for="exampleInputPassword1">Pick Up Date and Time</label>
-                                    <input type="datetime-local" value="{{tempOrder.date}}" ng-model="date" name="dateUser" required><br>
+                                    <input type="datetime-local" value="{{tempOrder[0].horaRecojo}}" ng-model="date" name="dateUser" required><br>
                             </div>
                             <div class="form-group">
                                         
                                                   <label> Select an Image for this Order</label>
                                                   <input type="file" class="form-control-file" id="inputFile" onchange="openFile(event)" >
                                                   <br></br>
-                                                <img class="img-responsive" src="{{tempOrder.image}}" id="output" style="width: 250px; height: 120px;">
-                                                </div>
-                                                <table class="points_table"  ng-init="getAllForms()">
-                                                    <tbody class="points_table_scrollbar">
-                                                        <tr class="pLabel" ng-repeat="product in {{tempOrder.products}}" >
-                                                            
-                                                            <td class="col-sm-8 col-md-6">
-                                                                        <div class="media">
-                                                                            <a class="thumbnail pull-left" > <img class="media-object" src="{{product.Imagen}}" style="width: 80px; height: 70px;"> </a>
-                                                                            <div class="media-body">
-                                                                                <h4 class="media-heading"><a><i class="fa fa-medkit" aria-hidden="true"></i> ID: {{form.idReceta}}</a></h4>
-                                                                            </div>
-                                                                        </div></td>
-                                                                        <td class="col-sm-1 col-md-1">
-                                                                        <button type="button" ng-click="" class="btn btn-success">
-                                                                                <i class="fa fa-plus-circle" aria-hidden="true"></i> Edit</button>
-                                                                </td>
-                                                                <td class="col-sm-5 col-md-5">
-                                                                    <button type="button" ng-click="" class="btn btn-warning">
-                                                                            <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Bag</button>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                    
-                                                </table>
-                           
-                                                <hr class="colorgraph">
+                                                <img class="img-responsive" src="data:image/jpg;base64,{{tempOrder[0].Imagen}}" id="output" style="width: 250px; height: 120px;">
+                            </div>
+                            <table class="points_table" >
+                                <tbody class="points_table_scrollbar">
+                                    <tr class="pLabel" ng-repeat="product in tempOrder" >             
+                                        <td class="col-sm-8 col-md-6">
+                                                    <div class="media">
+                                                        <a class="thumbnail pull-left" > <img class="media-object" src="data:image/jpg;base64,{{product.Image}}" style="width: 80px; height: 70px;"> </a>
+                                                        <div class="media-body">
+                                                            <h4 class="media-heading"><a><i class="fa fa-medkit" aria-hidden="true"></i> {{product.Nombre}}</a></h4>
+                                                        </div>
+                                                    </div></td>
+                                                    <td class="col-sm-4 col-md-4">
+                                                    <button type="button" ng-click="getAllDetails(order.idPedido)" class="btn btn-danger">
+                                                            <i class="fa fa-minus-circle" aria-hidden="true"></i> Delete </button>
+                                            </td>
+                                            <td class="col-sm-1 col-md-1" style="text-align: center">
+                                                <select ng-model="quantity"  value ="product.Cantidad" ng-options="number for number in [1,2,3,4,5,6,7,8,9,10]"></select>
+                                                      
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>                                 
+                        <hr class="colorgraph">
                              <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <input type="submit"  data-ng-click="placeOrder(phoneNumber,date)" class="btn btn-lg btn-success btn-block" value="Place Your Order">

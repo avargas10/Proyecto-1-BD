@@ -85,9 +85,8 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
         $http.get(url)
           .then(function successCallback(data) {
             console.log(data.data);
-            orderService.setTempValues(data.data[0].sucursalRecojo,data.data[0].Telefono
-              ,data.data[0].idCliente,data.data[0].horaRecojo,data.data[0],data.data[0].Imagen);
-              $location.path("/order");
+            orderService.setOrder(data.data);
+            $location.path("/order");
           },
           function errorCallback(response) {
             alert(response);
@@ -95,14 +94,7 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
       };
 
       $scope.getOrder=function(){$scope.tempOrder =  orderService.getOrder();
-        console.log($scope.tempOrder);
       }
 
-      $scope.getAllProducts=function(){
-        var products = orderService.getOrder().products;
-        for (var index = 0; index < products.length; index++) {
-           
-          
-        }
-      }
+
   }]);

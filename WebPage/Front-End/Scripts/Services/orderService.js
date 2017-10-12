@@ -26,6 +26,8 @@ angular.module("mainModule").service('orderService',function(){
    
     this.getOrder=function(){return newOrder;}
    
+    this.setOrder=function(order){newOrder=order;}
+
     this.setValues = function(Sucursal,phoneNumber,idClient,date){
       newOrder.idSucursal=Sucursal;
       newOrder.phoneNumber=phoneNumber;
