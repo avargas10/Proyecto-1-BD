@@ -17,8 +17,23 @@ angular.module("mainModule").controller("contNuevSucAdmin", ["$scope","$http",
 
     $scope.idAdmin=empresaAdmin;
 
+    $scope.postHttp = function (url, data, callback) {
+      var httpObject = $http.post(url, data);
+      httpObject.then(function (promise) {
+        callback(promise.data);
+      }, function (error) { console.log(error); })
+    }
+
+    $scope.updateInfo=function(username, password, conPassword, name, surname, sSurname, id, dir, date, email){
+      console.log("username "+username);
+      console.log("name "+name);
+      console.log("surname "+surname);
+      console.log("email "+email);
+    }
+
 
     $scope.init = function(){
+
       var url = 'http://'+getIp()+':58706/api/Distrito';
       $http.get(url).then(function(msg){
         $scope.distList = msg.data;
@@ -36,25 +51,39 @@ angular.module("mainModule").controller("contNuevSucAdmin", ["$scope","$http",
       $http.get(url).then(function(msg){
         $scope.provList = msg.data;
       });
-
     }
 
 
     $scope.createStore=function(idE,nme,idC,idP,idD,dr,lt,ln){
-      idE=idE.split("",1);
-      idC=idC.split("",1);
-      idP=idP.split("",1);
-      idD=idD.split("",1);
+      idE=parseInt(idE.split("",1));
+      idC=parseInt(idC.split("",1));
+      idP=parseInt(idP.split("",1));
+      idD=parseInt(idD.split("",1));
+      lt=parseFloat(lt);
+      ln=parseFloat(ln);
+
+      alert(nme);
+      alert(dr);
+
       var url='http://'+getIp()+':58706/api/Sucursal';
-      var sendData={"Nombre": nme, "detalleDireccion":dr, "idEmpresa":idE, "idCanton":idC, "idProvincia": idP, "idDistrito":idD, "Latitud": lt, "Longitud": ln , "Estado":"1"};
+      var sendData={
+        "idEmpresa": idE,
+        "idProvincia": idP,
+        "idCanton":idC, 
+        "idDistrito":idD,
+        "Latitud":lt,
+        "Longitud":ln,
+        "detalleDireccion":dr,
+        "Nombre":nme ,
+        "Estado":1
+      };
       
-      $http.post(url,sendData)
-      .then(
-        function successCallback(response){
+      $scope.postHttp(url,sendData,(data)=>{
+          if(data){
 
-        },function errorCallBack(response){
-
+          }
         });
+
         
       animation();
     }

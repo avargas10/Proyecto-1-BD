@@ -13,7 +13,6 @@
 
             Add Role
           </button>
-
         </div>
       </div>
     </div>
@@ -22,16 +21,16 @@
     <div class="list-group" ng-controller="contRolAdmin" data-ng-init="init()">
 
       <div ng-repeat="r in rollist">
-      <div ng-if="r.idEmpresa==idAdmin">
+      <!--<div ng-if="r.idEmpresa==idAdmin">-->
 
         <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
           <div class="d-flex justify-content-between">
 
           <div class="row">
             <div class="col-sm-5">
-           <h5 class="mb-1">{{r.Nombre}} <br><br> {{r.idRol}} <br><br> </h5>
+              <h5 class="mb-1">{{r.Nombre}} <br><br> {{r.idRol}} <br><br> </h5>
             </div>
-            <div class="col-sm-5">
+             <div class="col-sm-5">
               <p>{{r.Descripcion}} </p>
             </div>
 
@@ -52,7 +51,7 @@
         </div>
       </a>
 
-    </div>
+    <!--</div>-->
 
   </div>
   </div>

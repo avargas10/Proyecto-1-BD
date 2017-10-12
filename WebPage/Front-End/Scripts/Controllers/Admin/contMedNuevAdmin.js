@@ -5,9 +5,9 @@ function($scope,$http) {
   $scope.name="";
   $scope.presc="";
   $scope.house="";
-  $scope.qty="";
-  $scope.suc="";
-  $scope.sucList;
+  $scope.medicine="";
+  $scope.price="";
+  $scope.provList;
   $scope.idAdmin=empresaAdmin;
 
 
@@ -24,28 +24,43 @@ function($scope,$http) {
       }, function(error){ console.log(error);})}
 
       $scope.init = function(){
-        var url = 'http://'+getIp()+':58706/api/Sucursal';
+        var url = 'http://'+getIp()+':58706/api/Proveedores';
         $http.get(url).then(function(msg){
-          $scope.sucList = msg.data;
+          $scope.provList = msg.data;
         });
-
       }
 
 
-      $scope.createProduct=function(){
-        var url='http://'+getIp()+':58706/api/Roles';
-        var sendData={"Nombre": nme, "Descripcion":descr};
+      $scope.createProduct=function(idP, prov, nme, med, prsc, prc){
 
-        alert(nme+descr);
+        idP=parseInt(idP);
+        prov=parseInt(prov.split("",1));
+        med=parseInt(med.split("",1));
+        prsc=parseInt(prsc.split("",1));
+        prc=parseInt(prc);
+        var image=globalImage;
+        image=image.split(",")[1];
+        
+        var url='http://'+getIp()+':58706/api/Productos';
+        var sendData={
+          "idProducto": idP,
+          "Proveedor": prov ,
+          "Nombre": nme,
+          "esMedicamento": med,
+          "reqPrescripcion":prsc,
+          "Image": image,
+          "Precio":prc,
+          "Estado":1
+        };
 
-        $http.post(url,sendData)
-        .then(
-          function successCallback(response){
 
-          },function errorCallBack(response){
+        
+        $scope.postHttp(url,sendData,(data)=>{
+          if(data){
 
-          });
-        animation();
+          }
+        });
+       animation();
       };
 
     }]);

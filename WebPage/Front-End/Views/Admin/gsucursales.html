@@ -3,11 +3,11 @@
 
     <div class="container">
       <div class="row">
-        <div class="col">
+        <div class="col-sm-6">
           <h1>Stores Management</h1>
         </div>
-        <div class="col">
-        
+        <div class="col-sm-6">
+        <br>
         <button type="button" class="btn btn-light" ng-click="goTo('nuevSuc')">
             Add Store
           </button>
@@ -21,31 +21,37 @@
     <div class="list-group" ng-controller="contSucAdmin" data-ng-init="init()">
 
       <div ng-repeat="s in sucList">
-      <div ng-if="s.idEmpresa==idAdmin">
+        <!--<div ng-if="s.idEmpresa==idAdmin">-->
+          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
+            <div class="d-flex justify-content-between">
+              <div class="row">
+              <div class="col-sm-5">
+                 <h5 class="mb-1">{{s.Nombre}} <br></h5>
+               </div>
+               <div class="col-sm-5">
+                 <h5> {{s.detalleDireccion}}  </h5>
+                 <p>{{s.idSucursal}} </p>
+               </div>
 
 
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
-          <div class="d-flex justify-content-between">
-           <h5 class="mb-1">{{s.Nombre}} <br></h5>
-           <h5> {{s.detalleDireccion}}  </h5>
-           <p>{{s.idSucursal}} </p>
-           <div class="form-group select">
+               <div class="col-sm-2">
 
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-              Edit
-            </button>
-            <br>
-            <br>
-            <button type="button" class="btn btn-danger" ng-click="delete(c.name, cantidad)">
-              Delete
-            </button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                  Edit
+                </button>
+                <br>
+                <br>
+                <button type="button" class="btn btn-danger" ng-click="delete(c.name, cantidad)">
+                  Delete
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      </a>
+        </a>
+
+      <!--</div>-->
 
     </div>
-
-  </div>
   </div>
 
   <div id="snackbar">Client Deleted</div>

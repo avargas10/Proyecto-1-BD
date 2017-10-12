@@ -1,3 +1,4 @@
+
     <link rel="stylesheet" type="text/css" href="../CSS/Admin/nuevSuc.css">
 
 
@@ -12,14 +13,13 @@
           <label for="sucursales">Company ID</label>
 
           <select  class="form-control" ng-model="idEmp" required>
-              <option ng-if="e.idEmpresa==idAdmin" ng-repeat="e in empList" >
-              {{e.idEmpresa}}: {{e.Nombre}}
+              <option ng-if="e.idEmpresa==idAdmin" ng-repeat="e in empList" >{{e.idEmpresa}}: {{e.Nombre}}
               </option>
           </select>
         </div>
         <div class="form-group col-md-6">
           <label>Name</label>
-          <input type="text" class="form-control" name="nameProd" placeholder="Name of the Store" ng-model="name" ng-pattern="/^[A-Z][a-z]$/" required>
+          <input type="text" class="form-control" name="nameProd" placeholder="Name of the Store" ng-model="name" required>
           <span ng-show="datReceta.numDoctor.$error.pattern">
             <small id="fileHelp" class="form-text text-muted">Name is not valid</small>
           </span>
