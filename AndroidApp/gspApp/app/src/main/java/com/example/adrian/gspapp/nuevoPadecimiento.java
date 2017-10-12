@@ -28,7 +28,7 @@ public class nuevoPadecimiento extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuevo_padecimiento);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Registrar Padecimiento");
+        getSupportActionBar().setTitle("Add Condition");
 
         nombre=(EditText) findViewById(R.id.txtNombrePad);
         fecha=(EditText) findViewById(R.id.txtFechaPad);
@@ -67,7 +67,7 @@ public class nuevoPadecimiento extends AppCompatActivity {
                     System.out.println("DESCRIPCION: "+descrip.getText().toString());
                     System.out.println("JSON: "+pad.toString());
                    if(Connection.getInstance().regPadecimiento(pad)){
-                        Toast.makeText(getApplicationContext(),"Padecimiento Agregado Correctamente.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Condition added!.", Toast.LENGTH_LONG).show();
                        nombre.setText("");
                        fecha.setText("");
                        descrip.setText("");
@@ -76,7 +76,7 @@ public class nuevoPadecimiento extends AppCompatActivity {
                        Padecimientos.dataAdapter.notifyDataSetChanged();
                       // Padecimientos.allNames.clear();
                     }else{
-                        Toast.makeText(getApplicationContext(),"Error al agregar el Padecimiento.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Error adding Condition!.", Toast.LENGTH_LONG).show();
 
                     }
 
