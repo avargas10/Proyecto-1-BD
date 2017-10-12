@@ -6,6 +6,7 @@ angular.module("mainModule").service('orderService',function(){
       idClient:null,
       image:null,
       date:null,
+      products:null
     };
     this.setImage=function(image){
        newOrder.image = image;
@@ -17,7 +18,8 @@ angular.module("mainModule").service('orderService',function(){
        phoneNumber:null,
        idClient:nul,
        image:null,
-       date:null
+       date:null,
+       products:null
      };
      imageActive=false;
     }
@@ -29,6 +31,14 @@ angular.module("mainModule").service('orderService',function(){
       newOrder.phoneNumber=phoneNumber;
       newOrder.idClient=idClient;
       newOrder.date=date;
+    }
+    this.setTempValues = function(Sucursal,phoneNumber,idClient,date,products,image){
+      newOrder.idSucursal=Sucursal;
+      newOrder.phoneNumber=phoneNumber;
+      newOrder.idClient=idClient;
+      newOrder.date=date;
+      newOrder.image=image;
+      newOrder.products=products;
     }
    
    
