@@ -1,0 +1,61 @@
+   <link rel="stylesheet" type="text/css" href="../CSS/Admin/nuevEmpleado.css">
+
+  <div>
+
+    <h1>New Employee</h1>
+
+
+
+    <form name="datReceta" ng-controller="contNuevEmp" data-ng-init="init()">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label> Employee ID</label>
+          <input type="text" class="form-control" name="idEmp" placeholder="ID of the product" ng-model="id" required>
+          <span ng-show="datReceta.idRec.$error.pattern">
+            <small class="form-text text-muted">ID not valid</small>
+          </span>
+        </div>
+        <div class="form-group col-md-6">
+          <label>Name</label>
+          <input type="text" class="form-control" name="nameProd" placeholder="Name of the product" ng-model="name" required>
+
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label>Email</label>
+          <input type="text" class="form-control" name="empEmail" placeholder="Name of the product" ng-model="empEmail" required>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="sucursales">Username</label>
+          <input type="text" class="form-control" name="empUser" placeholder="Name of the product" ng-model="empUser" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label>Password</label>
+          <input type="password" class="form-control" placeholder="Price of the product" ng-model="userPass" required>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label>Surname</label>
+          <input type="text" class="form-control" placeholder="Price of the product" ng-model="empSur" required>
+        </div>
+        
+      </div>
+      <div class="form-row">
+        
+
+      </div>
+      
+      <button type="submit" class="btn btn-primary" ng-click="createEmp(id,empEmail,empUser,userPass,name,empUser)">
+      Create Employee
+      </button>
+
+    </form>
+
+    <div id="snackbar">Employee Created</div>
+
+
+</div>
