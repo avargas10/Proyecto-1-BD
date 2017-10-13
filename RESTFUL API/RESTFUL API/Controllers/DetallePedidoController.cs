@@ -66,10 +66,12 @@ namespace RESTFUL_API.Controllers
             {
                 using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO DETALLEPEDIDO(idProducto,idPedido,Cantidad) VALUES (@producto,@pedido,@cantidad)", conn);
+                    //SqlCommand cmd = new SqlCommand("INSERT INTO DETALLEPEDIDO(idProducto,idPedido,Cantidad) VALUES (@producto,@pedido,@cantidad)", conn);
+                    SqlCommand cmd = new SqlCommand("EXEC CREATEDETALLEPEDIDO @producto, @pedido, @sucursal, @cantidad", conn);
                     cmd.Parameters.AddWithValue("@producto", pedido.idProducto);
                     cmd.Parameters.AddWithValue("@pedido", pedido.idPedido);
                     cmd.Parameters.AddWithValue("@cantidad", pedido.Cantidad);
+                    cmd.Parameters.AddWithValue("@sucursal", pedido.idSucursal);
                     cmd.Connection = conn;
                     conn.Open();
                     cmd.ExecuteReader();
