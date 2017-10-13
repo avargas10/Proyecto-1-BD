@@ -328,6 +328,7 @@ public class Pedidos extends Fragment {
                 pad.put("idProducto", Config.idproducto.get(i));
                 pad.put("idPedido", numpedido);
                 pad.put("Cantidad", Config.cantidad.get(i));
+                pad.put("idSucursal", sucursal);
                 Connection.getInstance().regDetalle(pad);
             }
             Toast.makeText(getContext(), "Detalle Agregado Correctamente", Toast.LENGTH_LONG).show();
