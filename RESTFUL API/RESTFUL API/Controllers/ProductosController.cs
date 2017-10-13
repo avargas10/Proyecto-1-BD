@@ -94,6 +94,36 @@ namespace RESTFUL_API.Controllers
             }
         }
 
+        [HttpPut]
+        public HttpResponseMessage verifCantidad(productoSucursalModel detalle)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("EXEC VERIFCANTIDAD @producto, @sucursal, @cantidad", conn);
+                    cmd.Parameters.AddWithValue("@producto", detalle.codProducto);
+                    cmd.Parameters.AddWithValue("@sucursal", detalle.idSucursal);
+                    cmd.Parameters.AddWithValue("@cantidad", detalle.Cantidad);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    var reader=cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        return Request.CreateResponse(HttpStatusCode.Accepted, detalle);
+                    }
+                    else
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Producto sobrepaso cantidad");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
         [HttpPost]
         public IEnumerable<Dictionary<string, object>> ProductosxSucursal([FromUri] int id)
         {

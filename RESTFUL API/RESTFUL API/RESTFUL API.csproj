@@ -217,6 +217,7 @@
     <Compile Include="Models\padecimientosModel.cs" />
     <Compile Include="Models\pedidosModel.cs" />
     <Compile Include="Models\productosModel.cs" />
+    <Compile Include="Models\productoSucursalModel.cs" />
     <Compile Include="Models\proveedoresModel.cs" />
     <Compile Include="Models\provinciaModel.cs" />
     <Compile Include="Models\recetasModel.cs" />
