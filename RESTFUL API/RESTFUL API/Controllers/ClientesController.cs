@@ -168,6 +168,7 @@ namespace RESTFUL_API.Controllers
                     }
                     else
                     {
+                        conn.Close();
                         SqlCommand cmd = new SqlCommand("INSERT INTO CLIENTE(Cedula, Nombre, pApellido, sApellido, Password, Username, Email, Nacimiento, Penalizacion, Direccion, Estado, Telefono) VALUES (@cedula,@nombre,@papellido,@sapellido,@password,@username,@email,@nacimiento,@penalizacion,@direccion,0, @telefono)", conn);
                         cmd.Parameters.AddWithValue("@cedula", cliente.Cedula);
                         cmd.Parameters.AddWithValue("@nombre", cliente.Nombre);
