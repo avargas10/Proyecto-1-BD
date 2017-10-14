@@ -65,6 +65,7 @@ public class Pedidos extends Fragment {
     static List<Integer> available;
     static List<Integer> idproducto;
     static ArrayList<String> unavailable;
+    static ArrayList<Integer> cant_error;
     ArrayList<Integer> allrelation;
     String encodedprescription = null;
     static int sucursal = 0;
@@ -323,15 +324,67 @@ public class Pedidos extends Fragment {
 
     private void regDetalle() {
         try {
+            cant_error = new ArrayList<>();
             for (int i = 0; i < Config.idproducto.size(); i++) {
-                JSONObject pad = new JSONObject();
-                pad.put("idProducto", Config.idproducto.get(i));
-                pad.put("idPedido", numpedido);
-                pad.put("Cantidad", Config.cantidad.get(i));
-                pad.put("idSucursal", sucursal);
-                Connection.getInstance().regDetalle(pad);
+
+                JSONObject cantver = new JSONObject();
+                cantver.put("codProducto", Config.idproducto.get(i));
+                cantver.put("Cantidad", Config.cantidad.get(i));
+                cantver.put("idSucursal", sucursal);
+
+                if(Connection.getInstance().VerifCantidad(cantver)) {
+                    JSONObject pad = new JSONObject();
+                    pad.put("idProducto", Config.idproducto.get(i));
+                    pad.put("idPedido", numpedido);
+                    pad.put("Cantidad", Config.cantidad.get(i));
+                    pad.put("idSucursal", sucursal);
+
+                    Connection.getInstance().regDetalle(pad);
+                }
+                else{
+                    cant_error.add(Config.idproducto.get(i));
+                }
             }
-            Toast.makeText(getContext(), "Detalle Agregado Correctamente", Toast.LENGTH_LONG).show();
+            Log.e("cant_error",cant_error.toString());
+            if(cant_error.isEmpty()) {
+                Toast.makeText(getContext(), "Detalle Agregado Correctamente", Toast.LENGTH_LONG).show();
+            }
+            else{
+                Connection.getInstance().deletePedido(numpedido);
+                ArrayList<String> temp = new ArrayList<>();
+                for(int i = 0 ; i < cant_error.size() ; i++){
+                    JSONObject obj = Connection.getInstance().getProductobyId(cant_error.get(i));
+                    temp.add(obj.getString("Nombre"));
+                }
+                final AlertDialog.Builder buildersuc = new AlertDialog.Builder(getContext());
+                buildersuc.setMessage("Error, Cant. max of products not available")
+                        .setTitle("Error");
+                final ListView input = new ListView(getContext());
+
+                ArrayAdapter<String> dataAdapter = null;
+                try {
+                    dataAdapter = new ArrayAdapter<String>
+                            (getContext(), android.R.layout.simple_list_item_1, temp);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                dataAdapter.setDropDownViewResource
+                        (android.R.layout.simple_spinner_dropdown_item);
+
+                input.setAdapter(dataAdapter);
+
+                buildersuc.setView(input);
+
+                buildersuc.setPositiveButton("ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog dialog = buildersuc.create();
+                dialog.show();
+            }
 
 
         } catch (Exception e) {

@@ -110,11 +110,11 @@ namespace RESTFUL_API.Controllers
                     var reader=cmd.ExecuteReader();
                     if (reader.Read())
                     {
-                        return Request.CreateResponse(HttpStatusCode.Accepted, detalle);
+                        return Request.CreateResponse(HttpStatusCode.Accepted, "true");
                     }
                     else
                     {
-                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Producto sobrepaso cantidad");
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "false");
                     }
                 }
             }
