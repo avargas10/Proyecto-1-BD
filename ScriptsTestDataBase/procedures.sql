@@ -37,7 +37,10 @@ BEGIN
 DECLARE @sucursal int
 DECLARE @RowCnt int
 DECLARE @tableSize int 
-if((SELECT Estado FROM PEDIDOS WHERE idPedido=@idPedido)!=5)
+DECLARE @cedula int
+DECLARE @estado int
+SET @estado = (SELECT Estado FROM PEDIDOS WHERE idPedido=@idPedido)
+if((@estado!=5) AND (@estado!=4))
 BEGIN
 SET @RowCnt=0
 CREATE TABLE #tempTable (producto int , cantidad int)
@@ -51,5 +54,10 @@ UPDATE PRODUCTOXSUCURSAL SET Cantidad=Cantidad+(SELECT TOP 1 cantidad FROM #temp
 DELETE TOP (1) FROM #tempTable 
 END 
 UPDATE PEDIDOS SET Estado=5 WHERE idPedido=@idPedido
+IF ((@estado=2) OR (@estado=3)) 
+BEGIN
+SET @cedula= (SELECT idCliente FROM PEDIDOS WHERE idPedido=@idPedido)
+UPDATE CLIENTE SET Penalizacion=(Penalizacion+1) WHERE Cedula=@cedula
+END
 END
 END
