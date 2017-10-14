@@ -91,7 +91,8 @@ namespace RESTFUL_API.Controllers
             {
                 using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
                 {
-                    SqlCommand cmd = new SqlCommand("UPDATE  PEDIDOS SET  Estado=5 WHERE idPedido=@id", conn);
+                    // SqlCommand cmd = new SqlCommand("UPDATE  PEDIDOS SET  Estado=5 WHERE idPedido=@id", conn);
+                    SqlCommand cmd = new SqlCommand("EXEC DELETEPEDIDO @id", conn);
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.Connection = conn;
                     conn.Open();
