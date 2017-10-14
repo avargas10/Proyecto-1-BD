@@ -1,5 +1,6 @@
   
 <link rel="stylesheet" href="../CSS/Admin/gmedicamentos.css" />
+<div data-ng-init="init()" ng-controller="contMedAdmin">
       <div class="container">
       <div class="row">
         <div class="col-sm-6">
@@ -9,20 +10,20 @@
         <br>
         <button type="button" ng-controller="mainController" class="btn btn-light" ng-click="goTo('nuevMed')">
         
-            Add Product
-          </button>
+            Add Product 
+        </button>
 
         </div>
       </div>
     </div>
 
 
-    <div class="list-group" data-ng-init="init()" ng-controller="contMedAdmin">
+    <div class="list-group" >
 
       <div ng-repeat="m in medList">
 
 
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
+        <a class="list-group-item list-group-item-action flex-column align-items-start" >
           <div class="d-flex justify-content-between">
 
             <div class="row">
@@ -30,7 +31,7 @@
                <img class="img-fluid" src="data:image/png;base64,{{m.Image}}" alt="Card image cap">
              </div>
              <div class="col-sm-4">        
-               <h5 class="mb-1">{{m.Nombre}} <br><br> {{m.idProducto}}<br><br> </h5>
+               <h5 class="mb-1">{{m.Nombre}}<br><br> {{m.idProducto}}<br><br> </h5>
              </div>
              <div class="col-sm-2">
                <p>{{m.esMedicamento}} </p>
@@ -42,7 +43,7 @@
               </button>
               <br>
               <br>
-              <button type="button" class="btn btn-danger" ng-click="delete(m.name, m.id)">
+              <button type="button" class="btn btn-danger" ng-click="delete(m.idProducto)">
                 Delete
               </button>
             </div>
@@ -115,3 +116,4 @@
         </div>
       </div>
     </div>
+</div>

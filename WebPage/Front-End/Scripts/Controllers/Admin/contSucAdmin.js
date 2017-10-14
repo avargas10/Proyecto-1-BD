@@ -1,6 +1,5 @@
 angular.module("mainModule").controller("contSucAdmin", ["$scope","$http",
 function($scope,$http) {
-  $scope.sucList;
 
   $scope.idAdmin=empresaAdmin;
 
@@ -24,13 +23,24 @@ function($scope,$http) {
 
       };
 
+      $scope.delete=function(id){
+        var url = 'http://'+getIp()+':58706/api/Sucursal?idSucursal='+id;
+        $http.put(url)
+        .then(
+            function(response){
+              // success callback
+              console.log("erase");
+              animation();
+
+            }, 
+            function(response){
+              // failure callback
+            }
+         );
+      }
 
 
   $scope.edit=function(name,id){
-  }
-  $scope.delete=function(){
-      this.sucList.pop();
-      animation();
   }
 
 }]);

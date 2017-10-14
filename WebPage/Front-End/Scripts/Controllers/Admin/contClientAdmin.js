@@ -31,10 +31,23 @@ function($scope,$http) {
     alert(this.idAdmin);
   }
 
-  $scope.delete=function(){
-      this.clientlist.pop();
-      animation();
-  }
+      $scope.delete=function(id){
+        var url = 'http://'+getIp()+':58706/api/Clientes?Cedula='+id;
+        $http.put(url)
+        .then(
+            function(response){
+              // success callback
+              console.log("erase");
+              animation();
+
+            }, 
+            function(response){
+              // failure callback
+            }
+         );
+      }
+
+
 
 }]);
 

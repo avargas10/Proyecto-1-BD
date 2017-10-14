@@ -8,11 +8,10 @@
     <form name="datReceta" ng-controller="contNuevRolAdmin">
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label> Role ID</label>
-          <input type="text" class="form-control" name="idRec" placeholder="ID of the role" ng-model="id" ng-pattern="/^[0-9]{1,5}$/" required>
-          <span ng-show="datReceta.idRec.$error.pattern">
-            <small class="form-text text-muted">ID not valid</small>
-          </span>
+          <label> Company ID</label>
+          <select  class="form-control" id="Prescription" ng-model="idEmp" required>
+            <option ng-if="e.idEmpresa==idAdmin" ng-repeat="e in empList">{{e.idEmpresa}}: {{e.Nombre}}</option>
+          </select>
         </div>
         <div class="form-group col-md-6">
           <label>Name</label>
@@ -36,7 +35,7 @@
         
       </div>
       
-      <button type="submit" class="btn btn-primary" ng-click="createRol(name,desc)">
+      <button type="submit" class="btn btn-primary" ng-click="createRol(name,desc,idEmp)">
       Create Role
       </button>
 
