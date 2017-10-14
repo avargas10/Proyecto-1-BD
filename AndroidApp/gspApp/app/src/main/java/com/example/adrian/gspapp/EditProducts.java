@@ -144,7 +144,8 @@ public class EditProducts extends AppCompatActivity {
                     JSONObject pad = new JSONObject();
                     pad.put("idProducto", Config.selectedallrelation.get(i));
                     pad.put("idPedido", generaldata.getInt("idPedido"));
-                    pad.put("idCantidad", Config.selectedcant.get(i));
+                    pad.put("Cantidad", Config.selectedcant.get(i));
+                    pad.put("idSucursal", sucursal);
                     Connection.getInstance().regDetalle(pad);
                 }
 
