@@ -18,9 +18,21 @@ function($scope,$http) {
       }, function(error){ console.log(error);})}
 
 
-      $scope.delete=function(id){
-        var url = 'http://'+getIp()+':58706/api/Empleados?idEmpleado='+id;
-        $http.put(url)
+      $scope.delete=function(id,user,pass,nme,pAp,sAp,date,dir,ste){
+        var url = 'http://'+getIp()+':58706/api/Empleados';
+        var data={
+          "idEmpleado":id,
+          "Username":user,
+          "Password":pass,
+          "Nombre":nme,
+          "pApellido":pAp,
+          "sApellido":sAp,
+          "Nacimiento":date,
+          "Direccion":dir,
+          "Estado":ste
+
+        };
+        $http.delete(url,data)
         .then(
             function(response){
               // success callback

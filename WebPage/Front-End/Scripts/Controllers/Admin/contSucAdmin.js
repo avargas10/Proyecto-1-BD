@@ -23,9 +23,19 @@ function($scope,$http) {
 
       };
 
-      $scope.delete=function(id){
-        var url = 'http://'+getIp()+':58706/api/Sucursal?idSucursal='+id;
-        $http.put(url)
+      $scope.delete=function(id,emp,cant,dist,dir,nme,ste,img){
+        var url = 'http://'+getIp()+':58706/api/Sucursal';
+        var data={
+          "idSucursal":id,
+          "idEmpresa":emp,
+          "idCanton":cant,
+          "idDistrito":dist,
+          "detalleDireccion":dir,
+          "Nombre":nme,
+          "Estado":ste,
+          "Imagen":img
+        };
+        $http.delete(url,data)
         .then(
             function(response){
               // success callback
@@ -40,7 +50,32 @@ function($scope,$http) {
       }
 
 
-  $scope.edit=function(name,id){
+  $scope.edit=function(id,emp,cant,dist,dir,nme,ste,img){
+        var url = 'http://'+getIp()+':58706/api/Sucursal';
+        var data={
+          "idSucursal":id,
+          "idEmpresa":emp,
+          "idCanton":cant,
+          "idDistrito":dist,
+          "detalleDireccion":dir,
+          "Nombre":nme,
+          "Estado":ste,
+          "Imagen":img
+        };
+        $http.put(url,data)
+        .then(
+            function(response){
+              // success callback
+              console.log("erase");
+              animation();
+
+            }, 
+            function(response){
+              // failure callback
+            }
+         );
+
+
   }
 
 }]);
