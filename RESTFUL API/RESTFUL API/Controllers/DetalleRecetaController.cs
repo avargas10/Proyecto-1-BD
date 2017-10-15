@@ -101,5 +101,30 @@ namespace RESTFUL_API.Controllers
 
         }
 
+        [HttpDelete]
+        public HttpResponseMessage delete(int idReceta, int idProducto)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("DELETE FROM DETALLERECETA WHERE idReceta=@id AND idMedicamento=@producto", conn);
+                    cmd.Parameters.AddWithValue("@id", idReceta);
+                    cmd.Parameters.AddWithValue("@producto", idProducto);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    cmd.ExecuteReader();
+                    var message = Request.CreateResponse(HttpStatusCode.Accepted, idReceta);
+                    conn.Close();
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+
+        }
+
     }
 }

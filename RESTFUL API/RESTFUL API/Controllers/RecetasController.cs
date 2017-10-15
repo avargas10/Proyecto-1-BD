@@ -154,9 +154,12 @@ namespace RESTFUL_API.Controllers
         {
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("SELECT RECETAS.idReceta,RECETAS.idCliente,RECETAS.Imagen,RECETAS.Estado, RECETAS.idDoctor," +
-                    "DETALLERECETA.idMedicamento " +
-                     "FROM [DETALLERECETA] INNER JOIN [RECETAS] ON DETALLERECETA.idReceta = RECETAS.idReceta WHERE (((RECETAS.idReceta)=@id));", conn);
+                SqlCommand cmd = new SqlCommand("SELECT RECETAS.idReceta,RECETAS.idCliente,RECETAS.Imagen,RECETAS.Estado,RECETAS.idDoctor,"+
+                     " DETALLERECETA.idMedicamento, DETALLERECETA.idReceta, PRODUCTOS.Nombre, PRODUCTOS.Image"+
+                      " FROM[PRODUCTOS] INNER JOIN[DETALLERECETA]"+
+                     " ON PRODUCTOS.idProducto = DETALLERECETA.idMedicamento INNER JOIN[RECETAS]"+
+                    " ON DETALLERECETA.idReceta = RECETAS.idReceta"+
+                     " WHERE(((RECETAS.idReceta) = @id))", conn);
                 cmd.Parameters.AddWithValue("@id", idRec);
                 cmd.Connection = conn;
                 conn.Open();
