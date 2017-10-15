@@ -25,9 +25,21 @@ function($scope,$http) {
 
       $scope.edit=function(){
       }
-      $scope.delete=function(){
-        this.rollist.pop();
-        animation();
+      $scope.delete=function(id){
+        var url = 'http://'+getIp()+':58706/api/Roles?idRol='+id;
+        $http.put(url)
+        .then(
+            function(response){
+              // success callback
+              console.log("erase");
+              animation();
+
+            }, 
+            function(response){
+              // failure callback
+            }
+         );
       }
+
 
     }]);
