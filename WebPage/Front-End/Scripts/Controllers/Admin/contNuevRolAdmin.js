@@ -9,7 +9,6 @@ function($scope,$http) {
     var url='http://'+getIp()+':58706/api/Roles';
     var sendData={"Nombre": nme, "Descripcion":descr, "idEmpresa":emp};
 
-    alert(nme+descr);
 
     $http.post(url,sendData)
     .then(

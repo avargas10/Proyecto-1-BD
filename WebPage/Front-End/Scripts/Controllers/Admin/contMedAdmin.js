@@ -29,9 +29,16 @@ angular.module("mainModule").controller("contMedAdmin",["$scope","$http",
       $scope.edit=function(name,id){
       }
 
-      $scope.delete=function(id){
-        var url = 'http://'+getIp()+':58706/api/Productos?idProducto='+id;
-        $http.put(url)
+      $scope.delete=function(id,prov,nme,med,presc){
+        var url = 'http://'+getIp()+':58706/api/Productos';
+        var data={
+          "idProducto":id,
+          "Proveedor":prov,
+          "Nombre":nme,
+          "esMedicamento":med,
+          "reqPrescripcion":presc
+        };
+        $http.delete(url,data)
         .then(
             function(response){
               // success callback

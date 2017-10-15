@@ -1,5 +1,6 @@
   <link rel="stylesheet" href="../CSS/Admin/gclientes.css">
 
+<div data-ng-init="init()" ng-controller="contClientAdmin" >
 
     <div class="container">
       <div class="row">
@@ -18,12 +19,12 @@
 
 
 
-    <div class="list-group" data-ng-init="init()" ng-controller="contClientAdmin" >
+    <div class="list-group" >
 
 
       <div ng-repeat="c in clientlist" >
 
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
+        <a class="list-group-item list-group-item-action flex-column align-items-start" >
           <div class="d-flex justify-content-between">
             <div class="row">
             <div class="col-sm-5">
@@ -40,7 +41,7 @@
                 </button>
                 <br>
                 <br>
-                <button type="button" class="btn btn-danger" ng-click="delete(c.Cedula)">
+                <button type="button" class="btn btn-danger" ng-click="delete(c.Cedula,c.Direccion,c.Nombre,c.pApellido,c.sApellido,c.Password,c.Username,c.Estado,c.Penalizacion,c.Nacimiento)">
                   Delete
                 </button>
               </div>
@@ -80,10 +81,10 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-primary" ng-click="edit(ID,Direction,Name,fSur,sSur,State,Punish,Birth)">Save changes</button>
           </div>
         </div>
       </div>
     </div>
 
-
+</div>

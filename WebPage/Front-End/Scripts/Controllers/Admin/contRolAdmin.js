@@ -15,7 +15,7 @@ function($scope,$http) {
       }, function(error){ console.log(error);})}
 
       $scope.init = function(){
-        var url = 'http://'+getIp()+':58706/api/Roles';
+        var url = 'http://'+getIp()+':58706/api/Roles/{idAdmin}';
         $http.get(url).then(function(msg){
           $scope.rollist= msg.data;
         });
@@ -25,9 +25,15 @@ function($scope,$http) {
 
       $scope.edit=function(){
       }
-      $scope.delete=function(id){
-        var url = 'http://'+getIp()+':58706/api/Roles?idRol='+id;
-        $http.put(url)
+      $scope.delete=function(id,nme,desc,emp){
+        var url = 'http://'+getIp()+':58706/api/Roles';
+        var data={
+          "idRol":id,
+          "Nombre":nme,
+          "Descripcion":desc,
+          "idEmpresa":emp
+        };
+        $http.delete(url,data)
         .then(
             function(response){
               // success callback
