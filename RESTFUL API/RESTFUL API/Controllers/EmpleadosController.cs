@@ -192,6 +192,36 @@ namespace RESTFUL_API.Controllers
 
 
         }
+        [HttpPut]
+        public HttpResponseMessage updateEmpleados(empleadosModel empleado)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UPDATE EMPLEADO SET Email=@email, Username=@username, Password=@password, Nombre=@nombre, pApellido=@papellido, sApellido=@sapellido, Nacimiento=@nacimiento, Direccion=@direccion WHERE idEmpleado=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", empleado.idEmpleado);
+                    cmd.Parameters.AddWithValue("@email", empleado.Email);
+                    cmd.Parameters.AddWithValue("@username", empleado.Username);
+                    cmd.Parameters.AddWithValue("@password", empleado.Password);
+                    cmd.Parameters.AddWithValue("@nombre", empleado.Nombre);
+                    cmd.Parameters.AddWithValue("@papellido", empleado.pApellido);
+                    cmd.Parameters.AddWithValue("@sapellido", empleado.sApellido);
+                    cmd.Parameters.AddWithValue("@nacimiento", empleado.Nacimiento);
+                    cmd.Parameters.AddWithValue("@direccion", empleado.Direccion);
+
+                    cmd.Connection = conn;
+                    conn.Open();
+                    cmd.ExecuteReader();
+                    var message = Request.CreateResponse(HttpStatusCode.Created, empleado);
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
 
         [HttpDelete]
         public HttpResponseMessage deleteEmpleado([FromBody] empleadosModel del)

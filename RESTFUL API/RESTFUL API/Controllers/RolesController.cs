@@ -87,6 +87,30 @@ namespace RESTFUL_API.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
+        [HttpPut]
+        public HttpResponseMessage updateRol(RolesModel rol)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UPDATE ROLES SET Nombre=@nombre, Descripcion=@descripcion, Empresa=@empresa WHERE idRol=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", rol.idRol);
+                    cmd.Parameters.AddWithValue("@nomre", rol.Nombre);
+                    cmd.Parameters.AddWithValue("@descripcion", rol.Descripcion);
+                    cmd.Parameters.AddWithValue("@empresa", rol.Empresa);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    cmd.ExecuteReader();
+                    var message = Request.CreateResponse(HttpStatusCode.Created, rol);
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
 
         [HttpDelete]
         public HttpResponseMessage deleteRol([FromBody] RolesModel del)

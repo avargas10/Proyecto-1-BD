@@ -70,6 +70,33 @@ namespace RESTFUL_API.Controllers
 
             }
         }
+        [HttpPost]
+        public HttpResponseMessage updateEmpleados(productosModel medicamento)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UPDATE PRODUCTOS SET Proveedor=@proveedor, Nombre=@nombre, esMedicamento=@med, reqPrescripcion=@pres, Image=@image WHERE idProducto=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", medicamento.idProducto);
+                    cmd.Parameters.AddWithValue("@proveedor", medicamento.Proveedor);
+                    cmd.Parameters.AddWithValue("@nombre", medicamento.Nombre);
+                    cmd.Parameters.AddWithValue("@med", medicamento.esMedicamento);
+                    cmd.Parameters.AddWithValue("@pres", medicamento.reqPrescripcion);
+                    cmd.Parameters.AddWithValue("@image", medicamento.Image);
+
+                    cmd.Connection = conn;
+                    conn.Open();
+                    cmd.ExecuteReader();
+                    var message = Request.CreateResponse(HttpStatusCode.Created, medicamento);
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
         [HttpGet]
         public IEnumerable<Dictionary<string, object>> getProductosPedido(int idPed)
         {
