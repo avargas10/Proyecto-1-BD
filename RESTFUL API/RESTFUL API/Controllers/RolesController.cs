@@ -32,6 +32,25 @@ namespace RESTFUL_API.Controllers
 
             }
         }
+
+        [HttpGet]
+        public IEnumerable<Dictionary<string, object>> getRolbyEmpresa(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT idRol,Nombre,Descripcion,Estado, Empresa FROM ROLES WHERE Empresa=@id", conn);
+                cmd.Connection = conn;
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    var r = serial.Serialize(reader);
+                    conn.Close();
+                    return r;
+                }
+
+            }
+        }
+
         [HttpPost]
         public HttpResponseMessage regRol([FromBody] RolesModel rol)
         {
@@ -68,6 +87,30 @@ namespace RESTFUL_API.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
+
+        [HttpDelete]
+        public HttpResponseMessage deleteRol([FromBody] RolesModel del)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UPDATE  ROLES SET  Estado=0 WHERE idRol=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", del.idRol);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    cmd.ExecuteReader();
+                    var message = Request.CreateResponse(HttpStatusCode.Created, del);
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+
 
     }
 }

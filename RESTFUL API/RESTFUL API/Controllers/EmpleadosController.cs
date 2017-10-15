@@ -193,5 +193,27 @@ namespace RESTFUL_API.Controllers
 
         }
 
+        [HttpDelete]
+        public HttpResponseMessage deleteEmpleado([FromBody] empleadosModel del)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UPDATE  EMPLEADO SET  Estado=0 WHERE idEmpleado=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", del.idEmpleado);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    cmd.ExecuteReader();
+                    var message = Request.CreateResponse(HttpStatusCode.Created, del);
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
     }
 }

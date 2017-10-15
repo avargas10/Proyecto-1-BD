@@ -115,6 +115,8 @@ create table ROLES(
 	idRol INT NOT NULL IDENTITY(1,1),
   Nombre VARCHAR(20),
   Descripcion VARCHAR(100),
+  Empresa INT,
+  Estado INT,
   PRIMARY KEY(idRol)
 );
 
@@ -178,7 +180,9 @@ create table DETALLERECETA(
 
 
 
-
+ALTER TABLE ROLES
+ADD FOREIGN KEY(Empresa)
+REFERENCES EMPRESA(idEmpresa)
 
 ALTER TABLE EMPLEADOXSUCURSAL
 ADD FOREIGN KEY(idSucursal)

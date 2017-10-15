@@ -29,13 +29,6 @@ INSERT INTO DISTRITO ( idCanton, Nombre) VALUES ( 7, 'Piedades');
 INSERT INTO DISTRITO ( idCanton, Nombre) VALUES ( 8, 'Rio Cuarto');
 INSERT INTO DISTRITO ( idCanton, Nombre) VALUES ( 8, 'Bolivar');
 
-
-INSERT INTO ROLES ( Nombre, Descripcion) VALUES ('Ingeniero','Admin de la app');
-INSERT INTO ROLES ( Nombre, Descripcion) VALUES ('Cajero','Maneja diner en la farmacia');
-INSERT INTO ROLES ( Nombre, Descripcion) VALUES ('Farmaceutico','Vendedores especializados en medicina');
-INSERT INTO ROLES ( Nombre, Descripcion) VALUES ('Administrador','Administra farmacia');
-INSERT INTO ROLES ( Nombre, Descripcion) VALUES ('Doctor','Medico general');
-
 INSERT INTO EMPRESA(Nombre) VALUES ('Phischel');
 INSERT INTO EMPRESA(Nombre) VALUES ('BombaTica');
 
@@ -52,6 +45,12 @@ INSERT INTO DIRECCIONES(Provincia, Canton, Distrito, Descripcion) VALUES ( 1,2,3
 INSERT INTO DIRECCIONES(Provincia, Canton, Distrito, Descripcion) VALUES ( 2,4,7,'contiguo a Tango india');
 INSERT INTO DIRECCIONES(Provincia, Canton, Distrito, Descripcion) VALUES ( 3,6,11, 'residencial Cartago');
 INSERT INTO DIRECCIONES(Provincia, Canton, Distrito, Descripcion) VALUES ( 4,8,15,'Residencial el rey');
+
+INSERT INTO ROLES ( Nombre, Descripcion, Empresa, Estado) VALUES ('Ingeniero','Admin de la app', 1, 1);
+INSERT INTO ROLES ( Nombre, Descripcion, Empresa, Estado) VALUES ('Cajero','Maneja diner en la farmacia', 2, 1);
+INSERT INTO ROLES ( Nombre, Descripcion, Empresa, Estado) VALUES ('Farmaceutico','Vendedores especializados en medicina', 1, 1);
+INSERT INTO ROLES ( Nombre, Descripcion, Empresa, Estado) VALUES ('Administrador','Administra farmacia', 2, 1);
+INSERT INTO ROLES ( Nombre, Descripcion, Empresa, Estado) VALUES ('Doctor','Medico general', 1, 1);
 
 INSERT INTO EMPLEADO (idEmpleado, Email, Nombre, pApellido, sApellido, Password, Username, Nacimiento, Direccion, Estado) VALUES (1, 'rsolano1996@gmail.com','Rodolfo','Solano','Asenjo','123', 'rsolano', '1996-12-12', 1,1 );
 INSERT INTO EMPLEADO (idEmpleado, Email, Nombre, pApellido, sApellido, Password, Username, Nacimiento, Direccion, Estado) VALUES (2,'marcfg29@gmail.com','Marco','Fernandez','Apellido2','123', 'mfernandez', '1996-12-12', 2, 1);

@@ -268,5 +268,27 @@ namespace RESTFUL_API.Controllers
             }
             
         }
+
+        [HttpDelete]
+        public HttpResponseMessage deleteProducto([FromBody] productosModel del)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UPDATE  PRODUCTOS SET  Estado=0 WHERE idProducto=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", del.idProducto);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    cmd.ExecuteReader();
+                    var message = Request.CreateResponse(HttpStatusCode.Created, del);
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
     }
 }
