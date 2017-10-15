@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Diagnostics;
 
 namespace RESTFUL_API
 {
@@ -38,7 +39,9 @@ namespace RESTFUL_API
         {
             var result = new Dictionary<string, object>();
             foreach (var col in cols)
+            {
                 result.Add(col, reader[col]);
+            }
             return result;
         }
     }

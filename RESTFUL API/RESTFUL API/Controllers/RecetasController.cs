@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using RESTFUL_API.Models;
 using System.Data.SqlClient;
+using System.Diagnostics;
 
 namespace RESTFUL_API.Controllers
 {
@@ -155,7 +156,7 @@ namespace RESTFUL_API.Controllers
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
                 SqlCommand cmd = new SqlCommand("SELECT RECETAS.idReceta,RECETAS.idCliente,RECETAS.Imagen,RECETAS.Estado,RECETAS.idDoctor,"+
-                     " DETALLERECETA.idMedicamento, DETALLERECETA.idReceta, PRODUCTOS.Nombre, PRODUCTOS.Image"+
+                     " DETALLERECETA.idMedicamento, PRODUCTOS.Nombre, PRODUCTOS.Image"+
                       " FROM[PRODUCTOS] INNER JOIN[DETALLERECETA]"+
                      " ON PRODUCTOS.idProducto = DETALLERECETA.idMedicamento INNER JOIN[RECETAS]"+
                     " ON DETALLERECETA.idReceta = RECETAS.idReceta"+
@@ -165,9 +166,16 @@ namespace RESTFUL_API.Controllers
                 conn.Open();
                 using (var reader = cmd.ExecuteReader())
                 {
-                    var r = serial.Serialize(reader);
-                    conn.Close();
-                    return r;
+                    if (reader.Read())
+                    {
+                        reader.Close();
+                        var r = serial.Serialize(cmd.ExecuteReader());
+                        conn.Close();
+                        return r;
+                    }
+                    else {
+                        return null;
+                    }
                 }
 
             }
