@@ -194,7 +194,6 @@
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\EstadosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\MedicamentoController.cs" />
     <Compile Include="Controllers\PadecimientosController.cs" />
     <Compile Include="Controllers\PedidosController.cs" />
     <Compile Include="Controllers\ProductosController.cs" />
