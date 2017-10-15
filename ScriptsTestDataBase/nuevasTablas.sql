@@ -57,8 +57,6 @@ create table SUCURSAL(
   idProvincia INT,
   idCanton INT,
   idDistrito INT,
-  Latitud FLOAT,
-  Longitud FLOAT,
   detalleDireccion VARCHAR(200),
   Nombre VARCHAR(80),
   Estado INT,

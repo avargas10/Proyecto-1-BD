@@ -17,5 +17,6 @@ namespace RESTFUL_API.Models
         public string detalleDireccion { get; set; }
         public string Nombre { get; set; }
         public int Estado { get; set; }
+        public string Imagen { get; set; }
     }
 }

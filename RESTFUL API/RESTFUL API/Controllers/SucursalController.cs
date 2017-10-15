@@ -111,5 +111,36 @@ namespace RESTFUL_API.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
+
+        [HttpPut]
+        public HttpResponseMessage updateSucursal(sucursalModel sucursal)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UPDATE  SUCURSAL SET  idEmpresa=@empresa, idProvincia=@provincia, idCanton=@canton, idDistrito=@distrito, detalleDireccion=@direccion, Nombre=@nombre, Estado=@estado, Imagen=@imagen WHERE idSucursal=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", sucursal.idSucursal);
+                    cmd.Parameters.AddWithValue("@empresa", sucursal.idEmpresa);
+                    cmd.Parameters.AddWithValue("@provincia", sucursal.idProvincia);
+                    cmd.Parameters.AddWithValue("@canton", sucursal.idCanton);
+                    cmd.Parameters.AddWithValue("@distrito", sucursal.idDistrito);
+                    cmd.Parameters.AddWithValue("@direccion", sucursal.detalleDireccion);
+                    cmd.Parameters.AddWithValue("@nombre", sucursal.Nombre);
+                    cmd.Parameters.AddWithValue("@estado", sucursal.Estado);
+                    cmd.Parameters.AddWithValue("@imagen", sucursal.Imagen);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    cmd.ExecuteReader();
+                    var message = Request.CreateResponse(HttpStatusCode.Created, sucursal);
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+
+        }
     }
 }
