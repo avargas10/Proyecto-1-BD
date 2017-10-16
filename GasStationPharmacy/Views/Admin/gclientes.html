@@ -1,0 +1,70 @@
+ <div  ng-controller="contClientAdmin" data-ng-init="init()">
+<section class="mainContent clearfix userProfile"  >
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="innerWrapper">
+            <div class="orderBox">
+              <h4 ng-controller="mainController">Stores Managment</h4>
+              <div class="table-responsive">
+                <table class="table" >
+                  <thead>
+                    <tr>
+                      <th>Client Name</th>
+                      <th>Username & ID</th>
+                      <th>Client ID</th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr   ng-repeat="s in clientlist">
+                      <td><i class="fa fa-medkit" aria-hidden="true"></i>  {{s.Nombre}} {{s.pApellido}} </td>
+                      <td><i class="fa fa-medkit" aria-hidden="true"></i> {{s.Username}}</td>
+                      <td><i class="fa fa-medkit" aria-hidden="true"></i> {{s.Cedula}}</td>
+                      <td><a class="btn btn-info" data-toggle="modal" data-target="#myModal">Edit</a></td>
+                      <td><a class="btn btn-danger" ng-click="delete(s.Cedula,s.Direccion,s.Nombre,s.pApellido,s.sApellido,s.Password,s.Username,s.Estado,s.Penalizacion,s.Nacimiento)">delete</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="well well-lg clearfix">
+                <ul class="pager">
+                        <li ><a class="btn btn-succes btn-block"ng-controller="mainController" ng-click="goTo('register')"><i class="fa fa-plus" aria-hidden="true"></i> Add Client</a></li>         
+                
+                </ul>
+              </div>
+      </div>
+    </div>
+  </section>
+  
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Update Client Info</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <label>Name</label>
+            <input type="text" class="form-control" name="nameProd" placeholder="Name of the client" ng-model="name" required>
+            <label>ID</label>
+            <input type="text" class="form-control" name="nameProd" placeholder="ID of the client" ng-model="id" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" ng-click="edit(ID,Direction,Name,fSur,sSur,State,Punish,Birth)">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+e
+
+
+</div>
+

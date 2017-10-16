@@ -1,0 +1,113 @@
+  <!-- MAIN CONTENT SECTION -->
+  <section class="mainContent clearfix signUp" ng-controller="userController" data-ng-init="UpdateDirection()">
+    <div class="container" data-ng-init="getDireccion(getUser().Direccion)" >
+      <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-heading"><h3>sing up</h3></div>
+            <div class="panel-body">
+                    <table class="table">
+                            <thead>
+                              <tr>
+                                <th>Personal Information</th>
+                                <th>Account Information</th>
+                                <th>Adresss Information</th>
+                              </tr>
+                            </thead>
+                            <tbody>    
+                              <tr >
+                                <td class="primary">
+                                    <div class="form-group">
+                                    <label for="reg_username" class="sr-only">Name</label>
+                                    <input type="text" class="form-control" id="Name" name="reg_username" placeholder="{{getUser().Nombre}}" data-ng-model="name" >
+                                  </div>
+                                 
+                                  <div class="form-group">
+                                    <label for="reg_username" class="sr-only">Surname</label>
+                                    <input type="text" class="form-control" id="Surname" name="reg_username" placeholder="{{getUser().pApellido}}" data-ng-model="surname" > 
+                                  </div>
+                                  
+                                  
+                                  <div class="form-group">
+                                    <label for="reg_username" class="sr-only">Second Surname</label>
+                                    <input type="text" class="form-control" id="sSurname" name="reg_username" placeholder="{{getUser().sApellido}}" data-ng-model="sSurname" ></div>
+                                    
+                                    <div class="form-group">
+                                    <label for="reg_username" class="sr-only">Identification</label>
+                                    <input type="text" class="form-control" id="Identification" ng-disabled="true" name="reg_username" placeholder="{{getUser().Cedula}}" data-ng-model="id" >       
+                                  </div>
+                                  <div class="form-group">
+                                        <label for="reg_username" class="sr-only">Phone</label>
+                                        <input type="text" class="form-control" placeholder="{{getUser().Telefono}}" data-ng-model="phone" >
+                                    </div>
+                                  <div class="form-group">			            
+                                          <i class="fa fa-calendar" aria-hidden="true"></i> Born
+                                          <input type="datetime-local" ng-model="date"  value="{{getUser().Nacimiento}}" name="dateUser" required><br>  
+                                  </div>
+                                  </td>
+                                <td class="primary">
+                                      <div class="form-group">
+                                          <div class="input-group">
+                                        <span class="input-group-addon" id="btnGroupAddon">@</span>
+                                        <input type="text" class="form-control" aria-label="Email"  placeholder="{{getUser().Email}}" aria-describedby="btnGroupAddon" data-ng-model="email" >
+                                      </div>
+                                    </div>
+                                 
+                                  <div class="form-group">
+                                    <label for="reg_username" class="sr-only">Username</label>
+                                    <input type="text" class="form-control" id="username" ng-disabled="true" name="reg_username" placeholder="{{getUser().Username}}" data-ng-model="username" > 
+                                  </div>
+                                  
+                                  
+                                  <div class="form-group">
+                                    <label for="reg_username" class="sr-only">Password</label>
+                                    <input type="password" class="form-control" id="password" name="reg_username" placeholder="Password" data-ng-model="password" ></div>
+                                    
+                                    <div class="form-group">
+                                    <label for="reg_username" class="sr-only">Confirm Password</label>
+                                    <input type="password" class="form-control" id="cPassword" name="reg_username" placeholder="Confirm Password" data-ng-model="cPassword" ></div>
+                                    
+                                  </td>
+                                  <td class="primary">
+                                      <div class="form-group">
+                                                <label>State</label>
+                                                <select multiple class="form-control" ng-value="{{direction.Provincia}}" id="sucursales"  >
+                                                        <option ng-repeat="state in states" ng-click="UpdateCities(state.idProvincia)">{{state.Nombre}}</option>
+                                                    </select>
+        
+                                    </div>
+                                 
+                                  <div class="form-group">
+                                                    <label>City</label>
+                                                            <select multiple class="form-control" ng-value="{{direction.Canton}}"  id="sucursales"  >
+                                                                    <option ng-repeat="city in cities" ng-click="UpdateDistricts(city.idCanton)">{{city.Nombre}}</option>
+                                                                </select>
+        
+                                    </div>
+                                 
+                                  
+                                  
+                                  <div class="form-group">
+                                                  <label for="exampleInputEmail1">District</label>
+                                                        <select multiple class="form-control" ng-value="{{direction.Distrito}}" id="sucursales">
+                                                                <option ng-repeat="district in districts" ng-click="setDistrict(district.idDistrito)">{{district.Nombre}}</option>
+                                                            </select>
+                                    </div>
+                                 
+                                    
+                                    <div class="form-group">
+                                    <label for="reg_username" class="sr-only">Address Description</label>
+                                    <input type="text" class="form-control" id="dirSpec"  name="reg_username" placeholder="{{direction.Descripcion}}" data-ng-model="dirSpec" >
+                                </div>
+                                  </td>
+                              </tr>
+                              
+                    
+                            </tbody>
+                          </table>
+                          <button type="submit" class="btn btn-primary btn-block" data-ng-click="updateInfo(getUser().Username,password,cPassword,name,surname,sSurname,getUser().Cedula,dirSpec,date,email,phone,getUser().Direccion)">Edit Info</button>
+                          <button type="submit" class="btn btn-danger btn-block" data-ng-click="deleteUser(getUser().Cedula)">Delete My Account</button>
+            </div>
+          </div>
+      </div>
+    </div>
+  </section>

@@ -1,0 +1,67 @@
+  <!-- MAIN CONTENT SECTION -->
+  <section class="mainContent clearfix stepsWrapper" ng-controller="receipeController">
+        <div class="container" ng-init="getEditForm()">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="innerWrapper clearfix stepsPage">
+                <form action="" class="row"  role="form">
+                  <div class="col-xs-12">
+                    <div class="page-header">
+                      <h4>Edit Your Form</h4>
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-4 col-xs-12">
+                      <img class="img-responsive"  src="data:image/jpg;base64,{{editForm[0].Imagen}}" id="output" style="width: 160px; height: 160px;">
+                  </div>
+                  <div class="form-group col-sm-5 col-xs-8">
+                      <div class="form-group">
+                          <label> Select an Image for this Order</label>
+                          <input type="file" class="form-control-file" id="inputFile" onchange="openFile(event)" >
+                      </div>  
+                  </div>
+                  
+                  <div class="col-xs-12" >
+                    <div class="orderBox">
+                      <div class="table-responsive">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th>Medicamento</th>
+                              <th>ID Medicamento</th>
+                              <th>ID</th>
+                              <th>Cliente</th>
+                              
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody >
+                            <tr ng-repeat="product in editForm">
+                              <td><img class="img-responsive"  src="data:image/jpg;base64,{{product.Image}}" id="output" style="width: 50px; height: 50px;">
+                              </td>
+                            <td># {{product.idMedicamento}}</td>
+                              <td>{{product.idReceta}}</td>
+                              <td>{{product.idCliente}}</td>
+                              
+                              <td><a class="btn btn-danger" ng-click="deleteDetail(product.idMedicamento,product.idReceta,editForm)">delete</a></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12">
+                    <div class="well well-lg clearfix">
+                      <ul class="pager">
+                      <li class="previous"><a ng-controller="mainController" ng-click="goTo('allForms')">back</a></li>
+                        <li class="next"><a  data-ng-click="updateForm(editForm)">Update my Form</a></li>
+                        <li><a class="btn btn-warning" data-ng-click="addToBag(editForm)">Add to Bag</a></li>
+                        
+                      </ul>
+                  </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>

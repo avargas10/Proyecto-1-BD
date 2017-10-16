@@ -1,0 +1,40 @@
+<section class="mainContent clearfix userProfile"  data-ng-controller="orderController">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="innerWrapper">
+                <div class="orderBox">
+                  <h4 ng-controller="mainController">{{getUser().Nombre}} Orders</h4>
+                  <div class="table-responsive">
+                    <table class="table"  ng-init="getAllOrders()">
+                      <thead>
+                        <tr>
+                          
+                          <th>Order ID</th>
+                          <th>Date</th>
+                          <th>Status</th>
+                          <th></th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="order in Orders" >
+                          <td><i class="fa fa-medkit" aria-hidden="true"></i> {{order.idPedido}}</td>
+                          <td>{{(order.horaRecojo).split('T')[0]}}</td>
+                          <td><span ng-show="{{order.Estado==1}}" class="label label-default">Processing</span>
+                              <span ng-show="{{order.Estado==2}}" class="label label-info">Prepared</span>
+                              <span ng-show="{{order.Estado==3}}" class="label label-warning">Factured</span>
+                              <span ng-show="{{order.Estado==4}}" class="label label-success">Retired</span>
+                              <span ng-show="{{order.Estado==5}}" class="label label-danger">Inactive</span></td>
+                          <td><a class="btn btn-default" ng-click="editOrder(order.idPedido)" ng-show="(order.Estado==1||order.Estado==2)">Edit</a></td>
+                          <td><a class="btn btn-danger" ng-click="deleteOrder(order);">delete</a></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>

@@ -1,10 +1,10 @@
-var productos;
-
+var productos=[];
 angular.module("mainModule").controller("contEstAdmin",["$scope","$http",
 function($scope,$http) {
 
 
   $scope.getHttp= function(url , callback){
+    $scope.prod;
     var httpObject = $http.get(url);
     httpObject.then(function(promise){
       callback(promise.data);
@@ -17,31 +17,41 @@ function($scope,$http) {
       }, function(error){ console.log(error);})}
 
       $scope.init=function(){
-        var url = 'http://'+getIp()+':58706/api/Productos';
-        $http.get(url).then(function(msg){
-          client = msg.data;
-          this.medList = client;
-        });
+        //var url = 'http://'+getIp()+':58706/api/Productos?idEmpresa='+empresaAdmin;
+        //$http.get(url).then(function(msg){
+        //  $scope.prod = msg.data;
+        //});
+        
+        this.prod=[
+            {"nombreEmpresa":"Bomba","nombreProducto":"talerdin","sumaCantidad":50},
+            {"nombreEmpresa":"Bomba","nombreProducto":"gex","sumaCantidad":20},
+            {"nombreEmpresa":"Bomba","nombreProducto":"suero","sumaCantidad":10},
+            {"nombreEmpresa":"Bomba","nombreProducto":"condones","sumaCantidad":5}
+          ];
+          var sub=[];
+
+          for(var i=0;i<this.prod.length;i++){
+            sub=[];
+            var nme=this.prod[i].nombreProducto;
+            var qty=this.prod[i].sumaCantidad;
+            sub.push(nme);
+            sub.push(qty);
+            alert(nme+qty);
+            productos.push(sub);
+            
+          }
+
+    chart.dataProvider = AmCharts.parseJSON(productos);
+    chart.validateData();
+
+
+
+
       }
 
-
-
-    }]);
-
-/**
-   productos=[
-    ["Talerdin",200],
-    ["Tabcin",450],
-    ["Antifludes",100],
-    ["Condones",1000],
-    ["Suero",20]
-    ];
-  **/
-    
-    
-    //Vista estadistica
-    
-    var chart = AmCharts.makeChart("chartdiv", {
+   //Vista estadistica
+   alert('fuera');
+      var chart = AmCharts.makeChart("chartdiv", {
       "type": "serial",
       "theme": "light",
       "marginRight": 70,
@@ -120,3 +130,15 @@ function($scope,$http) {
         "enabled": true
       }
     } );
+
+
+    
+
+  
+
+
+
+
+
+    }]);
+
