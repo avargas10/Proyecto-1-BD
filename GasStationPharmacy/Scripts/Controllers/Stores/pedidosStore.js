@@ -30,10 +30,16 @@ angular.module("mainModule").controller("pedidosStore",["$scope","$http",
             });
         };
 
-        $scope.update=function(ste){
-          var id=ste.split("",1);
-            alert(id);
-            animation();
+        $scope.update=function(ste, pedido){
+            var id=ste.split(":",1);
+            var newid = id[0];
+            console.log(newid);
+            var url = 'http://'+getIp()+':58706/api/EstadosPedido';
+            var json = {"idPedido":pedido,"Estado":newid};
+            $http.post(url,json).then(function(msg){
+                console.log(msg.data);
+                $scope.init();
+            });
         }
     
     }]);
