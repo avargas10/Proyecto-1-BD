@@ -17,5 +17,7 @@ namespace RESTFUL_API.Models
         public Nullable<System.DateTime> Nacimiento { get; set; }
         public Nullable<int> Direccion { get; set; }
         public int Estado { get; set; }
+        public int idRol { get; set; }
+        public int idSucursal { get; set; }
     }
 }

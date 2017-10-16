@@ -85,11 +85,11 @@ namespace RESTFUL_API.Controllers
 
 
         [HttpPost]
-        public bool EmpleadoLogin([FromUri]string username, [FromUri]string pass)
+        public HttpResponseMessage EmpleadoLogin([FromUri]string username, [FromUri]string pass)
         {
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("SELECT * FROM EMPLEADO WHERE Username=@user AND Password=@pass", conn);
+                SqlCommand cmd = new SqlCommand("EXEC EMPLEADOLOGIN @user, @pass", conn);
                 cmd.Parameters.AddWithValue("@user", username);
                 cmd.Parameters.AddWithValue("@pass", pass);
                 cmd.Connection = conn;
@@ -98,11 +98,13 @@ namespace RESTFUL_API.Controllers
                 {
                     if (reader.Read())
                     {
-                        return true;
+                        reader.Close();
+                        return Request.CreateResponse(HttpStatusCode.Created, serial.singleserialize(cmd.ExecuteReader()));
                     }
                     else
                     {
-                        return false;
+                        reader.Close();
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, serial.singleserialize(cmd.ExecuteReader())); ;
                     }
                 }
 
@@ -119,7 +121,7 @@ namespace RESTFUL_API.Controllers
                     object user, cedula, estado;
                     SqlCommand cmd1;
 
-                    cmd1 = new SqlCommand("SELECT Estado, Cedula, Username FROM EMPLEADO WHERE idEmpleado=@id OR Username=@user");
+                    cmd1 = new SqlCommand("SELECT Estado, idEmpleado, Username FROM EMPLEADO WHERE idEmpleado=@id OR Username=@user");
                     cmd1.Parameters.AddWithValue("@id", empleado.idEmpleado);
                     cmd1.Parameters.AddWithValue("@user", empleado.Username);
                     cmd1.Connection = conn;
@@ -139,7 +141,7 @@ namespace RESTFUL_API.Controllers
                         }
                         else if ((Convert.ToString(user).Equals(empleado.Username)) && (Convert.ToInt32(cedula) == empleado.idEmpleado) && (Convert.ToInt32(estado) == 0))
                         {
-                            cmd1 = new SqlCommand("UPDATE EMPLEADO SET  Nombre=@nombre, pApellido=@papellido, sApellido=@sapellido, Password=@password, Email=@email, Nacimiento=@nacimiento WHERE idEmpleado=@id", conn);
+                            cmd1 = new SqlCommand("UPDATE EMPLEADO SET  Nombre=@nombre, pApellido=@papellido, sApellido=@sapellido, Password=@password, Email=@email, Nacimiento=@nacimiento, Estado=1 WHERE idEmpleado=@id", conn);
                             cmd1.Parameters.AddWithValue("@id", empleado.idEmpleado);
                             cmd1.Parameters.AddWithValue("@nombre", empleado.Nombre);
                             cmd1.Parameters.AddWithValue("@papellido", empleado.pApellido);
@@ -167,7 +169,7 @@ namespace RESTFUL_API.Controllers
                     }
                     else
                     {
-                        SqlCommand cmd = new SqlCommand("INSERT INTO EMPLEADO(idEmpleado, Nombre, pApellido, sApellido, Password, Username, Email, Nacimiento, Direccion ) VALUES (@cedula,@nombre,@papellido,@sapellido,@password,@username,@email,@nacimiento,@direccion)", conn);
+                        SqlCommand cmd = new SqlCommand("EXEC REGEMPLEADO @cedula, @email, @username, @password, @nombre, @papellido, @sapellido, @nacimiento, @direccion, @estado, @rol, @sucursal", conn);
                         cmd.Parameters.AddWithValue("@cedula", empleado.idEmpleado);
                         cmd.Parameters.AddWithValue("@nombre", empleado.Nombre);
                         cmd.Parameters.AddWithValue("@papellido", empleado.pApellido);
@@ -177,6 +179,9 @@ namespace RESTFUL_API.Controllers
                         cmd.Parameters.AddWithValue("@email", empleado.Email);
                         cmd.Parameters.AddWithValue("@nacimiento", empleado.Nacimiento);
                         cmd.Parameters.AddWithValue("@direccion", empleado.Direccion);
+                        cmd.Parameters.AddWithValue("@estado", empleado.Estado);
+                        cmd.Parameters.AddWithValue("@rol", empleado.idRol);
+                        cmd.Parameters.AddWithValue("@sucursal", empleado.idSucursal);
                         cmd.Connection = conn;
                         conn.Open();
                         cmd.ExecuteReader();
@@ -244,6 +249,8 @@ namespace RESTFUL_API.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
+
+        
 
     }
 }

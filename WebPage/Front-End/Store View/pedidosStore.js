@@ -3,12 +3,20 @@ var app=angular.module("pedidoStore", []);
 app.controller("contPedidoStore",["$scope","$http", 
   function($scope,$http) {
     $scope.state = "";
-    $scope.listOrders;
+    $scope.listOrders=[
+        {"idPedido":1,"Estado":1,'date':'03/06/2017 01:20',"punsih":1},
+        {"idPedido":2,"Estado":1,'date':'02/06/2017 02:20',"punsih":1},
+        {"idPedido":3,"Estado":1,'date':'02/06/2017 03:20',"punsih":2},
+        {"idPedido":4,"Estado":1,'date':'02/06/2017 01:20',"punsih":4},
+
+
+
+    ];
     $scope.statesId=[
-    {'id':'1:','estado':'Nuevo'},
-    {'id':'2:','estado':'Preparado'},
-    {'id':'3:','estado':'Facturado'},
-    {'id':'4:','estado':'Retirado'}
+    {'id':'1:','Estado':'Nuevo'},
+    {'id':'2:','Estado':'Preparado'},
+    {'id':'3:','Estado':'Facturado'},
+    {'id':'4:','Estado':'Retirado'}
     ];
 
 

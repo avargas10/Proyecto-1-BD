@@ -25,7 +25,7 @@ CREATE PROC UPDATEDETALLEPEDIDO(
 AS
 BEGIN
 DECLARE @cant int
-SELECT @cant=Cantidad FROM DETALLEPEDIDO WHERE idPedido=@pedido AND idProducto=@producto
+SET @cant = (SELECT Cantidad FROM DETALLEPEDIDO WHERE idPedido=@pedido AND idProducto=@producto)
 UPDATE DETALLEPEDIDO SET Cantidad=@cantidad WHERE idPedido=@pedido AND idProducto=@producto
 UPDATE PRODUCTOXSUCURSAL SET Cantidad=(Cantidad+@cant) WHERE idSucursal=@sucursal AND codProducto=@producto
 UPDATE PRODUCTOXSUCURSAL SET Cantidad=(Cantidad-@cantidad) WHERE idSucursal=@sucursal AND codProducto=@producto
@@ -42,7 +42,6 @@ BEGIN
 INSERT INTO DETALLEPEDIDO (idProducto, idPedido, Cantidad) VALUES (@producto, @pedido, @cantidad)
 UPDATE PRODUCTOXSUCURSAL SET Cantidad=(Cantidad-@cantidad) WHERE idSucursal=@sucursal AND codProducto=@producto
 END 
-)
 
 
 CREATE PROC DELETEPEDIDO(
@@ -76,4 +75,52 @@ SET @cedula= (SELECT idCliente FROM PEDIDOS WHERE idPedido=@idPedido)
 UPDATE CLIENTE SET Penalizacion=(Penalizacion+1) WHERE Cedula=@cedula
 END
 END
+END
+
+
+CREATE PROC REGEMPLEADO(
+@idEmpleado int,
+@Email varchar(80),
+@Username varchar(50),
+@Password varchar(50),
+@Nombre varchar(50),
+@pApellido varchar(50),
+@sApellido varchar(50),
+@Nacimiento varchar(50),
+@Direccion int,
+@Estado int,
+@idRol int,
+@idSucursal int
+)
+AS
+BEGIN
+INSERT INTO EMPLEADO(idEmpleado, Email, Username, Password, Nombre, pApellido, sApellido, Nacimiento, Direccion, Estado ) VALUES (@idEmpleado, @Email, @Username, @Password, @Nombre, @pApellido, @sApellido, @Nacimiento,@Direccion,@Estado)
+INSERT INTO EMPLEADOXSUCURSAL(idSucursal, idEmpleado, idRol) VALUES (@idSucursal, @idEmpleado, @idRol)
+END
+
+
+CREATE PROC EMPLEADOLOGIN(
+@Username varchar(50),
+@Password varchar(50)
+)
+AS
+BEGIN
+IF EXISTS (SELECT Username FROM EMPLEADO WHERE Username=@Username AND Password=@Password)
+BEGIN
+DECLARE @sucursal int
+DECLARE @empleado int
+SELECT @empleado=idEmpleado FROM EMPLEADO WHERE Username=@Username
+SELECT @sucursal=idSucursal FROM EMPLEADOXSUCURSAL WHERE idEmpleado=@empleado
+SELECT idEmpresa FROM SUCURSAL WHERE idSucursal=@sucursal
+END
+END
+
+CREATE PROC GETESTADISTICA(
+@idEmpresa int
+)
+AS
+BEGIN
+SELECT EMPRESA.Nombre AS nombreEmpresa,  SUCURSAL.Nombre AS nombreSucursal, PRODUCTOS.Nombre AS nombreProducto, PRODUCTOS.idProducto, SUM(DETALLEPEDIDO.Cantidad) AS sumaCantidad FROM PRODUCTOS INNER JOIN DETALLEPEDIDO
+ON PRODUCTOS.idProducto=DETALLEPEDIDO.idProducto INNER JOIN PEDIDOS ON DETALLEPEDIDO.idPedido=PEDIDOS.idPedido INNER JOIN SUCURSAL ON SUCURSAL.idSucursal=PEDIDOS.sucursalRecojo 
+INNER JOIN EMPRESA ON SUCURSAL.idEmpresa=EMPRESA.idEmpresa WHERE(EMPRESA.idEmpresa=@idEmpresa) GROUP BY EMPRESA.Nombre, SUCURSAL.Nombre, PRODUCTOS.Nombre, PRODUCTOS.idProducto 
 END

@@ -37,7 +37,7 @@
 
     <div class="list-group" ng-controller="contPedidoStore" data-ng-init="init()">
 
-      <div ng-repeat="o in listOrders | orderBy: 'date'">
+      <div ng-repeat="o in listOrders | orderBy:['date','punsih']">
 
         <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
           <div class="d-flex justify-content-between">

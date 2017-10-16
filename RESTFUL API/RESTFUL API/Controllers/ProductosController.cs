@@ -70,6 +70,27 @@ namespace RESTFUL_API.Controllers
 
             }
         }
+
+        [HttpGet]
+        public  IEnumerable<Dictionary<string, object>> getEstadistica(int idEmpresa){
+            
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+
+                    SqlCommand cmd = new SqlCommand("EXEC GETESTADISTICA @id", conn);
+                    cmd.Parameters.AddWithValue("@id", idEmpresa);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var r = serial.Serialize(reader);
+                        conn.Close();
+                        return r;
+                    }
+                }
+
+        }
+
         [HttpPost]
         public HttpResponseMessage updateEmpleados(productosModel medicamento)
         {
