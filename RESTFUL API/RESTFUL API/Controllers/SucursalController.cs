@@ -88,7 +88,7 @@ namespace RESTFUL_API.Controllers
                     else
                     {
                         conn.Close();
-                        SqlCommand cmd = new SqlCommand("INSERT INTO SUCURSAL (idEmpresa,idProvincia,idCanton,idDistrito, detalleDireccion,Nombre,Estado) VALUES (@empresa,@provincia,@canton,@distrito,@detalle,@nombre,@estado)", conn);
+                        SqlCommand cmd = new SqlCommand("INSERT INTO SUCURSAL (idEmpresa,idProvincia,idCanton,idDistrito, detalleDireccion,Nombre,Estado) OUTPUT INSERTED.idSucursal VALUES (@empresa,@provincia,@canton,@distrito,@detalle,@nombre,@estado)", conn);
                         cmd.Parameters.AddWithValue("@empresa", suc.idEmpresa);
                         cmd.Parameters.AddWithValue("@provincia", suc.idProvincia);
                         cmd.Parameters.AddWithValue("@canton", suc.idCanton);
@@ -98,8 +98,8 @@ namespace RESTFUL_API.Controllers
                         cmd.Parameters.AddWithValue("@estado", suc.Estado);
                         cmd.Connection = conn;
                         conn.Open();
-                        cmd.ExecuteReader();
-                        var message = Request.CreateResponse(HttpStatusCode.Created, suc);
+                        //cmd.ExecuteReader();
+                        var message = Request.CreateResponse(HttpStatusCode.Created, serial.singleserialize(cmd.ExecuteReader()));
                         return message;
                     }
                 }

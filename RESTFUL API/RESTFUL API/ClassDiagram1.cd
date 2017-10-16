@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="RESTFUL_API.Controllers.CantonesController">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAQIAAgA=</HashCode>
+      <FileName>Controllers\CantonesController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RESTFUL_API.Controllers.ClientesController">
+    <Position X="7.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAgAIAAAAACAAAAAEAAAAAEGAAAQEAAAAAIAAgA=</HashCode>
+      <FileName>Controllers\ClientesController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RESTFUL_API.Controllers.DetallePedidoController">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAgAEAAAAAAAABAAAAAAAAIAAgI=</HashCode>
+      <FileName>Controllers\DetallePedidoController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RESTFUL_API.Controllers.DetalleRecetaController">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQABAAAAgAEQAAAAAAAAAAAAAAAAIAAgA=</HashCode>
+      <FileName>Controllers\DetalleRecetaController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RESTFUL_API.Controllers.DireccionesController">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAQAAAAAAAAAAAAAAEAAAAAAAAAAAAAAIAAIAAgA=</HashCode>
+      <FileName>Controllers\DireccionesController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RESTFUL_API.Controllers.DistritoController">
+    <Position X="2.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAIAAgA=</HashCode>
+      <FileName>Controllers\DistritoController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RESTFUL_API.Controllers.EmpleadosController">
+    <Position X="5.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAQAAAEAwAAAAAAQAQAAAAAAIAAgA=</HashCode>
+      <FileName>Controllers\EmpleadosController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RESTFUL_API.Controllers.EmpresaController">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAIAAgA=</HashCode>
+      <FileName>Controllers\EmpresaController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RESTFUL_API.Controllers.EstadosController">
+    <Position X="9.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAEAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Controllers\EstadosController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RESTFUL_API.Controllers.HomeController">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RESTFUL_API.Controllers.PadecimientosController">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAACAgAAAEAAAAAAAAAAQAAAAAAIAAgA=</HashCode>
+      <FileName>Controllers\PadecimientosController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RESTFUL_API.Controllers.PedidosController">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAIAAAAAAAEAAAAAAAAAAAAAAAAAIAAgQ=</HashCode>
+      <FileName>Controllers\PedidosController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RESTFUL_API.Controllers.ProductosController">
+    <Position X="9.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAABQADAQgEAEAAAAAAAAAAAAAAAAAIAAyA=</HashCode>
+      <FileName>Controllers\ProductosController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RESTFUL_API.Controllers.ProveedoresController">
+    <Position X="7.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAIAAgA=</HashCode>
+      <FileName>Controllers\ProveedoresController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RESTFUL_API.Controllers.ProvinciasController">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAIAAgA=</HashCode>
+      <FileName>Controllers\ProvinciasController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RESTFUL_API.Controllers.RecetasController">
+    <Position X="4" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAACAAAAAAAAAEAAAEAgAAAAAAAgAAAIABgA=</HashCode>
+      <FileName>Controllers\RecetasController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RESTFUL_API.Controllers.RolesController">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAIAgAAAAAAEAAAAAAAAAAACAAAAAIAAgA=</HashCode>
+      <FileName>Controllers\RolesController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RESTFUL_API.Controllers.SucursalController">
+    <Position X="5.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAARAAAAQAAAAAAAAAAEIAAAAAAAAAAAAAAAAIBAgA=</HashCode>
+      <FileName>Controllers\SucursalController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RESTFUL_API.Controllers.ValuesController">
+    <Position X="7.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAACAEAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Controllers\ValuesController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RESTFUL_API.JSONSerializer">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAACAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>JSONSerializer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

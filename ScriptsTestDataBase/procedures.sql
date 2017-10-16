@@ -77,3 +77,24 @@ UPDATE CLIENTE SET Penalizacion=(Penalizacion+1) WHERE Cedula=@cedula
 END
 END
 END
+
+
+CREATE PROC REGEMPLEADO(
+@idEmpleado int,
+@Email varchar(80),
+@Username varchar(50),
+@Password varchar(50),
+@Nombre varchar(50),
+@pApellido varchar(50),
+@sApellido varchar(50),
+@Nacimiento varchar(50),
+@Direccion int,
+@Estado int,
+@idRol int,
+@idSucursal int
+)
+AS
+BEGIN
+INSERT INTO EMPLEADO(idEmpleado, Email, Username, Password, Nombre, pApellido, sApellido, Nacimiento, Direccion, Estado ) VALUES (@idEmpleado, @Email, @Username, @Password, @Nombre, @pApellido, @sApellido, @Nacimiento,@Direccion,@Estado)
+INSERT INTO EMPLEADOXSUCURSAL(idSucursal, idEmpleado, idRol) VALUES (@idSucursal, @idEmpleado, @idRol)
+END
