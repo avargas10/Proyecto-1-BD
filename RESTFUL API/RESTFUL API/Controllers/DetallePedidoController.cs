@@ -144,10 +144,11 @@ namespace RESTFUL_API.Controllers
             {
                 using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
                 {
-                    SqlCommand cmd = new SqlCommand("UPDATE DETALLEPEDIDO SET Cantidad=@cantidad WHERE idPedido=@id AND idProducto=@producto", conn);
-                    cmd.Parameters.AddWithValue("@id", detalle.idPedido);
+                    SqlCommand cmd = new SqlCommand("EXEC UPDATEDETALLEPEDIDO @producto, @pedido, @sucursal, @cantidad", conn);
                     cmd.Parameters.AddWithValue("@producto", detalle.idProducto);
+                    cmd.Parameters.AddWithValue("@pedido", detalle.idPedido);
                     cmd.Parameters.AddWithValue("@cantidad", detalle.Cantidad);
+                    cmd.Parameters.AddWithValue("@sucursal", detalle.idSucursal);
                     cmd.Connection = conn;
                     conn.Open();
                     cmd.ExecuteReader();

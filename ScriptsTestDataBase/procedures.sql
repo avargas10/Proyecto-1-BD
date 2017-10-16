@@ -16,8 +16,23 @@ END
 END
 
 
-CREATE PROC CREATEDETALLEPEDIDO(
+CREATE PROC UPDATEDETALLEPEDIDO(
 @producto int,
+@pedido int,
+@sucursal int,
+@cantidad int
+)
+AS
+BEGIN
+DECLARE @cant int
+UPDATE DETALLEPEDIDO SET Cantidad=@cantidad WHERE idPedido=@pedido AND idProducto=@producto
+SELECT @cant=Cantidad FROM DETALLEPEDIDO WHERE idPedido=@pedido AND idProducto=@producto
+UPDATE PRODUCTOXSUCURSAL SET Cantidad=(Cantidad+@cant) WHERE idSucursal=@sucursal AND codProducto=@producto
+UPDATE PRODUCTOXSUCURSAL SET Cantidad=(Cantidad-@cantidad) WHERE idSucursal=@sucursal AND codProducto=@producto
+END
+
+CREATE PROC CREATEDETALLEPEDIDO(
+   @producto int,
 @pedido int,
 @sucursal int,
 @cantidad int
@@ -26,7 +41,8 @@ AS
 BEGIN
 INSERT INTO DETALLEPEDIDO (idProducto, idPedido, Cantidad) VALUES (@producto, @pedido, @cantidad)
 UPDATE PRODUCTOXSUCURSAL SET Cantidad=(Cantidad-@cantidad) WHERE idSucursal=@sucursal AND codProducto=@producto
-END
+END 
+)
 
 
 CREATE PROC DELETEPEDIDO(
