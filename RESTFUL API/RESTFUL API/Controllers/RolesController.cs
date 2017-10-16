@@ -39,6 +39,7 @@ namespace RESTFUL_API.Controllers
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
                 SqlCommand cmd = new SqlCommand("SELECT idRol,Nombre,Descripcion,Estado, Empresa FROM ROLES WHERE Empresa=@id AND Estado!=0", conn);
+                cmd.Parameters.AddWithValue("@id", id);
                 cmd.Connection = conn;
                 conn.Open();
                 using (var reader = cmd.ExecuteReader())
