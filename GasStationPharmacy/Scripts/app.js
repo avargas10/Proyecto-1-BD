@@ -1,6 +1,6 @@
 var globalImage="";
 var currentImage="";
-var empresaAdmin;
+var empresaAdmin="1";
 var app = angular.module("mainModule",
   ["ngRoute",
     'vcRecaptcha']);

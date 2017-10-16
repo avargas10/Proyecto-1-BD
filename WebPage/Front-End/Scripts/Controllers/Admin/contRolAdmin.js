@@ -15,7 +15,7 @@ function($scope,$http) {
       }, function(error){ console.log(error);})}
 
       $scope.init = function(){
-        var url = 'http://'+getIp()+':58706/api/Roles/{idAdmin}';
+        var url = 'http://'+getIp()+':58706/api/Roles/'+1;
         $http.get(url).then(function(msg){
           $scope.rollist= msg.data;
         });

@@ -1,5 +1,5 @@
 var globalImage="";
-var empresaAdmin;
+var empresaAdmin="1";
 var app = angular.module("mainModule",
   ["ngRoute",
     'vcRecaptcha']);
@@ -16,13 +16,7 @@ var openFile = function(event) {
     };
     reader.readAsDataURL(input.files[0]);
  }
-  
-
-
-
-
-    
-    
+        
       function isBlank(str) {
         return (!str || /^\s*$/.test(str));
       }
