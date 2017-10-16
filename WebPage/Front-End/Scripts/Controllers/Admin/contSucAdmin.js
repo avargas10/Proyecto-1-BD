@@ -21,6 +21,7 @@ function($scope,$http) {
           $scope.sucList= msg.data;
         });
 
+        
       };
 
       $scope.delete=function(id,emp,cant,dist,dir,nme,ste,img){

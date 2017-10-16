@@ -57,7 +57,13 @@
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label> Choose Image {{image}}</label>
+          <label>Quantity</label>
+          <input type="text" class="form-control" placeholder="Price of the product" ng-model="qty" required>
+
+
+        </div>
+        <div class="form-group col-md-6">
+          <label> Choose Image</label>
           <input type="file" class="form-control-file" id="inputFile" onchange="openFile(event)" >
           <small id="fileHelp" class="form-text text-muted">Select an image to represent the product</small>
           
@@ -67,7 +73,7 @@
 
       </div>
       
-      <button type="submit" class="btn btn-primary" ng-click="createProduct(id,house,name,medicine,presc,price)">
+      <button type="submit" class="btn btn-primary" ng-click="createProduct(id,house,name,medicine,presc,price,qty)">
       Create Product
       </button>
 
