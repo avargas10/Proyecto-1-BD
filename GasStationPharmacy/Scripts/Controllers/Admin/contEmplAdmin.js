@@ -30,9 +30,32 @@ function($scope,$http) {
       $scope.edit=function(){
       }
 
-      $scope.delete=function(){
-        this.employeelist.pop();
-        animation();
+      $scope.delete=function(id,user,pass,nme,pAp,sAp,date,dir,ste){
+        var url = 'http://'+getIp()+':58706/api/Empleados';
+        var data={
+          "idEmpleado":id,
+          "Username":user,
+          "Password":pass,
+          "Nombre":nme,
+          "pApellido":pAp,
+          "sApellido":sAp,
+          "Nacimiento":date,
+          "Direccion":dir,
+          "Estado":ste
+
+        };
+        $http.delete(url,data)
+        .then(
+            function(response){
+              // success callback
+              console.log("erase");
+              animation();
+
+            }, 
+            function(response){
+              // failure callback
+            }
+         );
       }
 
     }]);

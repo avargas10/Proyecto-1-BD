@@ -1,0 +1,101 @@
+  <div  ng-controller="contEmplAdmin" data-ng-init="init()">
+<section class="mainContent clearfix userProfile"  >
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="innerWrapper">
+            <div class="orderBox">
+              <h4 ng-controller="mainController">Employee Managment</h4>
+              <div class="table-responsive">
+                <table class="table" >
+                  <thead>
+                    <tr>
+                      <th>Employee Name</th>
+                      <th>User & Email</th>
+                      <th>Employee ID</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+              </thead>
+              <tbody>
+              	<tr   ng-repeat="s in employeelist">
+              		<td><i class="fa fa-medkit" aria-hidden="true"></i>  {{s.Nombre}} {{s.pApellido}} </td>
+              		<td><i class="fa fa-medkit" aria-hidden="true"></i> <p>{{s.Username}} </p>
+              		<p>{{s.Email}}</p></td>
+              		<td><i class="fa fa-medkit" aria-hidden="true"></i> 
+              		{{s.idEmpleado}}
+              		</td>
+              		<td><a class="btn btn-info" data-toggle="modal" data-target="#myModal">Edit</a></td>
+              		<td><a class="btn btn-danger" ng-click="delete(s.idEmpleado,s.Username,s.Password,s.Nombre,s.pApellido,s.sApellido,s.Nacimiento,s.Direccion,s.Estado)">delete</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="well well-lg clearfix">
+                <ul class="pager">
+                        <li ><a class="btn btn-succes btn-block"ng-controller="mainController" ng-click="goTo('register')"><i class="fa fa-plus" aria-hidden="true"></i> Add Employee</a></li>         
+                
+                </ul>
+              </div>
+      </div>
+    </div>
+  </section>
+  
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  	<div class="modal-dialog" role="document">
+  		<div class="modal-content">
+  			<div class="modal-header">
+  				<h5 class="modal-title" id="exampleModalLabel">Update Employee Info</h5>
+  				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  					<span aria-hidden="true">&times;</span>
+  				</button>
+  			</div>
+  			<div class="modal-body">
+  				<label>Name</label>
+  				<input type="text" class="form-control" name="nameProd" placeholder="Name of the client" ng-model="name" required>
+  				<label>ID</label>
+  				<input type="text" class="form-control" name="nameProd" placeholder="ID of the client" ng-model="id" required>
+  				<label>Email</label>
+  				<input type="text" class="form-control" name="empEmail" placeholder="Name of the product" ng-model="empEmail" required>
+  			</div>
+  			<label for="sucursales">Username</label>
+  			<input type="text" class="form-control" name="empUser" placeholder="Name of the product" ng-model="empUser" required>
+  			<label>Password</label>
+  			<input type="password" class="form-control" placeholder="Price of the product" ng-model="userPass" required>
+  			<label>Surname</label>
+  			<input type="text" class="form-control" placeholder="Price of the product" ng-model="empSur" required>
+  			<label>Second Surname</label>
+  			<input type="text" class="form-control" placeholder="Price of the product" ng-model="empSecSur" required>
+  			<label>Direction</label>
+  			<input type="text" class="form-control" id="dirSpec" name="reg_username" placeholder="Address Description" data-ng-model="dirSpec" >
+  			<label>State</label>
+  			<select multiple class="form-control" id="sucursales"  >
+  				<option ng-repeat="state in states" ng-click="UpdateCities(state.idProvincia)">{{state.Nombre}}</option>
+  			</select>
+  			<label>City</label>
+  			<select multiple class="form-control" id="sucursales"  >
+  				<option ng-repeat="city in cities" ng-click="UpdateDistricts(city.idCanton)">{{city.Nombre}}</option>
+  			</select>
+  			<label for="exampleInputEmail1">District</label>
+  			<select multiple class="form-control" id="sucursales"  >
+  				<option ng-repeat="district in districts" ng-click="setDistrict(district.idDistrito)">{{district.Nombre}}</option>
+  			</select>
+  			<label>Birth Date</label><br>
+  			<input type="datetime-local" ng-model="empDate" name="empDate" required>
+
+
+  			<div class="modal-footer">
+  				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+  				<button type="button" class="btn btn-primary" ng-click="edit(ID,Direction,Name,fSur,sSur,State,Punish,Birth)">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+e
+
+
+</div>
+
