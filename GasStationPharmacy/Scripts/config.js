@@ -32,6 +32,7 @@ angular.module("mainModule").config(function ( $routeProvider, $locationProvider
       when('/Admin/nuevMed', { templateUrl: '../Views/Admin/nuevMed.html', controller: 'userController' }).
       when('/Admin/nuevRol', { templateUrl: '../Views/Admin/nuevRol.html', controller: 'userController' }).
       when('/Admin/nuevSuc', { templateUrl: '../Views/Admin/nuevSuc.html', controller: 'userController' }).
+      when('/Stores/pedidosStore', { templateUrl: '../Views/Stores/pedidosStore.html', controller: 'userController' }).
   //----------------------Main View------------------------------------------------------------
       otherwise({ redirectTo: '/Home' });
     // $locationProvider.html5Mode(true);
