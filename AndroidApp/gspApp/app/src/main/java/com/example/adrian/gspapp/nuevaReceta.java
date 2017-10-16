@@ -42,6 +42,7 @@ public class nuevaReceta extends AppCompatActivity {
     JSONArray lista;
     static List<Integer> selectedItems;
     private AppAdapter mAdapter;
+    private String foto;
     List<Item> items;
     Button send;
 
@@ -98,6 +99,7 @@ public class nuevaReceta extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 JSONObject obj= new JSONObject();
+                if(validateData()){
                 try {
                     obj.put("idCliente", MainActivity.clientInfo.getInt("Cedula"));
                     obj.put("Imagen", encodedprescription);
@@ -158,6 +160,9 @@ public class nuevaReceta extends AppCompatActivity {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                }}else{
+                    Toast.makeText(getApplicationContext(), "Please fill all information!", Toast.LENGTH_LONG ).show();
+
                 }
             }
         });
@@ -332,5 +337,14 @@ public class nuevaReceta extends AppCompatActivity {
            ImageView icon;
            TextView text, text1;
        }
+    }
+
+    private boolean validateData(){
+       if((encodedprescription!=null)&&(!doctor.getText().equals(""))&&(selectedItems.size()!=0)){
+           return true;
+       }else{
+           return false;
+       }
+
     }
 }
