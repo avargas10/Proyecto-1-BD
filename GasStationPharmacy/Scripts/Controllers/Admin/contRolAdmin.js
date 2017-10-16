@@ -1,6 +1,12 @@
 angular.module("mainModule").controller("contRolAdmin", ["$scope","$http",
 function($scope,$http) {
-  $scope.rollist;
+  $scope.rolList=[
+    {"Nombre":"Cajero", "idRol":"1","Descripcion":"Caja","idEmpresa":"1"},
+    {"Nombre":"Cajero", "idRol":"1","Descripcion":"Caja","idEmpresa":"1"},
+    {"Nombre":"Cajero", "idRol":"1","Descripcion":"Caja","idEmpresa":"1"},
+    {"Nombre":"Cajero", "idRol":"1","Descripcion":"Caja","idEmpresa":"1"}
+
+  ];
   $scope.idAdmin=empresaAdmin;
   $scope.getHttp= function(url , callback){
     var httpObject = $http.get(url);
@@ -15,9 +21,10 @@ function($scope,$http) {
       }, function(error){ console.log(error);})}
 
       $scope.init = function(){
+        alert("init");
         var url = 'http://'+getIp()+':58706/api/Roles';
         $http.get(url).then(function(msg){
-          $scope.rollist= msg.data;
+          $this.rolList= msg.data;
         });
 
       };
@@ -25,9 +32,25 @@ function($scope,$http) {
 
       $scope.edit=function(){
       }
-      $scope.delete=function(){
-        this.rollist.pop();
-        animation();
-      }
+      $scope.delete=function(id,nme,desc,emp){
+        var url = 'http://'+getIp()+':58706/api/Roles';
+        var data={
+          "idRol":id,
+          "Nombre":nme,
+          "Descripcion":desc,
+          "idEmpresa":emp
+        };
+        $http.delete(url,data)
+        .then(
+            function(response){
+              // success callback
+              console.log("erase");
+              animation();
 
+            }, 
+            function(response){
+              // failure callback
+            }
+         );
+      }
     }]);

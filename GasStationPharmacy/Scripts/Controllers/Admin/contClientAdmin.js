@@ -26,15 +26,67 @@ function($scope,$http) {
       };
 
 
-  $scope.edit=function(){
-    alert('hola');
-    alert(this.idAdmin);
-  }
+      $scope.edit=function(id,dir,nme,pAp,sAp,pass,usr,ste,pnz,date){
 
-  $scope.delete=function(){
-      this.clientlist.pop();
-      animation();
-  }
+        var url = 'http://'+getIp()+':58706/api/Clientes';
+        var data={
+          "Cedula":id,
+          "Direccion":dir,
+          "Nombre":nme,
+          "pApellido":pAp,
+          "sApellido":sAp,
+          "Password":pass,
+          "Username":usr,
+          "Estado":ste,
+          "Penalizacion":pnz,
+          "Nacimiento":date
+
+        };
+        $http.put(url,data)
+        .then(
+          function(response){
+              // success callback
+              console.log("erase");
+              animation();
+
+            }, 
+            function(response){
+              // failure callback
+            }
+            );
+
+      }
+
+
+      $scope.delete=function(id,dir,nme,pAP,sAp,pass,usr,ste,pnz,data){
+
+        var url = 'http://'+getIp()+':58706/api/Clientes';
+        var data={
+          "Cedula":id,
+          "Direccion":dir,
+          "Nombre":nme,
+          "pApellido":pAp,
+          "sApellido":sAp,
+          "Password":pass,
+          "Username":usr,
+          "Estado":ste,
+          "Penalizacion":pnz,
+          "Nacimiento":date
+
+        };
+        $http.delete(url,data)
+        .then(
+            function(response){
+              // success callback
+              console.log("erase");
+              animation();
+
+            }, 
+            function(response){
+              // failure callback
+            }
+         );
+      }
 
 }]);
 

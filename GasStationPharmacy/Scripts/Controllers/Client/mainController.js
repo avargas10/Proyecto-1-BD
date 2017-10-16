@@ -98,6 +98,10 @@ angular.module("mainModule").controller("mainController", ["$scope", "$http", "$
         case 'newOrder':
           $location.path("/newOrder");
           break;
+        case 'nuevEmpleado':
+          $location.path("/Admin/nuevEmpleado");
+          break;
+
         default:
       }
     };

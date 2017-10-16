@@ -20,6 +20,14 @@ function($scope,$http) {
     animation();
   };
 
+      $scope.init = function(){
+      url = 'http://'+getIp()+':58706/api/Empresa';
+      $http.get(url).then(function(msg){
+        $scope.empList = msg.data;
+      });
+    }
+
+
 }]);
 
 
