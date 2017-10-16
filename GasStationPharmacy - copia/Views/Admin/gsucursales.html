@@ -1,0 +1,102 @@
+<div  ng-controller="contSucAdmin" data-ng-init="init()">
+<section class="mainContent clearfix userProfile"  >
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="innerWrapper">
+            <div class="orderBox">
+              <h4 ng-controller="mainController">Stores Managment</h4>
+              <div class="table-responsive">
+                <table class="table" >
+                  <thead>
+                    <tr>
+                      <th>Store Name</th>
+                      <th>Store ID</th>
+                      <th>Address Description</th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr   ng-repeat="s in sucList" ng-if="s.idEmpresa==idAdmin" >
+                      <td><i class="fa fa-medkit" aria-hidden="true"></i>  {{s.Nombre}}</td>
+                      <td><i class="fa fa-medkit" aria-hidden="true"></i> {{s.idSucursal}}</td>
+                      <td><i class="fa fa-medkit" aria-hidden="true"></i> {{s.detalleDireccion}}</td>
+                      <td><a class="btn btn-info" data-toggle="modal" data-target="#myModal">Edit</a></td>
+                      <td><a class="btn btn-danger" ng-click="delete(s.idSucursal,s.idEmpresa,s.idCanton,s.idDistrito,s.detalleDireccion,s.Nombre,s.Estado,s.Imagen)">delete</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="well well-lg clearfix">
+                <ul class="pager">
+                        <li ><a class="btn btn-succes btn-block"ng-controller="mainController" ng-click="goTo('nuevSuc')"><i class="fa fa-plus" aria-hidden="true"></i> Add Store</a></li>         
+                
+                </ul>
+              </div>
+      </div>
+    </div>
+  </section>
+  <div class="modal fade" id="myModal"   ng-controller="userController" data-ng-init="UpdateDirection()" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update Sucursales Info</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" ng-controller="contNuevSucAdmin" ng-init="init()">
+
+          <label for="sucursales">Company ID</label>
+          <select  class="form-control"  ng-model="idEmp" required>
+            <option ng-repeat="e in empList">{{e.idEmpresa}}-{{e.Nombre}}</option>
+          </select>
+
+          <label>Name</label>
+          <input type="text" class="form-control" name="nameProd" placeholder="Name of the Store" ng-model="name" ng-pattern="/^[A-Z][a-z]$/" required>
+
+          <div class="form-group">
+            <label>State</label>
+            <select multiple class="form-control" id="sucursales"  >
+                    <option ng-repeat="state in states" ng-click="UpdateCities(state.idProvincia)">{{state.Nombre}}</option>
+                </select>
+
+                </div>
+
+                <div class="form-group">
+                <label>City</label>
+                        <select multiple class="form-control" id="sucursales"  >
+                                <option ng-repeat="city in cities" ng-click="UpdateDistricts(city.idCanton)">{{city.Nombre}}</option>
+                            </select>
+
+                </div>
+
+
+
+                <div class="form-group">
+                <label for="exampleInputEmail1">District</label>
+                        <select multiple class="form-control" id="sucursales"  >
+                                <option ng-repeat="district in districts" ng-click="setDistrict(district.idDistrito)">{{district.Nombre}}</option>
+                            </select>
+                </div>
+
+          <label>Direction</label>
+          <textarea class="form-control" name="inputList" ng-model="dir" ng-pattern="/^[A-Za-z0-9]/" required>
+          </textarea>
+
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" ng-click="edit(ID,Empresa,Canton,Distrito,Direccion,Nombre,Estado,Imagen)">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+

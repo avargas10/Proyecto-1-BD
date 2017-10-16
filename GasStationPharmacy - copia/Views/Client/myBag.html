@@ -1,0 +1,56 @@
+    <!-- MAIN CONTENT SECTION -->
+    <section class="mainContent clearfix cartListWrapper" ng-controller="storeController" ng-init="getBag()">
+            <div class="container">
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="cartListInner">
+                    <form action="#">
+                      <div class="table-responsive">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th>Product Name</th>
+                              <th>Price</th>
+                              <th>Quantity</th>
+                              <th>Sub Total</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="product in bag">
+                              <td class="col-xs-2">
+                                    <button type="button" class="close" ng-click="deleteFromBag(product)" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <span class="cartImage"><img  src="data:image/jpg;base64,{{product.product.Image}}" style="width: 50px; height: 50px;" alt="image"></span>
+                              </td>
+                              <td class="col-xs-4">{{product.product.Nombre}}</td>
+                              <td class="col-xs-2">₡{{product.product.Precio}}</td>
+                              <td class="col-xs-2"> <select ng-model="quantity" ng-change="{{getPrice(product,quantity)}}" ng-value="product.Cantidad" ng-options="number for number in [1,2,3,4,5,6,7,8,9,10,11]"></select></td>
+                              <td class="col-xs-2" > {{product.totalPrice}}</td>
+                            </tr>
+                            
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="row totalAmountArea">
+                        <div class="col-sm-4 col-sm-offset-8 col-xs-12">
+                          <ul class="list-unstyled">
+                            <li>Sub Total <span>₡{{getFinalPrice();}}</span></li>
+                            <li>CR Shipping <span>₡0</span></li>
+                            <li>Total <span class="grandTotal">₡{{getFinalPrice();}}</span></li>
+                          </ul>
+                        </div>
+                      </div>
+
+                     <div class="well well-lg clearfix">
+                            <ul class="pager">
+                                    <li class="next"><a class="btn btn-primary btn-block"ng-controller="mainController" ng-click="goTo('storeProducts')"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Continue Shoppinp</a></li>
+                            <li class="previous"> <a class="btn btn-primary btn-block" ng-click="verifyAllNumbers()" >Checkout <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a></li>
+                            
+                            </ul>
+                          </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
