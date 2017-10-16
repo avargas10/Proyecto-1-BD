@@ -42,7 +42,6 @@ BEGIN
 INSERT INTO DETALLEPEDIDO (idProducto, idPedido, Cantidad) VALUES (@producto, @pedido, @cantidad)
 UPDATE PRODUCTOXSUCURSAL SET Cantidad=(Cantidad-@cantidad) WHERE idSucursal=@sucursal AND codProducto=@producto
 END 
-)
 
 
 CREATE PROC DELETEPEDIDO(
@@ -114,4 +113,14 @@ SELECT @empleado=idEmpleado FROM EMPLEADO WHERE Username=@Username
 SELECT @sucursal=idSucursal FROM EMPLEADOXSUCURSAL WHERE idEmpleado=@empleado
 SELECT idEmpresa FROM SUCURSAL WHERE idSucursal=@sucursal
 END
+END
+
+CREATE PROC GETESTADISTICA(
+@idEmpresa int
+)
+AS
+BEGIN
+SELECT EMPRESA.Nombre AS nombreEmpresa,  SUCURSAL.Nombre AS nombreSucursal, PRODUCTOS.Nombre AS nombreProducto, PRODUCTOS.idProducto, SUM(DETALLEPEDIDO.Cantidad) AS sumaCantidad FROM PRODUCTOS INNER JOIN DETALLEPEDIDO
+ON PRODUCTOS.idProducto=DETALLEPEDIDO.idProducto INNER JOIN PEDIDOS ON DETALLEPEDIDO.idPedido=PEDIDOS.idPedido INNER JOIN SUCURSAL ON SUCURSAL.idSucursal=PEDIDOS.sucursalRecojo 
+INNER JOIN EMPRESA ON SUCURSAL.idEmpresa=EMPRESA.idEmpresa WHERE(EMPRESA.idEmpresa=@idEmpresa) GROUP BY EMPRESA.Nombre, SUCURSAL.Nombre, PRODUCTOS.Nombre, PRODUCTOS.idProducto 
 END
