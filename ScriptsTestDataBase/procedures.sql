@@ -124,3 +124,17 @@ SELECT EMPRESA.Nombre AS nombreEmpresa,  SUCURSAL.Nombre AS nombreSucursal, PROD
 ON PRODUCTOS.idProducto=DETALLEPEDIDO.idProducto INNER JOIN PEDIDOS ON DETALLEPEDIDO.idPedido=PEDIDOS.idPedido INNER JOIN SUCURSAL ON SUCURSAL.idSucursal=PEDIDOS.sucursalRecojo 
 INNER JOIN EMPRESA ON SUCURSAL.idEmpresa=EMPRESA.idEmpresa WHERE(EMPRESA.idEmpresa=@idEmpresa) GROUP BY EMPRESA.Nombre, SUCURSAL.Nombre, PRODUCTOS.Nombre, PRODUCTOS.idProducto 
 END
+
+
+CREATE PROC DELETEDETALLEPEDIDO(
+@pedido int,
+@producto int,
+@sucursal int
+)
+AS
+BEGIN
+DECLARE @cant int
+SET @cant = (SELECT Cantidad FROM DETALLEPEDIDO WHERE idPedido=@pedido AND idProducto=@producto)
+DELETE FROM DETALLEPEDIDO WHERE idPedido=@pedido AND idProducto=@producto
+UPDATE PRODUCTOXSUCURSAL SET Cantidad=(Cantidad+@cant) WHERE codProducto=@producto AND idSucursal=@sucursal	
+END
