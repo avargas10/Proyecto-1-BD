@@ -25,7 +25,7 @@ CREATE PROC UPDATEDETALLEPEDIDO(
 AS
 BEGIN
 DECLARE @cant int
-SELECT @cant=Cantidad FROM DETALLEPEDIDO WHERE idPedido=@pedido AND idProducto=@producto
+SET @cant = (SELECT Cantidad FROM DETALLEPEDIDO WHERE idPedido=@pedido AND idProducto=@producto)
 UPDATE DETALLEPEDIDO SET Cantidad=@cantidad WHERE idPedido=@pedido AND idProducto=@producto
 UPDATE PRODUCTOXSUCURSAL SET Cantidad=(Cantidad+@cant) WHERE idSucursal=@sucursal AND codProducto=@producto
 UPDATE PRODUCTOXSUCURSAL SET Cantidad=(Cantidad-@cantidad) WHERE idSucursal=@sucursal AND codProducto=@producto
