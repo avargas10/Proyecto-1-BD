@@ -147,8 +147,8 @@ namespace RESTFUL_API.Controllers
                     SqlCommand cmd = new SqlCommand("EXEC UPDATEDETALLEPEDIDO @producto, @pedido, @sucursal, @cantidad", conn);
                     cmd.Parameters.AddWithValue("@producto", detalle.idProducto);
                     cmd.Parameters.AddWithValue("@pedido", detalle.idPedido);
-                    cmd.Parameters.AddWithValue("@cantidad", detalle.Cantidad);
                     cmd.Parameters.AddWithValue("@sucursal", detalle.idSucursal);
+                    cmd.Parameters.AddWithValue("@cantidad", detalle.Cantidad);
                     cmd.Connection = conn;
                     conn.Open();
                     cmd.ExecuteReader();

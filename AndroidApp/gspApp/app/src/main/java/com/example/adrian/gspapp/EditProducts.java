@@ -138,15 +138,24 @@ public class EditProducts extends AppCompatActivity {
                 Toast.makeText(this, "Please fill all the blank spaces", Toast.LENGTH_SHORT).show();
             }
             else {
+                for(int i = 0; i < Config.selectedallrelation.size() ; i++){
+                    JSONObject pad1 = new JSONObject();
+                    pad1.put("idProducto", Config.selectedallrelation.get(i));
+                    pad1.put("idPedido", generaldata.getInt("idPedido"));
+                    pad1.put("Cantidad", Config.selectedcant.get(i));
+                    pad1.put("idSucursal", sucursal);
+                    Connection.getInstance().UpdateDetallePedido(pad1);
+                }
+
                 Connection.getInstance().deleteDetalle(generaldata.getInt("idPedido"));
 
                 for(int i = 0; i < Config.selectedallrelation.size() ; i++){
-                    JSONObject pad = new JSONObject();
-                    pad.put("idProducto", Config.selectedallrelation.get(i));
-                    pad.put("idPedido", generaldata.getInt("idPedido"));
-                    pad.put("Cantidad", Config.selectedcant.get(i));
-                    pad.put("idSucursal", sucursal);
-                    Connection.getInstance().regDetalle(pad);
+                    JSONObject pad1 = new JSONObject();
+                    pad1.put("idProducto", Config.selectedallrelation.get(i));
+                    pad1.put("idPedido", generaldata.getInt("idPedido"));
+                    pad1.put("Cantidad", Config.selectedcant.get(i));
+                    pad1.put("idSucursal", sucursal);
+                    Connection.getInstance().regDetalle(pad1);
                 }
 
                 JSONObject pad = new JSONObject();
