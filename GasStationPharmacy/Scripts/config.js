@@ -3,7 +3,7 @@ angular.module("mainModule").config(function ( $routeProvider, $locationProvider
     //----------------------Shared Views------------------------------------------------------------
       when('/Home', { templateUrl: '../Views/Shared/home-view.html', controller: 'mainController' }).
       when('/login', { templateUrl: '../Views/Shared/login-view.html', controller: 'userController' }).
-      when('/userInfo', { templateUrl: '../Views/Shared/userInfo.html', controller: 'userController' }).
+      when('/userInfo', { templateUrl: '../Views/Shared/editInfo.html', controller: 'userController' }).
       when('/register', { templateUrl: '../Views/Shared/register.html', controller: 'userController' }).
    //----------------------Client Views------------------------------------------------------------
       when('/products', { templateUrl: '../Views/Client/client.html', controller: 'userController' }).
@@ -17,6 +17,9 @@ angular.module("mainModule").config(function ( $routeProvider, $locationProvider
       when('/prescription', { templateUrl: '../Views/Client/prescription.html', controller: 'receipeController' }).
       when('/allForms', { templateUrl: '../Views/Client/allForms.html', controller: 'receipeController' }).
       when('/editForm', { templateUrl: '../Views/Client/editForm.html', controller: 'receipeController' }).
+      when('/newIllness', { templateUrl: '../Views/Client/newIllness.html', controller: 'illController'}).
+      when('/illnesses', { templateUrl: '../Views/Client/illnesses.html', controller: 'illController'}).
+      when('/editIllness', { templateUrl: '../Views/Client/editIllness.html', controller: 'illController'}).
   //----------------------Admin Views------------------------------------------------------------
       when('/Admin/estadistica', { templateUrl: '../Views/Admin/estadistica.html', controller: 'userController' }).
       when('/Admin/gclientes', { templateUrl: '../Views/Admin/gclientes.html', controller: 'userController' }).

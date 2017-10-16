@@ -51,7 +51,7 @@
                               <td># {{product.Cantidad}}</td>
                               <td class="col-xs-2"> <select ng-model="quantity" ng-change="{{getPrice(product,quantity)}}" ng-value="product.Cantidad" ng-options="number for number in [1,2,3,4,5,6,7,8,9,10]"></select></td>
                               <td><a class="btn btn-danger" ng-click="deleteDetail(product.idProducto,product.idPedido,editOrder)">delete</a></td>
-                              <td><a class="btn btn-success" ng-click="updateDetail(product,quantity)">Update</a></td>
+                              <td><a class="btn btn-success" ng-click="verifyDetail(product,quantity)">Update</a></td>
                               
                             </tr>
                           </tbody>

@@ -1,5 +1,6 @@
-angular.module("mainModule").controller("userController", ["$scope", "$http", "$location", "$routeParams", "userService", 'directionService',
-function ($scope, $http, $location, $routeParams, userService, directionService) {
+angular.module("mainModule").controller("userController", ["$scope", "$http", "$location", 
+"$routeParams", "userService", 'directionService',"orderService","receipeService","storeService",
+function ($scope, $http, $location, $routeParams, userService, directionService,orderService,receipeService,storeService) {
   var states;
   var cities;
   var districts;
@@ -17,21 +18,90 @@ function ($scope, $http, $location, $routeParams, userService, directionService)
     }, function (error) {alert(error.data); console.log(error); })
   }
 
-  $scope.updateInfo=function(username, password, conPassword, name, surname, sSurname, id, dir, date, email){
-    console.log("username "+username);
-    console.log("name "+name);
-    console.log("surname "+surname);
-    console.log("email "+email);
+  $scope.updateInfo=function(username, password, conPassword, name, surname, sSurname, id, dirSpec, date, email,phone,idDir){
+    if (createValidation(username, password, conPassword, name, surname, sSurname, id, date, email,phone)) {
+    if(password==conPassword){
+    if(directionService.update()){
+      UpdateDirection(idDir,dirSpec);
+    }
+    var url = 'http://'+getIp()+':58706/api/Clientes';
+    var sendData = {
+      "Cedula": parseInt(id),
+      "Nombre": name,
+      "pApellido": surname,
+      "sApellido": sSurname,
+      "Password": password,
+      "Username": username,
+      "Email": email,
+      "Nacimiento": date,
+      "Direccion": idDir,
+      "Telefono":parseInt(phone)
+    };
+    $http.put(url,sendData)
+    .then(
+        function(response){
+          // success callback
+          console.log("update");
+          directionService.setUpdate();
+          userService.logout();
+          storeService.cleanBag();
+          orderService.clean();
+          receipeService.cleanMeds();
+          $location.path("/Home");
+
+        }, 
+        function(response){
+          // failure callback
+        }
+     );
   }
+  else {
+    alert("Error(03): Passwords not match");
+  }
+}
+else { alert("Error(01): Can't sign in, space in blank"); }
+  
+}
 
   function isBlank(str) {
     return (!str || /^\s*$/.test(str));
   }
+  
 
+
+   function UpdateDirection(id,dirspec){
+    var url = 'http://'+getIp()+':58706/api/Direcciones';
+    var sendData = {
+      "idDireccion": id ,
+      "Provincia": directionService.getState(),
+      "Canton": directionService.getCity(),
+      "Distrito": directionService.getDistrict(),
+      "Descripcion": dirspec
+    }
+    $http.put(url,sendData)
+    .then(
+        function(response){
+          console.log("update");
+        }, 
+        function(response){
+          // failure callback
+        }
+     );
+    }
+
+ 
+$scope.getDireccion=function(id){
+    console.log("id: "+id);
+    var url = 'http://'+getIp()+':58706/api/Direcciones?id='+id;
+        $scope.getHttp(url,(data)=>{
+          $scope.direction = data;
+          console.log(data);
+        })
+      }
 
   $scope.loginUser = function (username, password, getCaptcha) {
     if (!isBlank(username) && !isBlank(password)) {
-      console.log("entra");
+      console.log("entra "+directionService.update());
       var url = 'http://'+getIp()+':58706/api/Clientes?username=' + username + '&pass=' + password;
       $http.post(url).then(function (msg) {
         if (msg.data) {
@@ -52,6 +122,37 @@ function ($scope, $http, $location, $routeParams, userService, directionService)
       alert("Error(01): Can't sign in, space in blank or not getCaptcha");
     }
   };
+
+  $scope.deleteUser=function(id){
+    if (confirm('Sure you want to delete?')) {
+    console.log("id: "+id);
+    var url = 'http://'+getIp()+':58706/api/Clientes';
+    var sendData = {
+      Cedula: id
+    };
+    $http({
+      method: 'DELETE',
+      url: url,
+      data: sendData,
+      headers: {
+          'Content-type': 'application/json;charset=utf-8'
+      }
+  })
+  .then(function successCallback(data) {
+    alert("Client "+userService.getUser().Nombre+" deleted");
+    userService.logout();
+    storeService.cleanBag();
+    orderService.clean();
+    receipeService.cleanMeds();
+    $location.path("/Home");
+    
+  },
+  function errorCallback(response) {
+    alert(response);
+  });
+    }
+  }
+
   $scope.UpdateDirection = function () {
     console.log("direction update");
     var url = 'http://'+getIp()+':58706/api/Provincias';

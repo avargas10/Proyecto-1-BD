@@ -14,6 +14,7 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
         Estado: 1
       };
       console.log("image: "+needPres());
+      if(!isBlank(phoneNumber)){
       if(!storeService.isEmpty()){
       if(needPres()){
         if(!isEmpty(globalImage)){
@@ -34,7 +35,11 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
       }
      }
       else{alert("Shopping bag is empty");
-     }}
+     }
+    }
+    else{alert("Data is Missing");
+  }
+    }
 
      
 
@@ -107,7 +112,7 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
       $http.delete(url)
       .then(function successCallback(data) {
         alert("Product "+detail+" deleted");
-        $scope.getEditOrder();
+        $location.path('/allOrders');
       },
       function errorCallback(response) {
         alert(response);
@@ -115,9 +120,7 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
     }
 
     $scope.getEditOrder=function(){
-      console.log(orderService.getEditOrder());
       currentImage = orderService.getEditOrder()[0].Imagen;
-      console.log('currentImage: '+currentImage);
       $scope.editOrder = orderService.getEditOrder();
       
     }
@@ -187,7 +190,26 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
          );
       }
 
-      $scope.updateDetail=function(order,quantity){
+      $scope.verifyDetail=function(order,quantity){
+        if( typeof quantity === 'undefined' || quantity === null ){
+          return null;
+          }
+        var url='http://'+getIp()+':58706/api/Productos/';
+        var sendData={
+               codProducto: order.idProducto,
+               idSucursal: order.sucursalRecojo,
+               Cantidad: quantity,
+        };
+            $http.put(url,sendData)
+            .then(function successCallback(data) {
+              updateDetail(order,quantity);
+            },
+            function errorCallback(response) {
+              alert("Reduce the number of "+order.Nombre);
+            });
+      }
+
+      function updateDetail(order,quantity){
         var url = 'http://'+getIp()+':58706/api/DetallePedido';
         var sendData={
           idPedido: order.idPedido,
@@ -200,7 +222,7 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
         .then(
             function(response){
               // success callback
-              console.log("update");
+              alert("Updated");
             }, 
             function(response){
               // failure callback
@@ -215,6 +237,7 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
             function(response){
               // success callback
               console.log("erase");
+              $location.path('/allOrders');
             }, 
             function(response){
               // failure callback
@@ -238,6 +261,8 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
             function errorCallback(response) {
               alert("Reduce the number of "+product.Nombre);
               $location.path("/order");
+              
+             
             });
           }
 

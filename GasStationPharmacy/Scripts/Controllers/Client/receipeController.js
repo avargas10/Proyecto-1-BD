@@ -25,7 +25,44 @@ function (orderService,receipeService,$scope, $http, $location, $routeParams, us
         alert("No Medicines Added to Form");
       }
     }
+
+    function getProSucursal(pro,suc,id){
+      var url = 'http://'+getIp()+':58706/api/Productos?Suc='+suc+'&CodProd='+id;
+      var send;
+      $scope.postHttp(url,send,(data)=>{
+        if(data==null){alert(pro.Nombre+' Out Stock'); return null; }
+        console.log("producto: "+data);
+        pro['Precio']=data.Precio;
+        var product= {product:pro,totalPrice:data.Precio};
+        storeService.addToBag(product);
+      })
     
+    }
+
+    function getProduct(id,suc){
+      console.log("idMedicamento "+id);
+      var url = 'http://'+getIp()+':58706/api/Productos?Cod='+id;
+      var send;
+      $scope.postHttp(url,send,(data)=>{
+        console.log("producto: "+data.data);
+        getProSucursal(data,suc,id);
+      })
+    }
+    
+    $scope.addToBag=function(form){
+      if(isBlank(storeService.getStore())){
+        alert("First select a store");
+        return null;
+      }
+      for (var index = 0; index < form.length; index++) {
+         if(!alreadyInBag(form[index])){
+            getProduct(form[index].idMedicamento,storeService.getStore().idSucursal);
+         }
+        
+      }
+      $location.path('/myBag');
+    }
+
     $scope.goBack=function(){
       receipeService.cleanMeds();
       $location.path("/myBag");
@@ -152,6 +189,14 @@ function (orderService,receipeService,$scope, $http, $location, $routeParams, us
       });
     }
     
+    function alreadyInBag(product){
+      var bag = storeService.getBag();
+      for (var index = 0; index < bag.length; index++) {
+        if(product.idMedicamento==bag[index].product.idProducto)
+        {return true;}
+      }
+      return false;
+    }
     
     $scope.deleteDetail=function(detail,form,products){
       console.log("detail: "+detail);

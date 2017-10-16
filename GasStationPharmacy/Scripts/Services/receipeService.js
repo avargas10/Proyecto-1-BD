@@ -10,6 +10,7 @@ angular.module("mainModule").service('receipeService',function(){
     this.setForm=function(pForm){form = pForm;}
     this.getForm=function(){return form;}
     this.cleanForm=function(){form = null;}
+  
     this.addMed=function(med){
        meds.push(med);
        console.log("Med "+med);

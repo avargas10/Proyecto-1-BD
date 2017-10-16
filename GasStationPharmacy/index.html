@@ -54,6 +54,7 @@
   <script src="Scripts/Services/orderService.js"></script>
   <script src="Scripts/Services/storeService.js"></script>
   <script src="Scripts/Services/receipeService.js"></script>
+  <script src="Scripts/Services/illnessService.js"></script>
 
   <!--Imports client app scripts -->
   <script src="Scripts/Controllers/Client/mainController.js"></script>
@@ -61,6 +62,7 @@
   <script src="Scripts/Controllers/Client/storeController.js"></script>
   <script src="Scripts/Controllers/Client/orderController.js"></script>
   <script src="Scripts/Controllers/Client/receipeController.js"></script>
+  <script src="Scripts/Controllers/Client/illnessesController.js"></script>
   <script src="Scripts/angular-recaptcha.min.js"></script>
 
   <!--Imports Admin app scripts -->
@@ -111,12 +113,12 @@
                 <ul class="list-inline pull-right top-right">
                   <li class="account-login"><span><a data-toggle="modal" ng-show="!isActive()" ng-click="goTo('login')">Log in</a>
                     <a data-toggle="modal" ng-show="!isActive()" ng-click="goTo('signup')">Create an account</a>
-                    <a data-toggle="modal" ng-show="isActive()" >{{getUser().Nombre}} {{getUser().pApellido}}</a>
+                    <a data-toggle="modal" ng-click="goTo('userInfo')" ng-show="isActive()" >{{getUser().Nombre}} {{getUser().pApellido}}</a>
                     <a data-toggle="modal" ng-show="isActive()" data-ng-click = "logOutUser()"> Log Out</a>
                   </span></li>
 
                   <li class="dropdown cart-dropdown" ng-click="getBag()" ng-controller="storeController">
-                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"  ><i class="fa fa-shopping-cart"></i>₡{{getFinalPrice();}}</a>
+                    <a  class="dropdown-toggle" data-toggle="dropdown"  ><i class="fa fa-shopping-cart"></i>₡{{getFinalPrice();}}</a>
                     <ul class="dropdown-menu dropdown-menu-right">
                       <li>Item(s) in your cart</li>
                       <li  ng-repeat="product in bag" >
@@ -161,16 +163,22 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
               <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                  <a href="javascript:void(0)" class="dropdown-toggle" ng-click="goTo('home')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Home</a>
+                  <a  class="dropdown-toggle" ng-click="goTo('home')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Home</a>
                 </li>
                 <li class="dropdown">
-                    <a href="javascript:void(0)" class="dropdown-toggle" ng-click="goTo('stores')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stores</a>
-                  </li>
-                <li class="dropdown megaDropMenu">
-                  <a href="javascript:void(0)" class="dropdown-toggle" ng-show="isActive()" ng-click= "goTo('allOrders')" data-toggle="dropdown" data-hover="dropdown" data-delay="300" data-close-others="true" aria-expanded="false">My Orders</b></a>
+                  <a  class="dropdown-toggle"  ng-show="isActive()" ng-click="goTo('userInfo')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account</a>
                 </li>
-                <li class="dropdown megaDropMenu">
-                    <a href="javascript:void(0)" class="dropdown-toggle"  ng-show="isActive()" ng-click= "goTo('allForms')" data-toggle="dropdown" data-hover="dropdown" data-delay="300" data-close-others="true" aria-expanded="false">My Forms</b></a>
+                <li class="dropdown">
+                    <a  class="dropdown-toggle" ng-click="goTo('stores')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stores</a>
+                  </li>
+                <li class="dropdown ">
+                  <a  class="dropdown-toggle" ng-show="isActive()" ng-click= "goTo('allOrders')" data-toggle="dropdown" data-hover="dropdown" data-delay="300" data-close-others="true" aria-expanded="false">My Orders</b></a>
+                </li>
+                <li class="dropdown ">
+                    <a  class="dropdown-toggle"  ng-show="isActive()" ng-click= "goTo('allForms')" data-toggle="dropdown" data-hover="dropdown" data-delay="300" data-close-others="true" aria-expanded="false">My Forms</b></a>
+                  </li>
+                  <li class="dropdown ">
+                    <a  class="dropdown-toggle"  ng-show="isActive()" ng-click= "goTo('illnesses')" data-toggle="dropdown" data-hover="dropdown" data-delay="300" data-close-others="true" aria-expanded="false">My Illnesses</b></a>
                   </li>
               </ul>
             </div><!-- /.navbar-collapse -->

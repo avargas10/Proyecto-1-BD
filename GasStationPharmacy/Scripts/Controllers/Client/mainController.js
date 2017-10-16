@@ -21,7 +21,17 @@ angular.module("mainModule").controller("mainController", ["$scope", "$http", "$
       switch (option) {
         case 'home':
           $location.path("/Home");
+          break; 
+        case 'illnesses':
+          $location.path("/illnesses");
           break;
+        case 'newIllness':
+          $location.path("/newIllness");
+          break;
+        case 'editIllnesses':
+          $location.path("/editIllnesses");
+          break;
+          
         case 'verify':
           $location.path("/accountVer");
           break;

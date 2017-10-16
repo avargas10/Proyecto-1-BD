@@ -1,0 +1,33 @@
+<section class="mainContent clearfix userProfile"  data-ng-controller="illController">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="innerWrapper">
+            <div class="orderBox">
+              <h4 ng-controller="mainController">{{getUser().Nombre}} Illnesses</h4>
+              <div class="table-responsive">
+                <table class="table"  ng-init="getAllIllness()">
+                  <thead>
+                    <tr>
+                      
+                      <th>Illness</th>
+                      <th>Date</th>
+                      <th></th> 
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="ill in ilnesses" >
+                      <td><i class="fa fa-medkit" aria-hidden="true"></i> {{ill.Nombre}}</td>
+                      <td>{{(ill.Fecha).split('T')[0]}}</td>
+                      <td><a class="btn btn-default" ng-click="getIllness(ill.idPadecimiento)" >Edit</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-success btn-block" ng-controller="mainController" data-ng-click="goTo('newIllness')">Add Illness</button>
+      </div>
+    </div>
+  </section>

@@ -51,6 +51,8 @@ function ($scope, $http, $location, $routeParams, userService, directionService)
       alert("Error(01): Can't sign in, space in blank or not getCaptcha");
     }
   };
+
+
   $scope.UpdateDirection = function () {
     console.log("direction update");
     var url = 'http://'+getIp()+':58706/api/Provincias';
