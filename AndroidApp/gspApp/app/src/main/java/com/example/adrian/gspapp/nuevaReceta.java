@@ -340,7 +340,7 @@ public class nuevaReceta extends AppCompatActivity {
     }
 
     private boolean validateData(){
-       if((encodedprescription!=null)&&(!doctor.getText().equals(""))&&(selectedItems.size()!=0)){
+       if((encodedprescription!=null)&&(!doctor.getText().toString().equals(""))&&(selectedItems.size()!=0)){
            return true;
        }else{
            return false;

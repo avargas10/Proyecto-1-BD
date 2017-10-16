@@ -81,6 +81,7 @@ public class Registro extends AppCompatActivity {
         registro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(validateInfo()){
                 JSONObject data = new JSONObject();
                 JSONObject direccion =new JSONObject();
                 try {
@@ -123,6 +124,8 @@ public class Registro extends AppCompatActivity {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                }}else {
+                    Toast.makeText(getApplicationContext(), "Please fill all information!", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -268,6 +271,17 @@ public class Registro extends AppCompatActivity {
 
             distrito.setAdapter(dataAdapter);
 
+    }
+
+    private boolean validateInfo(){
+        if(username.getText().toString().equals("")||pass.getText().toString().equals("")||name.getText().toString().equals("")||
+                pApellido.getText().toString().equals("")||sApellido.getText().toString().equals("")||cedula.getText().toString().equals("")||
+                telefono.getText().toString().equals("")||nacimiento.getText().toString().equals("")||email.getText().toString().equals("")||
+                direccionExacta.getText().toString().equals("")){
+            return false;
+        }else{
+            return true;
+        }
     }
 
 }
