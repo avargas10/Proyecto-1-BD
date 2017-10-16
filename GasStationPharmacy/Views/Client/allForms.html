@@ -1,0 +1,41 @@
+<section class="mainContent clearfix userProfile"  data-ng-controller="receipeController">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="innerWrapper">
+                <div class="orderBox">
+                  <h4 ng-controller="mainController">{{getUser().Nombre}} Forms</h4>
+                  <div class="table-responsive">
+                    <table class="table"  ng-init="getAllForms()">
+                      <thead>
+                        <tr>
+                          <th>Form Photo</th>
+                          <th>Form ID</th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr  ng-repeat="form in forms" >
+                            <td><img class="media-object" src="data:image/jpg;base64,{{form.Imagen}}" style="width: 80px; height: 70px;"></td>
+                          <td><i class="fa fa-medkit" aria-hidden="true"></i> ID: {{form.idReceta}}</td>
+                          <td><a class="btn btn-info" ng-click="editForm(form.idReceta)">Edit</a></td>
+                          <td><a class="btn btn-success">Add to Bag</a></td>
+                          <td><a class="btn btn-danger" ng-click="deleteForm(form)">delete</a></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="well well-lg clearfix">
+                    <ul class="pager">
+                            <li ><a class="btn btn-succes btn-block"ng-controller="mainController" ng-click="goTo('prescription')"><i class="fa fa-plus" aria-hidden="true"></i> New Form</a></li>         
+                    
+                    </ul>
+                  </div>
+          </div>
+        </div>
+      </section>

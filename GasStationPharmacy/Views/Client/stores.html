@@ -1,0 +1,24 @@
+<!-- DARK SECTION -->
+<section class="darkSection clearfix"  ng-controller="storeController" ng-init="getStores()">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <h3>Our Store Locations</h3>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12"  ng-repeat="store in stores">
+          <div class="thumbnail">
+            <div class="caption">
+              <h5>{{store.Nombre}}</h5>
+              <address>
+                {{store.detalleDireccion}}
+              </address>
+              <div ng-controller="mainController" ng-show="isActive()">
+                <button type="button" ng-controller="storeController" class="btn btn-default" ng-click="setStore(store)" >Buy here</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
