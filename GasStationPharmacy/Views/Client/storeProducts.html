@@ -1,0 +1,30 @@
+     <!-- MAIN CONTENT SECTION -->
+     <section class="mainContent clearfix productsContent" ng-init="getProducts()" ng-controller="storeController">
+            <div class="container">
+              <div class="row filterArea">
+                
+              </div>
+              <div class="row">
+                <div class="col-sm-4 col-xs-12" ng-repeat="product in products">
+                  <div class="productBox">
+                    <div class="productImage clearfix">
+                      <img src="data:image/jpg;base64,{{product.Image}}" alt="products-img">
+                      <div class="productMasking">
+                        <ul class="list-inline btn-group" role="group">
+
+                          <li><a  ng-click="addToBag(product)" class="btn btn-default"><i class="fa fa-shopping-cart"></i></a></li>
+
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="productCaption clearfix">
+                      <a href="single-product.html">
+                        <h5>{{product.Nombre}}</h5>
+                      </a>
+                      <h3>₡{{product.Precio}}</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
