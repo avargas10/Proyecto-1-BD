@@ -112,15 +112,16 @@ namespace RESTFUL_API.Controllers
         }
 
         [HttpDelete]
-        public HttpResponseMessage deleteDetalle(int idPedido, int idProducto)
+        public HttpResponseMessage deleteDetalle(int idPedido, int idProducto, int idSucursal)
         {
             try
             {
                 using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
                 {
-                    SqlCommand cmd = new SqlCommand("DELETE FROM DETALLEPEDIDO WHERE idPedido=@id AND idProducto=@producto", conn);
+                    SqlCommand cmd = new SqlCommand("EXEC DELETEDETALLEPEDIDO @id, @producto, @sucursal", conn);
                     cmd.Parameters.AddWithValue("@id", idPedido);
                     cmd.Parameters.AddWithValue("@producto", idProducto);
+                    cmd.Parameters.AddWithValue("@sucursal", idSucursal);
                     cmd.Connection = conn;
                     conn.Open();
                     cmd.ExecuteReader();
