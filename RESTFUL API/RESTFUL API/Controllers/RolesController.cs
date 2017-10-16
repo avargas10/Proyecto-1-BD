@@ -34,7 +34,7 @@ namespace RESTFUL_API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Dictionary<string, object>> getRolbyEmpresa(int id)
+        public IEnumerable<Dictionary<string, object>> getRolbyEmpresa([FromUri] int id)
         {
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
