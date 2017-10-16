@@ -85,11 +85,11 @@ namespace RESTFUL_API.Controllers
 
 
         [HttpPost]
-        public bool EmpleadoLogin([FromUri]string username, [FromUri]string pass)
+        public HttpResponseMessage EmpleadoLogin([FromUri]string username, [FromUri]string pass)
         {
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("SELECT * FROM EMPLEADO WHERE Username=@user AND Password=@pass", conn);
+                SqlCommand cmd = new SqlCommand("EXEC EMPLEADOLOGIN @user, @pass", conn);
                 cmd.Parameters.AddWithValue("@user", username);
                 cmd.Parameters.AddWithValue("@pass", pass);
                 cmd.Connection = conn;
@@ -98,11 +98,13 @@ namespace RESTFUL_API.Controllers
                 {
                     if (reader.Read())
                     {
-                        return true;
+                        reader.Close();
+                        return Request.CreateResponse(HttpStatusCode.Created, serial.singleserialize(cmd.ExecuteReader()));
                     }
                     else
                     {
-                        return false;
+                        reader.Close();
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, serial.singleserialize(cmd.ExecuteReader())); ;
                     }
                 }
 
@@ -110,7 +112,7 @@ namespace RESTFUL_API.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage regEmpleado([FromBody] adminModel empleado)
+        public HttpResponseMessage regEmpleado([FromBody] empleadosModel empleado)
         {
             try
             {

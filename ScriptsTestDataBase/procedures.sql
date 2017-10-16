@@ -98,3 +98,20 @@ BEGIN
 INSERT INTO EMPLEADO(idEmpleado, Email, Username, Password, Nombre, pApellido, sApellido, Nacimiento, Direccion, Estado ) VALUES (@idEmpleado, @Email, @Username, @Password, @Nombre, @pApellido, @sApellido, @Nacimiento,@Direccion,@Estado)
 INSERT INTO EMPLEADOXSUCURSAL(idSucursal, idEmpleado, idRol) VALUES (@idSucursal, @idEmpleado, @idRol)
 END
+
+
+CREATE PROC EMPLEADOLOGIN(
+@Username varchar(50),
+@Password varchar(50)
+)
+AS
+BEGIN
+IF EXISTS (SELECT Username FROM EMPLEADO WHERE Username=@Username AND Password=@Password)
+BEGIN
+DECLARE @sucursal int
+DECLARE @empleado int
+SELECT @empleado=idEmpleado FROM EMPLEADO WHERE Username=@Username
+SELECT @sucursal=idSucursal FROM EMPLEADOXSUCURSAL WHERE idEmpleado=@empleado
+SELECT idEmpresa FROM SUCURSAL WHERE idSucursal=@sucursal
+END
+END
