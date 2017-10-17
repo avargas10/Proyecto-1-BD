@@ -1,5 +1,5 @@
-angular.module("mainModule").controller("contRolAdmin", ["$scope","$http",
-function($scope,$http) {
+angular.module("mainModule").controller("contRolAdmin", ["$scope","$http",'userService',
+function($scope,$http,userService) {
   $scope.rolList=[
     {"Nombre":"Cajero", "idRol":"1","Descripcion":"Caja","idEmpresa":"1"},
     {"Nombre":"Cajero", "idRol":"1","Descripcion":"Caja","idEmpresa":"1"},
@@ -21,10 +21,9 @@ function($scope,$http) {
       }, function(error){ console.log(error);})}
 
       $scope.init = function(){
-        alert("init");
-        var url = 'http://'+getIp()+':58706/api/Roles';
+        var url = 'http://'+getIp()+':58706/api/Roles/'+userService.getCompany();
         $http.get(url).then(function(msg){
-          $this.rolList= msg.data;
+          $scope.rolList= msg.data;
         });
 
       };
@@ -32,25 +31,29 @@ function($scope,$http) {
 
       $scope.edit=function(){
       }
-      $scope.delete=function(id,nme,desc,emp){
+      $scope.delete=function(id,nme,desc){
         var url = 'http://'+getIp()+':58706/api/Roles';
         var data={
-          "idRol":id,
+          "idRol": id,
           "Nombre":nme,
           "Descripcion":desc,
-          "idEmpresa":emp
+          "idEmpresa":userService.getCompany()
         };
-        $http.delete(url,data)
-        .then(
-            function(response){
-              // success callback
-              console.log("erase");
-              animation();
-
-            }, 
-            function(response){
-              // failure callback
+          $http({
+            method: 'DELETE',
+            url: url,
+            data: data,
+            headers: {
+                'Content-type': 'application/json;charset=utf-8'
             }
-         );
+        })
+        .then(function(response) {
+          alert("Rol "+nme+" deleted");
+          $scope.init();
+        }, function(rejection) {
+            console.log(rejection.data);
+        });
+        
+      
       }
     }]);

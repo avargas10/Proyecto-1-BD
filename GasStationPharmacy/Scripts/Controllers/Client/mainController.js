@@ -6,6 +6,9 @@ angular.module("mainModule").controller("mainController", ["$scope", "$http", "$
     $scope.isActive = function () {
       return userService.getActive();
     }
+    $scope.isEmpActive = function () {
+      return userService.getEmpActive();
+    }
     $scope.getUser = function () {
       return userService.getUser();
     }

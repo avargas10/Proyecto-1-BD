@@ -19,7 +19,7 @@
                         <tr  ng-repeat="form in forms" >
                             <td><img class="media-object" src="data:image/jpg;base64,{{form.Imagen}}" style="width: 80px; height: 70px;"></td>
                           <td><i class="fa fa-medkit" aria-hidden="true"></i> ID: {{form.idReceta}}</td>
-                          <td><a class="btn btn-info" ng-click="editForm(form.idReceta)">Edit</a></td>
+                          <td><a class="btn btn-info" ng-click="editMyForm(form.idReceta)">Edit</a></td>
                           <td><a class="btn btn-danger" ng-click="deleteForm(form)">delete</a></td>
                         </tr>
                       </tbody>

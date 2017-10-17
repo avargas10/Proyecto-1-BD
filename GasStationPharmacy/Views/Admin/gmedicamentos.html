@@ -23,7 +23,7 @@
                       <td><i class="fa fa-medkit" aria-hidden="true"></i> {{s.idProducto}}</td>
                       <td><i class="fa fa-medkit" aria-hidden="true"></i> {{s.esMedicamento}}</td>
                       <td><a class="btn btn-info" data-toggle="modal" data-target="#myModal">Edit</a></td>
-                      <td><a class="btn btn-danger" ng-click="delete(s.idProducto,s.Proveedor,s.Nombre,s.esMedicamento,s.reqPrescripcion)"delete</a></td>
+                      <td><a class="btn btn-danger" ng-click="delete(s.idProducto,s.Nombre)">delete</a></td>
                     </tr>
                   </tbody>
                 </table>
@@ -33,7 +33,7 @@
         </div>
         <div class="well well-lg clearfix">
                 <ul class="pager">
-                        <li ><a class="btn btn-succes btn-block"ng-controller="mainController" ng-click="goTo('register')"><i class="fa fa-plus" aria-hidden="true"></i> Add Client</a></li>         
+                        <li ><a class="btn btn-succes btn-block"ng-controller="mainController" ng-click="goTo('nuevMed')"><i class="fa fa-plus" aria-hidden="true"></i> Add Product</a></li>         
                 
                 </ul>
               </div>

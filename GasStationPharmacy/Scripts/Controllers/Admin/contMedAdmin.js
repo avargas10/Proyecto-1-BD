@@ -31,29 +31,27 @@ function($scope,$http) {
       $scope.edit=function(name,id){
       }
 
-      $scope.delete=function(id,prov,nme,med,presc){
+      $scope.delete=function(id,nme){
         var url = 'http://'+getIp()+':58706/api/Productos';
         var data={
           "idProducto":id,
-          "Proveedor":prov,
-          "Nombre":nme,
-          "esMedicamento":med,
-          "reqPrescripcion":presc
         };
-        $http.delete(url,data)
-        .then(
-            function(response){
-              // success callback
-              console.log("erase");
-              animation();
-
-            }, 
-            function(response){
-              // failure callback
-            }
-         );
-      }
-    //this.getProducts();
+        $http({
+          method: 'DELETE',
+          url: url,
+          data: data,
+          headers: {
+              'Content-type': 'application/json;charset=utf-8'
+          }
+      })
+      .then(function(response) {
+        alert("Product "+nme+" deleted");
+        $scope.init();
+      }, function(rejection) {
+          console.log(rejection.data);
+      });
+      
+    }
 
 
     }]);

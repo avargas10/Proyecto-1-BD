@@ -83,12 +83,27 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
       $http.delete(url)
       .then(function successCallback(data) {
         alert("Order "+order+" deleted");
-        $location.path('/Home');
+        $scope.getAllOrders();
       },
       function errorCallback(response) {
         alert(response);
       });
     }
+
+    $scope.myOrder=function(order){
+      console.log("order "+order);
+      url= 'http://'+getIp()+':58706/api/Productos?idPed='+order;
+      $http.get(url)
+      .then(function successCallback(data) {
+        console.log(data);
+        orderService.setEditOrder(data.data);
+        $scope.getEditOrder();
+      },
+      function errorCallback(response) {
+        alert(response);
+      });
+    }
+
     $scope.editOrder=function(order){
       console.log("order "+order);
       url= 'http://'+getIp()+':58706/api/Productos?idPed='+order;
@@ -103,16 +118,18 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
       });
     }
 
-    $scope.deleteDetail=function(detail,order,products){
+    $scope.deleteDetail=function(detail,order,products,store){
       if(products.length==1){
         alert("Order can't be empty");
         return null;
       }
-      url= 'http://'+getIp()+':58706/api/DetallePedido?idPedido='+order+'&idProducto='+detail;
+      
+      url= 'http://'+getIp()+':58706/api/DetallePedido?idPedido='+order+'&idProducto='+detail+
+      '&idSucursal='+store;
       $http.delete(url)
       .then(function successCallback(data) {
         alert("Product "+detail+" deleted");
-        $location.path('/allOrders');
+        $scope.myOrder(order);
       },
       function errorCallback(response) {
         alert(response);

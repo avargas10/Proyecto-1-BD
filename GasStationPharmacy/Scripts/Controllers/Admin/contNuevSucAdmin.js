@@ -1,6 +1,7 @@
-angular.module("mainModule").controller("contNuevSucAdmin", ["$scope","$http","directionService",'$location','storeService',
+angular.module("mainModule").controller("contNuevSucAdmin", ["$scope","$http","directionService",'$location',
+'storeService','userService',
 
-  function($scope,$http,directionService,$location,storeService) {
+  function($scope,$http,directionService,$location,storeService,userService) {
     $scope.idEmp = "";
     $scope.name="";
     $scope.idCant="";
@@ -40,10 +41,10 @@ angular.module("mainModule").controller("contNuevSucAdmin", ["$scope","$http","d
     }
 
 
-    $scope.createStore=function(idE,nme,dr){
+    $scope.createStore=function(nme,dr){
       idE=idE.split("",1)[0];
       var url='http://'+getIp()+':58706/api/Sucursal';
-      var sendData={"Nombre": nme, "detalleDireccion":dr, "idEmpresa":idE, "idCanton":directionService.getCity(), "idProvincia": directionService.getState(), "idDistrito":directionService.getDistrict() , "Estado":"1"};
+      var sendData={"Nombre": nme, "detalleDireccion":dr, "idEmpresa":userService.getCompany(), "idCanton":directionService.getCity(), "idProvincia": directionService.getState(), "idDistrito":directionService.getDistrict() , "Estado":"1"};
       console.log("send: "+sendData);
       $scope.postHttp(url,sendData,(data)=>{
         console.log("id: "+data.idSucursal);

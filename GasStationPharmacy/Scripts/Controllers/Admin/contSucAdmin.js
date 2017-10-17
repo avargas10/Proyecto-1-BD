@@ -1,5 +1,5 @@
-angular.module("mainModule").controller("contSucAdmin", ["$scope","$http",
-function($scope,$http) {
+angular.module("mainModule").controller("contSucAdmin", ["$scope","$http","$location",
+function($scope,$http,$location) {
 
   $scope.idAdmin=empresaAdmin;
 
@@ -26,31 +26,29 @@ function($scope,$http) {
 
     
 
-      $scope.delete=function(id,emp,cant,dist,dir,nme,ste,img){
+      $scope.delete=function(id){
         var url = 'http://'+getIp()+':58706/api/Sucursal';
         var data={
-          "idSucursal":id,
-          "idEmpresa":emp,
-          "idCanton":cant,
-          "idDistrito":dist,
-          "detalleDireccion":dir,
-          "Nombre":nme,
-          "Estado":ste,
-          "Imagen":img
+          "idSucursal":id
         };
-        $http.delete(url,data)
-        .then(
-            function(response){
-              // success callback
-              console.log("erase");
-              animation();
+        $http({
+          method: 'DELETE',
+          url: url,
+          data: data,
+          headers: {
+              'Content-type': 'application/json;charset=utf-8'
+          }
+      })
+      .then(function(response) {
+        alert("Store "+id+" deleted");
+        $scope.init();
+      }, function(rejection) {
+          console.log(rejection.data);
+      });
+      
+    }
 
-            }, 
-            function(response){
-              // failure callback
-            }
-         );
-      }
+
 
 
   $scope.edit=function(id,emp,cant,dist,dir,nme,ste,img){
