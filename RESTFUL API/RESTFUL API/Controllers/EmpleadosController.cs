@@ -171,6 +171,7 @@ namespace RESTFUL_API.Controllers
                     }
                     else
                     {
+                        conn.Close();
                         SqlCommand cmd = new SqlCommand("EXEC REGEMPLEADO @cedula, @email, @username, @password, @nombre, @papellido, @sapellido, @nacimiento, @direccion, @estado, @rol, @sucursal", conn);
                         cmd.Parameters.AddWithValue("@cedula", empleado.idEmpleado);
                         cmd.Parameters.AddWithValue("@nombre", empleado.Nombre);
