@@ -1,6 +1,6 @@
 
-angular.module("mainModule").controller("contEstAdmin",["$scope","$http",
-  function($scope,$http) {
+angular.module("mainModule").controller("contEstAdmin",["$scope","$http","userService",
+  function($scope,$http,userService) {
 
 
     $scope.getHttp= function(url , callback){
@@ -18,28 +18,33 @@ angular.module("mainModule").controller("contEstAdmin",["$scope","$http",
 
 
         $scope.init=function(){
-        var url = 'http://'+getIp()+':58706/api/Productos?idEmpresa='+empresaAdmin;
+        console.log('entra');
+          var url = 'http://'+getIp()+':58706/api/Productos?idEmpresa='+userService.getSucursal();
         $http.get(url).then(function(msg){
          $scope.prod = msg.data;
-        });
-        
+         process(msg.data);
+         if(msg.data==[]){alert("No Sells Yet");}
+        }
+      );
         
 
-        ];
-        var sub=[];
+      }
+      function process(prod){
+        var sub={nombre:null,cantidad:null,color: "#FF0F00"};
         var productos=[];
 
-        for(var i=0;i<this.prod.length;i++){
-          sub=[];
-          var nme=this.prod[i].nombreProducto;
-          var qty=this.prod[i].sumaCantidad;
-          sub.push(nme);
-          sub.push(qty);
+        for(var i=0;i<prod.length ;i++){
+          sub={nombre:null,cantidad:null};;
+          var nme=prod[i].nombreProducto;
+          var qty=prod[i].sumaCantidad;
+          sub.nombre=nme;
+          sub.cantidad=qty;
           productos.push(sub);
+          console.log("sub: "+sub);
+          console.log("productos: "+productos);
 
         }
         create(productos);
-
       }
 
 
@@ -49,32 +54,21 @@ angular.module("mainModule").controller("contEstAdmin",["$scope","$http",
 
 
 function create(p){
-
-  var chart = AmCharts.makeChart("chartdiv", {
+ 
+  var total=[];
+  for (var index = 0; index < p.length; index++) {
+    var data = {
+      "country":p[index].nombre,
+      "visits": p[index].cantidad,
+      "color": "#FF0F00"
+    }
+    total.push(data);
+  }
+  var chart = AmCharts.makeChart("chartdiv", { 
     "type": "serial",
     "theme": "light",
     "marginRight": 70,
-    "dataProvider": [{
-      "country": p[0][0],
-      "visits": p[0][1],
-      "color": "#FF0F00"
-    }, {
-      "country": p[1][0],
-      "visits": p[1][1],
-      "color": "#FF6600"
-    }, {
-      "country": p[2][0],
-      "visits": p[2][1],
-      "color": "#FF9E01"
-    }, {
-      "country": p[3][0],
-      "visits": p[3][1],
-      "color": "#FCD202"
-    }, {
-      "country": p[4][0],
-      "visits": p[4][1],
-      "color": "#F8FF01"
-    }],
+    "dataProvider": total,
     "valueAxes": [{
       "axisAlpha": 0,
       "position": "left",

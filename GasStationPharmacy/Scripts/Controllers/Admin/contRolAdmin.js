@@ -29,7 +29,28 @@ function($scope,$http,userService) {
       };
 
 
-      $scope.edit=function(){
+
+
+      $scope.edit=function(id,name,desc){
+        var url = 'http://'+getIp()+':58706/api/Roles';
+        var sendData= {
+        "idRol": parseInt(id),
+        "Nombre": name,
+        "Descripcion": desc,
+        "Estado": 1,
+        "Empresa": userService.getCompany()
+      };
+      $http.put(url,sendData)
+      .then(
+          function(response){
+            // success callback
+            console.log(" Rol Update");
+            $scope.init();
+          }, 
+          function(response){
+            // failure callback
+          }
+       );
       }
       $scope.delete=function(id,nme,desc){
         var url = 'http://'+getIp()+':58706/api/Roles';

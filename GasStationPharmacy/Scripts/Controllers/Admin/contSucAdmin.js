@@ -1,6 +1,6 @@
-angular.module("mainModule").controller("contSucAdmin", ["$scope","$http","$location",
-function($scope,$http,$location) {
-
+angular.module("mainModule").controller("contSucAdmin", ["$scope","$http","$location"
+,"userService","directionService",
+function($scope,$http,$location,userService,directionService) {
   $scope.idAdmin=empresaAdmin;
 
   $scope.getHttp= function(url , callback){
@@ -16,7 +16,7 @@ function($scope,$http,$location) {
       }, function(error){ console.log(error);})}
 
       $scope.init = function(){
-        var url = 'http://'+getIp()+':58706/api/Sucursal';
+        var url = 'http://'+getIp()+':58706/api/Sucursal?empresa='+userService.getCompany();
         $http.get(url).then(function(msg){
           $scope.sucList= msg.data;
         });
@@ -49,26 +49,27 @@ function($scope,$http,$location) {
     }
 
 
-
-
-  $scope.edit=function(id,emp,cant,dist,dir,nme,ste,img){
+  $scope.edit=function(ID,dir,nme){
         var url = 'http://'+getIp()+':58706/api/Sucursal';
         var data={
-          "idSucursal":id,
-          "idEmpresa":emp,
-          "idCanton":cant,
-          "idDistrito":dist,
+          "idSucursal":parseInt(ID),
+          "idEmpresa":userService.getCompany(),
+          "idProvincia": directionService.getState(),
+          "idCanton":directionService.getCity(),
+          "idDistrito":directionService.getDistrict(),
           "detalleDireccion":dir,
           "Nombre":nme,
-          "Estado":ste,
-          "Imagen":img
+          "Estado":1,
+          "Imagen":""
         };
+        console.log("dir "+dir);
         $http.put(url,data)
         .then(
             function(response){
               // success callback
-              console.log("erase");
-              animation();
+              console.log("update");
+              $scope.init();
+              
 
             }, 
             function(response){

@@ -43,7 +43,7 @@
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content" ng-init="provedores()">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Update Product Info</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -54,43 +54,12 @@
 
             <label> Product ID</label>
             <input type="text" class="form-control" name="idRec" placeholder="ID of the product" ng-model="id" ng-pattern="/^[0-9]{1,5}$/" required>
-
-            <label>Name</label>
-            <input type="text" class="form-control" name="idRec" placeholder="ID of the product" ng-model="id" ng-pattern="/^[0-9]{1,5}$/" required>
-
-            <label for="sucursales">Pharmaceutical House</label>
-            <input type="text" class="form-control" name="house" placeholder="Name of the product" ng-model="house" ng-pattern="/^[A-Z][a-z]$/" required>
-
-            <label for="sucursales">Needs Prescription</label>
-
-            <select  class="form-control" id="Prescription" ng-model="presc" required>
-              <option>Yes</option>
-              <option>No</option>
-
-            </select>
-
-            <label>Choose a store</label>
-            <select class="form-control" ng-model="suc" required>
-              <option ng-repeat="s in sucList">{{s.Nombre}}</option>
-            </select>
-
-            <label>Quantity available</label>
-            <select class="form-control" id="Company" ng-model="qty" required>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-              <option>6</option>
-              <option>7</option>
-              <option>8</option>
-              <option>9</option>
-              <option>10</option>
-
-            </select>
-
-
-
+            <label> Quantity</label>
+            <input type="text" class="form-control" name="idRec" placeholder="ID of the product" ng-model="quantity"  required>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="edit(ID,Direction,Name,fSur,sSur,State,Punish,Birth)">Save changes</button>
+                </div>
           </div>
         </div>
       </div>

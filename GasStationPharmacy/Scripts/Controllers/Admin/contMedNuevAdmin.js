@@ -1,6 +1,6 @@
 
-angular.module("mainModule").controller("contMedNuevAdmin", ["$scope","$http",'$location',
-function($scope,$http,$location) {
+angular.module("mainModule").controller("contMedNuevAdmin", ["$scope","$http",'$location',"userService",
+function($scope,$http,$location,userService) {
   $scope.id = "";
   $scope.name="";
   $scope.presc="";
@@ -56,9 +56,24 @@ function($scope,$http,$location) {
         };
         $scope.postHttp(url,sendData,(data)=>{
           if(data){
-            $location.path('/Admin/gmedicamentos')
+            saveProdSuc(idP,quant,prc);
           }
         });
 
       };
+      function saveProdSuc(id,quant,price){
+        console.log(id+" "+quant+" "+price);
+        var url='http://'+getIp()+':58706/api/ProductoSucursal';
+        var sendData= {
+          "idSucursal": userService.getSucursal(),
+          "codProducto": id,
+          "Cantidad": quant,
+          "Precio": price
+        };
+        $scope.postHttp(url,sendData,(data)=>{
+          if(data){
+            $location.path('/Admin/gmedicamentos')
+          }
+        });
+      }
     }]);

@@ -1,5 +1,5 @@
-angular.module("mainModule").controller("contEmplAdmin",["$scope","$http",
-function($scope,$http) {
+angular.module("mainModule").controller("contEmplAdmin",["$scope","$http","userService",
+function($scope,$http,userService) {
   $scope.employeelist;
   $scope. idAdmin=empresaAdmin;
   var emp;
@@ -18,7 +18,7 @@ function($scope,$http) {
       }, function(error){ console.log(error);})}
 
       $scope.init = function(){
-        var url = 'http://'+getIp()+':58706/api/Empleados';
+        var url = 'http://'+getIp()+':58706/api/Empleados?idSuc='+userService.getSucursal();
         $http.get(url).then(function(msg){
           emp= msg.data;
           $scope.employeelist = emp;

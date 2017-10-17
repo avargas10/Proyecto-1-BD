@@ -1,5 +1,5 @@
-angular.module("mainModule").controller("contMedAdmin",["$scope","$http",
-function($scope,$http) {
+angular.module("mainModule").controller("contMedAdmin",["$scope","$http","userService",
+function($scope,$http,userService) {
   $scope.medList;
   $scope.idAdmin=empresaAdmin;
   var client;
@@ -15,10 +15,15 @@ function($scope,$http) {
         callback(promise.data);
       }, function(error){ console.log(error);})}
 
-      
+      $scope.provedores = function(){
+        var url = 'http://'+getIp()+':58706/api/Proveedores';
+        $http.get(url).then(function(msg){
+          $scope.provList = msg.data;
+        });
+      }
 
       $scope.init = function(){
-        var url = 'http://'+getIp()+':58706/api/Productos';
+        var url = 'http://'+getIp()+':58706/api/Productos?idSucursal='+userService.getSucursal();
         $http.get(url).then(function(msg){
           client = msg.data;
           $scope.medList = client;
@@ -28,7 +33,11 @@ function($scope,$http) {
 
       
 
-      $scope.edit=function(name,id){
+      $scope.update=function(id,quantity){
+        var data={
+          "idProducto":id,
+        };
+
       }
 
       $scope.delete=function(id,nme){

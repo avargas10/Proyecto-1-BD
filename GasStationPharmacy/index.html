@@ -84,8 +84,6 @@
 
 
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -170,30 +168,30 @@
                 </li>
 
                 <li class="dropdown">
-                  <a  class="dropdown-toggle" ng-show="isEmpActive()" ng-click="goTo('groles')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Roles</a>
+                  <a  class="dropdown-toggle" ng-show="isEmpActive()&&isAdmin()" ng-click="goTo('groles')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Rols</a>
                 </li>
                 <li class="dropdown">
                   <a  class="dropdown-toggle"  ng-click="goTo('stores')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stores</a>
                 </li>
                 
                 <li class="dropdown">
-                    <a  class="dropdown-toggle" ng-show="isEmpActive()" ng-click="goTo('pedidosStore')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Store Orders</a>
+                    <a  class="dropdown-toggle" ng-show="isEmpActive()&&!isAdmin()" ng-click="goTo('pedidosStore')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Store Orders</a>
                   </li>
                   <li class="dropdown">
-                      <a  class="dropdown-toggle" ng-show="isEmpActive()" ng-click="goTo('gmedicamentos')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Meds</a>
+                      <a  class="dropdown-toggle" ng-show="isEmpActive()&&isAdmin()" ng-click="goTo('gmedicamentos')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Meds</a>
                     </li>
                   <li class="dropdown">
-                    <a  class="dropdown-toggle" ng-show="isEmpActive()" ng-click="goTo('gempleados')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Employees</a>
+                    <a  class="dropdown-toggle" ng-show="isEmpActive()&&isAdmin()" ng-click="goTo('gempleados')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Employees</a>
                   </li>
                     
                 <li class="dropdown">
-                  <a  class="dropdown-toggle"  ng-show="isActive()" ng-click="goTo('userInfo')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account</a>
+                  <a  class="dropdown-toggle"  ng-show="isEmpActive()&&isAdmin()" ng-click="goTo('userInfo')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account</a>
                 </li>
                 <li class="dropdown">
-                    <a  class="dropdown-toggle" ng-show="isEmpActive()" ng-click="goTo('estadistica')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stats</a>
+                    <a  class="dropdown-toggle" ng-show="isEmpActive()&&isAdmin()" ng-click="goTo('estadistica')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stats</a>
                   </li>
                   <li class="dropdown">
-                    <a  class="dropdown-toggle" ng-show="isEmpActive()" ng-click="goTo('gsucursales')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stores Managment</a>
+                    <a  class="dropdown-toggle" ng-show="isEmpActive()&&isAdmin()" ng-click="goTo('gsucursales')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stores Managment</a>
                   </li>
                 <li class="dropdown ">
                   <a  class="dropdown-toggle" ng-show="isActive()" ng-click= "goTo('allOrders')" data-toggle="dropdown" data-hover="dropdown" data-delay="300" data-close-others="true" aria-expanded="false">My Orders</b></a>

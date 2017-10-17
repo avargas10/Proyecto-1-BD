@@ -9,6 +9,7 @@ angular.module("mainModule").controller("mainController", ["$scope", "$http", "$
     $scope.isEmpActive = function () {
       return userService.getEmpActive();
     }
+    $scope.isAdmin=function(){return userService.getAdmin();}
     $scope.getUser = function () {
       return userService.getUser();
     }

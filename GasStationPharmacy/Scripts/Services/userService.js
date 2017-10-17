@@ -4,19 +4,26 @@ angular.module("mainModule").service('userService', function () {
 	var empLogged;
 	var sucursal;
 	var company;
+	var admin;
 	this.getUser = function () {
 	  return currentUser;
 	}
 	this.getActive = function () {
 	  return logged;
 	}
+	this.getAdmin = function () {
+	  return admin;
+	}
 	this.getEmpActive = function () {
 	  return empLogged;
 	}
-	this.setEmpActive=function(){empLogged=true;}
+	this.setEmpActive=function(){
+		empLogged=true;
+		if(currentUser.idRol==1){admin=true;}
+	}
 	this.setActive=function(){logged=true;}
 	this.setUser = function (user) {
-	  currentUser = user;
+		currentUser = user;
 	}
 	this.getSucursal= function () {
 		return sucursal
@@ -36,5 +43,6 @@ angular.module("mainModule").service('userService', function () {
 		company=null;
 		logged = false;
 		empLogged=false;
+		admin=false;
 	}
   });

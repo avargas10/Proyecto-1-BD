@@ -18,11 +18,11 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr   ng-repeat="s in sucList" ng-if="s.idEmpresa==idAdmin" >
+                    <tr   ng-repeat="s in sucList" >
                       <td><i class="fa fa-medkit" aria-hidden="true"></i>  {{s.Nombre}}</td>
                       <td><i class="fa fa-medkit" aria-hidden="true"></i> {{s.idSucursal}}</td>
                       <td><i class="fa fa-medkit" aria-hidden="true"></i> {{s.detalleDireccion}}</td>
-                      <td><a class="btn btn-info" data-toggle="modal" data-target="#myModal">Edit</a></td>
+                      <td><a class="btn btn-info" ng-click="setSuc(s.idSucursal)" data-toggle="modal" data-target="#myModal">Edit</a></td>
                       <td><a class="btn btn-danger" ng-click="delete(s.idSucursal)">delete</a></td>
                     </tr>
                   </tbody>
@@ -41,7 +41,7 @@
     </div>
   </section>
   <div class="modal fade" id="myModal"   ng-controller="userController" data-ng-init="UpdateDirection()" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog"  ng-controller="contSucAdmin" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Update Sucursales Info</h5>
@@ -49,15 +49,13 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body" ng-controller="contNuevSucAdmin" ng-init="init()">
+        <div class="modal-body"  >
 
-          <label for="sucursales">Company ID</label>
-          <select  class="form-control"  ng-model="idEmp" required>
-            <option ng-repeat="e in empList">{{e.idEmpresa}}-{{e.Nombre}}</option>
-          </select>
+            <label>Store ID</label>
+            <input type="text" class="form-control" name="nameProd" placeholder="Name of the Store" ng-model="id"  required>
 
           <label>Name</label>
-          <input type="text" class="form-control" name="nameProd" placeholder="Name of the Store" ng-model="name" ng-pattern="/^[A-Z][a-z]$/" required>
+          <input type="text" class="form-control" name="nameProd" placeholder="Name of the Store" ng-model="newName"  required>
 
           <div class="form-group">
             <label>State</label>
@@ -85,15 +83,15 @@
                 </div>
 
           <label>Direction</label>
-          <textarea class="form-control" name="inputList" ng-model="dir" ng-pattern="/^[A-Za-z0-9]/" required>
+          <textarea class="form-control" name="inputList" ng-model="newDir" ng-pattern="/^[A-Za-z0-9]/" required>
           </textarea>
 
 
 
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" ng-click="edit(ID,Empresa,Canton,Distrito,Direccion,Nombre,Estado,Imagen)">Save changes</button>
+            <button type="button" class="btn btn-secondary" >Close</button>
+            <button type="button" class="btn btn-primary"  data-dismiss="modal" ng-click="edit(id,newDir,newName)">Save changes</button>
           </div>
         </div>
       </div>
