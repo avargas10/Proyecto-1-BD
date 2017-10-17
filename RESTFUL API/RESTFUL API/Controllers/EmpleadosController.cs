@@ -85,6 +85,27 @@ namespace RESTFUL_API.Controllers
             }
         }
 
+        [HttpGet]
+        public IEnumerable<Dictionary<string, object>> getEmpleadosxSucursal(int idSuc)
+        {
+            using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT EMPLEADOXSUCURSAL.idSucursal,EMPLEADOXSUCURSAL.idEmpleado,EMPLEADOXSUCURSAL.idRol , EMPLEADO.Email,EMPLEADO.Username,EMPLEADO.Password," +
+                     "EMPLEADO.Nombre,EMPLEADO.pApellido,EMPLEADO.sApellido,EMPLEADO.Nacimiento,EMPLEADO.Direccion,EMPLEADO.Estado " +
+                     "FROM [EMPLEADOXSUCURSAL] INNER JOIN [EMPLEADO] ON EMPLEADOXSUCURSAL.idEmpleado = EMPLEADO.idEmpleado WHERE (((EMPLEADOXSUCURSAL.idSucursal)=@id));", conn);
+                cmd.Parameters.AddWithValue("@id", idSuc);
+                cmd.Connection = conn;
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    var r = serial.Serialize(reader);
+                    conn.Close();
+                    return r;
+                }
+
+            }
+        }
+
 
         [HttpPost]
         public HttpResponseMessage EmpleadoLogin([FromUri]string username, [FromUri]string pass)
