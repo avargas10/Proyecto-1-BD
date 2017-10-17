@@ -19,14 +19,14 @@
               </thead>
               <tbody>
               	<tr   ng-repeat="s in employeelist">
-              		<td><i class="fa fa-medkit" aria-hidden="true"></i>  {{s.Nombre}} {{s.pApellido}} </td>
-              		<td><i class="fa fa-medkit" aria-hidden="true"></i> <p>{{s.Username}} </p>
+              		<td>  {{s.Nombre}} {{s.pApellido}} </td>
+              		<td> <p>{{s.Username}} </p>
               		<p>{{s.Email}}</p></td>
-              		<td><i class="fa fa-medkit" aria-hidden="true"></i> 
+              		<td> 
               		{{s.idEmpleado}}
               		</td>
               		<td><a class="btn btn-info" data-toggle="modal" data-target="#myModal">Edit</a></td>
-              		<td><a class="btn btn-danger" ng-click="delete(s.idEmpleado,s.Username,s.Password,s.Nombre,s.pApellido,s.sApellido,s.Nacimiento,s.Direccion,s.Estado)">delete</a></td>
+              		<td><a class="btn btn-danger" ng-click="delete(s.idEmpleado,s.Nombre)">delete</a></td>
                     </tr>
                   </tbody>
                 </table>
@@ -36,7 +36,7 @@
         </div>
         <div class="well well-lg clearfix">
                 <ul class="pager">
-                        <li ><a class="btn btn-succes btn-block"ng-controller="mainController" ng-click="goTo('register')"><i class="fa fa-plus" aria-hidden="true"></i> Add Employee</a></li>         
+                        <li ><a class="btn btn-succes btn-block"ng-controller="mainController" ng-click="goTo('nuevEmpleado')"><i class="fa fa-plus" aria-hidden="true"></i> Add Employee</a></li>         
                 
                 </ul>
               </div>

@@ -151,7 +151,7 @@ function (orderService,receipeService,$scope, $http, $location, $routeParams, us
       $http.delete(url)
       .then(function successCallback(data) {
         alert("Form "+form+" deleted");
-        $location.path('/Home');
+        $scope.getAllForms();
       },
       function errorCallback(response) {
         alert(response);
@@ -175,7 +175,21 @@ function (orderService,receipeService,$scope, $http, $location, $routeParams, us
       });
     }
     
-    $scope.editForm=function(form){
+    $scope.myForm =function(form){
+      console.log("order "+form);
+      url= 'http://'+getIp()+':58706/api/Recetas?idRec='+form;
+      $http.get(url)
+      .then(function successCallback(data) {
+        console.log(data);
+        receipeService.setForm(data.data);
+        $scope.getEditForm();
+      },
+      function errorCallback(response) {
+        alert(response);
+      });
+    }
+
+    $scope.editMyForm=function(form){
       console.log("order "+form);
       url= 'http://'+getIp()+':58706/api/Recetas?idRec='+form;
       $http.get(url)
@@ -208,7 +222,7 @@ function (orderService,receipeService,$scope, $http, $location, $routeParams, us
       $http.delete(url)
       .then(function successCallback(data) {
         alert("Product "+detail+" deleted");
-        $location.path('/allForms');
+        $scope.myForm(form);
       },
       function errorCallback(response) {
         alert(response);

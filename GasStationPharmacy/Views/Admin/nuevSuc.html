@@ -19,12 +19,6 @@
                                     </span>
                             </div>
                             <div class="form-group">
-                              <label for="" class="col-md-2 col-sm-3 control-label">Company</label>
-                              <div class="col-md-10 col-sm-9">
-                                <select  class="form-control" ng-model="idEmp" required>
-                                    <option ng-if="e.idEmpresa==idAdmin" ng-repeat="e in empList" >{{e.idEmpresa}}: {{e.Nombre}}
-                                    </option>
-                                </select>
                             </div>
                             </div>
                             <div ng-controller="userController" ng-init="UpdateDirection()">
@@ -61,7 +55,7 @@
                                         </div>
                             <div class="form-group">
                               <div class="col-md-offset-10 col-md-2 col-sm-offset-9 col-sm-3">
-                                <button type="submit" class="btn btn-primary btn-block" ng-click="createStore(idEmp,name,dir)" data-toggle="modal" data-target="#myModal">CREATE STORE</button>
+                                <button type="submit" class="btn btn-primary btn-block" ng-click="createStore(name,dir)" data-toggle="modal" data-target="#myModal">CREATE STORE</button>
                               </div>
                             </div>
                           </form>
@@ -120,7 +114,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary" ng-click="setDirection(empUser, adminPass, adminPassCon, name, adminS, adminSS, id, adminDir, adminDate, empEmail)">Create Admin</button>
+                      <button type="button" class="btn btn-primary" ng-click="setDirection(empUser, adminPass, adminPassCon, name, adminS, adminSS, id, adminDir, adminDate, empEmail,true)">Create Admin</button>
                     </div>
                   </div>
                 </div>

@@ -30,32 +30,25 @@ function($scope,$http) {
       $scope.edit=function(){
       }
 
-      $scope.delete=function(id,user,pass,nme,pAp,sAp,date,dir,ste){
+      $scope.delete=function(id,nme){
         var url = 'http://'+getIp()+':58706/api/Empleados';
         var data={
-          "idEmpleado":id,
-          "Username":user,
-          "Password":pass,
-          "Nombre":nme,
-          "pApellido":pAp,
-          "sApellido":sAp,
-          "Nacimiento":date,
-          "Direccion":dir,
-          "Estado":ste
-
+          "idEmpleado":id
         };
-        $http.delete(url,data)
-        .then(
-            function(response){
-              // success callback
-              console.log("erase");
-              animation();
-
-            }, 
-            function(response){
-              // failure callback
-            }
-         );
+        $http({
+          method: 'DELETE',
+          url: url,
+          data: data,
+          headers: {
+              'Content-type': 'application/json;charset=utf-8'
+          }
+      })
+      .then(function(response) {
+        alert("Employee "+nme+" fired");
+        $scope.init();
+      }, function(rejection) {
+          console.log(rejection.data);
+      });
       }
 
     }]);

@@ -110,6 +110,7 @@ $scope.getDireccion=function(id){
             var url = 'http://'+getIp()+':58706/api/Clientes?username='+username;
             $scope.getHttp(url,(data)=>{
               userService.setUser(data);
+              userService.setActive();
               console.log(data);
               $location.path("/Home");
             })
@@ -126,10 +127,14 @@ $scope.getDireccion=function(id){
         $http.post(url).then(function (msg) {
             var url = 'http://'+getIp()+':58706/api/Empleados?username='+username;
             var idsuc = msg.data.idSucursal;
+            var idEmp = msg.data.idEmpresa;
             $scope.getHttp(url,(data1)=>{
+              console.log(data1);
               userService.setUser(data1);
               userService.setSucursal(idsuc);
-              console.log(msg.data.idSucursal);
+              userService.setCompany(idEmp);
+              userService.setEmpActive();
+              console.log(msg.data);
               $location.path("/Home");
             })
         });

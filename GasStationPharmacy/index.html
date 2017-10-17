@@ -114,10 +114,10 @@
               </div>
               <div class="col-md-6 col-sm-7 col-xs-12">
                 <ul class="list-inline pull-right top-right">
-                  <li class="account-login"><span><a data-toggle="modal" ng-show="!isActive()" ng-click="goTo('login')">Log in</a>
-                    <a data-toggle="modal" ng-show="!isActive()" ng-click="goTo('signup')">Create an account</a>
-                    <a data-toggle="modal" ng-click="goTo('userInfo')" ng-show="isActive()" >{{getUser().Nombre}} {{getUser().pApellido}}</a>
-                    <a data-toggle="modal" ng-show="isActive()" data-ng-click = "logOutUser()"> Log Out</a>
+                  <li class="account-login"><span><a data-toggle="modal" ng-show="!isActive()&&!isEmpActive() " ng-click="goTo('login')">Log in</a>
+                    <a data-toggle="modal" ng-show="!isActive()&&!isEmpActive()" ng-click="goTo('signup')">Create an account</a>
+                    <a data-toggle="modal" ng-click="goTo('userInfo')" ng-show="isActive()||isEmpActive()" >{{getUser().Nombre}} {{getUser().pApellido}}</a>
+                    <a data-toggle="modal" ng-show="isActive()||isEmpActive()" data-ng-click = "logOutUser()"> Log Out</a>
                   </span></li>
 
                   <li class="dropdown cart-dropdown" ng-click="getBag()" ng-controller="storeController">
@@ -170,24 +170,30 @@
                 </li>
 
                 <li class="dropdown">
-                  <a  class="dropdown-toggle" ng-click="goTo('nuevRol')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Nuevo Rol</a>
+                  <a  class="dropdown-toggle" ng-show="isEmpActive()" ng-click="goTo('groles')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Roles</a>
                 </li>
                 <li class="dropdown">
-                  <a  class="dropdown-toggle" ng-click="goTo('stores')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stores</a>
+                  <a  class="dropdown-toggle"  ng-click="goTo('stores')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stores</a>
                 </li>
                 
                 <li class="dropdown">
-                    <a  class="dropdown-toggle" ng-click="goTo('pedidosStore')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Store Orders</a>
+                    <a  class="dropdown-toggle" ng-show="isEmpActive()" ng-click="goTo('pedidosStore')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Store Orders</a>
                   </li>
-                  
+                  <li class="dropdown">
+                      <a  class="dropdown-toggle" ng-show="isEmpActive()" ng-click="goTo('gmedicamentos')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Meds</a>
+                    </li>
+                  <li class="dropdown">
+                    <a  class="dropdown-toggle" ng-show="isEmpActive()" ng-click="goTo('gempleados')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Employees</a>
+                  </li>
+                    
                 <li class="dropdown">
                   <a  class="dropdown-toggle"  ng-show="isActive()" ng-click="goTo('userInfo')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account</a>
                 </li>
                 <li class="dropdown">
-                    <a  class="dropdown-toggle" ng-click="goTo('estadistica')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stats</a>
+                    <a  class="dropdown-toggle" ng-show="isEmpActive()" ng-click="goTo('estadistica')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stats</a>
                   </li>
                   <li class="dropdown">
-                    <a  class="dropdown-toggle" ng-click="goTo('gsucursales')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stores Managment</a>
+                    <a  class="dropdown-toggle" ng-show="isEmpActive()" ng-click="goTo('gsucursales')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stores Managment</a>
                   </li>
                 <li class="dropdown ">
                   <a  class="dropdown-toggle" ng-show="isActive()" ng-click= "goTo('allOrders')" data-toggle="dropdown" data-hover="dropdown" data-delay="300" data-close-others="true" aria-expanded="false">My Orders</b></a>

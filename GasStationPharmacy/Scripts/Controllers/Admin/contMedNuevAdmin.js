@@ -1,6 +1,6 @@
 
-angular.module("mainModule").controller("contMedNuevAdmin", ["$scope","$http",
-function($scope,$http) {
+angular.module("mainModule").controller("contMedNuevAdmin", ["$scope","$http",'$location',
+function($scope,$http,$location) {
   $scope.id = "";
   $scope.name="";
   $scope.presc="";
@@ -34,9 +34,9 @@ function($scope,$http) {
 
       $scope.createProduct=function(idP, prov, nme, med, prsc, prc, quant){
         idP=parseInt(idP);
-        prov=parseInt(prov.split("",1));
-        med=parseInt(med.split("",1));
-        prsc=parseInt(prsc.split("",1));
+        prov=parseInt(prov.split("",1)[0]);
+        med=parseInt(med.split("",1)[0]);
+        prsc=parseInt(prsc.split("",1)[0]);
         prc=parseInt(prc);
         quant=parseInt(quant)
         var image=globalImage;
@@ -54,14 +54,11 @@ function($scope,$http) {
           "Cantidad":quant,
           "Estado":1
         };
-
-
-        
         $scope.postHttp(url,sendData,(data)=>{
           if(data){
-
+            $location.path('/Admin/gmedicamentos')
           }
         });
-       animation();
+
       };
     }]);
