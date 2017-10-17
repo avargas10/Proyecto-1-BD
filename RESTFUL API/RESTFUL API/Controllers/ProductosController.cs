@@ -19,7 +19,7 @@ namespace RESTFUL_API.Controllers
         {
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("SELECT idProducto,Proveedor,Nombre,esMedicamento,reqPrescripcion,Image FROM PRODUCTOS", conn);
+                SqlCommand cmd = new SqlCommand("SELECT idProducto,Proveedor,Nombre,esMedicamento,reqPrescripcion,Image FROM PRODUCTOS AND Estado!=0", conn);
                 cmd.Connection = conn;
                 conn.Open();
                 using (var reader = cmd.ExecuteReader())
@@ -37,7 +37,7 @@ namespace RESTFUL_API.Controllers
         {
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("SELECT idProducto,Proveedor,Nombre,esMedicamento,reqPrescripcion,Image FROM PRODUCTOS WHERE esMedicamento=1", conn);
+                SqlCommand cmd = new SqlCommand("SELECT idProducto,Proveedor,Nombre,esMedicamento,reqPrescripcion,Image FROM PRODUCTOS WHERE esMedicamento=1 AND Estado!=0", conn);
                 cmd.Connection = conn;
                 conn.Open();
                 using (var reader = cmd.ExecuteReader())
@@ -57,7 +57,7 @@ namespace RESTFUL_API.Controllers
             {
                 SqlCommand cmd = new SqlCommand("SELECT PRODUCTOXSUCURSAL.idSucursal,PRODUCTOXSUCURSAL.Precio , PRODUCTOS.idProducto,PRODUCTOS.Proveedor,PRODUCTOS.Nombre," +
                      "PRODUCTOS.esMedicamento,PRODUCTOS.reqPrescripcion,PRODUCTOS.Image " +
-                     "FROM [PRODUCTOXSUCURSAL] INNER JOIN [PRODUCTOS] ON PRODUCTOXSUCURSAL.codProducto = PRODUCTOS.idProducto WHERE (((PRODUCTOXSUCURSAL.idSucursal)=@id));", conn);
+                     "FROM [PRODUCTOXSUCURSAL] INNER JOIN [PRODUCTOS] ON PRODUCTOXSUCURSAL.codProducto = PRODUCTOS.idProducto WHERE (((PRODUCTOXSUCURSAL.idSucursal)=@id AND Estado!=0));", conn);
                 cmd.Parameters.AddWithValue("@id", idSucursal);
                 cmd.Connection = conn;
                 conn.Open();

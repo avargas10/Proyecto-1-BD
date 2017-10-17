@@ -63,7 +63,7 @@ namespace RESTFUL_API.Controllers
             {
                 SqlCommand cmd = new SqlCommand("SELECT EMPLEADO.idEmpleado,EMPLEADO.Nombre,EMPLEADO.pApellido,EMPLEADO.sApellido,EMPLEADO.Password,EMPLEADO.Username,"+
                 " EMPLEADO.Email, EMPLEADO.Nacimiento, EMPLEADO.Direccion, EMPLEADOXSUCURSAL.idRol, Roles.Nombre AS nombreRol FROM EMPLEADO INNER JOIN"+
-                " EMPLEADOXSUCURSAL ON EMPLEADOXSUCURSAL.idEmpleado = EMPLEADO.idEmpleado INNER JOIN ROLES ON ROLES.idRol = EMPLEADOXSUCURSAL.idRol WHERE EMPLEADO.Username = @user", conn);
+                " EMPLEADOXSUCURSAL ON EMPLEADOXSUCURSAL.idEmpleado = EMPLEADO.idEmpleado INNER JOIN ROLES ON ROLES.idRol = EMPLEADOXSUCURSAL.idRol WHERE EMPLEADO.Username = @user AND Estado!=0", conn);
                 cmd.Parameters.AddWithValue("@user", username);
                 cmd.Connection = conn;
                 conn.Open();
@@ -92,7 +92,7 @@ namespace RESTFUL_API.Controllers
             {
                 SqlCommand cmd = new SqlCommand("SELECT EMPLEADOXSUCURSAL.idSucursal,EMPLEADOXSUCURSAL.idEmpleado,EMPLEADOXSUCURSAL.idRol , EMPLEADO.Email,EMPLEADO.Username,EMPLEADO.Password," +
                      "EMPLEADO.Nombre,EMPLEADO.pApellido,EMPLEADO.sApellido,EMPLEADO.Nacimiento,EMPLEADO.Direccion,EMPLEADO.Estado " +
-                     "FROM [EMPLEADOXSUCURSAL] INNER JOIN [EMPLEADO] ON EMPLEADOXSUCURSAL.idEmpleado = EMPLEADO.idEmpleado WHERE (((EMPLEADOXSUCURSAL.idSucursal)=@id));", conn);
+                     "FROM [EMPLEADOXSUCURSAL] INNER JOIN [EMPLEADO] ON EMPLEADOXSUCURSAL.idEmpleado = EMPLEADO.idEmpleado WHERE (((EMPLEADOXSUCURSAL.idSucursal)=@id AND Estado!=0));", conn);
                 cmd.Parameters.AddWithValue("@id", idSuc);
                 cmd.Connection = conn;
                 conn.Open();
