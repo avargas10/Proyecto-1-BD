@@ -20,7 +20,7 @@ namespace RESTFUL_API.Controllers
 
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("SELECT idEmpleado,Nombre,pApellido,sApellido,Password,Username,Email,Nacimiento,Direccion FROM EMPLEADO", conn);
+                SqlCommand cmd = new SqlCommand("SELECT idEmpleado,Nombre,pApellido,sApellido,Password,Username,Email,Nacimiento,Direccion FROM EMPLEADO AND Estado!=0", conn);
                 cmd.Connection = conn;
                 conn.Open();
                 using (var reader = cmd.ExecuteReader())
@@ -37,7 +37,7 @@ namespace RESTFUL_API.Controllers
         {
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("SELECT idEmpleado,Nombre,pApellido,sApellido,Password,Username,Email,Nacimiento,Direccion FROM EMPLEADO WHERE idEmpleado=@id", conn);
+                SqlCommand cmd = new SqlCommand("SELECT idEmpleado,Nombre,pApellido,sApellido,Password,Username,Email,Nacimiento,Direccion FROM EMPLEADO WHERE idEmpleado=@id AND Estado!=0", conn);
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Connection = conn;
                 conn.Open();
