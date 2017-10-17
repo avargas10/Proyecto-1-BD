@@ -25,7 +25,7 @@ angular.module("mainModule").controller("pedidosStore",["$scope","$http", "$loca
       }, function(error){ console.log(error);})}
 
         $scope.init = function(){
-            var url = 'http://'+getIp()+':58706/api/Pedidos?idSucursal='+userService.getSucursal();
+            var url = 'http://'+getIp()+':58706/api/Pedidos?idSuc='+userService.getSucursal();
             $http.get(url).then(function(msg){
                 console.log(msg.data);
                 $scope.listOrders= msg.data;
