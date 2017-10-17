@@ -24,7 +24,8 @@
                             <div vc-recaptcha ></div> 
                     <div class="checkbox">
                       <label>
-                        <input type="checkbox"> Employee
+                        <input type="checkbox" ng-model="EmployeeCheck"> 
+                        Employee
                       </label>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block"  data-ng-click="loginUser(username,password,gRecaptchaResponse)">log in</button>

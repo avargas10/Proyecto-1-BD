@@ -111,7 +111,7 @@ DECLARE @sucursal int
 DECLARE @empleado int
 SELECT @empleado=idEmpleado FROM EMPLEADO WHERE Username=@Username
 SELECT @sucursal=idSucursal FROM EMPLEADOXSUCURSAL WHERE idEmpleado=@empleado
-SELECT idEmpresa FROM SUCURSAL WHERE idSucursal=@sucursal
+SELECT idEmpresa,idSucursal FROM SUCURSAL WHERE idSucursal=@sucursal
 END
 END
 

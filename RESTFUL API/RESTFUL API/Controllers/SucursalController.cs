@@ -68,6 +68,7 @@ namespace RESTFUL_API.Controllers
 
             }
         }
+        
         [HttpPost]
         public HttpResponseMessage regSucursal([FromBody] sucursalModel suc)
         {

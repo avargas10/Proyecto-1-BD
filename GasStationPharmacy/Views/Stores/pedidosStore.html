@@ -13,7 +13,7 @@
 
     <div class="list-group container innerWrapper" ng-controller="pedidosStore" data-ng-init="init()">
 
-      <div ng-repeat="o in listOrders" | orderBy:['date','Penalizacion']>
+      <div ng-repeat="o in listOrders" | orderBy:'horaRecojo'>
 
         <a class="list-group-item list-group-item-action flex-column align-items-start" >
           <div class="d-flex justify-content-between">

@@ -104,7 +104,7 @@ namespace RESTFUL_API.Controllers
                     else
                     {
                         reader.Close();
-                        return Request.CreateResponse(HttpStatusCode.BadRequest, serial.singleserialize(cmd.ExecuteReader())); ;
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, false);
                     }
                 }
 

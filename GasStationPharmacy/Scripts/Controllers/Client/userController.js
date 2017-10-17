@@ -4,6 +4,7 @@ function ($scope, $http, $location, $routeParams, userService, directionService,
   var states;
   var cities;
   var districts;
+  var EmployeeCheck;
   $scope.getHttp = function (url, callback) {
     var httpObject = $http.get(url);
     httpObject.then(function (promise) {
@@ -101,22 +102,38 @@ $scope.getDireccion=function(id){
 
   $scope.loginUser = function (username, password, getCaptcha) {
     if (!isBlank(username) && !isBlank(password)) {
-      console.log("entra "+directionService.update());
-      var url = 'http://'+getIp()+':58706/api/Clientes?username=' + username + '&pass=' + password;
-      $http.post(url).then(function (msg) {
-        if (msg.data) {
-          var url = 'http://'+getIp()+':58706/api/Clientes?username='+username;
-          $scope.getHttp(url,(data)=>{
-            userService.setUser(data);
-            console.log(data);
-            $location.path("/Home");
-          })
-          
-        }
-        else {
-          alert("Error(02): Can't sign in, username or password incorrect");
-        }
-      });
+      console.log("state of checkbox: " + this.EmployeeCheck);
+      if(this.EmployeeCheck == false){
+        var url = 'http://'+getIp()+':58706/api/Clientes?username=' + username + '&pass=' + password;
+        $http.post(url).then(function (msg) {
+          if (msg.data) {
+            var url = 'http://'+getIp()+':58706/api/Clientes?username='+username;
+            $scope.getHttp(url,(data)=>{
+              userService.setUser(data);
+              console.log(data);
+              $location.path("/Home");
+            })
+            
+          }
+          else {
+            alert("Error(02): Can't sign in, username or password incorrect");
+          }
+        });
+      }
+      //else del empleyee check
+      else{
+        var url = 'http://'+getIp()+':58706/api/Empleados?username=' + username + '&pass=' + password;
+        $http.post(url).then(function (msg) {
+            var url = 'http://'+getIp()+':58706/api/Empleados?username='+username;
+            var idsuc = msg.data.idSucursal;
+            $scope.getHttp(url,(data1)=>{
+              userService.setUser(data1);
+              userService.setSucursal(idsuc);
+              console.log(msg.data.idSucursal);
+              $location.path("/Home");
+            })
+        });
+      }
     }
     else {
       alert("Error(01): Can't sign in, space in blank or not getCaptcha");

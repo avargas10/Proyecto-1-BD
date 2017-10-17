@@ -1,5 +1,5 @@
-angular.module("mainModule").controller("pedidosStore",["$scope","$http", 
-  function($scope,$http) {
+angular.module("mainModule").controller("pedidosStore",["$scope","$http", "userService", 
+  function($scope,$http, userService) {
     $scope.state = "";
     $scope.listOrders=[];
     $scope.statesId=[
@@ -23,7 +23,7 @@ angular.module("mainModule").controller("pedidosStore",["$scope","$http",
       }, function(error){ console.log(error);})}
 
         $scope.init = function(){
-            var url = 'http://'+getIp()+':58706/api/Pedidos';
+            var url = 'http://'+getIp()+':58706/api/Pedidos?idSucursal='+userService.getSucursal();
             $http.get(url).then(function(msg){
                 console.log(msg.data);
                 $scope.listOrders= msg.data;
@@ -33,7 +33,6 @@ angular.module("mainModule").controller("pedidosStore",["$scope","$http",
         $scope.update=function(ste, pedido){
             var id=ste.split(":",1);
             var newid = id[0];
-            console.log(newid);
             var url = 'http://'+getIp()+':58706/api/EstadosPedido';
             var json = {"idPedido":pedido,"Estado":newid};
             $http.post(url,json).then(function(msg){
