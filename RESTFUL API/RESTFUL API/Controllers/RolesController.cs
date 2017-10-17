@@ -99,7 +99,7 @@ namespace RESTFUL_API.Controllers
                 {
                     SqlCommand cmd = new SqlCommand("UPDATE ROLES SET Nombre=@nombre, Descripcion=@descripcion, Empresa=@empresa WHERE idRol=@id", conn);
                     cmd.Parameters.AddWithValue("@id", rol.idRol);
-                    cmd.Parameters.AddWithValue("@nomre", rol.Nombre);
+                    cmd.Parameters.AddWithValue("@nombre", rol.Nombre);
                     cmd.Parameters.AddWithValue("@descripcion", rol.Descripcion);
                     cmd.Parameters.AddWithValue("@empresa", rol.Empresa);
                     cmd.Connection = conn;
