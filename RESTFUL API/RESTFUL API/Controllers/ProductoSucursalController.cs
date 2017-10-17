@@ -41,5 +41,31 @@ namespace RESTFUL_API.Controllers
             }
 
         }
+
+        [HttpPut]
+        public HttpResponseMessage updateProducto(productoSucursalModel medicamento)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("EXEC UPDATEPRODUCTO @id, @sucursal, @cantidad, @precio", conn);
+                    cmd.Parameters.AddWithValue("@id", medicamento.codProducto);
+                    cmd.Parameters.AddWithValue("@sucursal", medicamento.idSucursal);
+                    cmd.Parameters.AddWithValue("@cantidad", medicamento.Cantidad);
+                    cmd.Parameters.AddWithValue("@precio", medicamento.Precio);
+
+                    cmd.Connection = conn;
+                    conn.Open();
+                    cmd.ExecuteReader();
+                    var message = Request.CreateResponse(HttpStatusCode.Created, medicamento);
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
     }
 }

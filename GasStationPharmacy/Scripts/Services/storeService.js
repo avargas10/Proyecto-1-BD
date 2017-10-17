@@ -2,9 +2,14 @@ angular.module("mainModule").service('storeService', function () {
     var store;
     var bag = [];
     var totalPrice;
-    var idStore;
+    var idStore=null;
 
-    this.setID=function(pID){idStore=pID;}
+    this.cleanStore=function(){
+      idStore=null;
+    }
+    this.setID=function(pID){
+      console.log("Store ID: "+pID);
+      idStore=pID;}
 
     this.getID=function(){return idStore;}
     

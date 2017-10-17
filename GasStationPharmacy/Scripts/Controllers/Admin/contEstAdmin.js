@@ -18,16 +18,25 @@ angular.module("mainModule").controller("contEstAdmin",["$scope","$http","userSe
 
 
         $scope.init=function(){
-        console.log('entra');
-          var url = 'http://'+getIp()+':58706/api/Productos?idEmpresa='+userService.getSucursal();
+        var url = 'http://'+getIp()+':58706/api/Productos?idEmpresa='+userService.getCompany();
         $http.get(url).then(function(msg){
-         $scope.prod = msg.data;
+        if(msg.data.length==0){alert("No Sells Yet");}
+        else{ $scope.prod = msg.data;
          process(msg.data);
-         if(msg.data==[]){alert("No Sells Yet");}
+        $scope.allOrders();
+        }
+        
         }
       );
-        
+    }
 
+      $scope.allOrders=function(){
+        var url = 'http://'+getIp()+':58706/api/Pedidos?idEmpresa='+userService.getCompany();
+        $http.get(url).then(function(msg){
+          $scope.all = msg.data.conteoPedidos; 
+          console.log($scope.all);       
+          }
+        );
       }
       function process(prod){
         var sub={nombre:null,cantidad:null,color: "#FF0F00"};

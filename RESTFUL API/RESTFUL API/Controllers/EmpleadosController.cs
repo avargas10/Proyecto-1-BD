@@ -122,7 +122,7 @@ namespace RESTFUL_API.Controllers
                     if (reader.Read())
                     {
                         reader.Close();
-                        return Request.CreateResponse(HttpStatusCode.Created, serial.singleserialize(cmd.ExecuteReader()));
+                        return Request.CreateResponse(HttpStatusCode.Created, serial.Serialize(cmd.ExecuteReader()));
                     }
                     else
                     {

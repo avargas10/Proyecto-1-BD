@@ -16,54 +16,6 @@ angular.module("mainModule").controller("contNuevEmp", ["$scope","$http","direct
     $scope.dirSpec;
     var rol;
 
-    $scope.createEmp=function(id,mail,user,pass,nme,pAp,sAp,date,dir){
-      alert(id);
-      alert(mail);
-      alert(user);
-      alert(pass);
-      alert(nme);
-      alert(pAp);
-      alert(sAp);
-      alert(date);
-      alert(dir);
-      var url='http://'+getIp()+':58706/api/Sucursal';
-      var sendData={
-        "idEmpleado": parseInt(id),
-        "Email": mail,
-        "Username":user,
-        "Password":pass,
-        "Nombre":nme,
-        "pApellido":pAp,
-        "sApellido":sAp,
-        "Nacimientos":date,
-        "Direccion": dir,
-        "Estado":1
-      };
-      
-      $scope.postHttp(url,sendData,(data)=>{
-          if(data){
-
-          }
-        });
-        
-      }
-
-      $scope.setDirection = function (id,mail,user,pass,nme,pAp,sAp,date,dirSpec) {
-        var url = 'http://'+getIp()+':58706/api/Direcciones';
-        var sendData = {
-          "Provincia": directionService.getState(),
-          "Canton": directionService.getCity(),
-          "Distrito": directionService.getDistrict(),
-          "Descripcion": dirSpec
-        };
-        $scope.postHttp(url,sendData,(data)=>{
-          console.log("dir: "+data.idDireccion);
-          $scope.createUser(username, password, conPassword, name, surname, sSurname, id, data.idDireccion, date, email);
-        })
-      };
-
-
-
 
       $scope.getRols=function(){
         var url = 'http://'+getIp()+':58706/api/Roles/'+userService.getCompany();
@@ -115,7 +67,7 @@ angular.module("mainModule").controller("contNuevEmp", ["$scope","$http","direct
       $scope.setDistrict = function (_id) {
         directionService.setDisctrict(_id);
       };
-      $scope.setDirection = function (username, password, conPassword, name, surname, sSurname, id, dirSpec, date, email,admin) {
+      $scope.setDirection = function (username, password, conPassword, name, surname, sSurname, id, dirSpec, date, email,admin,sucAd) {
         var url = 'http://'+getIp()+':58706/api/Direcciones';
         var sendData = {
           "Provincia": directionService.getState(),
@@ -125,12 +77,13 @@ angular.module("mainModule").controller("contNuevEmp", ["$scope","$http","direct
         };
         $scope.postHttp(url,sendData,(data)=>{
           console.log("dir: "+data.idDireccion);
-          $scope.createEmployee(username, password, conPassword, name, surname, sSurname, id, data.idDireccion, date, email,admin);
+          $scope.createEmployee(username, password, conPassword, name, surname, sSurname, id, data.idDireccion, date, email,admin,sucAd);
         })
       };
 
-      $scope.createEmployee = function (username, password, conPassword, name, surname, sSurname, id, dir, date, email,admin) {
-        if(admin){rol=1;}      
+      $scope.createEmployee = function (username, password, conPassword, name, surname, sSurname, id, dir, date, email,admin,sucAd) {
+        if(admin){rol=1;} 
+        if(!sucAd){storeService.setID(userService.getSucursal());}
         if (password == conPassword) {
                 var url = 'http://'+getIp()+':58706/api/Empleados';
                 var sendData = {
@@ -145,11 +98,12 @@ angular.module("mainModule").controller("contNuevEmp", ["$scope","$http","direct
                   "Direccion": dir,
                   "Estado": 1,
                   "idRol": rol,
-                  "idSucursal": userService.getSucursal()
+                  "idSucursal": storeService.getID()
                 }
                 console.log("employee: "+sendData);
                 $scope.postHttp(url,sendData,(data)=>{
                   alert('created Admin');
+                  storeService.cleanStore();
                   $location.path('/Admin/gsucursales');
                 })
               }

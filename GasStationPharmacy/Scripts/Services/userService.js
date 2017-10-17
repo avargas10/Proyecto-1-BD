@@ -4,6 +4,7 @@ angular.module("mainModule").service('userService', function () {
 	var empLogged;
 	var sucursal;
 	var company;
+	var rol;
 	var admin;
 	this.getUser = function () {
 	  return currentUser;
@@ -14,12 +15,14 @@ angular.module("mainModule").service('userService', function () {
 	this.getAdmin = function () {
 	  return admin;
 	}
+	this.setRol=function(pRol){rol=pRol;}
+	this.getRol=function(){return rol;}
 	this.getEmpActive = function () {
 	  return empLogged;
 	}
 	this.setEmpActive=function(){
 		empLogged=true;
-		if(currentUser.idRol==1){admin=true;}
+		if(rol==1){admin=true;}
 	}
 	this.setActive=function(){logged=true;}
 	this.setUser = function (user) {

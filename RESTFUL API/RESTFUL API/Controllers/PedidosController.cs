@@ -58,6 +58,27 @@ namespace RESTFUL_API.Controllers
             }
         }
 
+        [HttpGet]
+        public HttpResponseMessage getTotalPedidos(int idEmpresa)
+        {
+
+            using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+            {
+
+                SqlCommand cmd = new SqlCommand("EXEC GETCOUNTPEDIDOS @id", conn);
+                cmd.Parameters.AddWithValue("@id", idEmpresa);
+                cmd.Connection = conn;
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    var r = serial.singleserialize(reader);
+                    conn.Close();
+                    return Request.CreateResponse(HttpStatusCode.Created, r);
+                }
+            }
+
+        }
+
         [HttpPost]
         public HttpResponseMessage regPedido([FromBody] pedidosModel pedido)
         {

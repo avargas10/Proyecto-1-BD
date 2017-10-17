@@ -105,13 +105,11 @@ CREATE PROC EMPLEADOLOGIN(
 )
 AS
 BEGIN
-IF EXISTS (SELECT Username FROM EMPLEADO WHERE Username=@Username AND Password=@Password)
+IF EXISTS (SELECT Username FROM EMPLEADO WHERE Username=@Username AND Password=@Password AND Estado!=0)
 BEGIN
-DECLARE @sucursal int
-DECLARE @empleado int
-SELECT @empleado=idEmpleado FROM EMPLEADO WHERE Username=@Username
-SELECT @sucursal=idSucursal FROM EMPLEADOXSUCURSAL WHERE idEmpleado=@empleado
-SELECT idEmpresa,idSucursal FROM SUCURSAL WHERE idSucursal=@sucursal
+SELECT SUCURSAL.idEmpresa, SUCURSAL.Nombre AS nombreSucursal,EMPLEADOXSUCURSAL.idSucursal,ROLES.idRol,ROLES.Nombre AS nombreRol FROM SUCURSAL INNER JOIN EMPLEADOXSUCURSAL
+ON EMPLEADOXSUCURSAL.idSucursal=SUCURSAL.idSucursal INNER JOIN EMPLEADO ON EMPLEADOXSUCURSAL.idEmpleado=EMPLEADO.idEmpleado INNER JOIN ROLES ON
+ROLES.idRol=EMPLEADOXSUCURSAL.idRol WHERE EMPLEADO.Username=@Username
 END
 END
 
@@ -121,7 +119,7 @@ CREATE PROC GETESTADISTICA(
 AS
 BEGIN
 SELECT EMPRESA.Nombre AS nombreEmpresa,  SUCURSAL.Nombre AS nombreSucursal, PRODUCTOS.Nombre AS nombreProducto, PRODUCTOS.idProducto, SUM(DETALLEPEDIDO.Cantidad) AS sumaCantidad FROM PRODUCTOS INNER JOIN DETALLEPEDIDO
-ON PRODUCTOS.idProducto=DETALLEPEDIDO.idProducto INNER JOIN PEDIDOS ON DETALLEPEDIDO.idPedido=PEDIDOS.idPedido INNER JOIN SUCURSAL ON SUCURSAL.idSucursal=PEDIDOS.sucursalRecojo 
+ON PRODUCTOS.idProducto=DETALLEPEDIDO.idProducto INNER JOIN PEDIDOS ON DETALLEPEDIDO.idPedido=PEDIDOS.idPedido AND PEDIDOS.Estado!=5 INNER JOIN SUCURSAL ON SUCURSAL.idSucursal=PEDIDOS.sucursalRecojo 
 INNER JOIN EMPRESA ON SUCURSAL.idEmpresa=EMPRESA.idEmpresa WHERE(EMPRESA.idEmpresa=@idEmpresa) GROUP BY EMPRESA.Nombre, SUCURSAL.Nombre, PRODUCTOS.Nombre, PRODUCTOS.idProducto 
 END
 
@@ -137,4 +135,24 @@ DECLARE @cant int
 SET @cant = (SELECT Cantidad FROM DETALLEPEDIDO WHERE idPedido=@pedido AND idProducto=@producto)
 DELETE FROM DETALLEPEDIDO WHERE idPedido=@pedido AND idProducto=@producto
 UPDATE PRODUCTOXSUCURSAL SET Cantidad=(Cantidad+@cant) WHERE codProducto=@producto AND idSucursal=@sucursal	
+END
+
+CREATE PROC UPDATEPRODUCTO(
+@id int,
+@sucursal int,
+@cantidad int,
+@precio int
+)
+AS
+BEGIN
+UPDATE PRODUCTOXSUCURSAL SET Precio=@precio, Cantidad=@cantidad WHERE idSucursal=@sucursal AND codProducto=@id
+END
+
+CREATE PROC GETCOUNTPEDIDOS(
+@id int
+)
+AS
+BEGIN
+SELECT COUNT(PEDIDOS.idPedido) AS conteoPedidos FROM PEDIDOS INNER JOIN SUCURSAL ON SUCURSAL.idSucursal=PEDIDOS.sucursalRecojo INNER JOIN 
+EMPRESA ON EMPRESA.idEmpresa=SUCURSAL.idEmpresa WHERE (EMPRESA.idEmpresa=@id AND PEDIDOS.Estado!=5)
 END

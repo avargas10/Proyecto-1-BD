@@ -263,7 +263,7 @@ angular.module("mainModule").controller("orderController", [ "orderService","$sc
       }
 
       function verifyNumber(product,number){
-        var url='http://'+getIp()+':58706/api/Productos/';
+        var url='http://'+getIp()+':58706/api/Productos';
         var sendData={
                codProducto: product.idProducto,
                idSucursal: product.idSucursal,

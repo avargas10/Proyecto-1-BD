@@ -1,5 +1,6 @@
 <!-- MAIN CONTENT SECTION -->
-<section class="mainContent clearfix logIn" ng-controller="userController">
+<div ng-controller="userController">
+<section class="mainContent clearfix logIn">
         <div class="container">
           <div class="row">
             <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
@@ -15,21 +16,25 @@
                       <label for="">Password</label>
                       <input type="password" class="form-control" ng-model="password">
                     </div>
+                    <button type="button" ng-if="!EmployeeCheck"  class="btn btn-primary btn-block"  ng-click="loginUser(username,password,gRecaptchaResponse)">log in</button>
+                    <button type="button" ng-if="EmployeeCheck"  class="btn btn-primary btn-block"  ng-click="loginUser(username,password,gRecaptchaResponse)" data-toggle="modal" data-target="#myModal">log in</button>
+                    <button type="button" class="btn btn-link btn-block">Forgot Password?</button>
+                    <div class="checkbox">
+                        <label>
+                          <input type="checkbox" ng-model="EmployeeCheck"> 
+                          Employee
+                        </label>
+                      </div>
+                      <br>
                     <div
                     vc-recaptcha
                     ng-model="gRecaptchaResponse"
                     theme="dark"
-                    key="'6Lcb0jEUAAAAAGjvk_YL7MI9sUcQVlNPP8b5-a8R'"
+                    key="'6Le2EzYUAAAAAFtstiAPVePaUOA6Jk7cDypk38yi'"
                     ></div>
                             <div vc-recaptcha ></div> 
-                    <div class="checkbox">
-                      <label>
-                        <input type="checkbox" ng-model="EmployeeCheck"> 
-                        Employee
-                      </label>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block"  ng-click="loginUser(username,password,gRecaptchaResponse)">log in</button>
-                    <button type="button" class="btn btn-link btn-block">Forgot Password?</button>
+
+                   
                     
                   </form>
                 </div>
@@ -38,3 +43,27 @@
           </div>
         </div>
       </section>
+
+      <div class="modal fade"  id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Update Employee Info</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <label for="sucursales">Choose an option</label>
+               <select multiple class="form-control" id="sucursales"  >
+                <option ng-repeat="p in options"  data-dismiss="modal" ng-click="setSucursal(p,usernameEmp)">{{p.nombreSucursal}}:{{p.nombreRol}}</option>
+            </select>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" ng-click="setSucursal(selected,usernameEmp)">Continue</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>

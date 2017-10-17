@@ -33,7 +33,6 @@ var openFile = function(event) {
     }
 
     function getIp(){
-      var ipPato = "192.168.1.68";
-      var ipVargas = "localhost";
-      return ipVargas;
+      var ipPato = "172.18.34.172";
+      return ipPato;
     }

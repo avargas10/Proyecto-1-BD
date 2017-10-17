@@ -101,9 +101,10 @@ $scope.getDireccion=function(id){
       }
 
   $scope.loginUser = function (username, password, getCaptcha) {
-    if (!isBlank(username) && !isBlank(password)) {
+    if (!isBlank(username) && !isBlank(password)&& getCaptcha) {
       console.log("state of checkbox: " + this.EmployeeCheck);
       if(this.EmployeeCheck == false){
+        console.log(getIp());
         var url = 'http://'+getIp()+':58706/api/Clientes?username=' + username + '&pass=' + password;
         $http.post(url).then(function (msg) {
           if (msg.data) {
@@ -111,7 +112,7 @@ $scope.getDireccion=function(id){
             $scope.getHttp(url,(data)=>{
               userService.setUser(data);
               userService.setActive();
-              console.log(data);
+              
               $location.path("/Home");
             })
             
@@ -125,18 +126,9 @@ $scope.getDireccion=function(id){
       else{
         var url = 'http://'+getIp()+':58706/api/Empleados?username=' + username + '&pass=' + password;
         $http.post(url).then(function (msg) {
-            var url = 'http://'+getIp()+':58706/api/Empleados?username='+username;
-            var idsuc = msg.data.idSucursal;
-            var idEmp = msg.data.idEmpresa;
-            $scope.getHttp(url,(data1)=>{
-              console.log(data1);
-              userService.setUser(data1);
-              userService.setSucursal(idsuc);
-              userService.setCompany(idEmp);
-              userService.setEmpActive();
-              console.log(msg.data);
-              $location.path("/Home");
-            })
+          console.log("data "+msg.data);
+            $scope.usernameEmp = username;
+            $scope.options = msg.data;
         });
       }
     }
@@ -144,6 +136,19 @@ $scope.getDireccion=function(id){
       alert("Error(01): Can't sign in, space in blank or not getCaptcha");
     }
   };
+
+  $scope.setSucursal=function(options,username){
+    console.log("options: "+options);
+    var url = 'http://'+getIp()+':58706/api/Empleados?username='+username;
+    $scope.getHttp(url,(data1)=>{
+      userService.setRol(options.idRol);
+      userService.setUser(data1);
+      userService.setSucursal(options.idSucursal);
+      userService.setCompany(options.idEmpresa);
+      userService.setEmpActive();
+      $location.path("/Home");
+    })
+  }
 
   $scope.deleteUser=function(id){
     if (confirm('Sure you want to delete?')) {

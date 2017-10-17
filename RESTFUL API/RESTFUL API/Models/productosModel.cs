@@ -15,5 +15,7 @@ namespace RESTFUL_API.Models
         public string Image { get; set; }
         public Nullable<int> Precio { get; set; }
         public int Estado { get; set; }
+        public int Sucursal { get; set; }
+        public int Cantidad { get; set; }
     }
 }

@@ -33,10 +33,25 @@ function($scope,$http,userService) {
 
       
 
-      $scope.update=function(id,quantity){
-        var data={
-          "idProducto":id,
+      $scope.update=function(id,quantity,price){
+        var url='http://'+getIp()+':58706/api/ProductoSucursal';
+        var sendData={
+          "idSucursal": userService.getSucursal(),
+          "codProducto": id,
+          "Cantidad": quantity,
+          "Precio": price
         };
+            $http.put(url,sendData)
+            .then(function successCallback(data) {
+              console.log("responde true: "+ data.data);
+                console.log("pass verify")
+            },
+            function errorCallback(response) {
+              alert("Reduce the number of "+product.Nombre);
+              $location.path("/order");
+              
+             
+            });
 
       }
 

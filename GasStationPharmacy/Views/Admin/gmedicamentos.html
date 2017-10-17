@@ -12,6 +12,7 @@
                     <tr>
                       <th>Product Name</th>
                       <th>Prodcut ID</th>
+                      <th>Price</th>
                       <th>Medicament</th>
                       <th></th>
                       <th></th>
@@ -19,9 +20,10 @@
                   </thead>
                   <tbody>
                     <tr   ng-repeat="s in medList">
-                      <td><i class="fa fa-medkit" aria-hidden="true"></i>  {{s.Nombre}} </td>
-                      <td><i class="fa fa-medkit" aria-hidden="true"></i> {{s.idProducto}}</td>
-                      <td><i class="fa fa-medkit" aria-hidden="true"></i> {{s.esMedicamento}}</td>
+                      <td><i></i>  {{s.Nombre}} </td>
+                      <td><i></i> {{s.idProducto}}</td>
+                      <td><i></i> {{s.Precio}}</td>
+                      <td><i></i> {{s.esMedicamento}}</td>
                       <td><a class="btn btn-info" data-toggle="modal" data-target="#myModal">Edit</a></td>
                       <td><a class="btn btn-danger" ng-click="delete(s.idProducto,s.Nombre)">delete</a></td>
                     </tr>
@@ -41,9 +43,9 @@
     </div>
   </section>
 
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="myModal" tabindex="-1" ng-controller="contMedAdmin" ng-click="UpdateDirections()" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
-        <div class="modal-content" ng-init="provedores()">
+        <div class="modal-content" >
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Update Product Info</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -55,10 +57,12 @@
             <label> Product ID</label>
             <input type="text" class="form-control" name="idRec" placeholder="ID of the product" ng-model="id" ng-pattern="/^[0-9]{1,5}$/" required>
             <label> Quantity</label>
-            <input type="text" class="form-control" name="idRec" placeholder="ID of the product" ng-model="quantity"  required>
+            <input type="text" class="form-control" name="idRec" placeholder="Qunatity" ng-model="quantity"  required>
+            <label> Price</label>
+            <input type="text" class="form-control" name="idRec" placeholder="Price" ng-model="price"  required>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" ng-click="edit(ID,Direction,Name,fSur,sSur,State,Punish,Birth)">Save changes</button>
+                <button type="button" class="btn btn-primary" ng-click="update(id,quantity,price)">Save changes</button>
                 </div>
           </div>
         </div>

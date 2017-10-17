@@ -50,5 +50,70 @@ function($scope,$http,userService) {
           console.log(rejection.data);
       });
       }
+      
+      $scope.getRols=function(){
+        var url = 'http://'+getIp()+':58706/api/Roles/'+userService.getCompany();
+        $http.get(url).then(function(msg){
+          $scope.rolList= msg.data;
+        });
+      }
+      $scope.setRol=function(pRol){
+          rol = pRol;
+      }
+
+      $scope.UpdateDirection = function () {
+        console.log("direction update");
+        var url = 'http://'+getIp()+':58706/api/Provincias';
+        $http.get(url)
+        .then(function successCallback(data) {
+          console.log(data);
+          $scope.states = data.data;
+          $scope.getRols();
+        },
+        function errorCallback(response) {
+          alert(response);
+        });
+      };
+      $scope.UpdateCities = function (_id) {
+        directionService.setState(_id);
+        var url = 'http://'+getIp()+':58706/api/Cantones?idProvincia=' + _id;
+        $http.get(url)
+        .then(function successCallback(data) {
+          console.log(data);
+          $scope.cities = data.data;
+        },
+        function errorCallback(response) {
+          alert(response);
+        });
+      };
+      $scope.UpdateDistricts = function (_id) {
+        directionService.setCity(_id);
+        var url = 'http://'+getIp()+':58706/api/Distrito?idCanton=' + _id;
+        $http.get(url)
+        .then(function successCallback(data) {
+          console.log(data);
+          $scope.districts = data.data;
+        },
+        function errorCallback(response) {
+          alert(response);
+        });
+      };
+      $scope.setDistrict = function (_id) {
+        directionService.setDisctrict(_id);
+      };
+      $scope.setDirection = function (username, password, conPassword, name, surname, sSurname, id, dirSpec, date, email,admin,sucAd) {
+        var url = 'http://'+getIp()+':58706/api/Direcciones';
+        var sendData = {
+          "Provincia": directionService.getState(),
+          "Canton": directionService.getCity(),
+          "Distrito": directionService.getDistrict(),
+          "Descripcion": dirSpec
+        };
+        $scope.postHttp(url,sendData,(data)=>{
+          console.log("dir: "+data.idDireccion);
+         // $scope.createEmployee(username, password, conPassword, name, surname, sSurname, id, data.idDireccion, date, email,admin,sucAd);
+        })
+      };
+
 
     }]);
