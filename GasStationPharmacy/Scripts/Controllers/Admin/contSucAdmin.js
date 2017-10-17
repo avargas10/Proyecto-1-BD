@@ -24,6 +24,8 @@ function($scope,$http) {
         
       };
 
+    
+
       $scope.delete=function(id,emp,cant,dist,dir,nme,ste,img){
         var url = 'http://'+getIp()+':58706/api/Sucursal';
         var data={
