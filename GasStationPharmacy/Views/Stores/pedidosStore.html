@@ -21,8 +21,9 @@
               <img class="img-fluid img" src="data:image/jpg;base64,{{o.Imagen}}" alt="Card image cap">
               <h5 class="mb-1">Pedido #{{o.idPedido}} </h5>
             </div>
-           <textarea name="inputList" ng-model="o.productos" cols="15" disabled>
-           </textarea>
+            <div ng-repeat="p in ProductsOrders" >
+              <textarea name="inputList" ng-model="p.idProducto" cols="15" disabled></textarea>
+            </div>
 
            <div class="form-group select">
             <label>Estado: {{o.Estado}}</label>

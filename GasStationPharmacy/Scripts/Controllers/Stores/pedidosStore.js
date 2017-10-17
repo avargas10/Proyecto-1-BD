@@ -2,6 +2,7 @@ angular.module("mainModule").controller("pedidosStore",["$scope","$http", "userS
   function($scope,$http, userService) {
     $scope.state = "";
     $scope.listOrders=[];
+    $scope.ProductsOrders=[];
     $scope.statesId=[
     {'id':'1:','Estado':'Nuevo'},
     {'id':'2:','Estado':'Preparado'},
@@ -27,9 +28,21 @@ angular.module("mainModule").controller("pedidosStore",["$scope","$http", "userS
             $http.get(url).then(function(msg){
                 console.log(msg.data);
                 $scope.listOrders= msg.data;
+                for (i = 0; i < msg.data.length; i++) { 
+                    var idPed = msg.data[i].idPedido;
+                    console.log("idPedido: "+idPed);
+                    var url2 = 'http://'+getIp()+':58706/api/DetallePedido/'+ idPed;
+                    $http.get(url2).then(function(Data){
+                        for (j = 0; j < Data.data.length; j++) {
+                        console.log("id de producto: " + Data.data[j].idProducto);
+                        $scope.ProductsOrders.push(Data.data[j]);
+                        }
+                    });
+                }
+                
             });
         };
-
+        
         $scope.update=function(ste, pedido){
             var id=ste.split(":",1);
             var newid = id[0];
