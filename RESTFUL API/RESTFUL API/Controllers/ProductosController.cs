@@ -91,8 +91,8 @@ namespace RESTFUL_API.Controllers
 
         }
 
-        [HttpPost]
-        public HttpResponseMessage updateEmpleados(productosModel medicamento)
+        [HttpPut]
+        public HttpResponseMessage updateProducto(productosModel medicamento)
         {
             try
             {
@@ -118,6 +118,7 @@ namespace RESTFUL_API.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
+
         [HttpGet]
         public IEnumerable<Dictionary<string, object>> getProductosPedido(int idPed)
         {
