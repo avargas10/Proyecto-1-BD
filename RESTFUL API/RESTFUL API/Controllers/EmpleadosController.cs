@@ -195,7 +195,7 @@ namespace RESTFUL_API.Controllers
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
             }
 
 
