@@ -1,6 +1,6 @@
-angular.module("mainModule").controller("contNuevSucAdmin", ["$scope","$http",
+angular.module("mainModule").controller("contNuevSucAdmin", ["$scope","$http","directionService",'$location','storeService',
 
-  function($scope,$http) {
+  function($scope,$http,directionService,$location,storeService) {
     $scope.idEmp = "";
     $scope.name="";
     $scope.idCant="";
@@ -40,23 +40,15 @@ angular.module("mainModule").controller("contNuevSucAdmin", ["$scope","$http",
     }
 
 
-    $scope.createStore=function(idE,nme,idC,idP,idD,dr,lt,ln){
-      idE=idE.split("",1);
-      idC=idC.split("",1);
-      idP=idP.split("",1);
-      idD=idD.split("",1);
+    $scope.createStore=function(idE,nme,dr){
+      idE=idE.split("",1)[0];
       var url='http://'+getIp()+':58706/api/Sucursal';
-      var sendData={"Nombre": nme, "detalleDireccion":dr, "idEmpresa":idE, "idCanton":idC, "idProvincia": idP, "idDistrito":idD, "Latitud": lt, "Longitud": ln , "Estado":"1"};
-      
-      $http.post(url,sendData)
-      .then(
-        function successCallback(response){
-
-        },function errorCallBack(response){
-
-        });
-        
-      animation();
+      var sendData={"Nombre": nme, "detalleDireccion":dr, "idEmpresa":idE, "idCanton":directionService.getCity(), "idProvincia": directionService.getState(), "idDistrito":directionService.getDistrict() , "Estado":"1"};
+      console.log("send: "+sendData);
+      $scope.postHttp(url,sendData,(data)=>{
+        console.log("id: "+data.idSucursal);
+        storeService.setID(data.idSucursal);
+      })
     }
 
   }]);

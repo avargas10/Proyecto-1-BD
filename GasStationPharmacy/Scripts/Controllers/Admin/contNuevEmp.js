@@ -1,6 +1,6 @@
-angular.module("mainModule").controller("contNuevEmp", ["$scope","$http",
+angular.module("mainModule").controller("contNuevEmp", ["$scope","$http","directionService",'storeService','$location',
 
-  function($scope,$http) {
+  function($scope,$http,directionService,storeService,$location) {
     var states;
     var cities;
     var districts;
@@ -38,14 +38,13 @@ angular.module("mainModule").controller("contNuevEmp", ["$scope","$http",
         "Direccion": dir,
         "Estado":1
       };
-      /**
+      
       $scope.postHttp(url,sendData,(data)=>{
           if(data){
 
           }
         });
-        **/
-        animation();
+        
       }
 
       $scope.setDirection = function (id,mail,user,pass,nme,pAp,sAp,date,dirSpec) {
@@ -105,6 +104,46 @@ angular.module("mainModule").controller("contNuevEmp", ["$scope","$http",
       $scope.setDistrict = function (_id) {
         directionService.setDisctrict(_id);
       };
+      $scope.setDirection = function (username, password, conPassword, name, surname, sSurname, id, dirSpec, date, email) {
+        var url = 'http://'+getIp()+':58706/api/Direcciones';
+        var sendData = {
+          "Provincia": directionService.getState(),
+          "Canton": directionService.getCity(),
+          "Distrito": directionService.getDistrict(),
+          "Descripcion": dirSpec
+        };
+        $scope.postHttp(url,sendData,(data)=>{
+          console.log("dir: "+data.idDireccion);
+          $scope.createEmployee(username, password, conPassword, name, surname, sSurname, id, data.idDireccion, date, email);
+        })
+      };
 
-
+      $scope.createEmployee = function (username, password, conPassword, name, surname, sSurname, id, dir, date, email) {
+              if (password == conPassword) {
+                var url = 'http://'+getIp()+':58706/api/Empleados';
+                var sendData = {
+                  "idEmpleado": parseInt(id),
+                  "Email": email,
+                  "Username": username,
+                  "Password": password,
+                  "Nombre": name,
+                  "pApellido": surname,
+                  "sApellido": sSurname,
+                  "Nacimiento": date,
+                  "Direccion": dir,
+                  "Estado": 1,
+                  "idRol": 1,
+                  "idSucursal": storeService.getID()
+                }
+                console.log("employee: "+sendData);
+                $scope.postHttp(url,sendData,(data)=>{
+                  alert('created Admin');
+                  $location.path('/Admin/gsucursales');
+                })
+              }
+              else {
+                alert("Error(03): Passwords not match");
+              }
+        
+          };
       }]);

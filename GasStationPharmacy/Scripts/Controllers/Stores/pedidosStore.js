@@ -28,15 +28,6 @@ angular.module("mainModule").controller("pedidosStore",["$scope","$http", "userS
             $http.get(url).then(function(msg){
                 console.log(msg.data);
                 $scope.listOrders= msg.data;
-                for (i = 0; i < msg.data.length; i++) { 
-                    var idPed = msg.data[i].idPedido;
-                    console.log("idPedido: "+idPed);
-                    var url2 = 'http://'+getIp()+':58706/api/DetallePedido/'+ idPed;
-                    $http.get(url2).then(function(Data){
-                        $scope.listOrders.push(Data.data[0]);
-                    });
-                }
-                
             });
         };
         
