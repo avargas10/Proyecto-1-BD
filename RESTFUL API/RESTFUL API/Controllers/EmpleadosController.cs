@@ -61,7 +61,9 @@ namespace RESTFUL_API.Controllers
         {
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("SELECT idEmpleado,Nombre,pApellido,sApellido,Password,Username,Email,Nacimiento,Direccion FROM EMPLEADO WHERE Username=@user", conn);
+                SqlCommand cmd = new SqlCommand("SELECT EMPLEADO.idEmpleado,EMPLEADO.Nombre,EMPLEADO.pApellido,EMPLEADO.sApellido,EMPLEADO.Password,EMPLEADO.Username,"+
+                " EMPLEADO.Email, EMPLEADO.Nacimiento, EMPLEADO.Direccion, EMPLEADOXSUCURSAL.idRol, Roles.Nombre AS nombreRol FROM EMPLEADO INNER JOIN"+
+                " EMPLEADOXSUCURSAL ON EMPLEADOXSUCURSAL.idEmpleado = EMPLEADO.idEmpleado INNER JOIN ROLES ON ROLES.idRol = EMPLEADOXSUCURSAL.idRol WHERE EMPLEADO.Username = @user", conn);
                 cmd.Parameters.AddWithValue("@user", username);
                 cmd.Connection = conn;
                 conn.Open();
