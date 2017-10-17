@@ -59,7 +59,7 @@ namespace RESTFUL_API.Controllers
             {
                 using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
                 {
-                    SqlCommand cmd1 = new SqlCommand("SELECT Nombre FROM ROLES WHERE Nombre=@nombre");
+                    SqlCommand cmd1 = new SqlCommand("SELECT Nombre FROM ROLES WHERE Nombre=@nombre AND Estado!=0");
                     cmd1.Parameters.AddWithValue("@nombre", rol.Nombre);
                     cmd1.Connection = conn;
                     conn.Open();
