@@ -144,6 +144,26 @@ namespace RESTFUL_API.Controllers
             }
         }
 
+        [HttpGet]
+        public IEnumerable<Dictionary<string, object>> getInfoPedidosbyIdSucursal([FromUri] int idSuc)
+        {
+            using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT CLIENTE.Penalizacion AS penalizacionCliente, PEDIDOS.idPedido, PEDIDOS.sucursalRecojo, PEDIDOS.idCliente, PEDIDOS.horaRecojo,"+
+                " PEDIDOS.Telefono, PEDIDOS.Imagen, PEDIDOS.Estado FROM PEDIDOS INNER JOIN CLIENTE ON CLIENTE.Cedula = PEDIDOS.idCliente WHERE PEDIDOS.sucursalRecojo = @id", conn);
+                cmd.Parameters.AddWithValue("@id", idSuc);
+                cmd.Connection = conn;
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    var r = serial.Serialize(reader);
+                    conn.Close();
+                    return r;
+                }
+
+            }
+        }
+
         [HttpPut]
         public HttpResponseMessage updatePedido(pedidosModel pedido)
         {
