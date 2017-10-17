@@ -72,9 +72,11 @@ namespace RESTFUL_API.Controllers
                     else
                     {
                         conn.Close();
-                        SqlCommand cmd = new SqlCommand("INSERT INTO ROLES(Nombre,Descripcion) VALUES (@nombre,@descripcion)", conn);
+                        SqlCommand cmd = new SqlCommand("INSERT INTO ROLES(Nombre,Descripcion,Empresa, Estado ) VALUES (@nombre,@descripcion, @empresa, @estado)", conn);
                         cmd.Parameters.AddWithValue("@nombre", rol.Nombre);
                         cmd.Parameters.AddWithValue("@descripcion", rol.Descripcion);
+                        cmd.Parameters.AddWithValue("@empresa", rol.Empresa);
+                        cmd.Parameters.AddWithValue("@estado", rol.Estado);
                         cmd.Connection = conn;
                         conn.Open();
                         cmd.ExecuteReader();
