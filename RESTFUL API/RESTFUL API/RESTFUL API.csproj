@@ -198,6 +198,7 @@
     <Compile Include="Controllers\PadecimientosController.cs" />
     <Compile Include="Controllers\PedidosController.cs" />
     <Compile Include="Controllers\ProductosController.cs" />
+    <Compile Include="Controllers\ProductoSucursalController.cs" />
     <Compile Include="Controllers\ProveedoresController.cs" />
     <Compile Include="Controllers\ProvinciasController.cs" />
     <Compile Include="Controllers\RecetasController.cs" />
