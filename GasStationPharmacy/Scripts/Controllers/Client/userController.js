@@ -4,7 +4,7 @@ function ($scope, $http, $location, $routeParams, userService, directionService,
   var states;
   var cities;
   var districts;
-  var EmployeeCheck;
+  $scope.EmployeeCheck=false;
   $scope.getHttp = function (url, callback) {
     var httpObject = $http.get(url);
     httpObject.then(function (promise) {

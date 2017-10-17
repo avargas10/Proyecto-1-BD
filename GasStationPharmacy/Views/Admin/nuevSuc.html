@@ -54,14 +54,14 @@
                                         </div> 
                                         <div class="form-group">
                                                 <label>Direction Detail</label>
-                                                <input type="text" class="form-control" name="nameProd" placeholder="Direction Detail" ng-model="name" required>
+                                                <input type="text" class="form-control" name="nameProd" placeholder="Direction Detail" ng-model="dir" required>
                                                 <span ng-show="datReceta.numDoctor.$error.pattern">
                                                   <small id="fileHelp" class="form-text text-muted">Name is not valid</small>
                                                 </span>
                                         </div>
                             <div class="form-group">
                               <div class="col-md-offset-10 col-md-2 col-sm-offset-9 col-sm-3">
-                                <button type="submit" class="btn btn-primary btn-block">SAVE INFO</button>
+                                <button type="submit" class="btn btn-primary btn-block" ng-click="createStore(idEmp,name,dir)" data-toggle="modal" data-target="#myModal">CREATE STORE</button>
                               </div>
                             </div>
                           </form>
@@ -72,3 +72,56 @@
               </div>
             </div>
           </section>
+
+          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" ng-controller="contNuevEmp">
+                <div class="modal-dialog" role="document" ng-init="UpdateDirection()">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Create Administrator</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                    <label> Employee ID</label>
+                    <input type="text" class="form-control" name="adminId" placeholder="ID" ng-model="id" required>
+                    <label>Name</label>
+                    <input type="text" class="form-control" name="nameAdmin" placeholder="Name" ng-model="name" required>
+                    <label>Email</label>
+                    <input type="text" class="form-control" name="emailAdmin" placeholder="Email" ng-model="empEmail" required>
+                    <label for="sucursales">Username</label>
+                    <input type="text" class="form-control" name="adminUser" placeholder="Username" ng-model="empUser" required>
+                    <label>Password</label>
+                    <input type="password" class="form-control" placeholder="Password" ng-model="adminPass" required>
+                    <label>Confirm Password</label>
+                    <input type="password" class="form-control" placeholder="Confirm Password" ng-model="adminPassCon" required>
+                    <label>Surname</label>
+                    <input type="text" class="form-control" placeholder="Surname" ng-model="adminS" required>
+                    <label>Second Surname</label>
+                    <input type="text" class="form-control" placeholder="Second Surname" ng-model="adminSS" required>
+                    <label>Direction</label>
+                    <input type="text" class="form-control" id="dirSpec" name="reg_username" placeholder="Address Description" data-ng-model="adminDir" >
+                    <label>State</label>
+                    <select multiple class="form-control" id="sucursales"  >
+                      <option ng-repeat="state in states" ng-click="UpdateCities(state.idProvincia)">{{state.Nombre}}</option>
+                    </select>
+                      <label>City</label>
+                      <select multiple class="form-control" id="sucursales"  >
+                        <option ng-repeat="city in cities" ng-click="UpdateDistricts(city.idCanton)">{{city.Nombre}}</option>
+                      </select>
+                      <label for="exampleInputEmail1">District</label>
+                      <select multiple class="form-control" id="sucursales"  >
+                        <option ng-repeat="district in districts" ng-click="setDistrict(district.idDistrito)">{{district.Nombre}}</option>
+                      </select>
+                      <label>Birth Date</label><br>
+                      <input type="datetime-local" ng-model="adminDate" name="dateUser" required>  
+          
+          
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary" ng-click="setDirection(empUser, adminPass, adminPassCon, name, adminS, adminSS, id, adminDir, adminDate, empEmail)">Create Admin</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
