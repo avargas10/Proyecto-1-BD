@@ -33,10 +33,7 @@ angular.module("mainModule").controller("pedidosStore",["$scope","$http", "userS
                     console.log("idPedido: "+idPed);
                     var url2 = 'http://'+getIp()+':58706/api/DetallePedido/'+ idPed;
                     $http.get(url2).then(function(Data){
-                        for (j = 0; j < Data.data.length; j++) {
-                        console.log("id de producto: " + Data.data[j].idProducto);
-                        $scope.ProductsOrders.push(Data.data[j]);
-                        }
+                        $scope.listOrders.push(Data.data[0]);
                     });
                 }
                 

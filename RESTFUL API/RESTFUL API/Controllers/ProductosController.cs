@@ -141,6 +141,29 @@ namespace RESTFUL_API.Controllers
 
             }
         }
+        [HttpGet]
+        public IEnumerable<Dictionary<string, object>> getProductosPedidoSucursal([FromUri] int suc)
+        {
+            using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT PEDIDOS.idPedido,PEDIDOS.sucursalRecojo,PEDIDOS.Imagen,PEDIDOS.idCliente,PEDIDOS.horaRecojo, PEDIDOS.Telefono,PEDIDOS.Estado," +
+                    " DETALLEPEDIDO.idProducto, DETALLEPEDIDO.Cantidad, PRODUCTOS.Nombre, PRODUCTOS.Image" +
+                     " FROM [PRODUCTOS] INNER JOIN[DETALLEPEDIDO]" +
+                     " ON PRODUCTOS.idProducto = DETALLEPEDIDO.idProducto INNER JOIN[PEDIDOS]" +
+                    " ON DETALLEPEDIDO.idPedido = PEDIDOS.idPedido" +
+                     " WHERE(((PEDIDOS.sucursalRecojo) = @suc))", conn);
+                cmd.Parameters.AddWithValue("@suc", suc);
+                cmd.Connection = conn;
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    var r = serial.Serialize(reader);
+                    conn.Close();
+                    return r;
+                }
+
+            }
+        }
 
         [HttpPut]
         public HttpResponseMessage verifCantidad(productoSucursalModel detalle)
