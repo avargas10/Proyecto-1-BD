@@ -1,8 +1,9 @@
-angular.module("mainModule").controller("pedidosStore",["$scope","$http", "userService", 
-  function($scope,$http, userService) {
+angular.module("mainModule").controller("pedidosStore",["$scope","$http", "$location","userService", "orderService",  
+  function($scope,$http, $location, userService, orderService) {
     $scope.state = "";
     $scope.listOrders=[];
-    $scope.ProductsOrders=[];
+    $scope.ProductOrders=[];
+    var pedidoselected=1;
     $scope.statesId=[
     {'id':'1:','Estado':'Nuevo'},
     {'id':'2:','Estado':'Preparado'},
@@ -30,6 +31,14 @@ angular.module("mainModule").controller("pedidosStore",["$scope","$http", "userS
                 $scope.listOrders= msg.data;
             });
         };
+        $scope.initProduct = function(){
+            console.log("PEdido Selected: " + orderService.getCurrentOrder());
+            var url = 'http://'+getIp()+':58706/api/Productos?Ped='+orderService.getCurrentOrder();
+            $http.get(url).then(function(msg){
+                console.log(msg.data);
+                $scope.ProductOrders= msg.data;
+            });
+        };
         
         $scope.update=function(ste, pedido){
             var id=ste.split(":",1);
@@ -40,6 +49,10 @@ angular.module("mainModule").controller("pedidosStore",["$scope","$http", "userS
                 console.log(msg.data);
                 $scope.init();
             });
+        }
+        $scope.see=function(pedido){
+            orderService.setCurrentOrder(pedido);
+            $location.path("/Stores/ProductsxOrder");
         }
     
     }]);

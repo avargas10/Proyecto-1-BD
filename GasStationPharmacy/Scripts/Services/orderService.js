@@ -1,5 +1,6 @@
 angular.module("mainModule").service('orderService',function(){
     var editOrder;
+    var currentOrder;
     var newOrder = 
     {
       idSucursal:null,
@@ -12,6 +13,9 @@ angular.module("mainModule").service('orderService',function(){
     this.setImage=function(image){
        newOrder.image = image;
     }
+    this.setCurrentOrder=function(order){
+     currentOrder = order;
+   }
     this.setEditOrder=function(order){editOrder=order;
     }
     
@@ -32,6 +36,7 @@ angular.module("mainModule").service('orderService',function(){
     }
    
     this.getOrder=function(){return newOrder;}
+    this.getCurrentOrder=function(){return currentOrder;}
    
     this.setOrder=function(order){newOrder=order;}
 

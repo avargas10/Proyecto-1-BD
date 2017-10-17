@@ -1,0 +1,32 @@
+<style>
+img {
+  border-radius: 5px 5px 0 0;
+  max-height: 10vw;
+  min-height: 10vw;
+  max-width:  10vw;
+  min-width:  10vw;
+}
+</style>
+<section class="mainContent clearfix userProfile" ng-controller="pedidosStore" data-ng-init="initProduct()">
+    <h1 style="align-content: center; text-align: center;">Product List</h1>
+    <div class="list-group container innerWrapper">
+                <div class="row filterArea"> 
+                </div>
+                <div class="row">
+                  <div class="col-sm-4 col-xs-12" ng-repeat="product in ProductOrders">
+                    <div class="productBox table-responsive">
+                      <div class="productImage clearfix img">
+                        <img src="data:image/jpg;base64,{{product.Image}}" alt="products-img">
+                        <div class="productMasking">
+                                <div class="productCaption clearfix">
+                                        <h3>{{product.Nombre}}</h3>
+                                        <h4>Cantidad: {{product.Cantidad}}</h3>
+                                </div>
+  
+                        </div>
+                      </div>  
+                    </div>
+                  </div>
+                </div>
+              </div>
+</section>

@@ -142,6 +142,29 @@ namespace RESTFUL_API.Controllers
             }
         }
         [HttpGet]
+        public IEnumerable<Dictionary<string, object>> getProdPed(int Ped)
+        {
+            using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT PEDIDOS.idPedido,PEDIDOS.sucursalRecojo,PEDIDOS.idCliente,PEDIDOS.horaRecojo, PEDIDOS.Telefono,PEDIDOS.Estado," +
+                    " DETALLEPEDIDO.idProducto, DETALLEPEDIDO.Cantidad, PRODUCTOS.Nombre, PRODUCTOS.Image" +
+                     " FROM [PRODUCTOS] INNER JOIN[DETALLEPEDIDO]" +
+                     " ON PRODUCTOS.idProducto = DETALLEPEDIDO.idProducto INNER JOIN[PEDIDOS]" +
+                    " ON DETALLEPEDIDO.idPedido = PEDIDOS.idPedido" +
+                     " WHERE(((PEDIDOS.idPedido) = @id))", conn);
+                cmd.Parameters.AddWithValue("@id", Ped);
+                cmd.Connection = conn;
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    var r = serial.Serialize(reader);
+                    conn.Close();
+                    return r;
+                }
+
+            }
+        }
+        [HttpGet]
         public IEnumerable<Dictionary<string, object>> getProductosPedidoSucursal([FromUri] int suc)
         {
             using (SqlConnection conn = new SqlConnection(DatabaseConnectionString))
